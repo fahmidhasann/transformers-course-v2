@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 5: FFN, Residual Connections, and Layer Normalization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #a855f7;
+            --accent-green: #10b981;
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: clip;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: #cbd5e1;
+            font-size: 1.05rem;
+        }
+
+        .highlight {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .tech-term {
+            font-family: 'Outfit', sans-serif;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .math-block {
+            background: rgba(15, 23, 42, 0.6);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 1.2rem;
+            border-radius: 0 12px 12px 0;
+            font-family: 'Outfit', monospace;
+            font-size: 1.1rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f8fafc;
+            overflow-x: auto;
+        }
+
+        .math-inline {
+            font-family: 'Outfit', monospace;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* Interactive Simulator Styles */
+        .sim-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .sim-container {
+                grid-template-columns: 260px 1fr;
+            }
+        }
+
+        .control-panel {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .control-hint {
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            line-height: 1.45;
+            margin: -0.15rem 0 0.1rem;
+        }
+
+        .sim-tip {
+            background: rgba(56, 189, 248, 0.07);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            border-radius: 8px;
+            padding: 0.7rem 0.9rem;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+        .toggle-switch {
+            display: flex;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2px;
+        }
+
+        .toggle-switch button {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .toggle-switch button.active {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+        }
+
+        .btn-run {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border: none;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-run-backward {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+        }
+
+        .btn-run:hover, .btn-run-backward:hover {
+            opacity: 0.9;
+        }
+
+        .btn-run:disabled, .btn-run-backward:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .sim-graph-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .explanation-panel {
+            grid-column: 1 / -1;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        /* SVG Graph Styling */
+        .graph-line {
+            stroke: #475569;
+            stroke-width: 3;
+            fill: none;
+            transition: stroke 0.3s, stroke-width 0.3s;
+        }
+
+        .graph-line.active-forward {
+            stroke: var(--accent-cyan);
+            stroke-width: 4;
+        }
+
+        .graph-line.active-backward {
+            stroke: var(--accent-green);
+            stroke-width: 4;
+        }
+
+        .graph-node {
+            fill: #1e293b;
+            stroke: #475569;
+            stroke-width: 2;
+            transition: all 0.3s;
+        }
+
+        .graph-node.active {
+            stroke: var(--accent-cyan);
+            fill: rgba(6, 182, 212, 0.1);
+        }
+
+        .graph-node.active-ln {
+            stroke: var(--accent-purple);
+            fill: rgba(168, 85, 247, 0.1);
+        }
+
+        .node-text {
+            fill: var(--text-primary);
+            font-size: 13px;
+            font-weight: 600;
+            text-anchor: middle;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .node-subtext {
+            fill: var(--text-secondary);
+            font-size: 11px;
+            text-anchor: middle;
+            font-family: 'Outfit', monospace;
+        }
+
+        /* SVG Flow Animation */
+        @keyframes flowForward {
+            to {
+                stroke-dashoffset: -20;
+            }
+        }
+
+        @keyframes flowBackward {
+            to {
+                stroke-dashoffset: 20;
+            }
+        }
+
+        .flow-fwd {
+            stroke-dasharray: 8, 4;
+            animation: flowForward 1s linear infinite;
+        }
+
+        .flow-bwd {
+            stroke-dasharray: 8, 4;
+            animation: flowBackward 1s linear infinite;
+        }
+
+        /* Vector Visualizer inside Console */
+        .console-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .console-grid {
+                grid-template-columns: 1fr 1.3fr;
+            }
+        }
+
+        .console-steps h4, .console-values h4 {
+            font-size: 0.95rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .console-steps ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .console-steps li {
+            font-size: 0.85rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .console-steps li.active {
+            background: rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.3);
+            color: var(--text-primary);
+        }
+
+        .console-steps li.completed {
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+
+        .val-inspect-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .val-lbl {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            width: 90px;
+            flex-shrink: 0;
+        }
+
+        .val-box {
+            flex-grow: 1;
+        }
+
+        .vector-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .vector-element {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 38px;
+        }
+
+        .vector-bar-wrapper {
+            height: 35px;
+            width: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .vector-bar {
+            width: 100%;
+            border-radius: 4px;
+            transition: height 0.3s ease, background-color 0.3s ease;
+        }
+
+        .vector-val {
+            font-size: 10px;
+            font-family: 'Outfit', monospace;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .summary-banner {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .banner-stable {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .banner-warning {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .quiz-question-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .quiz-question-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .quiz-option {
+            display: block;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--accent-cyan);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--accent-green);
+            color: #e2e8f0;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #e2e8f0;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .quiz-feedback.success {
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            display: block;
+        }
+
+        .quiz-feedback.error {
+            background: rgba(239, 68, 68, 0.08);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            display: block;
+        }
+
+        /* Citations & Footer */
+        .citations {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        .citations a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .citations a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Simulator controls and network nodes custom overrides (Lesson 5) */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+        
+
+
+        
+
+        
+
+        /* Transitions */
+        *, *::before, *::after {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* ===== Cross-device: responsive, touch, accessibility & performance ===== */
+        /* Fluid hero heading so it scales down on small screens */
+        h1 {
+            font-size: clamp(1.6rem, 5vw, 2.5rem);
+        }
+
+        /* Visible keyboard-focus indicator */
+        a:focus-visible,
+        button:focus-visible,
+        select:focus-visible,
+        input:focus-visible,
+        [tabindex]:focus-visible,
+        .quiz-option:focus-visible {
+            outline: 2px solid var(--accent-cyan);
+            outline-offset: 2px;
+        }
+
+        /* Touch & small-screen layout (mobile-first priority) */
+        @media (max-width: 768px) {
+            body {
+                padding: 1.25rem 0.85rem;
+            }
+            .container {
+                max-width: 100%;
+            }
+            .card {
+                padding: 1.25rem;
+            }
+            .simulator {
+                padding: 1rem;
+            }
+            .sim-input-group {
+                flex-direction: column;
+            }
+            /* Comfortable touch targets */
+            .tab-btn,
+            .quiz-option,
+            select,
+            button {
+                min-height: 44px;
+            }
+            /* backdrop-filter blur is GPU-expensive on phones */
+            .card,
+            .simulator {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+        }
+
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* per-lesson overflow fix */
+        /* Let single-column sim grid shrink below content width on phones */
+        @media (max-width: 767px) {
+            .sim-container { grid-template-columns: minmax(0, 1fr); }
+            .control-panel, .sim-graph-card, .explanation-panel { min-width: 0; }
+        }
+    
+        /* ===== Shared Site Navbar ===== */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            margin: -2rem -1rem 2.5rem;
+            background: var(--card-bg);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+        }
+        .site-nav-inner {
+            position: relative;
+            max-width: 1180px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+        }
+        .site-nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        .site-nav-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+        .site-nav-brand-name {
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        .site-nav-toggle {
+            display: none;
+            margin-left: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            line-height: 1;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        .site-nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-left: auto;
+        }
+        .site-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.92rem;
+            padding: 0.5rem 0.85rem;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+        .site-nav-link:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.07); }
+        .site-nav-caret { font-size: 0.7em; opacity: 0.85; }
+        /* Syllabus dropdown */
+        .site-nav-dropdown { position: relative; }
+        .site-nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            min-width: 320px;
+            max-width: 88vw;
+            list-style: none;
+            margin: 0;
+            padding: 0.4rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            z-index: 60;
+        }
+        .site-nav-dropdown.open .site-nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .site-nav-dropdown-menu li { margin: 0; }
+        .site-nav-dropdown-menu a {
+            display: flex;
+            gap: 0.55rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 9px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.35;
+            border: 1px solid transparent;
+        }
+        .site-nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.06); color: var(--text-primary); }
+        .site-nav-dropdown-menu a.active {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+            color: var(--text-primary);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        .site-nav-dropdown-menu .num {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+        /* Prev / Next pager */
+        .site-nav-pager { display: flex; align-items: center; gap: 0.3rem; }
+        .site-nav-link.disabled { opacity: 0.35; pointer-events: none; cursor: default; }
+        /* Controls (language + theme) */
+        .site-nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 1px solid var(--border-color);
+            padding-left: 0.7rem;
+            margin-left: 0.15rem;
+        }
+        .site-nav-icon-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            height: 40px;
+            padding: 0 0.7rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            white-space: nowrap;
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+        .site-nav-icon-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+        /* Mobile */
+        @media (max-width: 900px) {
+            .site-nav-toggle { display: inline-flex; }
+            .site-nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.25rem;
+                margin: 0;
+                padding: 1rem 1.25rem 1.25rem;
+                background: var(--bg-color);
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+                display: none;
+            }
+            .site-nav-menu.open { display: flex; }
+            .site-nav-link { width: 100%; justify-content: flex-start; padding: 0.8rem 0.85rem; }
+            .site-nav-dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                min-width: 0;
+                max-width: 100%;
+                box-shadow: none;
+                background: rgba(255, 255, 255, 0.03);
+                margin-top: 0.25rem;
+            }
+            .site-nav-dropdown.open .site-nav-dropdown-menu { display: block; }
+            .site-nav-pager { width: 100%; gap: 0.5rem; }
+            .site-nav-pager .site-nav-link { justify-content: center; border: 1px solid var(--border-color); flex: 1; }
+            .site-nav-controls {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+                padding: 0.85rem 0 0;
+                margin: 0.6rem 0 0;
+            }
+            .site-nav-icon-btn { flex: 1; justify-content: center; height: 44px; }
+        }
+        @media (max-width: 768px) {
+            .site-nav { margin: -1.25rem -0.85rem 2rem; }
+        }
+
+    
+/* tb-map styles */
+.tb-architecture-map .tb-map-svg {
+    width: 100%; max-width: 420px; height: auto; display: block;
+    margin: 0.5rem auto 1rem; overflow: visible;
+}
+.tb-map-svg text { text-anchor: middle; font-family: 'Outfit', sans-serif; font-size: 12px; }
+.tb-map-svg .tb-sub { font-size: 9.5px; }
+.tb-node rect, .tb-node circle {
+    fill: rgba(15, 23, 42, 0.75); stroke: var(--accent-purple); stroke-width: 1.5;
+    transition: all 0.35s ease;
+}
+.tb-node text { fill: var(--text-secondary); transition: all 0.35s ease; }
+.tb-node.active rect, .tb-node.active circle {
+    fill: rgba(6, 182, 212, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.55));
+}
+.tb-node.active text { fill: var(--text-primary); font-weight: 600; }
+.tb-node.dim { opacity: 0.3; }
+.tb-block .tb-block-outline {
+    fill: none; stroke: rgba(168, 85, 247, 0.45); stroke-width: 1.5;
+    stroke-dasharray: 6 4; transition: all 0.35s ease;
+}
+.tb-block .tb-block-label { fill: var(--accent-purple); font-size: 11px; font-weight: 600; transition: all 0.35s ease; }
+.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.5)); }
+.tb-block.active .tb-block-label { fill: var(--accent-cyan); }
+.tb-block.dim { opacity: 0.3; }
+.tb-flow { fill: none; stroke: #64748b; stroke-width: 1.6; }
+.tb-skip {
+    fill: none; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4 3;
+    transition: all 0.35s ease;
+}
+.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.55)); }
+.tb-skip.dim { opacity: 0.28; }
+.tb-map-caption { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0; }
+.tb-map-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); margin: 0.2rem 0 1rem; }
+.tb-map-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.tb-legend-dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.tb-legend-active { background: rgba(6, 182, 212, 0.5); box-shadow: 0 0 6px rgba(6, 182, 212, 0.7); border: 1px solid var(--accent-cyan); }
+.tb-legend-rest { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--accent-purple); opacity: 0.45; }
+
+        </style>
+</head>
+<body>
+    <!-- ===== Shared Site Navbar (auto-configured from URL) ===== -->
+    <nav class="site-nav" id="site-nav" aria-label="Site navigation">
+        <div class="site-nav-inner">
+            <a class="site-nav-brand" href="../index.html">
+                <span class="site-nav-logo">T</span>
+                <span class="site-nav-brand-name">Transformer Hub</span>
+            </a>
+            <button class="site-nav-toggle" id="siteNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="siteNavMenu">☰</button>
+            <div class="site-nav-menu" id="siteNavMenu">
+                <a class="site-nav-link" href="../index.html"><span data-bn="হাব" data-en="Hub">Hub</span></a>
+                <div class="site-nav-dropdown" id="siteNavDropdown">
+                    <button class="site-nav-link" id="syllabusBtn" type="button" aria-haspopup="true" aria-expanded="false">
+                        <span data-bn="সিলেবাস" data-en="Syllabus">Syllabus</span>
+                        <span class="site-nav-caret">▾</span>
+                    </button>
+                    <ul class="site-nav-dropdown-menu" id="syllabusMenu"></ul>
+                </div>
+                <div class="site-nav-pager">
+                    <a class="site-nav-link" id="prevLessonBtn" rel="prev"><span class="site-nav-caret">‹</span> <span data-bn="আগের" data-en="Prev">Prev</span></a>
+                    <a class="site-nav-link" id="nextLessonBtn" rel="next"><span data-bn="পরের" data-en="Next">Next</span> <span class="site-nav-caret">›</span></a>
+                </div>
+                <div class="site-nav-controls">
+                    <button class="site-nav-icon-btn" id="langToggleBtn" type="button" title="Switch language"><span id="langToggleLabel">EN</span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+<header>
+            <span class="badge">Lesson 5</span>
+            <h1>FFN, Residual Connections, and Layer Normalization</h1>
+            <p class="subtitle">Transformer-এর ভেতরের স্থায়িত্ব, ফ্লো কন্ট্রোল এবং ফিচার এক্সট্রাকশন</p>
+        </header>
+
+        <!-- Transformer Block Map -->
+        <div class="card tb-architecture-map">
+            <h2>Transformer Block ম্যাপ — তুমি এখন কোথায়</h2>
+            <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
+  <defs>
+    <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 1.5 L8 5 L0 8.5 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- flow arrows (bottom -> top) -->
+  <line class="tb-flow" x1="190" y1="444" x2="190" y2="430" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="390" x2="190" y2="376" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="340" x2="190" y2="318" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="246" x2="190" y2="236" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="204" x2="190" y2="194" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="152" x2="190" y2="142" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="84"  x2="190" y2="64"  marker-end="url(#tb-arrow)"/>
+
+  <!-- residual / skip connections -->
+  <path class="tb-skip active" d="M 110 320 Q 30 320 30 240 L 30 224 Q 30 219 84 219" marker-end="url(#tb-arrow)"/>
+  <path class="tb-skip active" d="M 110 206 Q 22 206 22 142 L 22 130 Q 22 125 84 125" marker-end="url(#tb-arrow)"/>
+
+  <!-- output -->
+  <g class="tb-node dim">
+    <rect x="70" y="16" width="240" height="46" rx="10"/>
+    <text x="190" y="37">Linear + Softmax</text>
+    <text x="190" y="52" class="tb-sub">&#8594; Next Token</text>
+  </g>
+
+  <!-- transformer block container -->
+  <g class="tb-block dim">
+    <rect class="tb-block-outline" x="44" y="84" width="292" height="232" rx="14"/>
+    <text class="tb-block-label" x="190" y="101">Transformer Block &#215; N</text>
+  </g>
+
+  <!-- add & norm (after FFN) -->
+  <g class="tb-node active">
+    <rect x="86" y="112" width="208" height="30" rx="8"/>
+    <text x="190" y="131">Add &amp; Norm</text>
+  </g>
+  <!-- feed-forward network -->
+  <g class="tb-node active">
+    <rect x="86" y="154" width="208" height="40" rx="8"/>
+    <text x="190" y="178">Feed-Forward Network</text>
+  </g>
+  <!-- add & norm (after attention) -->
+  <g class="tb-node active">
+    <rect x="86" y="206" width="208" height="30" rx="8"/>
+    <text x="190" y="225">Add &amp; Norm</text>
+  </g>
+  <!-- multi-head self-attention -->
+  <g class="tb-node dim">
+    <rect x="86" y="248" width="208" height="48" rx="8"/>
+    <text x="190" y="270">Multi-Head Self-Attention</text>
+    <text x="190" y="286" class="tb-sub">Causal Mask</text>
+  </g>
+
+  <!-- positional encoding -->
+  <g class="tb-node dim">
+    <rect x="70" y="340" width="240" height="34" rx="10"/>
+    <text x="190" y="361">+ Positional Encoding</text>
+  </g>
+  <!-- token embedding -->
+  <g class="tb-node dim">
+    <rect x="70" y="390" width="240" height="38" rx="10"/>
+    <text x="190" y="413">Token Embedding</text>
+  </g>
+  <!-- input tokens -->
+  <g class="tb-node dim">
+    <rect x="70" y="444" width="240" height="38" rx="10"/>
+    <text x="190" y="467">Input Tokens</text>
+  </g>
+</svg>
+            <div class="tb-map-legend"><span><i class="tb-legend-dot tb-legend-active"></i> এই লেসনের ফোকাস</span><span><i class="tb-legend-dot tb-legend-rest"></i> বাকি অংশ (অন্য লেসনে)</span></div>
+            <p class="tb-map-caption"><strong>তুমি এখন এখানে:</strong> এই লেসন <span class="tech-term">Attention</span>-এর পরের অংশ নিয়ে — <span class="tech-term">Feed-Forward Network</span>, <span class="tech-term">Residual</span> (skip) <span class="tech-term">Connection</span> ও <span class="tech-term">Layer Normalization</span> (<span class="tech-term">Add &amp; Norm</span>), নিচে আলোকিত। সবুজ ড্যাশ-লাইনগুলো হলো residual পথ।</p>
+        </div>
+
+
+        <!-- Intro Card -->
+        <div class="card">
+            <h2>The Unsung Heroes (অবমূল্যায়িত হিরোরা)</h2>
+            <p>আমরা এতক্ষণ <span class="tech-term">Attention</span> নিয়ে অনেক কথা বলেছি, যা এআই-এর "চোখ ও কান" হিসেবে কাজ করে এবং বাক্যের শব্দগুলোর মধ্যকার সম্পর্ক দেখে। কিন্তু শুধু Attention দিয়ে একটি বুদ্ধিমান এআই তৈরি করা সম্ভব নয়।</p>
+            <p>এআই যখন চারপাশ দেখে তথ্য সংগ্রহ করে, তখন সেই তথ্য প্রসেস করার জন্য তার একটি "মস্তিষ্ক" এবং শেখার সময় ক্র্যাশ না করার জন্য একটি "সেফটি সিস্টেম" বা সুরক্ষাব্যবস্থার প্রয়োজন হয়। এখানেই আসে তিন অবমূল্যায়িত হিরো: <span class="highlight">Feed-Forward Networks (FFN)</span>, <span class="highlight">Skip Connections</span>, এবং <span class="highlight">Layer Normalization</span>।</p>
+        </div>
+
+        <!-- FFN Card -->
+        <div class="card">
+            <h2>1. দ্য থিংকার বা চিন্তাবিদ (Feed-Forward Network)</h2>
+            <p>Attention ধাপে শব্দগুলো যখন একে অপরের সাথে কথা বলে ফেলে, তখন প্রতিটি শব্দের ডেটাকে আলাদাভাবে প্রসেস করার প্রয়োজন হয়। এই কাজটি করে <span class="tech-term">Feed-Forward Network</span> (FFN)।</p>
+            
+            <p><strong>কীভাবে এটি কাজ করে?</strong></p>
+            <p>FFN-কে তথ্যের একটি বিশাল <span class="highlight">মেমোরি ব্যাংক বা মেমোরি স্টোরেজ</span> হিসেবে চিন্তা করতে পারেন। Attention যখন বলে, "এই দেখো, 'barking' (ঘেউ ঘেউ) শব্দটি 'dog' (কুকুর)-এর সাথে যুক্ত," তখন FFN সেই তথ্যটি নেয় এবং বলে, "আহা, 'dog' এবং 'barking' তারমানে আমরা কোনো প্রাণী নিয়ে কথা বলছি, আমার পোষা প্রাণীর তথ্যগুলো ঘেঁটে দেখা উচিত।"</p>
+
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
+                <li><strong>Attention:</strong> "আমি কার সাথে যুক্ত?" (গ্রুপ ওয়ার্ক)</li>
+                <li><strong>FFN:</strong> "এই সংযোগগুলোর ওপর ভিত্তি করে, আমার কোন তথ্যগুলো জানা আছে?" (একক কাজ)</li>
+            </ul>
+
+            <details class="step-example" style="margin-bottom: 1rem;">
+                <summary>একটু গভীরে: FFN-এর গণিত</summary>
+                <div style="padding-top: 1rem;">
+                    <p>এটি একটি দ্বি-স্তর বিশিষ্ট নিউরাল নেটওয়ার্ক, যার মাঝখানে একটি অ্যাক্টিভেশন ফাংশন থাকে:</p>
+                    <div class="math-block">
+                        FFN(x) = Activation(x W₁ + b₁) W₂ + b₂
+                    </div>
+                    <p>প্রথম লেয়ারটি ডেটাকে অনেক বড় আকারে (সাধারণত ৪ গুণ) প্রসারিত করে, অ্যাক্টিভেশন ফাংশনটি সেটি ফিল্টার করে, এবং দ্বিতীয় লেয়ারটি আবার তাকে ছোট করে আগের আকারে নিয়ে আসে। এটি অনেকটা চাবি দিয়ে তালা খুলে তথ্য বের করে আনার মতো কাজ করে।</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Residual Connections Card -->
+        <div class="card">
+            <h2>2. সেফটি হাইওয়ে বা নিরাপদ মহাসড়ক (Skip Connections)</h2>
+            <p>GPT-4 এর মতো আধুনিক এআই মডেলগুলো অনেক "গভীর" হয়, অর্থাৎ এগুলোর ভেতরে ডজন ডজন বা শত শত প্রসেসিং লেয়ার একটির ওপর আরেকটি সাজানো থাকে। কিন্তু এখানে একটি সমস্যা আছে: এতগুলো লেয়ার পার হওয়ার সময় তথ্য হারিয়ে যেতে পারে বা এলোমেলো হয়ে যেতে পারে, যার ফলে এআই হয়তো মূল শব্দগুলোই ভুলে যেতে পারে।</p>
+            
+            <p><strong>সমাধান: সরাসরি বাইপাস রাস্তা</strong></p>
+            <p>এই সমস্যার সমাধানে ইঞ্জিনিয়াররা তৈরি করেছেন <span class="tech-term">Skip Connections</span> (বা Residual Connections)। এটি লোকাল রাস্তার পাশে দিয়ে যাওয়া একটি এক্সপ্রেস হাইওয়ের মতো কাজ করে।</p>
+            
+            <p>কোনো শব্দ একটি জটিল প্রসেসিং লেয়ারে প্রবেশ করার আগে, এআই তার একটি কপি বা নকল তৈরি করে। মূল শব্দটি এই "এক্সপ্রেস হাইওয়ে" ধরে সরাসরি লেয়ারের শেষে চলে যায়, যেখানে এটি নতুন প্রসেস করা ডেটার সাথে আবার যোগ হয়ে যায়।</p>
+            
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
+                <li>এটি নিশ্চিত করে যে এআই কখনোই তার আসল ইনপুট ভুলে যাবে না।</li>
+                <li>যদি কোনো লেয়ার ভুল করে বা বিভ্রান্ত হয়, তবে মূল কপিটি সেখানে ঠিকই থাকে পরিস্থিতি সামাল দেওয়ার জন্য!</li>
+            </ul>
+
+            <details class="step-example" style="margin-bottom: 1rem;">
+                <summary>একটু গভীরে: Backpropagation বা শেখার যাদু</summary>
+                <div style="padding-top: 1rem;">
+                    <p>গাণিতিকভাবে এটি দেখতে এমন:</p>
+                    <div class="math-block">
+                        Output = x + SubLayer(x)
+                    </div>
+                    <p>ট্রেনিং বা শেখার সময়, গাণিতিক ক্যালকুলাসের কারণে আমরা পাই: <code>1 + derivative(SubLayer)</code>। এই <code>+1</code> নিশ্চিত করে যে শেখার সিগন্যাল কখনোই শূন্য হয়ে হারিয়ে যাবে না (যাকে ভ্যানিশিং গ্র্যাডিয়েন্ট সমস্যা বলে)।</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Layer Normalization Card -->
+        <div class="card">
+            <h2>3. স্বয়ংক্রিয় ভলিউম কন্ট্রোল (Layer Normalization)</h2>
+            <p>শত শত লেয়ার জুড়ে সংখ্যাগুলো বারবার গুণ হতে থাকলে সেগুলো বিশাল বড় হয়ে যেতে পারে, বা সংকুচিত হয়ে একেবারে শূন্য হয়ে যেতে পারে। যদি সংখ্যাগুলো অনেক বেশি এলোমেলো হয়ে যায়, তবে এআই-এর "মস্তিষ্ক" কাজ করা বন্ধ করে দেয় এবং সে আর নতুন কিছু শিখতে পারে না।</p>
+
+            <p>সংখ্যাগুলোকে স্বাস্থ্যকর এবং স্থিতিশীল রাখতে আমরা <span class="tech-term">Layer Normalization</span> (বা LayerNorm) ব্যবহার করি। আপনি একে একটি স্বয়ংক্রিয় ভলিউম কন্ট্রোলার হিসেবে চিন্তা করতে পারেন।</p>
+            
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
+                <li>সংখ্যা বা সিগন্যালগুলো অনেক "লাউড" (বড়) হয়ে গেলে, LayerNorm ভলিউম কমিয়ে দেয়।</li>
+                <li>সিগন্যালগুলো অনেক "কোয়ায়েট" (ছোট) হয়ে গেলে, LayerNorm ভলিউম বাড়িয়ে দেয়।</li>
+                <li>এটি সবকিছু নিখুঁতভাবে ব্যালেন্স করে, ফলে এআই কোনো বাধা ছাড়াই শিখতে পারে।</li>
+            </ul>
+
+            <details class="step-example" style="margin-bottom: 1rem;">
+                <summary>একটু গভীরে: Pre-LN বনাম Post-LN</summary>
+                <div style="padding-top: 1rem;">
+                    <p>গাণিতিক সূত্রটি নিশ্চিত করে যে সংখ্যাগুলোর গড় ০ এবং ভ্যারিয়েন্স ১ হবে।</p>
+                    <p>পুরনো মডেলগুলোতে লেয়ারের প্রসেসিংয়ের <em>পরে</em> এই ব্যালেন্স করার কাজ হতো (Post-LN: <code>LN(x + SubLayer(x))</code>)। কিন্তু LLaMA-এর মতো আধুনিক মডেলগুলো প্রসেসিংয়ের <em>আগেই</em> ইনপুটকে ব্যালেন্স করে নেয় (Pre-LN: <code>x + SubLayer(LN(x))</code>), যা প্রথম ধাপ থেকেই ট্রেনিংকে অনেক বেশি স্থিতিশীল করে তোলে।</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Interactive Simulator Card -->
+        <div class="card">
+            <h2>Interactive Layer Explorer: Skip Connection & LayerNorm</h2>
+            <p>নিচের সিমুলেটরটি ব্যবহার করে আপনি দেখতে পাবেন কীভাবে <strong>Skip Connection</strong> এবং <strong>Layer Normalization</strong> বন্ধ বা চালু রাখলে একটি সাব-লেয়ারের ভেতর দিয়ে সিগন্যাল ও গ্র্যাডিয়েন্ট প্রবাহিত হয়।</p>
+
+            <div class="sim-tip"><strong>যেভাবে ব্যবহার করবেন:</strong> বাঁদিকের সুইচগুলো চালু/বন্ধ করুন, তারপর সংখ্যাগুলোকে লেয়ারের ভেতর দিয়ে পাঠাতে <strong>Run Forward Pass</strong> চাপুন, অথবা শেখার সিগন্যাল (gradient) ফেরত পাঠাতে <strong>Run Backward Pass</strong> চাপুন। ডানদিকের বারগুলো লক্ষ্য করুন — সংখ্যাগুলো কি স্বাভাবিক থাকছে, নাকি অনেক বড় হয়ে যাচ্ছে বা মিলিয়ে যাচ্ছে?</div>
+
+            <div class="sim-container">
+                <!-- Controls -->
+                <div class="control-panel">
+                    <div class="control-group">
+                        <label>Skip Connection</label>
+                        <p class="control-hint">একটি শর্টকাট, যা ইনপুটের একটি কপি করে শেষে আবার যোগ করে দেয়।</p>
+                        <div class="toggle-switch" id="skip-toggle">
+                            <button class="active" onclick="setSkip(true)">ON</button>
+                            <button onclick="setSkip(false)">OFF</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Layer Normalization</label>
+                        <p class="control-hint">সংখ্যাগুলোকে পুনরায় স্কেল করে গোছানো রাখে — খুব বড়ও নয়, খুব ছোটও নয়।</p>
+                        <div class="toggle-switch" id="ln-toggle">
+                            <button class="active" onclick="setLN(true)">ON</button>
+                            <button onclick="setLN(false)">OFF</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Inner Layer Strength</label>
+                        <p class="control-hint">ভেতরের লেয়ার (FFN) সংখ্যাগুলোকে কতটা জোরে পরিবর্তন করবে।</p>
+                        <div class="toggle-switch" id="weight-toggle">
+                            <button class="active" onclick="setWeightScale(0.1)">Shrink (×0.1)</button>
+                            <button onclick="setWeightScale(3.0)">Grow (×3.0)</button>
+                        </div>
+                    </div>
+
+                    <button class="btn-run" id="btn-fwd" onclick="runForwardPass()">Run Forward Pass</button>
+                    <button class="btn-run btn-run-backward" id="btn-bwd" onclick="runBackwardPass()">Run Backward Pass</button>
+                </div>
+
+                <!-- SVG Graph Visualizer -->
+                <div class="sim-graph-card">
+                    <svg id="network-graph" viewBox="0 0 600 440" width="100%" height="440">
+                        <defs>
+                            <marker id="arrow-fwd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" id="arrow-fwd-path"/>
+                            </marker>
+                            <marker id="arrow-bwd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Skip Connection path (left side) -->
+                        <path id="path-skip" d="M 300 70 L 120 70 L 120 310 L 278 310" class="graph-line" marker-end="url(#arrow-fwd)" />
+                        
+                        <!-- Main path (center) -->
+                        <line id="path-to-ln" x1="300" y1="70" x2="300" y2="115" class="graph-line" marker-end="url(#arrow-fwd)" />
+                        <line id="path-ln-to-ffn" x1="300" y1="165" x2="300" y2="195" class="graph-line" marker-end="url(#arrow-fwd)" />
+                        <line id="path-ffn-to-add" x1="300" y1="245" x2="300" y2="288" class="graph-line" marker-end="url(#arrow-fwd)" />
+                        <line id="path-to-out" x1="300" y1="328" x2="300" y2="365" class="graph-line" marker-end="url(#arrow-fwd)" />
+
+                        <!-- Nodes -->
+                        <!-- Input x Node -->
+                        <g id="node-input" class="node-group">
+                            <rect x="200" y="25" width="200" height="45" rx="8" class="graph-node active" />
+                            <text x="300" y="44" class="node-text">Input Vector (x)</text>
+                            <text x="300" y="60" class="node-subtext" style="font-size: 10px;">[1.50, -2.00, 3.00, -0.50]</text>
+                        </g>
+
+                        <!-- LayerNorm Node -->
+                        <g id="node-ln" class="node-group">
+                            <rect x="210" y="120" width="180" height="45" rx="8" class="graph-node" />
+                            <text x="300" y="139" class="node-text">Layer Normalization</text>
+                            <text x="300" y="155" id="lbl-ln-status" class="node-subtext" style="font-size: 10px;">চালু — সংখ্যা রিস্কেল করা</text>
+                        </g>
+
+                        <!-- Sub-layer / FFN Node -->
+                        <g id="node-ffn" class="node-group">
+                            <rect x="210" y="200" width="180" height="45" rx="8" class="graph-node" />
+                            <text x="300" y="219" class="node-text">Inner Layer (FFN)</text>
+                            <text x="300" y="235" id="lbl-ffn-status" class="node-subtext" style="font-size: 10px;">সিগন্যাল ছোট হয়ে 0.1×</text>
+                        </g>
+
+                        <!-- Addition Node (circle) -->
+                        <g id="node-add" class="node-group">
+                            <circle cx="300" cy="310" r="18" class="graph-node" />
+                            <text x="300" y="316" class="node-text" style="font-size: 18px; fill: var(--text-primary); text-anchor: middle;">+</text>
+                        </g>
+
+                        <!-- Output y Node -->
+                        <g id="node-output" class="node-group">
+                            <rect x="200" y="370" width="200" height="45" rx="8" class="graph-node" />
+                            <text x="300" y="389" class="node-text">Output Vector (y)</text>
+                            <text x="300" y="405" id="lbl-output-status" class="node-subtext" style="font-size: 10px;">Waiting...</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Explanation & Value Inspector Console -->
+                <div class="explanation-panel">
+                    <div class="console-grid">
+                        <!-- Left: Checklist -->
+                        <div class="console-steps">
+                            <h4 id="console-steps-title">ফরওয়ার্ড পাস — ধাপে ধাপে:</h4>
+                            <ul id="console-step-list">
+                                <li id="step-1">1. ইনপুট সংখ্যাগুলো ভেতরে আসে</li>
+                                <li id="step-2">2. নরমালাইজ — সংখ্যাগুলো গোছানো হয়</li>
+                                <li id="step-3">3. ভেতরের লেয়ার (FFN) সেগুলো রূপান্তর করে</li>
+                                <li id="step-4">4. শর্টকাট কপিটি আবার যোগ হয়</li>
+                                <li id="step-5">5. আউটপুট প্রস্তুত</li>
+                            </ul>
+                        </div>
+                        <!-- Right: Values & Mini Vectors -->
+                        <div class="console-values">
+                            <h4 id="console-vals-title">প্রতি ধাপে সংখ্যাগুলো:</h4>
+                            <div class="val-inspect-row">
+                                <span class="val-lbl" id="lbl-inspect-1">ইনপুট:</span>
+                                <div id="inspect-1" class="val-box"></div>
+                            </div>
+                            <div class="val-inspect-row">
+                                <span class="val-lbl" id="lbl-inspect-2">নরমালাইজ পরে:</span>
+                                <div id="inspect-2" class="val-box"></div>
+                            </div>
+                            <div class="val-inspect-row">
+                                <span class="val-lbl" id="lbl-inspect-3">FFN পরে:</span>
+                                <div id="inspect-3" class="val-box"></div>
+                            </div>
+                            <div class="val-inspect-row">
+                                <span class="val-lbl" id="lbl-inspect-4">আউটপুট:</span>
+                                <div id="inspect-4" class="val-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Live feedback message -->
+                    <div class="summary-banner" id="sim-summary-banner">
+                        একটি স্থিতিশীল ফরওয়ার্ড পাস এবং ফিরে আসা একটি হেলদি শেখার সিগন্যাল (gradient) — একটি ট্রান্সফরমার ব্লকের আচরণ ঠিক এমনই হওয়া উচিত!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Card -->
+        <div class="card">
+            <h2>Quick Assessment (কুইজ)</h2>
+            <p>আপনার ধারণাকে ঝালাই করতে নিচের প্রশ্নগুলোর সঠিক উত্তর দিন:</p>
+            
+            <div class="quiz-container">
+                <!-- Question 1 -->
+                <div class="quiz-question-card">
+                    <h3>প্রশ্ন ১: Transformer-এর প্রতিটি ব্লকের ভেতরে Feed-Forward Network (FFN)-এর মূল কাজ কী?</h3>
+                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'ভুল উত্তর। বিভিন্ন টোকেনের মধ্যে সম্পর্ক এবং কনটেক্সট খুঁজে বের করা Self-Attention-এর কাজ।')">
+                        ক) একটি বাক্যের বিভিন্ন টোকেনের মধ্যে পারস্পরিক সম্পর্ক এবং কনটেক্সট তৈরি করা।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(1, this, true, 'চমৎকার! FFN প্রতিটি টোকেন রিপ্রেজেন্টেশনকে পজিশন-অনুযায়ী স্বাধীনভাবে প্রসেস করে গভীর ফিচার তৈরি করে ও ফ্যাকচুয়াল নলেজ যোগ করে।')">
+                        খ) প্রতিটি টোকেনকে আলাদা আলাদাভাবে (Independently) প্রসেস করে তাদের মধ্যকার গভীর ফিচার এক্সট্র্যাক্ট করা।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'ভুল উত্তর। এটি টোকেনাইজেশনের অংশ, যা মূলত ওক্যাবুলারি তৈরির সময় বাইরের পাইপলাইনে ঘটে।')">
+                        গ) টেক্সটকে ক্ষুদ্র ক্ষুদ্র টুকরোতে ভাগ করে আইডি (Token IDs) অ্যাসাইন করা।
+                    </div>
+                    <div id="quiz-feedback-1" class="quiz-feedback"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="quiz-question-card">
+                    <h3>প্রশ্ন ২: Residual Connection (Skip Connection) কীভাবে গভীর নেটওয়ার্ক ট্রেনিং সহজতর করে?</h3>
+                    <div class="quiz-option" onclick="checkAnswer(2, this, true, 'একদম সঠিক! Skip Connection-এর মূল কাজই হলো এটি ব্যাকপ্রপাগেশনের সময় গ্র্যাডিয়েন্ট সরাসরি পূর্ববর্তী লেয়ারে পৌঁছে দেয়, ফলে গ্র্যাডিয়েন্ট ভ্যানিশিং হয় না।')">
+                        ক) এটি ইনপুটকে সাব-লেয়ারের আউটপুটের সাথে সরাসরি যোগ করে ব্যাকপ্রপাগেশনে গ্র্যাডিয়েন্ট নির্বিঘ্নে চলাচলের রাস্তা (+১ ড্রাইভ) তৈরি করে।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(2, this, false, 'ভুল উত্তর। Skip Connection ভেক্টরের ডাইমেনশন কমায় না, বরং আগের ডাইমেনশন বজায় রেখেই যোগ সম্পন্ন করে।')">
+                        খ) এটি ইনপুট ভেক্টরের সাইজ অর্ধেক করে দেয় যাতে দ্রুত ম্যাট্রিক্স গুণন সম্পন্ন করা যায়।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(2, this, false, 'ভুল উত্তর। এটি একটি গাণিতিক ফ্লো-কন্ট্রোল মেকানিজম, লস ফাংশনের গাণিতিক রূপ পরিবর্তনের সাথে এর সম্পর্ক নেই।')">
+                        গ) এটি লস ফাংশনকে নন-কনভেক্স থেকে কনভেক্স লসে রূপান্তর করে।
+                    </div>
+                    <div id="quiz-feedback-2" class="quiz-feedback"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="quiz-question-card">
+                    <h3>প্রশ্ন ৩: Layer Normalization (LayerNorm) কেন Transformers-এ Batch Normalization-এর চেয়ে বেশি উপযোগী?</h3>
+                    <div class="quiz-option" onclick="checkAnswer(3, this, false, 'ভুল উত্তর। পুরো ব্যাচ জুড়ে গড় হিসাব করা BatchNorm-এর কাজ, যা পরিবর্তনশীল দৈর্ঘ্যের সিকোয়েন্সে অস্থিতিশীল ফলাফল দেয়।')">
+                        ক) এটি পুরো ব্যাচের (Batch) সমস্ত টোকেন ভেক্টরের গড় এবং ভ্যারিয়েন্স একসাথে হিসাব করে নরমালাইজ করে।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'দারুণ উত্তর! LayerNorm একক টোকেনের বিভিন্ন ফিচারের গড় ও ভ্যারিয়েন্স হিসাব করে। ফলে এটি ব্যাচ সাইজ বা সিকোয়েন্সের দৈর্ঘ্যের ওপর নির্ভর করে না, যা অটোরেগ্রেসিভ জেনারেশনে দরকারি।')">
+                        খ) এটি একক টোকেন ভেক্টরের ফিচারগুলোর মধ্যে গড় ০ ও ভ্যারিয়েন্স ১ বজায় রাখে, যা ব্যাচ সাইজ বা সেন্টেন্সের দৈর্ঘ্যের ওপর নির্ভরশীল নয়।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(3, this, false, 'ভুল উত্তর। লেয়ার নরমালাইজেশন একটি গাণিতিক ফিচার স্কেলিং অপারেশন, বানান সংশোধনের সাথে এর কোনো সংযোগ নেই।')">
+                        গ) এটি প্রতিটি বাক্যের ব্যাকরণগত ত্রুটি ও বানান সংশোধন করে ভেক্টরের অর্থ সংশোধন করে।
+                    </div>
+                    <div id="quiz-feedback-3" class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources & Citations -->
+        <div class="card citations">
+            <h3>সহায়ক ও বিশ্বস্ত রেফারেন্সসমূহ (Citations):</h3>
+            <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
+                <li>Transformer-এর আদি উৎস: <a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention Is All You Need (Vaswani et al., 2017)</a></li>
+                <li>FFN-এর মেমোরি ইন্টারপ্রিটেশন: <a href="https://arxiv.org/abs/2012.14913" target="_blank">Transformer Feed-Forward Layers Are Key-Value Memories (Geva et al., 2020)</a></li>
+                <li>Pre-LN বনাম Post-LN বিশ্লেষণ: <a href="https://arxiv.org/abs/2002.04745" target="_blank">On Layer Normalization in the Transformer Architecture (Xiong et al., 2020)</a></li>
+                <li>ভ্যানিশিং গ্র্যাডিয়েন্ট ও রেজিনাল কানেকশন: <a href="https://arxiv.org/abs/1512.03385" target="_blank">Deep Residual Learning for Image Recognition (He et al., 2015)</a></li>
+            </ul>
+            <p style="margin-top: 1rem; font-style: italic;">পরবর্তী লেসনে আমরা ট্রান্সফরমার এনকোডার এবং ডেকোডার ব্লকের মধ্যকার পার্থক্য ও তাদের কম্বাইনড কাজের প্রক্রিয়া শিখবো।</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Global visualizer state
+        const config = {
+            inputVector: [1.5, -2.0, 3.0, -0.5],
+            incomingGrad: [1.0, -1.0, 1.0, -1.0]
+        };
+
+        const state = {
+            skip: true,
+            ln: true,
+            ffnScale: 0.1,
+            animating: false
+        };
+
+        // Initialize display on load
+        window.onload = function() {
+            resetInspector();
+            updateLabelDisplays();
+        };
+
+        function setSkip(val) {
+            if (state.animating) return;
+            state.skip = val;
+            updateToggleUI('skip-toggle', val ? 0 : 1);
+            resetInspector();
+            updateLabelDisplays();
+        }
+
+        function setLN(val) {
+            if (state.animating) return;
+            state.ln = val;
+            updateToggleUI('ln-toggle', val ? 0 : 1);
+            resetInspector();
+            updateLabelDisplays();
+        }
+
+        function setWeightScale(val) {
+            if (state.animating) return;
+            state.ffnScale = val;
+            updateToggleUI('weight-toggle', val === 0.1 ? 0 : 1);
+            resetInspector();
+            updateLabelDisplays();
+        }
+
+        function updateToggleUI(containerId, activeIndex) {
+            const buttons = document.getElementById(containerId).getElementsByTagName('button');
+            for(let i=0; i<buttons.length; i++) {
+                if(i === activeIndex) {
+                    buttons[i].classList.add('active');
+                } else {
+                    buttons[i].classList.remove('active');
+                }
+            }
+        }
+
+        function updateLabelDisplays() {
+            document.getElementById('lbl-ln-status').textContent = state.ln ? "চালু — সংখ্যা রিস্কেল করা" : "বন্ধ — এড়িয়ে যাওয়া";
+            document.getElementById('lbl-ffn-status').textContent = state.ffnScale === 0.1 ? "সিগন্যাল ছোট হয়ে 0.1×" : "সিগন্যাল বড় হয়ে 3×";
+            
+            // Stylize nodes in SVG graph based on activation
+            const lnNode = document.getElementById('node-ln').querySelector('rect');
+            if (state.ln) {
+                lnNode.style.stroke = 'var(--accent-purple)';
+                lnNode.style.fill = 'rgba(168, 85, 247, 0.05)';
+            } else {
+                lnNode.style.stroke = '#475569';
+                lnNode.style.fill = 'rgba(30, 41, 59, 0.2)';
+            }
+
+            const skipPath = document.getElementById('path-skip');
+            if (state.skip) {
+                skipPath.style.stroke = '#64748b';
+                skipPath.style.strokeDasharray = 'none';
+            } else {
+                skipPath.style.stroke = 'rgba(255,255,255,0.05)';
+                skipPath.style.strokeDasharray = '4, 4';
+            }
+        }
+
+        function resetInspector() {
+            // Reset SVGs
+            document.querySelectorAll('.graph-line').forEach(line => {
+                line.className.baseVal = 'graph-line';
+            });
+            document.querySelectorAll('.graph-node').forEach(node => {
+                node.classList.remove('active', 'active-ln');
+            });
+            document.getElementById('node-input').querySelector('rect').classList.add('active');
+
+            // Reset console steps text
+            updateConsoleHeaders(true);
+            const stepList = document.getElementById('console-step-list');
+            stepList.innerHTML = `
+                <li id="step-1">1. ইনপুট সংখ্যাগুলো ভেতরে আসে</li>
+                <li id="step-2">2. নরমালাইজ — সংখ্যাগুলো গোছানো হয়</li>
+                <li id="step-3">3. ভেতরের লেয়ার (FFN) সেগুলো রূপান্তর করে</li>
+                <li id="step-4">4. শর্টকাট কপিটি আবার যোগ হয়</li>
+                <li id="step-5">5. আউটপুট প্রস্তুত</li>
+            `;
+
+            // Clear vectors
+            renderVectorUI('inspect-1', config.inputVector);
+            renderVectorUI('inspect-2', null);
+            renderVectorUI('inspect-3', null);
+            renderVectorUI('inspect-4', null);
+            
+            document.getElementById('lbl-output-status').textContent = "Waiting...";
+            document.getElementById('sim-summary-banner').style.display = 'none';
+        }
+
+        function updateConsoleHeaders(isForward) {
+            if (isForward) {
+                document.getElementById('console-steps-title').textContent = "ফরওয়ার্ড পাস — ধাপে ধাপে:";
+                document.getElementById('console-vals-title').textContent = "প্রতি ধাপে সংখ্যাগুলো:";
+                document.getElementById('lbl-inspect-1').textContent = "ইনপুট:";
+                document.getElementById('lbl-inspect-2').textContent = "নরমালাইজ পরে:";
+                document.getElementById('lbl-inspect-3').textContent = "FFN পরে:";
+                document.getElementById('lbl-inspect-4').textContent = "আউটপুট:";
+            } else {
+                document.getElementById('console-steps-title').textContent = "ব্যাকওয়ার্ড পাস — ধাপে ধাপে:";
+                document.getElementById('console-vals-title').textContent = "প্রতি ধাপে শেখার সিগন্যাল:";
+                document.getElementById('lbl-inspect-1').textContent = "আউটপুট থেকে:";
+                document.getElementById('lbl-inspect-2').textContent = "FFN দিয়ে:";
+                document.getElementById('lbl-inspect-3').textContent = "শর্টকাট দিয়ে:";
+                document.getElementById('lbl-inspect-4').textContent = "ইনপুটে:";
+            }
+        }
+
+        // Vector calculations
+        function calculateForwardValues() {
+            const x = config.inputVector;
+            
+            // LayerNorm Output
+            let lnOut = [...x];
+            if (state.ln) {
+                const mean = x.reduce((a, b) => a + b, 0) / x.length; // 0.5
+                const variance = x.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / x.length; // 3.625
+                const std = Math.sqrt(variance); // 1.904
+                lnOut = x.map(val => (val - mean) / std); // [0.53, -1.31, 1.31, -0.53]
+            }
+
+            // FFN Output
+            const ffnOut = lnOut.map(val => val * state.ffnScale);
+
+            // Final Output (y)
+            let y = [...ffnOut];
+            if (state.skip) {
+                y = y.map((val, idx) => val + x[idx]);
+            }
+
+            return { x, lnOut, ffnOut, y };
+        }
+
+        function calculateBackwardValues() {
+            const gOut = config.incomingGrad;
+            
+            // Gradient flowing through FFN (SubLayer)
+            const gFfn = gOut.map(val => val * state.ffnScale);
+
+            // Gradient flowing through Skip
+            const gSkip = state.skip ? [...gOut] : [0, 0, 0, 0];
+
+            // Combined gradient reaching the input (gIn = gSkip + gFfn)
+            const gIn = gSkip.map((val, idx) => val + gFfn[idx]);
+
+            return { gOut, gFfn, gSkip, gIn };
+        }
+
+        function runForwardPass() {
+            if (state.animating) return;
+            state.animating = true;
+            disableActionButtons(true);
+            resetInspector();
+
+            const vals = calculateForwardValues();
+            const delay = 1000;
+
+            // Step 1: Input node lights up
+            highlightStep(1, true);
+            
+            // Step 2: LN step
+            setTimeout(() => {
+                highlightStep(2, true);
+                document.getElementById('node-ln').querySelector('rect').classList.add(state.ln ? 'active-ln' : 'active');
+                renderVectorUI('inspect-2', vals.lnOut);
+                
+                // Animate lines to LN and Skip path
+                document.getElementById('path-to-ln').className.baseVal = 'graph-line active-forward flow-fwd';
+                if (state.skip) {
+                    document.getElementById('path-skip').className.baseVal = 'graph-line active-forward flow-fwd';
+                }
+            }, delay);
+
+            // Step 3: FFN step
+            setTimeout(() => {
+                highlightStep(3, true);
+                document.getElementById('node-ffn').querySelector('rect').classList.add('active');
+                renderVectorUI('inspect-3', vals.ffnOut);
+                document.getElementById('path-ln-to-ffn').className.baseVal = 'graph-line active-forward flow-fwd';
+            }, delay * 2);
+
+            // Step 4: Addition step
+            setTimeout(() => {
+                highlightStep(4, true);
+                document.getElementById('node-add').querySelector('circle').classList.add('active');
+                document.getElementById('path-ffn-to-add').className.baseVal = 'graph-line active-forward flow-fwd';
+            }, delay * 3);
+
+            // Step 5: Final output
+            setTimeout(() => {
+                highlightStep(5, true);
+                document.getElementById('node-output').querySelector('rect').classList.add('active');
+                renderVectorUI('inspect-4', vals.y);
+                document.getElementById('path-to-out').className.baseVal = 'graph-line active-forward flow-fwd';
+                
+                document.getElementById('lbl-output-status').textContent = `[${vals.y.map(v=>v.toFixed(2)).join(', ')}]`;
+                
+                displayForwardSummary(vals.y);
+                
+                state.animating = false;
+                disableActionButtons(false);
+            }, delay * 4);
+        }
+
+        function displayForwardSummary(y) {
+            const banner = document.getElementById('sim-summary-banner');
+            banner.className = 'summary-banner';
+            
+            // Check if values exploded (large standard deviation or elements)
+            const maxVal = Math.max(...y.map(v => Math.abs(v)));
+            
+            if (!state.skip && state.ffnScale === 0.1) {
+                banner.classList.add('banner-warning');
+                banner.textContent = "সিগন্যাল মিলিয়ে গেছে। কোনো শর্টকাট না থাকায় এবং ভেতরের লেয়ার সংকুচিত হওয়ায় সংখ্যাগুলো খুব ছোট হয়ে গেছে — গভীর মডেলে এই তথ্য হারিয়ে যেত। (একে বলে signal decay।)";
+            } else if (maxVal > 5) {
+                banner.classList.add('banner-warning');
+                banner.textContent = "সংখ্যাগুলো অনেক বড় হয়ে গেছে! নরমালাইজেশন ছাড়া, বা ভেতরের লেয়ার খুব শক্তিশালী হলে, মানগুলো নিয়ন্ত্রণের বাইরে বেড়ে যায়। (একে বলে exploding values।)";
+            } else {
+                banner.classList.add('banner-stable');
+                banner.textContent = "দেখতে সুস্থ! নরমালাইজেশন এবং স্কিপ শর্টকাট একসাথে কাজ করে সংখ্যাগুলোকে নিরাপদ সীমার মধ্যে রাখে।";
+            }
+            banner.style.display = 'block';
+        }
+
+        function runBackwardPass() {
+            if (state.animating) return;
+            state.animating = true;
+            disableActionButtons(true);
+            
+            // Reset and configure backward headers
+            updateConsoleHeaders(false);
+            const stepList = document.getElementById('console-step-list');
+            stepList.innerHTML = `
+                <li id="step-1">1. আউটপুট থেকে শেখার সিগন্যাল আসে</li>
+                <li id="step-2">2. এর কিছু অংশ শর্টকাট দিয়ে ফিরে যায়</li>
+                <li id="step-3">3. কিছু অংশ ভেতরের লেয়ার (FFN) দিয়ে ফিরে যায়</li>
+                <li id="step-4">4. নরমালাইজেশনের মধ্য দিয়ে ফিরে যায়</li>
+                <li id="step-5">5. শেখার সিগন্যাল ইনপুটে পৌঁছায়</li>
+            `;
+
+            // Reset paths
+            document.querySelectorAll('.graph-line').forEach(line => {
+                line.className.baseVal = 'graph-line';
+            });
+            document.querySelectorAll('.graph-node').forEach(node => {
+                node.classList.remove('active', 'active-ln');
+            });
+
+            // Start backward pass calculations
+            const grads = calculateBackwardValues();
+            const delay = 1000;
+
+            // Step 1: Output Node displays gradient
+            highlightStep(1, true);
+            document.getElementById('node-output').querySelector('rect').classList.add('active');
+            renderVectorUI('inspect-1', grads.gOut); // Slot 1 shows Output Gradient
+            renderVectorUI('inspect-2', null);
+            renderVectorUI('inspect-3', null);
+            renderVectorUI('inspect-4', null);
+
+            // Step 2: Gradient reaches Addition Node and splits
+            setTimeout(() => {
+                highlightStep(2, true);
+                document.getElementById('node-add').querySelector('circle').classList.add('active');
+                document.getElementById('path-to-out').className.baseVal = 'graph-line active-backward flow-bwd';
+                renderVectorUI('inspect-3', grads.gSkip); // Slot 3 shows Skip Gradient
+            }, delay);
+
+            // Step 3: Gradient passes through FFN
+            setTimeout(() => {
+                highlightStep(3, true);
+                document.getElementById('node-ffn').querySelector('rect').classList.add('active');
+                document.getElementById('path-ffn-to-add').className.baseVal = 'graph-line active-backward flow-bwd';
+                if (state.skip) {
+                    document.getElementById('path-skip').className.baseVal = 'graph-line active-backward flow-bwd';
+                }
+                renderVectorUI('inspect-2', grads.gFfn); // Slot 2 shows FFN Gradient
+            }, delay * 2);
+
+            // Step 4: Gradient passes through LayerNorm (if active)
+            setTimeout(() => {
+                highlightStep(4, true);
+                const lnNode = document.getElementById('node-ln').querySelector('rect');
+                if (state.ln) {
+                    lnNode.classList.add('active-ln');
+                } else {
+                    lnNode.classList.add('active');
+                }
+                document.getElementById('path-ln-to-ffn').className.baseVal = 'graph-line active-backward flow-bwd';
+            }, delay * 3);
+
+            // Step 5: Combined gradient reaches Input
+            setTimeout(() => {
+                highlightStep(5, true);
+                document.getElementById('node-input').querySelector('rect').classList.add('active');
+                document.getElementById('path-to-ln').className.baseVal = 'graph-line active-backward flow-bwd';
+                renderVectorUI('inspect-4', grads.gIn); // Slot 4 shows Final Input Gradient
+                
+                displayBackwardSummary(grads.gIn);
+                
+                state.animating = false;
+                disableActionButtons(false);
+            }, delay * 4);
+        }
+
+        function displayBackwardSummary(gIn) {
+            const banner = document.getElementById('sim-summary-banner');
+            banner.className = 'summary-banner';
+            
+            const meanAbsGrad = gIn.reduce((sum, val) => sum + Math.abs(val), 0) / gIn.length;
+            
+            if (!state.skip && state.ffnScale === 0.1) {
+                banner.classList.add('banner-warning');
+                banner.textContent = "শেখার সিগন্যাল প্রায় মিলিয়ে গেছে — কমে মাত্র 0.10 হয়েছে। শর্টকাট না থাকায় শুরুর দিকের লেয়ারগুলো প্রায় শেখেই না। (একে বলে vanishing gradient সমস্যা।)";
+            } else if (!state.skip && state.ffnScale === 3.0) {
+                banner.classList.add('banner-warning');
+                banner.textContent = "শেখার সিগন্যাল বিস্ফোরিত হয়েছে — এই ধাপে 3× বেড়ে গেছে। গভীর নেটওয়ার্কে এটি ট্রেনিংকে ধসিয়ে দেয়। (একে বলে exploding gradient সমস্যা।)";
+            } else {
+                banner.classList.add('banner-stable');
+                banner.textContent = "হেলদি শেখার সিগন্যাল! স্কিপ শর্টকাটের কল্যাণে একটি শক্তিশালী সিগন্যাল পুরো পথ ফিরে আসে, যাতে প্রতিটি লেয়ার শিখতে পারে।";
+            }
+            banner.style.display = 'block';
+        }
+
+        function highlightStep(stepNum, active) {
+            // Remove active/completed from others
+            for (let i = 1; i <= 5; i++) {
+                const li = document.getElementById(`step-${i}`);
+                if (i < stepNum) {
+                    li.className = 'completed';
+                } else if (i === stepNum) {
+                    li.className = 'active';
+                } else {
+                    li.className = '';
+                }
+            }
+        }
+
+        function disableActionButtons(disable) {
+            document.getElementById('btn-fwd').disabled = disable;
+            document.getElementById('btn-bwd').disabled = disable;
+        }
+
+        function renderVectorUI(elementId, vector) {
+            const container = document.getElementById(elementId);
+            if (!container) return;
+            if (!vector) {
+                container.innerHTML = '<span style="color:var(--text-secondary); font-size:0.85rem;">হিসাব করা হচ্ছে...</span>';
+                return;
+            }
+            
+            let html = '<div class="vector-container">';
+            vector.forEach(val => {
+                const absVal = Math.abs(val);
+                const barHeight = Math.min(30, absVal * 8); // max height 30px
+                
+                // Color coding
+                let barColor = val >= 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)';
+                if (absVal > 2.5) {
+                    barColor = '#ef4444'; // Red for exploding
+                } else if (absVal < 0.15 && absVal > 0) {
+                    barColor = '#64748b'; // Gray for vanishing
+                }
+                
+                html += `
+                    <div class="vector-element">
+                        <div class="vector-bar-wrapper">
+                            <div class="vector-bar" style="height: ${barHeight}px; background-color: ${barColor}"></div>
+                        </div>
+                        <span class="vector-val">${val.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Quiz Logic
+        function checkAnswer(questionNum, optionElement, isCorrect, feedbackText) {
+            const questionCard = optionElement.closest('.quiz-question-card');
+            const options = questionCard.querySelectorAll('.quiz-option');
+            
+            // Reset previous choices
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+
+            // Mark current selection
+            if (isCorrect) {
+                optionElement.classList.add('correct');
+            } else {
+                optionElement.classList.add('incorrect');
+            }
+
+            // Show feedback
+            const feedbackBox = document.getElementById(`quiz-feedback-${questionNum}`);
+            feedbackBox.className = 'quiz-feedback';
+            feedbackBox.classList.add(isCorrect ? 'success' : 'error');
+            feedbackBox.textContent = feedbackText;
+            feedbackBox.style.display = 'block';
+        }
+
+
+    </script>
+
+    <script>
+        /* Shared site-navbar controller — self-configures from the page URL. */
+        (function () {
+            var LESSONS = [
+                { id: '0001-high-level-llm-pipeline', bn: 'LLM Pipeline-এর High-Level Intuition', en: 'High-Level Intuition of the LLM Pipeline' },
+                { id: '0002-tokens-embeddings-positional-encoding', bn: 'Tokens, Embeddings ও Positional Encoding', en: 'Tokens, Embeddings & Positional Encoding' },
+                { id: '0003-self-attention-mechanism', bn: 'Self-Attention Mechanism', en: 'Self-Attention Mechanism' },
+                { id: '0004-multi-head-attention-layer-stacking', bn: 'Multi-Head Attention ও Layer Stacking', en: 'Multi-Head Attention & Layer Stacking' },
+                { id: '0005-ffn-residual-connections-layer-norm', bn: 'FFN, Residual Connections ও Layer Norm', en: 'FFN, Residual Connections & Layer Norm' },
+                { id: '0006-decoder-only-vs-encoder-decoder', bn: 'Decoder-Only Architecture ও Causal Masking', en: 'Decoder-Only Architecture & Causal Masking' }
+            ];
+            var nav = document.getElementById('site-nav');
+            if (!nav) return;
+
+            // If this lesson is embedded inside the hub's iframe preview, the hub already
+            // provides navigation — hide the standalone bar to avoid redundant chrome.
+            var embedded = false;
+            try { embedded = (window.self !== window.top); } catch (e) { embedded = true; }
+            if (embedded) { nav.style.display = 'none'; return; }
+
+            var file = (location.pathname.split('/').pop() || '').toLowerCase();
+            var isEn = /-en\.html$/.test(file);
+            var baseId = file.replace(/-en\.html$/, '').replace(/\.html$/, '');
+            var idx = LESSONS.findIndex(function (l) { return l.id === baseId; });
+            var suffix = isEn ? '-en.html' : '.html';
+            function fileFor(id) { return id + suffix; }
+
+            // Localise the static labels (Hub / Syllabus / Prev / Next).
+            nav.querySelectorAll('[data-bn]').forEach(function (el) {
+                el.textContent = isEn ? el.getAttribute('data-en') : el.getAttribute('data-bn');
+            });
+
+            // Build the syllabus dropdown.
+            var menu = document.getElementById('syllabusMenu');
+            LESSONS.forEach(function (l, i) {
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                a.href = fileFor(l.id);
+                a.innerHTML = '<span class="num">' + (i + 1) + '.</span><span>' + (isEn ? l.en : l.bn) + '</span>';
+                if (i === idx) { a.classList.add('active'); a.setAttribute('aria-current', 'page'); }
+                li.appendChild(a);
+                menu.appendChild(li);
+            });
+
+            // Prev / Next.
+            var prev = document.getElementById('prevLessonBtn');
+            var next = document.getElementById('nextLessonBtn');
+            if (idx > 0) { prev.href = fileFor(LESSONS[idx - 1].id); }
+            else { prev.classList.add('disabled'); prev.setAttribute('aria-disabled', 'true'); }
+            if (idx > -1 && idx < LESSONS.length - 1) { next.href = fileFor(LESSONS[idx + 1].id); }
+            else { next.classList.add('disabled'); next.setAttribute('aria-disabled', 'true'); }
+
+            // Language toggle -> sibling-language file (and remember the choice for the hub).
+            var langBtn = document.getElementById('langToggleBtn');
+            var langLabel = document.getElementById('langToggleLabel');
+            langLabel.textContent = isEn ? 'বাংলা' : 'EN';
+            langBtn.addEventListener('click', function () {
+                try { localStorage.setItem('lang', isEn ? 'bn' : 'en'); } catch (e) {}
+                location.href = baseId + (isEn ? '.html' : '-en.html');
+            });
+
+            // Hamburger (mobile).
+            var toggle = document.getElementById('siteNavToggle');
+            var navMenu = document.getElementById('siteNavMenu');
+            toggle.addEventListener('click', function () {
+                var open = navMenu.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                toggle.innerHTML = open ? '✕' : '☰';
+            });
+
+            // Syllabus dropdown open/close.
+            var dd = document.getElementById('siteNavDropdown');
+            var sylBtn = document.getElementById('syllabusBtn');
+            sylBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var open = dd.classList.toggle('open');
+                sylBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            document.addEventListener('click', function () {
+                dd.classList.remove('open');
+                sylBtn.setAttribute('aria-expanded', 'false');
+            });
+        })();
+    </script>
+</body>
+</html>

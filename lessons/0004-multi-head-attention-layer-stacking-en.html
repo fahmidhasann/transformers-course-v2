@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 4: Multi-Head Attention and Layer Stacking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #a855f7;
+            --accent-green: #10b981;
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: clip;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        .highlight {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .tech-term {
+            font-family: 'Outfit', sans-serif;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Multi-Head Simulator Widgets */
+        .head-selector {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .head-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .head-btn.active {
+            color: white !important;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+        }
+
+        .head1-active.active { background: var(--accent-cyan); }
+        .head2-active.active { background: var(--accent-purple); }
+        .head3-active.active { background: var(--accent-green); }
+        .head4-active.active { background: var(--accent-orange); }
+
+        .visualizer-tokens {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .viz-token {
+            background: #1e293b;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.05rem;
+        }
+
+        .viz-token:hover {
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+
+        .viz-token.query-token {
+            background: var(--text-primary) !important;
+            color: #0f172a !important;
+            border-color: var(--text-primary) !important;
+            box-shadow: 0 4px 20px rgba(255,255,255,0.25);
+            transform: scale(1.05);
+        }
+
+        .viz-details-panel {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .layer-detail-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .viz-explanation {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            padding: 0.75rem;
+            border-left: 3.5px solid;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 1.5rem;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .border-head1 { border-color: var(--accent-cyan); }
+        .border-head2 { border-color: var(--accent-purple); }
+        .border-head3 { border-color: var(--accent-green); }
+        .border-head4 { border-color: var(--accent-orange); }
+
+        .color-head1 { background: var(--accent-cyan); }
+        .color-head2 { background: var(--accent-purple); }
+        .color-head3 { background: var(--accent-green); }
+        .color-head4 { background: var(--accent-orange); }
+
+        .attention-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .chart-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chart-label {
+            width: 80px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .chart-bar-container {
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.05);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .chart-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 5px;
+        }
+
+        .chart-value {
+            width: 40px;
+            text-align: right;
+            font-size: 0.85rem;
+            font-weight: bold;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Layer Stacking visual block */
+        .layer-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .layer-group {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .layer-group:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+        }
+
+        .layer-group.active {
+            border-color: var(--accent-cyan);
+            background: rgba(30, 41, 59, 0.9);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+        }
+
+        .layer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .layer-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .layer-arrow {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: bold;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(3px); }
+        }
+
+        .layer-detail-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Quiz Styles */
+        .quiz-question-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-question {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .quiz-option {
+            display: block;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-cyan);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--accent-green);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .quiz-feedback.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            display: block;
+        }
+
+        .quiz-feedback.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: block;
+        }
+
+        /* Citations */
+        .citations {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        .citations a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .citations a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Head buttons and visualizer custom overrides (Lesson 4) */
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+        
+
+
+        
+
+        
+
+        /* Transitions */
+        *, *::before, *::after {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* ===== Cross-device: responsive, touch, accessibility & performance ===== */
+        /* Fluid hero heading so it scales down on small screens */
+        h1 {
+            font-size: clamp(1.6rem, 5vw, 2.5rem);
+        }
+
+        /* Visible keyboard-focus indicator */
+        a:focus-visible,
+        button:focus-visible,
+        select:focus-visible,
+        input:focus-visible,
+        [tabindex]:focus-visible,
+        .quiz-option:focus-visible {
+            outline: 2px solid var(--accent-cyan);
+            outline-offset: 2px;
+        }
+
+        /* Touch & small-screen layout (mobile-first priority) */
+        @media (max-width: 768px) {
+            body {
+                padding: 1.25rem 0.85rem;
+            }
+            .container {
+                max-width: 100%;
+            }
+            .card {
+                padding: 1.25rem;
+            }
+            .simulator {
+                padding: 1rem;
+            }
+            .sim-input-group {
+                flex-direction: column;
+            }
+            /* Comfortable touch targets */
+            .tab-btn,
+            .quiz-option,
+            select,
+            button {
+                min-height: 44px;
+            }
+            /* backdrop-filter blur is GPU-expensive on phones */
+            .card,
+            .simulator {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+        }
+
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    
+        /* ===== Shared Site Navbar ===== */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            margin: -2rem -1rem 2.5rem;
+            background: var(--card-bg);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+        }
+        .site-nav-inner {
+            position: relative;
+            max-width: 1180px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 1.25rem;
+        }
+        .site-nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        .site-nav-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+        .site-nav-brand-name {
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        .site-nav-toggle {
+            display: none;
+            margin-left: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            line-height: 1;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        .site-nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-left: auto;
+        }
+        .site-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.92rem;
+            padding: 0.5rem 0.85rem;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+        .site-nav-link:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.07); }
+        .site-nav-caret { font-size: 0.7em; opacity: 0.85; }
+        /* Syllabus dropdown */
+        .site-nav-dropdown { position: relative; }
+        .site-nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            min-width: 320px;
+            max-width: 88vw;
+            list-style: none;
+            margin: 0;
+            padding: 0.4rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            z-index: 60;
+        }
+        .site-nav-dropdown.open .site-nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .site-nav-dropdown-menu li { margin: 0; }
+        .site-nav-dropdown-menu a {
+            display: flex;
+            gap: 0.55rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 9px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.35;
+            border: 1px solid transparent;
+        }
+        .site-nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.06); color: var(--text-primary); }
+        .site-nav-dropdown-menu a.active {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+            color: var(--text-primary);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        .site-nav-dropdown-menu .num {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+        /* Prev / Next pager */
+        .site-nav-pager { display: flex; align-items: center; gap: 0.3rem; }
+        .site-nav-link.disabled { opacity: 0.35; pointer-events: none; cursor: default; }
+        /* Controls (language + theme) */
+        .site-nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 1px solid var(--border-color);
+            padding-left: 0.7rem;
+            margin-left: 0.15rem;
+        }
+        .site-nav-icon-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            height: 40px;
+            padding: 0 0.7rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            white-space: nowrap;
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+        .site-nav-icon-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+        /* Mobile */
+        @media (max-width: 900px) {
+            .site-nav-toggle { display: inline-flex; }
+            .site-nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.25rem;
+                margin: 0;
+                padding: 1rem 1.25rem 1.25rem;
+                background: var(--bg-color);
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+                display: none;
+            }
+            .site-nav-menu.open { display: flex; }
+            .site-nav-link { width: 100%; justify-content: flex-start; padding: 0.8rem 0.85rem; }
+            .site-nav-dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                min-width: 0;
+                max-width: 100%;
+                box-shadow: none;
+                background: rgba(255, 255, 255, 0.03);
+                margin-top: 0.25rem;
+            }
+            .site-nav-dropdown.open .site-nav-dropdown-menu { display: block; }
+            .site-nav-pager { width: 100%; gap: 0.5rem; }
+            .site-nav-pager .site-nav-link { justify-content: center; border: 1px solid var(--border-color); flex: 1; }
+            .site-nav-controls {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+                padding: 0.85rem 0 0;
+                margin: 0.6rem 0 0;
+            }
+            .site-nav-icon-btn { flex: 1; justify-content: center; height: 44px; }
+        }
+        @media (max-width: 768px) {
+            .site-nav { margin: -1.25rem -0.85rem 2rem; }
+        }
+
+    
+/* tb-map styles */
+.tb-architecture-map .tb-map-svg {
+    width: 100%; max-width: 420px; height: auto; display: block;
+    margin: 0.5rem auto 1rem; overflow: visible;
+}
+.tb-map-svg text { text-anchor: middle; font-family: 'Outfit', sans-serif; font-size: 12px; }
+.tb-map-svg .tb-sub { font-size: 9.5px; }
+.tb-node rect, .tb-node circle {
+    fill: rgba(15, 23, 42, 0.75); stroke: var(--accent-purple); stroke-width: 1.5;
+    transition: all 0.35s ease;
+}
+.tb-node text { fill: var(--text-secondary); transition: all 0.35s ease; }
+.tb-node.active rect, .tb-node.active circle {
+    fill: rgba(6, 182, 212, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.55));
+}
+.tb-node.active text { fill: var(--text-primary); font-weight: 600; }
+.tb-node.dim { opacity: 0.3; }
+.tb-block .tb-block-outline {
+    fill: none; stroke: rgba(168, 85, 247, 0.45); stroke-width: 1.5;
+    stroke-dasharray: 6 4; transition: all 0.35s ease;
+}
+.tb-block .tb-block-label { fill: var(--accent-purple); font-size: 11px; font-weight: 600; transition: all 0.35s ease; }
+.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.5)); }
+.tb-block.active .tb-block-label { fill: var(--accent-cyan); }
+.tb-block.dim { opacity: 0.3; }
+.tb-flow { fill: none; stroke: #64748b; stroke-width: 1.6; }
+.tb-skip {
+    fill: none; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4 3;
+    transition: all 0.35s ease;
+}
+.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.55)); }
+.tb-skip.dim { opacity: 0.28; }
+.tb-map-caption { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0; }
+.tb-map-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); margin: 0.2rem 0 1rem; }
+.tb-map-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.tb-legend-dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.tb-legend-active { background: rgba(6, 182, 212, 0.5); box-shadow: 0 0 6px rgba(6, 182, 212, 0.7); border: 1px solid var(--accent-cyan); }
+.tb-legend-rest { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--accent-purple); opacity: 0.45; }
+
+        </style>
+</head>
+<body>
+    <!-- ===== Shared Site Navbar (auto-configured from URL) ===== -->
+    <nav class="site-nav" id="site-nav" aria-label="Site navigation">
+        <div class="site-nav-inner">
+            <a class="site-nav-brand" href="../index.html">
+                <span class="site-nav-logo">T</span>
+                <span class="site-nav-brand-name">Transformer Hub</span>
+            </a>
+            <button class="site-nav-toggle" id="siteNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="siteNavMenu">☰</button>
+            <div class="site-nav-menu" id="siteNavMenu">
+                <a class="site-nav-link" href="../index.html"><span data-bn="হাব" data-en="Hub">Hub</span></a>
+                <div class="site-nav-dropdown" id="siteNavDropdown">
+                    <button class="site-nav-link" id="syllabusBtn" type="button" aria-haspopup="true" aria-expanded="false">
+                        <span data-bn="সিলেবাস" data-en="Syllabus">Syllabus</span>
+                        <span class="site-nav-caret">▾</span>
+                    </button>
+                    <ul class="site-nav-dropdown-menu" id="syllabusMenu"></ul>
+                </div>
+                <div class="site-nav-pager">
+                    <a class="site-nav-link" id="prevLessonBtn" rel="prev"><span class="site-nav-caret">‹</span> <span data-bn="আগের" data-en="Prev">Prev</span></a>
+                    <a class="site-nav-link" id="nextLessonBtn" rel="next"><span data-bn="পরের" data-en="Next">Next</span> <span class="site-nav-caret">›</span></a>
+                </div>
+                <div class="site-nav-controls">
+                    <button class="site-nav-icon-btn" id="langToggleBtn" type="button" title="Switch language"><span id="langToggleLabel">EN</span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+<header>
+            <span class="badge">Lesson 4</span>
+            <h1>Multi-Head Attention and Layer Stacking</h1>
+            <p class="subtitle">How do multiple Attention Heads and stacked layers construct deep semantic reasoning?</p>
+        </header>
+
+        <!-- Transformer Block Map -->
+        <div class="card tb-architecture-map">
+            <h2>Transformer Block Map — where you are</h2>
+            <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
+  <defs>
+    <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 1.5 L8 5 L0 8.5 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- flow arrows (bottom -> top) -->
+  <line class="tb-flow" x1="190" y1="444" x2="190" y2="430" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="390" x2="190" y2="376" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="340" x2="190" y2="318" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="246" x2="190" y2="236" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="204" x2="190" y2="194" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="152" x2="190" y2="142" marker-end="url(#tb-arrow)"/>
+  <line class="tb-flow" x1="190" y1="84"  x2="190" y2="64"  marker-end="url(#tb-arrow)"/>
+
+  <!-- residual / skip connections -->
+  <path class="tb-skip dim" d="M 110 320 Q 30 320 30 240 L 30 224 Q 30 219 84 219" marker-end="url(#tb-arrow)"/>
+  <path class="tb-skip dim" d="M 110 206 Q 22 206 22 142 L 22 130 Q 22 125 84 125" marker-end="url(#tb-arrow)"/>
+
+  <!-- output -->
+  <g class="tb-node dim">
+    <rect x="70" y="16" width="240" height="46" rx="10"/>
+    <text x="190" y="37">Linear + Softmax</text>
+    <text x="190" y="52" class="tb-sub">&#8594; Next Token</text>
+  </g>
+
+  <!-- transformer block container -->
+  <g class="tb-block active">
+    <rect class="tb-block-outline" x="44" y="84" width="292" height="232" rx="14"/>
+    <text class="tb-block-label" x="190" y="101">Transformer Block &#215; N</text>
+  </g>
+
+  <!-- add & norm (after FFN) -->
+  <g class="tb-node dim">
+    <rect x="86" y="112" width="208" height="30" rx="8"/>
+    <text x="190" y="131">Add &amp; Norm</text>
+  </g>
+  <!-- feed-forward network -->
+  <g class="tb-node dim">
+    <rect x="86" y="154" width="208" height="40" rx="8"/>
+    <text x="190" y="178">Feed-Forward Network</text>
+  </g>
+  <!-- add & norm (after attention) -->
+  <g class="tb-node dim">
+    <rect x="86" y="206" width="208" height="30" rx="8"/>
+    <text x="190" y="225">Add &amp; Norm</text>
+  </g>
+  <!-- multi-head self-attention -->
+  <g class="tb-node active">
+    <rect x="86" y="248" width="208" height="48" rx="8"/>
+    <text x="190" y="270">Multi-Head Self-Attention</text>
+    <text x="190" y="286" class="tb-sub">Causal Mask</text>
+  </g>
+
+  <!-- positional encoding -->
+  <g class="tb-node dim">
+    <rect x="70" y="340" width="240" height="34" rx="10"/>
+    <text x="190" y="361">+ Positional Encoding</text>
+  </g>
+  <!-- token embedding -->
+  <g class="tb-node dim">
+    <rect x="70" y="390" width="240" height="38" rx="10"/>
+    <text x="190" y="413">Token Embedding</text>
+  </g>
+  <!-- input tokens -->
+  <g class="tb-node dim">
+    <rect x="70" y="444" width="240" height="38" rx="10"/>
+    <text x="190" y="467">Input Tokens</text>
+  </g>
+</svg>
+            <div class="tb-map-legend"><span><i class="tb-legend-dot tb-legend-active"></i> Focus of this lesson</span><span><i class="tb-legend-dot tb-legend-rest"></i> Rest (other lessons)</span></div>
+            <p class="tb-map-caption"><strong>You are here:</strong> we split <span class="tech-term">Attention</span> into multiple <span class="tech-term">Heads</span> and stack the whole <span class="tech-term">Block</span> <span class="tech-term">N</span> times (the <span class="tech-term">Attention</span> sub-layer and <span class="tech-term">Block &#215; N</span> are highlighted below).</p>
+        </div>
+
+
+        <!-- Intro Card -->
+        <div class="card">
+            <h2>Why Do We Need Multiple Attention Heads?</h2>
+            <p>We know that Self-Attention helps a word connect with other words to find context. But language is tricky! A single word can have many different relationships at the same time.</p>
+            
+            <p>Look at this sentence: <span class="highlight">"The cute dog chased the cat because it was running fast."</span></p>
+            <p>Think about the word <span class="tech-term">dog</span>. It's doing several things at once:</p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
+                <li>It's being described as <span class="highlight">"cute"</span>.</li>
+                <li>It's performing the action <span class="highlight">"chased"</span>.</li>
+                <li>It's involved in a "why" scenario (because of the running cat).</li>
+            </ul>
+
+            <p>If the AI only had one way to pay attention (called <span class="tech-term">Single-Head Attention</span>), it would get confused trying to mix all these different relationships together. It's like trying to listen to 5 different conversations with one ear!</p>
+            
+            <p>The solution is <span class="tech-term">Multi-Head Attention</span>. Instead of one ear, the AI gets multiple "Heads" that listen in parallel. Each Head becomes a specialist:</p>
+            <p>If the AI only had one way to pay attention, it would get confused trying to mix all these different relationships together.</p>
+            
+            <p>The solution is <span class="tech-term">Multi-Head Attention</span>. Instead of one, the AI gets multiple "Heads" that listen in parallel. Each Head becomes a specialist:</p>
+            
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: decimal;">
+                <li><span class="highlight">Head 1 (The Action Tracker):</span> Focuses on who is doing what (e.g., dog & chased).</li>
+                <li><span class="highlight">Head 2 (The Pronoun Detective):</span> Figures out who "it" or "they" refers to.</li>
+                <li><span class="highlight">Head 3 (The Describer):</span> Links describing words to things (e.g., cute & dog).</li>
+                <li><span class="highlight">Head 4 (The Order Keeper):</span> Looks at how words follow each other.</li>
+            </ul>
+        </div>
+
+        <!-- Dimension Splitting Card -->
+        <div class="card">
+            <h2>Dimension Splitting: A Clever Trick</h2>
+            <p>You might think running 8 "Heads" at the same time would make the computer 8 times slower. But the Transformer uses a clever trick to avoid this!</p>
+            
+            <p>Imagine a word's meaning is stored as a list of <span class="highlight">512 numbers</span>. If we have <span class="highlight">8</span> Attention Heads, the AI doesn't give all 512 numbers to every Head.</p>
+            
+            <p>Instead, it splits the numbers equally:</p>
+            <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">
+                512 total numbers ÷ 8 Heads = 64 numbers per Head
+            </div>
+            
+            <p>Each Head only looks at a small slice (64 numbers) to do its specialized job. When they are all done, they glue their answers back together into a single 512-number list.</p>
+            <p>This allows the AI to think about the word from 8 different angles at the exact same speed as thinking from just 1 angle!</p>
+        </div>
+
+        <!-- Interactive Visualizer Card -->
+        <div class="card">
+            <h2>Interactive Multi-Head Attention Visualizer</h2>
+            <p>Select different Attention Heads below and click on any word in the sentence (which acts as the <strong>Query Word</strong>). Observe how different heads shift their attention distribution across the sentence.</p>
+            
+            <!-- Head Selector Tabs -->
+            <div class="head-selector">
+                <button class="head-btn head1-active active" id="btn-head1" onclick="selectHead('head1')">Head 1: Subject-Verb</button>
+                <button class="head-btn" id="btn-head2" onclick="selectHead('head2')">Head 2: Pronoun Resolution</button>
+                <button class="head-btn" id="btn-head3" onclick="selectHead('head3')">Head 3: Modifier/Adjective</button>
+                <button class="head-btn" id="btn-head4" onclick="selectHead('head4')">Head 4: Local Context</button>
+            </div>
+
+            <!-- Tokens Workspace -->
+            <div class="visualizer-tokens" id="tokens-container">
+                <!-- Javascript will inject tokens here -->
+            </div>
+
+            <!-- Visualizer Feedback & Bars -->
+            <div class="viz-details-panel">
+                <div class="layer-detail-title" style="color: var(--accent-cyan);">
+                    <span>Selected Query:</span> <strong id="query-word-display" style="font-family: 'Outfit', sans-serif; background: rgba(255,255,255,0.1); padding: 0.1rem 0.6rem; border-radius:4px;">cute</strong>
+                </div>
+                <div class="viz-explanation border-head1" id="explanation-box">
+                    "cute" (adjective) directly points to the noun it modifies - which is "dog".
+                </div>
+                
+                <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-secondary);">Attention Weights:</h3>
+                <div class="attention-chart" id="chart-container">
+                    <!-- Javascript will inject chart rows here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Layer Stacking Card -->
+        <div class="card">
+            <h2>Layer Stacking: Building Deep Understanding</h2>
+            <p>An AI model isn't just one single block of Multi-Head Attention. It's actually a massive tower of blocks stacked on top of each other. This is called <span class="tech-term">Layer Stacking</span>.</p>
+            <p>For example, LLaMA-3 has 32 layers, and GPT-4 has over 100! Why so many? Because understanding language takes steps. The bottom layers handle simple things, and the top layers handle deep thinking:</p>
+            
+            <div class="layer-stack">
+                <!-- Top Layers -->
+                <div class="layer-group top-group" id="layer-top" onclick="selectLayer('top')">
+                    <div class="layer-title">Top Layers: Big Picture & Reasoning</div>
+                    <div class="layer-desc">Deals with abstract ideas, logic, sentiment, and the final answer.</div>
+                </div>
+                <div class="layer-arrow">↓</div>
+                <!-- Middle Layers -->
+                <div class="layer-group mid-group active" id="layer-mid" onclick="selectLayer('mid')">
+                    <div class="layer-title">Middle Layers: Grammar & Connections</div>
+                    <div class="layer-desc">Figures out who is doing what, and what "it" refers to.</div>
+                </div>
+                <div class="layer-arrow">↓</div>
+                <!-- Bottom Layers -->
+                <div class="layer-group bottom-group" id="layer-bottom" onclick="selectLayer('bottom')">
+                    <div class="layer-title">Bottom Layers: Basics & Spelling</div>
+                    <div class="layer-desc">Looks at basic grammar rules, spelling, and word order.</div>
+                </div>
+            </div>
+
+            <!-- Layer Details Explorer Panel -->
+            <div class="layer-detail-box" id="layer-detail-panel">
+                <div class="layer-detail-title" id="layer-panel-title" style="color:var(--accent-purple);">
+                    Middle Layers: Grammar & Connections
+                </div>
+                <div id="layer-panel-content">
+                    <p><strong>Job:</strong> Figuring out how words connect to form a proper sentence.</p>
+                    <p><strong>Example:</strong></p>
+                    <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-purple); font-size:0.9rem; font-style:italic;">
+                        At this stage, the AI figures out that the 'dog' is the one who 'chased'. It also solves the mystery of the word 'it', realizing 'it' means the 'cat'.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Card -->
+        <div class="card">
+            <h2>Quick Assessment (Quiz)</h2>
+            <p>Test your understanding with the following 3 questions:</p>
+            
+            <div class="quiz-container">
+                <!-- Question 1 -->
+                <div class="quiz-question-card">
+                    <div class="quiz-question">Question 1: What is the primary reason for using Multi-Head Attention?</div>
+                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'Incorrect! Increasing computational speed is not the reason for multiple heads.')">
+                        A) To double the model's training speed.
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(1, this, true, 'Excellent! Multiple heads allow the model to simultaneously pay attention to different semantic and syntactic aspects of the text.')">
+                        B) To capture different types of relationships (e.g., subject-verb and modifier) for the same word in parallel.
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'Incorrect! This is the job of the embedding layer, not attention heads.')">
+                        C) To increase the vocabulary size of the dictionary.
+                    </div>
+                    <div id="quiz-feedback-1" class="quiz-feedback"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="quiz-question-card">
+                    <div class="quiz-question">Question 2: Which layer group in Layer Stacking is responsible for abstract reasoning and semantic comprehension?</div>
+                    <div class="quiz-option" onclick="checkAnswer(2, this, false, 'Incorrect! Bottom layers work on basic grammar and superficial patterns.')">
+                        A) Bottom Layers
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(2, this, false, 'Incorrect! Middle layers resolve syntax and clause connections.')">
+                        B) Middle Layers
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(2, this, true, 'Correct! Top layers are closest to the output and synthesize global meaning, causal reasoning, and next-token probability distributions.')">
+                        C) Top Layers
+                    </div>
+                    <div id="quiz-feedback-2" class="quiz-feedback"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="quiz-question-card">
+                    <div class="quiz-question">Question 3: If a Transformer's Embedding Dimension (d_model) is 768 and it has 12 Attention Heads, what is the dimension of each head (d_head)?</div>
+                    <div class="quiz-option" onclick="checkAnswer(3, this, false, 'Incorrect! 12 is the number of heads, not the dimension.')">
+                        A) 12
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'Excellent! The 768 dimensions are split equally among 12 heads, meaning d_head = 768 / 12 = 64.')">
+                        B) 64 (since 768 / 12 = 64)
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(3, this, false, 'Incorrect! The entire dimension is not processed by a single head; it is split.')">
+                        C) 768
+                    </div>
+                    <div id="quiz-feedback-3" class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources & Citations -->
+        <div class="card citations">
+            <h3>Helpful and Authoritative References (Citations):</h3>
+            <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
+                <li>Original Transformer Paper: <a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention Is All You Need (Vaswani et al.)</a></li>
+                <li>Visual Guide: <a href="https://jalammar.github.io/illustrated-transformer/" target="_blank">The Illustrated Transformer by Jay Alammar</a></li>
+                <li>Layer Stacking Explanation: <a href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank">A Mathematical Framework for Transformer Circuits (Anthropic Research)</a></li>
+            </ul>
+            <p style="margin-top: 1rem; font-style: italic;">In the next lesson, we will learn how Transformers stack hundreds of layers using <strong>Residual Connections and Layer Normalization</strong>.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Tokens for the visualizer
+        const tokens = ["The", "cute", "dog", "chased", "the", "cat", "because", "it", "was", "running", "fast."];
+
+        const attnData = {
+            head1: { // Subject-Verb
+                name: "Head 1: Subject-Verb",
+                accentColor: "var(--accent-cyan)",
+                className: "head1-active",
+                colorClass: "color-head1",
+                borderClass: "border-head1",
+                weights: [
+                    [0.60, 0.05, 0.15, 0.05, 0.05, 0.05, 0.01, 0.01, 0.01, 0.01, 0.01], // The
+                    [0.05, 0.70, 0.15, 0.03, 0.02, 0.02, 0.01, 0.01, 0.01, 0.00, 0.00], // cute
+                    [0.05, 0.15, 0.20, 0.45, 0.02, 0.05, 0.02, 0.02, 0.02, 0.01, 0.01], // dog
+                    [0.02, 0.03, 0.65, 0.15, 0.02, 0.10, 0.01, 0.01, 0.01, 0.00, 0.00], // chased
+                    [0.01, 0.01, 0.03, 0.05, 0.60, 0.20, 0.05, 0.02, 0.01, 0.01, 0.01], // the
+                    [0.01, 0.01, 0.05, 0.55, 0.03, 0.25, 0.02, 0.04, 0.02, 0.01, 0.01], // cat
+                    [0.01, 0.01, 0.02, 0.05, 0.01, 0.05, 0.70, 0.05, 0.05, 0.03, 0.02], // because
+                    [0.01, 0.01, 0.05, 0.05, 0.01, 0.15, 0.05, 0.20, 0.10, 0.35, 0.02], // it
+                    [0.01, 0.01, 0.02, 0.02, 0.01, 0.05, 0.05, 0.50, 0.20, 0.10, 0.03], // was
+                    [0.01, 0.01, 0.02, 0.02, 0.01, 0.03, 0.02, 0.60, 0.10, 0.15, 0.03], // running
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.05, 0.02, 0.70, 0.16]  // fast
+                ],
+                explanations: {
+                    "chased": "'chased' identifies who performs the action ('dog') and who it is performed on ('cat').",
+                    "dog": "'dog' (subject) relates to its main action ('chased').",
+                    "cat": "'cat' (object) is linked to the verb 'chased' acting upon it.",
+                    "running": "'running' focuses on its subject 'it' (which refers to the cat).",
+                    "was": "'was' focuses on its subject 'it'."
+                },
+                defaultExplanation: "This head looks for syntactic connections between subjects and verbs in the sentence."
+            },
+            head2: { // Pronoun Resolution
+                name: "Head 2: Pronoun Resolution",
+                accentColor: "var(--accent-purple)",
+                className: "head2-active",
+                colorClass: "color-head2",
+                borderClass: "border-head2",
+                weights: [
+                    [0.80, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02],
+                    [0.02, 0.85, 0.03, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.00, 0.01],
+                    [0.02, 0.08, 0.80, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.00, 0.01],
+                    [0.01, 0.01, 0.05, 0.85, 0.01, 0.04, 0.01, 0.01, 0.01, 0.00, 0.00],
+                    [0.01, 0.01, 0.02, 0.02, 0.80, 0.10, 0.01, 0.01, 0.01, 0.00, 0.01],
+                    [0.01, 0.01, 0.05, 0.05, 0.02, 0.70, 0.01, 0.12, 0.01, 0.01, 0.01],
+                    [0.01, 0.01, 0.02, 0.02, 0.01, 0.02, 0.85, 0.02, 0.02, 0.01, 0.01],
+                    [0.01, 0.01, 0.15, 0.02, 0.01, 0.70, 0.02, 0.05, 0.01, 0.01, 0.01], // "it" focus 70% on "cat" and 15% on "dog"
+                    [0.01, 0.01, 0.05, 0.02, 0.01, 0.35, 0.02, 0.50, 0.02, 0.01, 0.01],
+                    [0.01, 0.01, 0.05, 0.02, 0.01, 0.25, 0.02, 0.40, 0.05, 0.15, 0.03],
+                    [0.01, 0.01, 0.02, 0.02, 0.01, 0.10, 0.02, 0.15, 0.02, 0.05, 0.60]
+                ],
+                explanations: {
+                    "it": "'it' (pronoun) establishes a 70% connection with the noun 'cat' (and 15% with 'dog'), resolving its reference. It focuses more on the cat because the cat was running.",
+                    "cat": "Shows the connection between the cat and the pronoun 'it' referring to it.",
+                    "was": "Attends back towards 'it' and 'cat' to maintain subject-verb-complement agreement."
+                },
+                defaultExplanation: "This head resolves pronoun references by linking pronouns to their antecedent nouns."
+            },
+            head3: { // Modifier & Adjective
+                name: "Head 3: Modifier & Adjective",
+                accentColor: "var(--accent-green)",
+                className: "head3-active",
+                colorClass: "color-head3",
+                borderClass: "border-head3",
+                weights: [
+                    [0.70, 0.10, 0.10, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.00, 0.01],
+                    [0.02, 0.10, 0.82, 0.01, 0.01, 0.01, 0.01, 0.01, 0.00, 0.00, 0.01], // cute -> dog
+                    [0.01, 0.75, 0.20, 0.01, 0.01, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00], // dog -> cute
+                    [0.01, 0.01, 0.02, 0.90, 0.01, 0.02, 0.01, 0.01, 0.00, 0.01, 0.00],
+                    [0.01, 0.01, 0.01, 0.02, 0.75, 0.15, 0.01, 0.01, 0.01, 0.01, 0.01],
+                    [0.01, 0.01, 0.01, 0.02, 0.60, 0.30, 0.01, 0.01, 0.01, 0.01, 0.01],
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.90, 0.01, 0.01, 0.01, 0.01],
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.02, 0.85, 0.03, 0.02, 0.01],
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.05, 0.80, 0.05, 0.02],
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.05, 0.15, 0.72], // running -> fast
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.85, 0.07]  // fast -> running
+                ],
+                explanations: {
+                    "cute": "'cute' (adjective) focuses 82% of its attention on 'dog', showing which noun it describes.",
+                    "dog": "Connects back with the modifying adjective 'cute'.",
+                    "fast": "'fast' (adverb) modifies the action 'running', indicating the speed of the run.",
+                    "running": "Links with 'fast' to capture the description of the action."
+                },
+                defaultExplanation: "This head connects adjectives and adverbs to the nouns and verbs they modify."
+            },
+            head4: { // Positional / Local Context
+                name: "Head 4: Positional & Local Context",
+                accentColor: "var(--accent-orange)",
+                className: "head4-active",
+                colorClass: "color-head4",
+                borderClass: "border-head4",
+                weights: [
+                    [0.95, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // The
+                    [0.80, 0.15, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // cute -> The
+                    [0.02, 0.78, 0.15, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // dog -> cute
+                    [0.00, 0.02, 0.80, 0.15, 0.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // chased -> dog
+                    [0.00, 0.00, 0.02, 0.78, 0.15, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00], // the -> chased
+                    [0.00, 0.00, 0.00, 0.02, 0.80, 0.15, 0.03, 0.00, 0.00, 0.00, 0.00], // cat -> the
+                    [0.00, 0.00, 0.00, 0.00, 0.02, 0.78, 0.15, 0.05, 0.00, 0.00, 0.00], // because -> cat
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.80, 0.15, 0.03, 0.00, 0.00], // it -> because
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.78, 0.15, 0.05, 0.00], // was -> it
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.80, 0.15, 0.03], // running -> was
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.82, 0.16]  // fast -> running
+                ],
+                explanations: {},
+                defaultExplanation: "This head focuses on local sequences, usually attending to the immediately preceding token, helping to preserve word order context."
+            }
+        };
+
+        const layerDetails = {
+            bottom: {
+                title: "Bottom Layers: Basics & Spelling",
+                color: "var(--accent-green)",
+                border: "var(--accent-green)",
+                content: `
+                    <p><strong>Job:</strong> Spotting basic word types (noun, verb) and looking at words that are right next to each other.</p>
+                    <p><strong>Example ("The cute dog chased the cat..."):</strong></p>
+                    <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-green); font-size:0.9rem; font-style:italic;">
+                        At this stage, the AI just realizes that 'cute' is describing a thing, and 'dog' is a thing. It's just scanning the surface.
+                    </p>
+                `
+            },
+            mid: {
+                title: "Middle Layers: Grammar & Connections",
+                color: "var(--accent-purple)",
+                border: "var(--accent-purple)",
+                content: `
+                    <p><strong>Job:</strong> Figuring out how words connect to form a proper sentence.</p>
+                    <p><strong>Example ("The cute dog chased the cat..."):</strong></p>
+                    <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-purple); font-size:0.9rem; font-style:italic;">
+                        At this stage, the AI figures out that the 'dog' is the one who 'chased'. It also solves the mystery of the word 'it', realizing 'it' means the 'cat'.
+                    </p>
+                `
+            },
+            top: {
+                title: "Top Layers: Big Picture & Reasoning",
+                color: "var(--accent-cyan)",
+                border: "var(--accent-cyan)",
+                content: `
+                    <p><strong>Job:</strong> Understanding the true meaning, logic, and deciding what the next word should be.</p>
+                    <p><strong>Example ("The cute dog chased the cat because..."):</strong></p>
+                    <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-cyan); font-size:0.9rem; font-style:italic;">
+                        The AI finally understands the "why". It connects the 'chasing' with the 'running fast' to understand the whole story. Now it is ready to predict what happens next!
+                    </p>
+                `
+            }
+        };
+
+        let activeHeadKey = 'head1';
+        let activeQueryIndex = 1; // "cute"
+
+        // Initialize Visualizer Tokens
+        function initVisualizer() {
+            const container = document.getElementById('tokens-container');
+            container.innerHTML = tokens.map((t, idx) => `
+                <div class="viz-token" id="token-${idx}" onclick="clickToken(${idx})">
+                    ${t}
+                </div>
+            `).join('');
+            
+            updateVisualizer();
+        }
+
+        function clickToken(index) {
+            activeQueryIndex = index;
+            updateVisualizer();
+        }
+
+        function selectHead(headKey) {
+            activeHeadKey = headKey;
+            
+            // Update button active classes
+            document.querySelectorAll('.head-btn').forEach(btn => {
+                btn.className = 'head-btn'; // reset
+            });
+            
+            const selectedBtn = document.getElementById(`btn-${headKey}`);
+            const head = attnData[headKey];
+            selectedBtn.classList.add('active', head.className);
+
+            updateVisualizer();
+        }
+
+        function updateVisualizer() {
+            const head = attnData[activeHeadKey];
+            const weights = head.weights[activeQueryIndex];
+            const word = tokens[activeQueryIndex];
+            
+            // Highlight query token
+            document.querySelectorAll('.viz-token').forEach((el, idx) => {
+                el.classList.remove('query-token');
+                el.style.background = '';
+                el.style.color = '';
+                el.style.borderColor = '';
+                
+                if (idx === activeQueryIndex) {
+                    el.classList.add('query-token');
+                } else {
+                    const w = weights[idx];
+                    // Apply color depending on active head and attention weight
+                    el.style.background = getFadedColor(activeHeadKey, w);
+                    el.style.borderColor = `rgba(255, 255, 255, ${0.1 + w * 0.4})`;
+                    el.style.color = `rgba(248, 250, 252, ${0.5 + w * 0.5})`;
+                    if (w > 0.3) {
+                        el.style.fontWeight = '600';
+                    } else {
+                        el.style.fontWeight = '400';
+                    }
+                }
+            });
+
+            // Update display query text
+            document.getElementById('query-word-display').innerText = word;
+            
+            // Update explanation
+            const expBox = document.getElementById('explanation-box');
+            expBox.className = `viz-explanation ${head.borderClass}`;
+            const cleanWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").trim().toLowerCase();
+            expBox.innerText = head.explanations[cleanWord] || head.defaultExplanation;
+
+            // Draw attention chart
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.innerHTML = tokens.map((t, idx) => {
+                const w = weights[idx];
+                const percentage = (w * 100).toFixed(0);
+                return `
+                    <div class="chart-row">
+                        <span class="chart-label">${t}</span>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar ${head.colorClass}" style="width: ${percentage}%"></div>
+                        </div>
+                        <span class="chart-value">${percentage}%</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getFadedColor(headKey, weight) {
+            // Generates faded background color based on head colors
+            if (headKey === 'head1') {
+                return `rgba(6, 182, 212, ${weight * 0.85})`; // Cyan
+            } else if (headKey === 'head2') {
+                return `rgba(168, 85, 247, ${weight * 0.85})`; // Purple
+            } else if (headKey === 'head3') {
+                return `rgba(16, 185, 129, ${weight * 0.85})`; // Green
+            } else {
+                return `rgba(245, 158, 11, ${weight * 0.85})`; // Orange
+            }
+        }
+
+        // Initialize Layer Explorer
+        function selectLayer(layerKey) {
+            // Remove active classes
+            document.querySelectorAll('.layer-group').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Add active class
+            document.getElementById(`layer-${layerKey}`).classList.add('active');
+
+            // Update details
+            const detail = layerDetails[layerKey];
+            const titleEl = document.getElementById('layer-panel-title');
+            titleEl.style.color = detail.color;
+            titleEl.innerText = detail.title;
+            document.getElementById('layer-panel-content').innerHTML = detail.content;
+        }
+
+        // Quiz handler
+        function checkAnswer(qNum, element, isCorrect, feedbackText) {
+            const parentNode = element.parentNode;
+            
+            // Clear choices in this question
+            parentNode.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+
+            const feedbackBox = document.getElementById(`quiz-feedback-${qNum}`);
+            feedbackBox.className = 'quiz-feedback';
+
+            if (isCorrect) {
+                element.classList.add('correct');
+                feedbackBox.classList.add('success');
+                feedbackBox.innerText = feedbackText;
+            } else {
+                element.classList.add('incorrect');
+                feedbackBox.classList.add('error');
+                feedbackBox.innerText = feedbackText;
+            }
+        }
+
+
+
+        // Boot
+        window.onload = () => {
+            initVisualizer();
+            selectHead('head1');
+        };
+    </script>
+
+    <script>
+        /* Shared site-navbar controller — self-configures from the page URL. */
+        (function () {
+            var LESSONS = [
+                { id: '0001-high-level-llm-pipeline', bn: 'LLM Pipeline-এর High-Level Intuition', en: 'High-Level Intuition of the LLM Pipeline' },
+                { id: '0002-tokens-embeddings-positional-encoding', bn: 'Tokens, Embeddings ও Positional Encoding', en: 'Tokens, Embeddings & Positional Encoding' },
+                { id: '0003-self-attention-mechanism', bn: 'Self-Attention Mechanism', en: 'Self-Attention Mechanism' },
+                { id: '0004-multi-head-attention-layer-stacking', bn: 'Multi-Head Attention ও Layer Stacking', en: 'Multi-Head Attention & Layer Stacking' },
+                { id: '0005-ffn-residual-connections-layer-norm', bn: 'FFN, Residual Connections ও Layer Norm', en: 'FFN, Residual Connections & Layer Norm' },
+                { id: '0006-decoder-only-vs-encoder-decoder', bn: 'Decoder-Only Architecture ও Causal Masking', en: 'Decoder-Only Architecture & Causal Masking' }
+            ];
+            var nav = document.getElementById('site-nav');
+            if (!nav) return;
+
+            // If this lesson is embedded inside the hub's iframe preview, the hub already
+            // provides navigation — hide the standalone bar to avoid redundant chrome.
+            var embedded = false;
+            try { embedded = (window.self !== window.top); } catch (e) { embedded = true; }
+            if (embedded) { nav.style.display = 'none'; return; }
+
+            var file = (location.pathname.split('/').pop() || '').toLowerCase();
+            var isEn = /-en\.html$/.test(file);
+            var baseId = file.replace(/-en\.html$/, '').replace(/\.html$/, '');
+            var idx = LESSONS.findIndex(function (l) { return l.id === baseId; });
+            var suffix = isEn ? '-en.html' : '.html';
+            function fileFor(id) { return id + suffix; }
+
+            // Localise the static labels (Hub / Syllabus / Prev / Next).
+            nav.querySelectorAll('[data-bn]').forEach(function (el) {
+                el.textContent = isEn ? el.getAttribute('data-en') : el.getAttribute('data-bn');
+            });
+
+            // Build the syllabus dropdown.
+            var menu = document.getElementById('syllabusMenu');
+            LESSONS.forEach(function (l, i) {
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                a.href = fileFor(l.id);
+                a.innerHTML = '<span class="num">' + (i + 1) + '.</span><span>' + (isEn ? l.en : l.bn) + '</span>';
+                if (i === idx) { a.classList.add('active'); a.setAttribute('aria-current', 'page'); }
+                li.appendChild(a);
+                menu.appendChild(li);
+            });
+
+            // Prev / Next.
+            var prev = document.getElementById('prevLessonBtn');
+            var next = document.getElementById('nextLessonBtn');
+            if (idx > 0) { prev.href = fileFor(LESSONS[idx - 1].id); }
+            else { prev.classList.add('disabled'); prev.setAttribute('aria-disabled', 'true'); }
+            if (idx > -1 && idx < LESSONS.length - 1) { next.href = fileFor(LESSONS[idx + 1].id); }
+            else { next.classList.add('disabled'); next.setAttribute('aria-disabled', 'true'); }
+
+            // Language toggle -> sibling-language file (and remember the choice for the hub).
+            var langBtn = document.getElementById('langToggleBtn');
+            var langLabel = document.getElementById('langToggleLabel');
+            langLabel.textContent = isEn ? 'বাংলা' : 'EN';
+            langBtn.addEventListener('click', function () {
+                try { localStorage.setItem('lang', isEn ? 'bn' : 'en'); } catch (e) {}
+                location.href = baseId + (isEn ? '.html' : '-en.html');
+            });
+
+            // Hamburger (mobile).
+            var toggle = document.getElementById('siteNavToggle');
+            var navMenu = document.getElementById('siteNavMenu');
+            toggle.addEventListener('click', function () {
+                var open = navMenu.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                toggle.innerHTML = open ? '✕' : '☰';
+            });
+
+            // Syllabus dropdown open/close.
+            var dd = document.getElementById('siteNavDropdown');
+            var sylBtn = document.getElementById('syllabusBtn');
+            sylBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var open = dd.classList.toggle('open');
+                sylBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            document.addEventListener('click', function () {
+                dd.classList.remove('open');
+                sylBtn.setAttribute('aria-expanded', 'false');
+            });
+        })();
+    </script>
+</body>
+</html>

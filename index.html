@@ -1,0 +1,3029 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformer Architecture Learning Hub | ট্রান্সফরমার লার্নিং হাব</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --sidebar-bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.45);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #a855f7;
+            --accent-green: #10b981;
+            --accent-pink: #ec4899;
+            --accent-orange: #f59e0b;
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --glow: 0 0 15px rgba(6, 182, 212, 0.2);
+            --font-main: 'Outfit', 'Hind Siliguri', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+            overflow-x: hidden;
+        }
+
+        /* Top Navigation Bar (shared design with the lesson pages) */
+        .sidebar {
+            width: 100%;
+            background-color: var(--sidebar-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.7rem 2rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 500;
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            transition: padding 0.3s ease;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .sidebar-brand-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.3rem;
+            list-style: none;
+            margin-left: auto;
+        }
+
+        .nav-item button {
+            width: auto;
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            padding: 0.6rem 0.9rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+        }
+
+        .nav-item button:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active button {
+            color: var(--text-primary);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+            border-color: rgba(6, 182, 212, 0.25);
+            box-shadow: var(--glow);
+        }
+
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s;
+        }
+
+        .nav-item:hover svg {
+            transform: scale(1.1);
+        }
+
+        .sidebar-footer {
+            display: none;
+            margin-top: auto;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            background: rgba(30, 41, 59, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+        }
+
+        .sidebar-footer:hover {
+            border-color: rgba(6, 182, 212, 0.35);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
+            transform: translateY(-2px);
+            background: rgba(30, 41, 59, 0.35);
+        }
+
+        .sidebar-footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+        }
+
+        .sidebar-footer a:hover {
+            color: var(--accent-purple);
+            text-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+        }
+
+
+
+        /* Main Content Panel */
+        .main-panel {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .header-title h1 {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-title p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        /* Views Layout */
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Component */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .card-header-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Dashboard View specific styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .analytics-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .analytics-info h3 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .analytics-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .progress-circle-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+        }
+
+        .progress-circle-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .progress-circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 8;
+        }
+
+        .progress-circle-bar {
+            fill: none;
+            stroke: url(#cyan-purple-grad);
+            stroke-width: 8;
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 251.2;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-circle-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-primary);
+        }
+
+        /* Mission Card */
+        .mission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .mission-goals {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .goal-item:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .goal-checkbox {
+            margin-top: 0.2rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 2px solid var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .goal-item.checked .goal-checkbox {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .goal-checkbox::after {
+            content: "✓";
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        .goal-item.checked .goal-checkbox::after {
+            display: block;
+        }
+
+        .goal-content {
+            font-size: 0.95rem;
+        }
+
+        .goal-item.checked .goal-content p {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+        }
+
+        .goal-tag {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: var(--accent-purple);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Roadmap timeline layout */
+        .roadmap-container {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+
+        .roadmap-line {
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 10px;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+        }
+
+        .roadmap-node {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .roadmap-node:last-child {
+            margin-bottom: 0;
+        }
+
+        .roadmap-marker {
+            position: absolute;
+            left: -2.85rem;
+            top: 2rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: 4px solid var(--accent-cyan);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            transition: all 0.3s;
+        }
+
+        .roadmap-node.completed .roadmap-marker {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 10px var(--accent-green);
+            background: var(--accent-green);
+        }
+
+        .roadmap-node.completed .roadmap-marker::after {
+            content: "✓";
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .roadmap-node.in-progress .roadmap-marker {
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 10px var(--accent-orange);
+        }
+
+        .roadmap-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .roadmap-card:hover {
+            transform: translateX(8px);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.08);
+        }
+
+        .roadmap-card-info {
+            flex-grow: 1;
+            max-width: 65%;
+        }
+
+        .roadmap-card-badge {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            border: 1px solid var(--border-color);
+        }
+
+        .roadmap-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .roadmap-card-desc {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .roadmap-card-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Dropdown custom styling */
+        .status-dropdown {
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .status-dropdown:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .status-dropdown option {
+            background: #0f172a;
+            color: var(--text-primary);
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-main);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Glossary Explorer View Specific */
+        .glossary-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+            min-width: 280px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.25rem 0.75rem 2.75rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+            font-family: var(--font-main);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-cyan);
+            background: rgba(30, 41, 59, 0.8);
+            box-shadow: var(--glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .category-filter {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            font-family: var(--font-main);
+            min-width: 180px;
+        }
+
+        .category-filter:focus {
+            border-color: var(--accent-purple);
+        }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .glossary-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .glossary-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.08);
+        }
+
+        .glossary-card-header {
+            margin-bottom: 0.75rem;
+        }
+
+        .glossary-card-category {
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-purple);
+            margin-bottom: 0.25rem;
+        }
+
+        .glossary-card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .glossary-card-title span {
+            font-size: 0.85rem;
+            font-weight: normal;
+            color: var(--text-secondary);
+        }
+
+        .glossary-card-def {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        /* Resources Hub Grid */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.08);
+        }
+
+        .resource-type-badge {
+            align-self: flex-start;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .resource-type-article {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .resource-type-video {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-orange);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .resource-type-paper {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent-purple);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .resource-type-wisdom {
+            background: rgba(236, 72, 153, 0.15);
+            color: var(--accent-pink);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .resource-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .resource-link {
+            text-decoration: none;
+            color: var(--accent-green);
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s;
+            margin-top: auto;
+        }
+
+        .resource-link:hover {
+            color: white;
+            text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Final Quiz / Assessment Styles */
+        .quiz-view-container {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .quiz-intro-box {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .quiz-intro-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .quiz-card {
+            display: none;
+        }
+
+        .quiz-card.active {
+            display: block;
+        }
+
+        .quiz-question-number {
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-question-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .quiz-option-item {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.98rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .quiz-option-item:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(30, 41, 59, 0.6);
+        }
+
+        .quiz-option-item.selected {
+            border-color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .quiz-option-item.correct {
+            border-color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .quiz-option-item.incorrect {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        .quiz-bullet {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option-item.selected .quiz-bullet {
+            border-color: var(--accent-purple);
+            background: var(--accent-purple);
+            color: white;
+        }
+
+        .quiz-option-item.correct .quiz-bullet {
+            border-color: var(--accent-green);
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .quiz-option-item.incorrect .quiz-bullet {
+            border-color: #ef4444;
+            background: #ef4444;
+            color: white;
+        }
+
+        .quiz-nav-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Certificate display styles */
+        .certificate-wrapper {
+            background: linear-gradient(135deg, #1e1b4b, #030712);
+            border: 6px double #312e81;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            margin-top: 1rem;
+        }
+
+        .certificate-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .cert-badge {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.4));
+        }
+
+        .cert-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .cert-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .cert-statement {
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        .cert-score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px dashed rgba(16, 185, 129, 0.3);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .cert-seal {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: 4px solid #fef3c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #78350f;
+            font-weight: 900;
+            font-size: 0.75rem;
+            margin: 0 auto 1.5rem auto;
+            transform: rotate(-10deg);
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .cert-footer-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Quick View IFrame Reader Drawer Overlay */
+        .preview-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100%;
+            background-color: #0b0f19;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7);
+            border-left: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-drawer.open {
+            right: 0;
+        }
+
+        .preview-drawer-header {
+            background-color: var(--sidebar-bg);
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-drawer-title h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .preview-drawer-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .preview-iframe-container {
+            flex-grow: 1;
+            width: 100%;
+            background: white;
+            position: relative;
+        }
+
+        .preview-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .preview-drawer-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .preview-drawer-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .close-btn {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Mobile responsive adjustments */
+        .mobile-hamburger {
+            display: none;
+            margin-left: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            min-width: 44px;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        /* Collapse the horizontal nav into a hamburger menu when the bilingual labels stop fitting */
+        @media (max-width: 1024px) {
+            .mobile-hamburger { display: flex; }
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.25rem;
+                margin-left: 0;
+                background-color: var(--sidebar-bg);
+                border-bottom: 1px solid var(--border-color);
+                padding: 1.25rem 1.5rem;
+                z-index: 90;
+                box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45);
+            }
+            .nav-menu.open { display: flex; }
+            .nav-item button { width: 100%; min-height: 44px; }
+            .preview-drawer { width: 90%; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { padding: 0.9rem 1.25rem; }
+            .main-panel { padding: 1.5rem; }
+            .preview-drawer { width: 100%; }
+
+            .roadmap-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .roadmap-card-info {
+                max-width: 100%;
+            }
+
+            .roadmap-card-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            .main-panel {
+                padding: 1.1rem;
+            }
+            header {
+                gap: 1rem;
+            }
+            .dashboard-grid,
+            .glossary-grid,
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            .roadmap-card-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Theme & Language Toggle Button Styles */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .lang-toggle-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0 1rem;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+        }
+        
+        .lang-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        
+
+        
+        
+        
+
+
+        
+
+        
+
+        /* Apply transitions globally to key elements */
+        body, aside, main, .card, button, input, select, .sidebar, .nav-item button, .glossary-card, .resource-card, .roadmap-card, .goal-item, .pe-word-btn, .step-node, .vector-visualizer, .vector-table, .close-btn {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        /* ---- Accessibility & performance layer ---- */
+        /* Keyboard focus visibility */
+        a:focus-visible,
+        button:focus-visible,
+        [tabindex]:focus-visible,
+        .nav-item button:focus-visible,
+        .card:focus-visible {
+            outline: 2px solid var(--accent-cyan);
+            outline-offset: 2px;
+        }
+
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* backdrop-filter blur is GPU-expensive on phones — drop it on small screens */
+        @media (max-width: 768px) {
+            .card, .roadmap-card, .preview-drawer-backdrop {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG Gradients Definition -->
+    <svg style="width:0; height:0; position:absolute;">
+        <defs>
+            <linearGradient id="cyan-purple-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--accent-cyan)" />
+                <stop offset="100%" stop-color="var(--accent-purple)" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Sidebar Menu -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-logo">T</div>
+            <div class="sidebar-brand-name">Transformer Hub</div>
+        </div>
+
+        <button class="mobile-hamburger" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">☰</button>
+
+        <ul class="nav-menu" id="nav-menu">
+            <li class="nav-item active" id="nav-dashboard">
+                <button onclick="switchTab('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span class="nav-text" id="nav-text-dashboard">Dashboard (সংক্ষিপ্তসার)</span>
+                </button>
+            </li>
+            <li class="nav-item" id="nav-lessons">
+                <button onclick="switchTab('lessons')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3.5A2.5 2.5 0 0 1 6.5 1H20v21H6.5a2.5 2.5 0 0 1-2.5-2.5z"/></svg>
+                    <span class="nav-text" id="nav-text-lessons">Syllabus (লেসন ম্যাপ)</span>
+                </button>
+            </li>
+            <li class="nav-item" id="nav-glossary">
+                <button onclick="switchTab('glossary')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M12 4v16M2 8h20M2 14h20"/></svg>
+                    <span class="nav-text" id="nav-text-glossary">Glossary (শব্দকোষ)</span>
+                </button>
+            </li>
+            <li class="nav-item" id="nav-resources">
+                <button onclick="switchTab('resources')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    <span class="nav-text" id="nav-text-resources">References (সহায়ক লিংক)</span>
+                </button>
+            </li>
+            <li class="nav-item" id="nav-quiz">
+                <button onclick="switchTab('quiz')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+                    <span class="nav-text" id="nav-text-quiz">Assessment (চূড়ান্ত কুইজ)</span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <p style="font-size: 0.85rem; line-height: 1.45; margin-bottom: 0.65rem; color: var(--text-primary); font-weight: 500;">Helping you learn Transformers, the core architecture behind all modern large language models like ChatGPT, Claude, and Gemini.</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Course made by <a href="https://web.facebook.com/fahmid.hasan.190797/" target="_blank">Fahmid Hasan</a></p>
+        </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-panel">
+        <header>
+            <div class="header-title">
+                <h1 id="page-heading">Dashboard</h1>
+                <p id="page-subheading">স্বাগতম! ট্রান্সফরমার আর্কিটেকচার শেখার যাত্রা শুরু হোক।</p>
+            </div>
+            <div class="header-controls">
+                <button class="lang-toggle-btn" id="lang-toggle-btn" onclick="toggleLanguage()">English</button>
+            </div>
+        </header>
+
+        <!-- DASHBOARD VIEW -->
+        <section class="view-section active" id="view-dashboard">
+            <div class="dashboard-grid">
+                <!-- Learning Progress Card -->
+                <div class="card analytics-card">
+                    <div class="analytics-info">
+                        <p id="syllabus-progress-lbl">Syllabus Progress</p>
+                        <h3 id="dash-progress-text">0%</h3>
+                        <p style="margin-top:0.5rem; text-transform:none; font-weight:normal; font-size:0.85rem;" id="dash-remaining-text">৬টি লেসনের সবকটি বাকি</p>
+                    </div>
+                    <div class="progress-circle-container">
+                        <svg class="progress-circle-svg" viewBox="0 0 100 100">
+                            <circle class="progress-circle-bg" cx="50" cy="50" r="40" />
+                            <circle class="progress-circle-bar" id="dash-progress-ring" cx="50" cy="50" r="40" />
+                        </svg>
+                        <div class="progress-circle-text" id="dash-progress-ring-label">0%</div>
+                    </div>
+                </div>
+
+                <!-- Glossary Metrics Card -->
+                <div class="card analytics-card">
+                    <div class="analytics-info">
+                        <p id="total-glossary-lbl">Total Glossary Terms</p>
+                        <h3 id="total-glossary-count">২৫+</h3>
+                        <p style="margin-top:0.5rem; text-transform:none; font-weight:normal; font-size:0.85rem;" id="total-glossary-desc">সহজ বাংলা ব্যাখ্যাসহ গুরুত্বপূর্ণ পদ</p>
+                    </div>
+                    
+                </div>
+
+                <!-- Final Quiz status Card -->
+                <div class="card analytics-card">
+                    <div class="analytics-info">
+                        <p id="final-assessment-lbl">Final Assessment</p>
+                        <h3 id="dash-quiz-status">Not Attempted</h3>
+                        <p style="margin-top:0.5rem; text-transform:none; font-weight:normal; font-size:0.85rem;" id="dash-quiz-score-sub">নিজের অর্জিত জ্ঞান যাচাই করুন</p>
+                    </div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-secondary);" id="dash-quiz-badge">—</div>
+                </div>
+            </div>
+
+            <!-- Mission Overview Card -->
+            <div class="card">
+                <div class="mission-header">
+                    <h2 id="mission-card-title">Learning Mission (আমাদের উদ্দেশ্য)</h2>
+                    <span class="goal-tag" id="mission-tracker-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: var(--accent-green);">Interactive Tracker</span>
+                </div>
+                <p id="mission-card-desc">LLM (Large Language Model) এর "behind the scene" বা ভেতরের মেকানিজম স্পষ্টভাবে বোঝা। কোনো জটিল গাণিতিক ফর্মুলা বা কোডিং জটলা ছাড়া <strong>Conceptual Intuition</strong> নিজের আয়ত্তে আনা, যাতে পরবর্তীতে যেকোনো advanced LLM concept সহজে ধরতে পারেন।</p>
+                
+                <div class="mission-goals" id="mission-goals-list">
+                    <div class="goal-item" onclick="toggleGoal(0)" id="goal-0">
+                        <div class="goal-checkbox"></div>
+                        <div class="goal-content">
+                            <span class="goal-tag">Lesson 1</span>
+                            <p id="goal-text-0"><strong>Big Picture Pipeline:</strong> একটি মানুষের লেখা বাক্য বা প্রম্পট কীভাবে ধাপে ধাপে প্রসেস হয়ে পরবর্তী শব্দ অনুমান করে, তার সামগ্রিক উচ্চস্তরের (High-Level) রূপরেখা বোঝা।</p>
+                        </div>
+                    </div>
+                    <div class="goal-item" onclick="toggleGoal(1)" id="goal-1">
+                        <div class="goal-checkbox"></div>
+                        <div class="goal-content">
+                            <span class="goal-tag">Lesson 2</span>
+                            <p id="goal-text-1"><strong>Input Pipeline:</strong> মানুষের বাক্য কীভাবে Tokenization, Sub-words, Vectors (Embedding) ও Positional Encoding অতিক্রম করে গাণিতিক ফিঙ্গারপ্রিন্ট তৈরি করে তা শেখা।</p>
+                        </div>
+                    </div>
+                    <div class="goal-item" onclick="toggleGoal(2)" id="goal-2">
+                        <div class="goal-checkbox"></div>
+                        <div class="goal-content">
+                            <span class="goal-tag">Lesson 3</span>
+                            <p id="goal-text-2"><strong>Core Attention Intuition:</strong> Self-Attention, Query (Q), Key (K), Value (V) এবং Softmax-এর ভেতরের মেকানিজম অনুধাবন করা।</p>
+                        </div>
+                    </div>
+                    <div class="goal-item" onclick="toggleGoal(3)" id="goal-3">
+                        <div class="goal-checkbox"></div>
+                        <div class="goal-content">
+                            <span class="goal-tag">Lesson 4-5</span>
+                            <p id="goal-text-3"><strong>Multi-Head Stacking:</strong> একাধিক মনোযোগ হেড কেন লাগে, Dimension Splitting কী এবং Residual Skip Connections ও LayerNorm কীভাবে ট্রেনিং স্থিতিশীল করে তা বোঝা।</p>
+                        </div>
+                    </div>
+                    <div class="goal-item" onclick="toggleGoal(4)" id="goal-4">
+                        <div class="goal-checkbox"></div>
+                        <div class="goal-content">
+                            <span class="goal-tag">Lesson 6</span>
+                            <p id="goal-text-4"><strong>LLM Gen Architecture:</strong> Modern Decoder-Only Transformers (যেমন GPT, LLaMA) কেন ব্যবহৃত হয় এবং Causal Masking কী তা জানা।</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Start Box -->
+            <div class="card" id="quick-start-card" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(168, 85, 247, 0.08)); border-color: rgba(6, 182, 212, 0.25);">
+                <h2 id="quick-start-title">Quick Start Guide</h2>
+                <p id="quick-start-desc">শেখ শুরু করার জন্য <strong>"Syllabus (লেসন ম্যাপ)"</strong> ট্যাবে চলে যান। সেখানে সিরিয়ালি সাজানো লেসনগুলো পড়তে পারবেন। প্রতিটি লেসন পড়ার সময় আপনি তা <strong>"In Progress"</strong> বা <strong>"Completed"</strong> হিসেবে চিহ্নিত করতে পারেন, যা উপরে আপনার ড্যাশবোর্ডের প্রোগ্রেস ও ট্র্যাকার আপডেট করে রাখবে!</p>
+                <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                    <button class="btn btn-primary" id="quick-start-btn-1" onclick="switchTab('lessons')">লেসন ম্যাপে যান</button>
+                    <button class="btn btn-secondary" id="quick-start-btn-2" onclick="switchTab('glossary')">শব্দকোষ সার্চ করুন</button>
+                </div>
+            </div>
+
+            <!-- Course Attribution -->
+            <div style="text-align: center; margin-top: 1.5rem; padding: 1.25rem 1rem; border: 1px solid var(--border-color); border-radius: 12px; background: rgba(30, 41, 59, 0.2); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div>
+                <p style="font-size: 0.85rem; line-height: 1.45; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">Helping you learn Transformers, the core architecture behind all modern large language models like ChatGPT, Claude, and Gemini.</p>
+                <p style="font-size: 0.8rem; color: var(--text-secondary);">Course made by <a href="https://web.facebook.com/fahmid.hasan.190797/" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-weight: 600;">Fahmid Hasan</a></p>
+            </div>
+        </section>
+
+        <!-- LESSONS ROADMAP VIEW -->
+        <section class="view-section" id="view-lessons">
+            <div class="roadmap-container">
+                <div class="roadmap-line"></div>
+                <div id="lessons-roadmap-nodes">
+                    <!-- Roadmap Nodes dynamically injected here by Javascript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- GLOSSARY EXPLORER VIEW -->
+        <section class="view-section" id="view-glossary">
+            <div class="glossary-controls">
+                <div class="search-box">
+                    
+                    <input type="text" class="search-input" id="glossary-search" placeholder="পদক্ষেপ বা ইংরেজি Term দিয়ে সার্চ করুন (যেমন: Attention)..." oninput="filterGlossary()">
+                </div>
+                <select class="category-filter" id="glossary-cat-filter" onchange="filterGlossary()">
+                    <option value="all" id="glossary-cat-all-opt">সব ক্যাটাগরি</option>
+                    <option value="Input Representation">Input Representation</option>
+                    <option value="Attention Mechanism">Attention Mechanism</option>
+                    <option value="Model Block & Optimization">Model Block & Optimization</option>
+                    <option value="Generation & LLM Architecture">Generation & LLM Architecture</option>
+                </select>
+            </div>
+
+            <div class="glossary-grid" id="glossary-container">
+                <!-- Glossary Cards dynamically injected here by Javascript -->
+            </div>
+        </section>
+
+        <!-- REFERENCES/RESOURCES VIEW -->
+        <section class="view-section" id="view-resources">
+            <div class="card" style="margin-bottom: 2rem;">
+                <h2 id="resources-intro-title">সহায়ক রিসোর্স গাইড</h2>
+                <p id="resources-intro-desc">ট্রান্সফরমার আর্কিটেকচার নিয়ে ভিজ্যুয়াল অ্যানিমেশন, অরিজিনাল পেপার এবং মডার্ন লার্জ ল্যাঙ্গুয়েজ মডেল শেখার জন্য নিচে চমৎকার কিছু সহায়ক রিসোর্স সাজানো রয়েছে। প্রতিটি রিসোর্সের সংক্ষিপ্ত বিবরণও দেওয়া হলো যাতে আপনি আপনি আপনার সুবিধামতো বেছে নিতে পারেন।</p>
+            </div>
+            
+            <div class="resources-grid" id="resources-container">
+                <!-- Resources injected by JS -->
+            </div>
+        </section>
+
+        <!-- FINAL QUIZ ASSESSMENT VIEW -->
+        <section class="view-section" id="view-quiz">
+            <div class="quiz-view-container">
+                
+                <!-- Quiz Intro Box -->
+                <div class="card quiz-intro-box" id="quiz-intro">
+                    
+                    <h2 id="quiz-intro-title" style="border:none; padding:0; display:block; text-align:center; font-size:1.75rem; margin-bottom:1rem;">Transformer Architecture Assessment</h2>
+                    <p id="quiz-intro-desc" style="max-width:550px; margin:0 auto 2rem auto; color:var(--text-secondary);">
+                        ৬টি লেসন শেষ করার পর আপনার অর্জিত জ্ঞান যাচাইয়ের জন্য প্রস্তুত? ৫টি বহুনির্বাচনী প্রশ্নের সঠিক উত্তর দিয়ে সফলতার সাথে উত্তীর্ণ হয়ে অর্জন করুন আপনার <strong>"Transformer Hub Completion Certificate"</strong>!
+                    </p>
+                    <button class="btn btn-primary btn-large" id="quiz-start-btn" style="padding: 0.85rem 2rem; font-size: 1rem;" onclick="startQuiz()">কুইজ শুরু করুন</button>
+                </div>
+
+                <!-- Quiz Questions Area -->
+                <div id="quiz-questions-area" style="display: none;">
+                    <!-- Question Cards Injected here by JS -->
+                    <div id="quiz-cards-container"></div>
+                    
+                    <!-- Navigation footer -->
+                    <div class="quiz-nav-footer">
+                        <span style="font-size:0.9rem; color:var(--text-secondary);" id="quiz-counter">প্রশ্ন ১/৫</span>
+                        <button class="btn btn-primary" id="quiz-next-btn" onclick="nextQuizStep()" disabled>পরবর্তী প্রশ্ন</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Certificate/Result Result -->
+                <div class="quiz-result-area" id="quiz-result" style="display: none;">
+                    <div class="certificate-wrapper">
+                        <div class="cert-seal">PASS</div>
+                        <div class="cert-title" id="cert-title">Certificate of Completion</div>
+                        <div class="cert-subtitle" id="cert-subtitle">Bengali Transformer Learning Hub</div>
+                        <div class="cert-statement" id="cert-statement">
+                            গর্বের সাথে প্রত্যয়ন করা যাচ্ছে যে,<br>
+                            <strong style="font-size: 1.6rem; color: white;" id="cert-user-name">শিক্ষার্থী</strong><br>
+                            সাফল্যের সাথে <strong>Transformer Architecture and LLM Mechanics</strong>-এর কুইজ সম্পন্ন করেছেন।
+                        </div>
+                        <div class="cert-score" id="cert-final-score">Score: 5 / 5 (100%)</div>
+                        <div class="cert-footer-text" id="cert-date-text">তারিখ: June 9, 2026</div>
+                    </div>
+                    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+                        <button class="btn btn-primary" id="quiz-restart-btn" onclick="restartQuiz()">পুনরায় কুইজ দিন</button>
+                        <button class="btn btn-secondary" id="quiz-back-btn" onclick="switchTab('dashboard')">ড্যাশবোর্ডে ফিরে যান</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Fullscreen IFrame Reader Overlay -->
+    <div class="preview-drawer-backdrop" id="preview-backdrop" onclick="closeLessonPreview()"></div>
+    <div class="preview-drawer" id="preview-drawer">
+        <div class="preview-drawer-header">
+            <div class="preview-drawer-title">
+                <h3 id="preview-lesson-title">Lesson Preview</h3>
+            </div>
+            <div class="preview-drawer-controls">
+                <select class="status-dropdown" id="preview-status-dropdown" onchange="onPreviewStatusChange(this.value)">
+                    <option value="not-started" id="preview-opt-not-started">Not Started</option>
+                    <option value="in-progress" id="preview-opt-in-progress">In Progress</option>
+                    <option value="completed" id="preview-opt-completed">Completed</option>
+                </select>
+                <a class="btn btn-secondary" id="preview-open-tab-btn" target="_blank" href="#">
+                    <span id="preview-open-tab-text">New Tab</span> ↗
+                </a>
+                <button class="close-btn" onclick="closeLessonPreview()">✕</button>
+            </div>
+        </div>
+        <div class="preview-iframe-container">
+            <iframe class="preview-iframe" id="preview-iframe" src="" loading="lazy" title="Lesson preview"></iframe>
+        </div>
+    </div>
+<script>
+        // --- 1. Static Databases (Bengali) ---
+        const lessonsData = [
+            {
+                id: "0001-high-level-llm-pipeline",
+                num: "01",
+                title: "LLM Pipeline-এর High-Level Intuition",
+                desc: "একটি মানুষের লেখা বাক্য বা প্রম্পট কীভাবে ধাপে ধাপে টোকেনাইজড হয়ে ভেক্টরে রূপ নেয় এবং মডেলের ভেতর দিয়ে প্রসেস হয়ে পরবর্তী শব্দ অনুমান করে তার সামগ্রিক রূপরেখা।",
+                file: "lessons/0001-high-level-llm-pipeline.html",
+                duration: "15 min"
+            },
+            {
+                id: "0002-tokens-embeddings-positional-encoding",
+                num: "02",
+                title: "Tokens, Embeddings এবং Positional Encoding",
+                desc: "কম্পিউটারের সংখ্যা চেনার পেছনের মূল ভিত্তি। টোকেনাইজেশনের BPE অ্যালগরিদম, শব্দের গাণিতিক অর্থ ধারণকারী সেমান্টিক ভেক্টর স্পেস ও সমান্তরাল প্রসেসিংয়ে শব্দের অবস্থান সংরক্ষণের ট্রাইগনোমেট্রিক এনকোডিং পদ্ধতি।",
+                file: "lessons/0002-tokens-embeddings-positional-encoding.html",
+                duration: "20 min"
+            },
+            {
+                id: "0003-self-attention-mechanism",
+                num: "03",
+                title: "Self-Attention Mechanism",
+                desc: "শব্দের প্রসঙ্গের সংকট সমাধানের জাদুকরী কৌশল। YouTube-এর সার্চ অ্যালগরিদমের আদলে Query (Q), Key (K) ও Value (V) ভেক্টরের ডট প্রোডাক্ট, স্কেলিং ও সফটম্যাক্সের সাহায্যে মনোযোগ বন্টন।",
+                file: "lessons/0003-self-attention-mechanism.html",
+                duration: "25 min"
+            },
+            {
+                id: "0004-multi-head-attention-layer-stacking",
+                num: "04",
+                title: "Multi-Head Attention এবং Layer Stacking",
+                desc: "ভাষা আরও নিখুঁতভাবে অনুধাবনের উপায়। একাধিক মনোযোগের ধারা দিয়ে একই শব্দের বহুমাত্রিক সম্পর্ক ক্যাপচার করার Dimension Splitting প্র্যাকটিস ও লেয়ার স্ট্যাকিংয়ের মাধ্যমে গভীর ফিচার তৈরির স্তর বিন্যাস।",
+                file: "lessons/0004-multi-head-attention-layer-stacking.html",
+                duration: "20 min"
+            },
+            {
+                id: "0005-ffn-residual-connections-layer-norm",
+                num: "05",
+                title: "FFN, Residual Connections, and Layer Normalization",
+                desc: "ফিড-ফরোয়ার্ড নেটওয়ার্কের মাধ্যমে নলেজ রিপ্রেজেন্টেশন, এবং গভীর স্তরে সিগন্যাল হারিয়ে যাওয়া রোধ করতে Skip Connections ও ট্রেনিং দ্রুত-স্থিতিশীল করতে Pre-LN লেয়ার নরমালাইজেশন পদ্ধতি।",
+                file: "lessons/0005-ffn-residual-connections-layer-norm.html",
+                duration: "25 min"
+            },
+            {
+                id: "0006-decoder-only-vs-encoder-decoder",
+                num: "06",
+                title: "Decoder-Only Architecture ও Causal Masking",
+                desc: "মডার্ন জেনারেটিভ এআই-এর চালিকাশক্তি। ঐতিহ্যবাহী Seq2Seq আর্কিটেকচারের সাথে GPT/LLaMA-এর মতো অটো-রিগ্রেসিভ জেনারেটর ডিকোডারের পার্থক্য এবং ভবিষ্যৎ শব্দ আড়াল করার Causal Attention মাস্কিং।",
+                file: "lessons/0006-decoder-only-vs-encoder-decoder.html",
+                duration: "20 min"
+            }
+        ];
+
+        const glossaryData = [
+            {
+                category: "Input Representation",
+                term: "Tokenization",
+                bnTerm: "টোকেনাইজেশন",
+                def: "মানুষের লেখা টেক্সটকে ক্ষুদ্র ক্ষুদ্র অর্থপূর্ণ অংশ বা টোকেনে (যেমন শব্দ বা উপ-শব্দ) বিভক্ত করার প্রক্রিয়া, যা কম্পিউটার সহজে প্রসেস করতে পারে।"
+            },
+            {
+                category: "Input Representation",
+                term: "Vocabulary",
+                bnTerm: "ভোকাবুলারি",
+                def: "একটি মডেল যতগুলো অনন্য টোকেন বা শব্দ চিনতে পারে, তার সম্পূর্ণ সংগ্রহ বা নিজস্ব ডিকশনারি।"
+            },
+            {
+                category: "Input Representation",
+                term: "BPE (Byte Pair Encoding)",
+                bnTerm: "বাইট পেয়ার এনকোডিং",
+                def: "একটি সাব-ওয়ার্ড টোকেনাইজেশন অ্যালগরিদম যা পরিচিত শব্দগুলোকে আস্ত রাখে এবং অপরিচিত শব্দগুলোকে ছোট পরিচিত উপ-শব্দে বিভক্ত করে OOV সমস্যা এড়ায়।"
+            },
+            {
+                category: "Input Representation",
+                term: "Embedding",
+                bnTerm: "এম্বেডিং",
+                def: "টোকেন আইডিকে একটি উচ্চ-মাত্রিক সেমান্টিক ভেক্টরে রূপান্তর করা, যা শব্দের অর্থ ও পারস্পরিক সম্পর্ক গাণিতিকভাবে প্রকাশ করে।"
+            },
+            {
+                category: "Input Representation",
+                term: "Positional Encoding",
+                bnTerm: "পজিশনাল এনকোডিং",
+                def: "সমান্তরালভাবে প্রসেস হওয়া টোকেনগুলোর ক্রমানুসার বা বাক্যে তাদের অবস্থান নির্দেশ করার জন্য এম্বেডিং ভেক্টরের সাথে যোগ করা একটি নির্দিষ্ট গাণিতিক ভেক্টর।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Self-Attention Mechanism",
+                bnTerm: "সেলফ-অ্যাটেনশন মেকানিজম",
+                def: "একটি শব্দ বাক্যের অন্যান্য শব্দের সাথে কতটা সম্পর্কযুক্ত তা পরিমাপ করে প্রতিটি শব্দের অর্থ ও কনটেক্সট নির্ধারণ করার পদ্ধতি।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Query (Q)",
+                bnTerm: "কোয়েরি",
+                def: "বাক্যের একটি শব্দ যখন অন্য শব্দের সাথে তার সম্পর্ক খুঁজে বেড়ায়, তখন সেই অনুসন্ধানকারী ভেক্টরটিকে Query বলা হয় (সার্চ ইঞ্জিনে টাইপ করা শব্দ)।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Key (K)",
+                bnTerm: "কী",
+                def: "বাক্যের প্রতিটি শব্দের বিবরণ বা লেবেল ভেক্টর, যার সাথে Query ভেক্টরটির মিল পরীক্ষা করা হয় (ইউটিউব ভিডিওর টাইটেল/লেবেল)।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Value (V)",
+                bnTerm: "ভ্যালু",
+                def: "শব্দের মূল তথ্য বা কন্টেন্ট ধারণকারী ভেক্টর, যা Attention Weight অনুযায়ী সমন্বয় করে আউটপুট তৈরি করা হয় (ইউটিউবের মূল ভিডিও কন্টেন্ট)।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Attention Weights",
+                bnTerm: "অ্যাটেনশন ওয়েটস",
+                def: "Softmax ফাংশন প্রয়োগ করে প্রাপ্ত ভগ্নাংশ বা পারসেন্টেজ মান, যা নির্দেশ করে একটি শব্দ অন্য শব্দগুলোর ওপর কত শতাংশ মনোযোগ দিবে।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Dot-Product Similarity",
+                bnTerm: "ডট-প্রোডাক্ট সিমিলারিটি",
+                def: "দুটি ভেক্টরের সামঞ্জস্যতা বা মিল পরিমাপ করার গাণিতিক পদ্ধতি, যা Self-Attention-এ স্কোর গণনায় ব্যবহৃত হয়।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Scaling",
+                bnTerm: "স্কেলিং",
+                def: "ডট প্রোডাক্টের বিশাল মান নিয়ন্ত্রণ করার জন্য ভেক্টরের সাইজের বর্গমূল (sqrt(d_k)) দিয়ে ভাগ করার প্রক্রিয়া।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Multi-Head Attention",
+                bnTerm: "মাল্টি-হেড অ্যাটেনশন",
+                def: "একাধিক Attention Mechanism যা সমান্তরালভাবে (in parallel) ইনপুটের ভিন্ন ভিন্ন অংশের সম্পর্ক এবং কনটেক্সট ক্যাপচার করতে ব্যবহৃত হয়।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Single-Head Attention",
+                bnTerm: "সিঙ্গেল-হেড অ্যাটেনশন",
+                def: "মাত্র একটি Attention Head বিশিষ্ট মনোযোগ মেকানিজম, যা বাক্যের বহুবিধ সম্পর্ক একসাথে বুঝতে সীমাবদ্ধ থাকে।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Bidirectional Attention",
+                bnTerm: "বাইডাইরেকশনাল অ্যাটেনশন",
+                def: "অ্যাটেনশন মেকানিজম যা একটি টোকেনকে বাক্যের বাম ও ডান—উভয় পাশের শব্দগুলোর ওপর সমান মনোযোগ দিতে দেয় (যেমন- BERT)।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Pronoun Resolution",
+                bnTerm: "প্রোনাউন রেজোলিউশন",
+                def: "বাক্যে কোনো সর্বনাম (pronoun যেমন - 'it') কোন বিশেষ্যকে (noun যেমন - 'dog' বা 'street') নির্দেশ করছে তা খুঁজে বের করার প্রক্রিয়া।"
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Layer Stacking",
+                bnTerm: "লেয়ার স্ট্যাকিং",
+                def: "ট্রান্সফরমার ব্লকের একাধিক স্তর একের পর এক সাজানো, যা মডেলকে পর্যায়ক্রমিক ও গভীর যৌক্তিক কাঠামো তৈরি করতে সাহায্য করে।"
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Dimension Splitting",
+                bnTerm: "ডাইমেনশন স্প্লিটিং",
+                def: "Multi-Head Attention-এ মূল এম্বেডিং সাইজকে সমান ভাগে ভাগ করে প্রতিটি হেডের জন্য ছোট সাবস্পেস তৈরি করার পদ্ধতি।"
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Feed-Forward Network (FFN)",
+                bnTerm: "ফিড-ফরোয়ার্ড নেটওয়ার্ক",
+                def: "Transformer-এর একটি সাব-লেয়ার, যা প্রতিটি টোকেন রিপ্রেজেন্টেশনকে পজিশন-অনুযায়ী স্বাধীনভাবে প্রসেস করে গভীর ফিচার তৈরি করে ও মডেলের লার্নড নলেজ যুক্ত করে।"
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Residual Connection",
+                bnTerm: "রেজিসডুয়াল কানেকশন",
+                def: "একটি আর্কিটেকচারাল মেকানিজম যেখানে সাব-লেয়ারের ইনপুট সরাসরি তার আউটপুটের সাথে যোগ করা হয়, যা ভ্যানিশিং গ্র্যাডিয়েন্ট সমস্যা রোধ করে।"
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Layer Normalization",
+                bnTerm: "লেয়ার নরমালাইজেশন",
+                def: "একটি ভেক্টর ফিচার স্কেলিং অপারেশন যা প্রতিটি টোকেন ভেক্টরের উপাদানগুলোর গড় ০ ও ভ্যারিয়েন্স ১ বজায় রাখে, যা ট্রেনিং স্থিতিশীল করে।"
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Pre-LN",
+                bnTerm: "প্রি-এলএন",
+                def: "একটি আধুনিক ট্রান্সফরমার ডিজাইন যেখানে ইনপুটটি সাব-লেয়ারে প্রবেশ করার পূর্বেই লেয়ার নরমালাইজেশন প্রয়োগ করা হয়, যা ট্রেনিং প্রারম্ভিক স্থিতিশীলতা রক্ষা করে।"
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Post-LN",
+                bnTerm: "পোস্ট-এলএন",
+                def: "আদি ট্রান্সফরমার আর্কিটেকচার যেখানে সাব-লেয়ারের প্রসেসিং এবং রেজিসডুয়াল অ্যাডিশন সম্পন্ন করার পরে লেয়ার নরমালাইজেশন প্রয়োগ করা হয়।"
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "Decoder-Only Architecture",
+                bnTerm: "ডিকোডার-অনলি আর্কিটেকচার",
+                def: "যে ট্রান্সফরমার আর্কিটেকচার কেবল ডিকোডারের ওপর ভিত্তি করে তৈরি এবং মূলত পরবর্তী টোকেন জেনারেট করার কাজে ব্যবহৃত হয় (যেমন- GPT, LLaMA)।"
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "Causal Masking",
+                bnTerm: "কজাল মাস্কিং",
+                def: "ট্রেনিংয়ের সময় মডেল যাতে ভবিষ্যতের টোকেন বা শব্দগুলো দেখে চিট করতে না পারে, সেজন্য একটি আপার-ট্রায়াঙ্গুলার ম্যাট্রিক্স দিয়ে ভবিষ্যতের অ্যাটেনশন স্কোর ব্লক করার পদ্ধতি।"
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "Autoregressive Generation",
+                bnTerm: "অটো-রিগ্রেসিভ জেনারেট",
+                def: "মডেল দ্বারা পূর্ববর্তী জেনারেট করা টোকেনগুলোকে পুনরায় ইনপুট হিসেবে ব্যবহার করে এক এক করে পরবর্তী টোকেন জেনারেশন করার প্রক্রিয়া।"
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "Sequence-to-Sequence (Seq2Seq)",
+                bnTerm: "সিকোয়েন্স-টু-সিকোয়েন্স",
+                def: "নক ডিজাইন করাSeq2Seq আর্কিটেকচার যেখানে একটি সিকোয়েন্সকে (যেমন ইংরেজি বাক্য) অন্য একটি সিকোয়েন্সকে (যেমন বাংলা বাক্য) রূপান্তর করা হয়।"
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "End of Sequence (EOS) Token",
+                bnTerm: "ইওএস টোকেন",
+                def: "একটি বিশেষ টোকেন যা নির্দেশ করে যে টেক্সট জেনারেশন প্রক্রিয়াটি শেষ হয়েছে এবং মডেল আর কোনো নতুন টোকেন তৈরি করবে না।"
+            }
+        ];
+
+        const resourcesData = [
+            {
+                type: "article",
+                title: '"The Illustrated Transformer" — Jay Alammar',
+                desc: "Transformer architecture-এর চমৎকার visual explainer। Encoder, Decoder, Self-Attention এবং Feed-Forward Layer-এর workflow সহজে বোঝার জন্য এটি অত্যন্ত কার্যকরী রেফারেন্স।",
+                url: "https://jalammar.github.io/illustrated-transformer/"
+            },
+            {
+                type: "article",
+                title: '"The Illustrated GPT-2" — Jay Alammar',
+                desc: "Decoder-only models (যেমন GPT-2, GPT-3) কীভাবে কাজ করে এবং Generation process-টি কেমন হয়, তার visual explanation ও intuitive বিবরণ প্রদান করে।",
+                url: "https://jalammar.github.io/illustrated-gpt2/"
+            },
+            {
+                type: "video",
+                title: '3Blue1Brown: "Attention and Transformers" Series',
+                desc: "Attention mechanism এবং Transformers-এর অত্যন্ত দৃষ্টিনন্দন visual animation। গাণিতিক ভিত্তি ও মূল ধারণা চমৎকারভাবে ফুটে উঠেছে এই ভিডিও প্লেলিস্টে।",
+                url: "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi"
+            },
+            {
+                type: "paper",
+                title: '"Attention Is All You Need" — Vaswani et al. (Original Paper)',
+                desc: "Transformer-এর মূল research paper। Transformer architecture-এর structure, mathematical formulas এবং experimental results সরাসরি বোঝার জন্য reference হিসেবে ব্যবহার্য।",
+                url: "https://arxiv.org/abs/1706.03762"
+            },
+            {
+                type: "video",
+                title: 'Andrej Karpathy: "Let\'s build GPT: from scratch"',
+                desc: " hisPyTorch কোডিং-এর ওপর নির্মিত হলেও, এর শুরুর অংশগুলো Transformer-এর components (বিশেষ করে causal mask, attention logits) খুব সুন্দরভাবে visually ও conceptually ব্যাখ্যা করে।",
+                url: "https://www.youtube.com/watch?v=kCc8FmEb1nY"
+            },
+            {
+                type: "wisdom",
+                title: "Reddit Community: r/MachineLearning",
+                desc: "মেশিন লার্নিংয়ের advanced discussion এবং নতুন নতুন papers-এর analysis ও discussion জানার জন্য বিশ্বস্ত ও চমৎকার Reddit community।",
+                url: "https://reddit.com/r/MachineLearning"
+            },
+            {
+                type: "wisdom",
+                title: "Reddit Community: r/LocalLLaMA",
+                desc: "Modern LLM architectures, fine-tuning, এবং local inference-এর practical implementation ও feedback সংক্রান্ত আলোচনার community।",
+                url: "https://reddit.com/r/LocalLLaMA"
+            }
+        ];
+
+        const quizQuestions = [
+            {
+                question: "১. Transformer block-এর ভেতরে থাকা Self-Attention Mechanism-এর মূল কাজ কী?",
+                options: [
+                    "টেক্সটকে টুকরো টুকরো করে টোকেনে ভাগ করা।",
+                    "বাক্যের বিভিন্ন টোকেনের মধ্যকার পারস্পরিক অর্থগত ও ব্যাকরণগত সম্পর্ক এবং কনটেক্সট তৈরি করা।",
+                    "পরবর্তী টোকেনের সম্ভাবনা বা Probability স্কোর গণনা করা।",
+                    "এম্বেডিং ভেক্টরের সাইজ বা ডাইমেনশন কমিয়ে অর্ধেক করে ফেলা।"
+                ],
+                answer: 1,
+                explain: "Self-Attention বাক্যের প্রতিটি শব্দ অন্য শব্দগুলোর সাথে কতটা সম্পর্কযুক্ত তা পরিমাপ করে কনটেক্সট সমৃদ্ধ করতে ব্যবহৃত হয়।"
+            },
+            {
+                question: "২. Word Embedding স্পেসে 'Vector(King) - Vector(Man) + Vector(Woman) ≈ Vector(Queen)' সম্পর্কটি দ্বারা কী বোঝানো হয়?",
+                options: [
+                    "এটি ডিকশনারি সার্চ করার জন্য একটি সূক্ষ্ম ব্যাকরণগত নিয়মের কোড।",
+                    "এম্বেডিং স্পেসের ভেক্টরগুলো শব্দের ব্যাকরণগত ও অর্থগত (semantic) সম্পর্ক ধারণ করে এবং তাদের ওপর গাণিতিক হিসাব বা ভেক্টর ম্যাথ করা সম্ভব হয়।",
+                    "এটি একটি ত্রুটিপূর্ণ গাণিতিক সমীকরণ যা এম্বেডিংয়ের ক্ষেত্রে কাজ করে না।",
+                    "এটি দিয়ে পজিশনাল এনকোডিং তৈরি করা হয়।"
+                ],
+                answer: 1,
+                explain: "এম্বেডিং স্পেসে অর্থগত দিক থেকে কাছাকাছি শব্দগুলো কাছাকাছি অবস্থান করে, ফলে King-Man+Woman = Queen এর মতো চমৎকার ভেক্টর রিলেশনশিপ কাজ করে।"
+            },
+            {
+                question: "৩. Transformer আর্কিটেকচারে Positional Encoding কেন বাধ্যতামূলক বা প্রয়োজনীয়?",
+                options: [
+                    "টোকেন আইডিগুলোকে ডিকশনারি অনুযায়ী ইউনিক করার জন্য।",
+                    "এম্বেডিং ভেক্টরের সাইজকে পরিবর্তন করে প্রসেসর স্পিড বাড়ানোর জন্য।",
+                    "যেহেতু Transformer সব টোকেন সমান্তরালভাবে (in parallel) প্রসেস করে, তাই বাক্যে শব্দের অবস্থান বা সিকোয়েন্স বোঝানোর জন্য এটি প্রয়োজন।",
+                    "ভবিষ্যতের টোকেন দেখার সুযোগ বন্ধ করে চিটিং রোধ করার জন্য।"
+                ],
+                answer: 2,
+                explain: "যেহেতু ট্রান্সফরমার সিকোয়েনশিয়ালি না করে প্যারালালি প্রসেস করে, তাই শব্দের পরম ও আপেক্ষিক অবস্থান বোঝাতে পজিশনাল এনকোডিং ভেক্টর যোগ করা অপরিহার্য।"
+            },
+            {
+                question: "৪. Multi-Head Attention-এ 'Dimension Splitting' এর মূল সুবিধা বা কৌশল কোনটি?",
+                options: [
+                    "এটি মূল এম্বেডিং সাইজকে সমান ভাগে ভাগ করে প্রতিটি হেডের জন্য ছোট সাবস্পেস তৈরি করে কম্পিউটেশনাল পাওয়ার অতিরিক্ত খরচ না করে একাধিক সম্পর্ক ক্যাপচার করতে দেয়।",
+                    "এটি টোকেনাইজেশনের vocabulary-র সাইজ বৃদ্ধি করে।",
+                    "এটি ব্যাকপ্রপাগেশনের সময় গ্রেডিয়েন্ট সরাসরি পূর্ববর্তী লেয়ারে পাঠাতে সাহায্য করে।",
+                    "এটি দিয়ে মডেলের লেয়ারের সংখ্যা বা গভীরতা বাড়ানো হয়।"
+                ],
+                answer: 0,
+                explain: "Dimension Splitting প্রতিটি Head-কে মূল এম্বেডিংয়ের অংশবিশেষ (d_head = d_model / h) নিয়ে সমান্তরালে কাজ করতে দেয়, যা রিসোর্স বাঁচিয়ে উন্নত পারফরম্যান্স দেয়।"
+            },
+            {
+                question: "৫. Decoder-Only মডেলে Training-এর সময় ভবিষ্যৎ শব্দ দেখে ফেলা (Cheating) বন্ধ করতে কোন মেকানিজম ব্যবহৃত হয়?",
+                options: [
+                    "Layer Normalization (লেয়ার নরমালাইজেশন)",
+                    "Causal Masking (কজাল মাস্কিং)",
+                    "Residual/Skip Connection (রেজিসডুয়াল কানেকশন)",
+                    "Sub-word Tokenization (BPE)"
+                ],
+                answer: 1,
+                explain: "Causal Masking একটি আপার-ট্রায়াঙ্গুলার ম্যাট্রিক্স ব্যবহার করে ভবিষ্যতের মনোযোগের স্কোর ব্লক করে যাতে মডেল কেবল পূর্ববর্তী শব্দ দেখে পরবর্তী শব্দ অনুমান করা শেখে।"
+            }
+        ];
+
+        // --- 1. Static Databases (English) ---
+        const lessonsDataEn = [
+            {
+                id: "0001-high-level-llm-pipeline",
+                num: "01",
+                title: "High-Level Intuition of LLM Pipeline",
+                desc: "An overview of how a human-written sentence or prompt is tokenized step-by-step, converted to embedding vectors, and processed through a model to predict the next word.",
+                file: "lessons/0001-high-level-llm-pipeline-en.html",
+                duration: "15 min"
+            },
+            {
+                id: "0002-tokens-embeddings-positional-encoding",
+                num: "02",
+                title: "Tokens, Embeddings, and Positional Encoding",
+                desc: "The foundation of computer word recognition. BPE tokenization algorithm, semantic vector spaces representing word meanings, and trigonometric encoding representing word positions for parallel processing.",
+                file: "lessons/0002-tokens-embeddings-positional-encoding-en.html",
+                duration: "20 min"
+            },
+            {
+                id: "0003-self-attention-mechanism",
+                num: "03",
+                title: "Self-Attention Mechanism",
+                desc: "The magic solution to word context ambiguity. Query (Q), Key (K), and Value (V) vector dot product, scaling, and Softmax attention distribution based on search engine analogies.",
+                file: "lessons/0003-self-attention-mechanism-en.html",
+                duration: "25 min"
+            },
+            {
+                id: "0004-multi-head-attention-layer-stacking",
+                num: "04",
+                title: "Multi-Head Attention and Layer Stacking",
+                desc: "Enhancing language understanding. Capturing multi-dimensional relationships using multiple attention heads via Dimension Splitting, and layer stacking to build hierarchal deep features.",
+                file: "lessons/0004-multi-head-attention-layer-stacking-en.html",
+                duration: "20 min"
+            },
+            {
+                id: "0005-ffn-residual-connections-layer-norm",
+                num: "05",
+                title: "FFN, Residual Connections, and Layer Normalization",
+                desc: "Representing factual knowledge through Feed-Forward Networks, preventing signal vanishing using Skip Connections, and stabilizing deep training with Pre-LN layer normalization.",
+                file: "lessons/0005-ffn-residual-connections-layer-norm-en.html",
+                duration: "25 min"
+            },
+            {
+                id: "0006-decoder-only-vs-encoder-decoder",
+                num: "06",
+                title: "Decoder-Only Architecture and Causal Masking",
+                desc: "The engine of modern generative AI. Differences between Seq2Seq architectures and GPT/LLaMA-style autoregressive decoders, and Causal Attention masking to hide future words.",
+                file: "lessons/0006-decoder-only-vs-encoder-decoder-en.html",
+                duration: "20 min"
+            }
+        ];
+
+        const glossaryDataEn = [
+            {
+                category: "Input Representation",
+                term: "Tokenization",
+                bnTerm: "টোকেনাইজেশন",
+                def: "The complete collection of unique tokens or words that a model can recognize, essentially its dictionary."
+            },
+            {
+                category: "Input Representation",
+                term: "BPE (Byte Pair Encoding)",
+                bnTerm: "বাইট পেয়ার এনকোডিং",
+                def: "A sub-word tokenization algorithm that keeps frequent words intact and splits rare words into smaller subwords to prevent Out-Of-Vocabulary (OOV) issues."
+            },
+            {
+                category: "Input Representation",
+                term: "Embedding",
+                bnTerm: "এম্বেডিং",
+                def: "Converting a token ID into a high-dimensional semantic vector that mathematically represents the word's meaning and relationships."
+            },
+            {
+                category: "Input Representation",
+                term: "Positional Encoding",
+                bnTerm: "পজিশনাল এনকোডিং",
+                def: "A specific mathematical vector added to embedding vectors to convey the order or position of tokens processed in parallel."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Self-Attention Mechanism",
+                bnTerm: "সেলফ-অ্যাটেনশন মেকানিজম",
+                def: "A mechanism that measures how related a word is to other words in the same sentence to determine its context-rich meaning."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Query (Q)",
+                bnTerm: "কোয়েরি",
+                def: "A vector representing the current word searching for relationships with other words in the sentence (like a search query typed in a search engine)."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Key (K)",
+                bnTerm: "কী",
+                def: "A label vector for every word in the sentence used to check compatibility with the Query vector (like video titles or tags matching a search)."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Value (V)",
+                bnTerm: "ভ্যালু",
+                def: "A vector containing the actual semantic information of the word, which is weighted by attention scores to construct the output representation."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Attention Weights",
+                bnTerm: "অ্যাটেনশন ওয়েটস",
+                def: "Percentages or probability distributions obtained via Softmax that indicate how much attention a word should pay to other words."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Dot-Product Similarity",
+                bnTerm: "ডট-প্রোডাক্ট সিমিলারিটি",
+                def: "A mathematical method to compute compatibility or similarity between two vectors, used to obtain raw attention logits."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Scaling",
+                bnTerm: "স্কেলিং",
+                def: "Dividing dot-product values by the square root of the query/key dimension (sqrt(d_k)) to prevent large scores from saturating the Softmax function."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Multi-Head Attention",
+                bnTerm: "মাল্টি-হেড অ্যাটেনশন",
+                def: "Using multiple attention mechanisms in parallel to focus on different aspects of relationships and context in a sentence."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Single-Head Attention",
+                bnTerm: "সিঙ্গেল-হেড অ্যাটেনশন",
+                def: "An attention mechanism with only one head, which has limited capacity to capture multiple relationships simultaneously."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Bidirectional Attention",
+                bnTerm: "বাইডাইরেকশনাল অ্যাটেনশন",
+                def: "An attention mechanism where a token can look at words to both its left and right sides (e.g., in BERT)."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Pronoun Resolution",
+                bnTerm: "প্রোনাউন রেজোলিউশন",
+                def: "The task of determining which noun a pronoun (e.g., 'it') refers to in a sentence."
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Layer Stacking",
+                bnTerm: "লেয়ার স্ট্যাকিং",
+                def: "Stacking multiple Transformer blocks sequentially to help the model build hierarchical, high-level logical abstractions."
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Dimension Splitting",
+                bnTerm: "ডাইমেনশন স্প্লিটিং",
+                def: "Splitting the main embedding dimension into equal pieces for each head (d_head = d_model / h) to build parallel attention subspaces."
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Feed-Forward Network (FFN)",
+                bnTerm: "ফিড-ফরোয়ার্ড নেটওয়ার্ক",
+                def: "A sub-layer in a Transformer block that processes each token representation position-by-position independently to build deep features and add factual knowledge."
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Residual Connection",
+                bnTerm: "রেজিসডুয়াল কানেকশন",
+                def: "An architectural shortcut where the sub-layer's input is directly added to its output, preventing vanishing gradients in deep training."
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Layer Normalization",
+                bnTerm: "লেয়ার নরমালাইজেশন",
+                def: "A vector feature scaling operation that stabilizes training by maintaining a mean of 0 and a variance of 1 across the features of a single token."
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Pre-LN",
+                bnTerm: "প্রি-এলএন",
+                def: "A modern design choice where Layer Normalization is applied to the input before it enters a sub-layer, ensuring early training stability."
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Post-LN",
+                bnTerm: "পোস্ট-এলএন",
+                def: "The original Transformer design where Layer Normalization is applied after sub-layer processing and residual addition."
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "Decoder-Only Architecture",
+                bnTerm: "ডিকোডার-অনলি আর্কিটেকচার",
+                def: "A Transformer architecture composed solely of decoders, primarily used for generating next tokens autoregressively (e.g., GPT, LLaMA)."
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "Causal Masking",
+                bnTerm: "কজাল মাস্কিং",
+                def: "A technique using an upper-triangular mask matrix to block attention to future tokens during training, preventing cheating."
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "Autoregressive Generation",
+                bnTerm: "অটো-রিগ্রেসিভ জেনারেট",
+                def: "An iterative text generation process where previously generated tokens are appended back to the input to generate the next token, one by one."
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "Sequence-to-Sequence (Seq2Seq)",
+                bnTerm: "সিকোয়েন্স-টু-সিকোয়েন্স",
+                def: "A machine learning framework or problem where a model maps an input sequence (e.g., English) to an output sequence (e.g., Bengali)."
+            },
+            {
+                category: "Generation & LLM Architecture",
+                term: "End of Sequence (EOS) Token",
+                bnTerm: "ইওএস টোকেন",
+                def: "A special token that signals the end of text generation, indicating that the model should stop producing new tokens."
+            }
+        ];
+
+        const resourcesDataEn = [
+            {
+                type: "article",
+                title: '"The Illustrated Transformer" — Jay Alammar',
+                desc: "An excellent visual explanation of the Transformer architecture. Highly recommended for understanding the inner workings of Encoder, Decoder, Self-Attention, and FFNs.",
+                url: "https://jalammar.github.io/illustrated-transformer/"
+            },
+            {
+                type: "article",
+                title: '"The Illustrated GPT-2" — Jay Alammar',
+                desc: "Visually explains how decoder-only models (like GPT-2, GPT-3) work under the hood and how the autoregressive generation loop is executed.",
+                url: "https://jalammar.github.io/illustrated-gpt2/"
+            },
+            {
+                type: "video",
+                title: '3Blue1Brown: "Attention and Transformers" Series',
+                desc: "Dazzling visual animations explaining the math and intuition behind Self-Attention and the Transformer block.",
+                url: "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi"
+            },
+            {
+                type: "paper",
+                title: '"Attention Is All You Need" — Vaswani et al. (Original Paper)',
+                desc: "The seminal research paper that introduced the Transformer. Crucial for understanding the original mathematical formulation and experimental details.",
+                url: "https://arxiv.org/abs/1706.03762"
+            },
+            {
+                type: "video",
+                title: 'Andrej Karpathy: "Let\'s build GPT: from scratch"',
+                desc: "A legendary step-by-step video guide building a GPT model from scratch in PyTorch. Extremely helpful for visual and conceptual learning.",
+                url: "https://www.youtube.com/watch?v=kCc8FmEb1nY"
+            },
+            {
+                type: "wisdom",
+                title: "Reddit Community: r/MachineLearning",
+                desc: "The premier Reddit community for advanced machine learning discussions, research papers, and technical debates.",
+                url: "https://reddit.com/r/MachineLearning"
+            },
+            {
+                type: "wisdom",
+                title: "Reddit Community: r/LocalLLaMA",
+                desc: "An active community focused on running LLMs locally, fine-tuning, hardware setups, and practical engineering insights.",
+                url: "https://reddit.com/r/LocalLLaMA"
+            }
+        ];
+
+        const quizQuestionsEn = [
+            {
+                question: "1. What is the primary role of the Self-Attention Mechanism inside a Transformer block?",
+                options: [
+                    "To split input text into tokens.",
+                    "To calculate semantic and grammatical relations and context between different tokens in the sentence.",
+                    "To compute the probability scores for the next predicted token.",
+                    "To reduce the size or dimension of embedding vectors by half."
+                ],
+                answer: 1,
+                explain: "Self-Attention measures how related a word is to all other words in the same sentence to enrich its context-aware representation."
+            },
+            {
+                question: "2. In a Word Embedding space, what is demonstrated by the relationship 'Vector(King) - Vector(Man) + Vector(Woman) ≈ Vector(Queen)'?",
+                options: [
+                    "It is a complex grammatical rule code used for dictionary searches.",
+                    "Embedding vectors capture grammatical and semantic word relations, allowing mathematical operations (vector math) to hold semantic meaning.",
+                    "It is a flawed equation that does not actually work in practice.",
+                    "It is used to construct positional encodings."
+                ],
+                answer: 1,
+                explain: "Semantically similar words lie close to each other in the embedding space, enabling vector arithmetic to preserve analogy relations like King-Man+Woman = Queen."
+            },
+            {
+                question: "3. Why is Positional Encoding necessary in the Transformer architecture?",
+                options: [
+                    "To make token IDs unique according to a vocabulary dictionary.",
+                    "To alter embedding sizes and speed up processing.",
+                    "Since the Transformer processes all tokens in parallel, it is needed to preserve word order and sequence information.",
+                    "To prevent the model from looking at future tokens."
+                ],
+                answer: 2,
+                explain: "Because Transformers process all tokens simultaneously rather than sequentially, positional encodings must be added to provide token order information."
+            },
+            {
+                question: "4. What is the primary advantage of 'Dimension Splitting' in Multi-Head Attention?",
+                options: [
+                    "It splits the main embedding dimension into equal pieces for each head, creating parallel subspaces to capture multiple relationships without increasing computational cost.",
+                    "It increases the vocabulary size of the tokenizer.",
+                    "It helps backpropagation by routing gradients directly to previous layers.",
+                    "It is used to stack more blocks and make the model deeper."
+                ],
+                answer: 0,
+                explain: "Dimension Splitting allows each attention head to work on a smaller subspace (d_head = d_model / h) in parallel, capturing diverse contexts efficiently."
+            },
+            {
+                question: "5. Which mechanism prevents a Decoder-Only model from looking ahead at future words (cheating) during training?",
+                options: [
+                    "Layer Normalization",
+                    "Causal Masking",
+                    "Residual/Skip Connection",
+                    "Sub-word Tokenization (BPE)"
+                ],
+                answer: 1,
+                explain: "Causal Masking uses an upper-triangular matrix to mask future attention scores, forcing the model to predict the next word using only previous context."
+            }
+        ];
+
+        // --- 2. Logical State Management ---
+        let currentTab = "dashboard";
+        let activeLessonPreviewId = null;
+        
+        // Active pointer arrays based on language
+        let activeLessonsData = lessonsData;
+        let activeGlossaryData = glossaryData;
+        let activeResourcesData = resourcesData;
+        let activeQuizQuestions = quizQuestions;
+
+        // Progress State
+        let lessonProgress = {};
+        let missionGoals = [false, false, false, false, false];
+        let quizScore = null;
+
+        // Quiz State
+        let quizCurrentStep = 0; 
+        let quizUserAnswers = [];
+
+        // Language state
+        let currentLang = localStorage.getItem('lang') || 'bn';
+
+        // Translation Maps
+        const uiTranslations = {
+            bn: {
+                "nav-text-dashboard": "Dashboard (সংক্ষিপ্তসার)",
+                "nav-text-lessons": "Syllabus (লেসন ম্যাপ)",
+                "nav-text-glossary": "Glossary (শব্দকোষ)",
+                "nav-text-resources": "References (সহায়ক লিংক)",
+                "nav-text-quiz": "Assessment (চূড়ান্ত কুইজ)",
+                "syllabus-progress-lbl": "Syllabus Progress",
+                "total-glossary-lbl": "Total Glossary Terms",
+                "total-glossary-count": "২৫+",
+                "total-glossary-desc": "সহজ বাংলা ব্যাখ্যাসহ গুরুত্বপূর্ণ পদ",
+                "final-assessment-lbl": "Final Assessment",
+                "mission-card-title": "Learning Mission (আমাদের উদ্দেশ্য)",
+                "mission-tracker-badge": "Interactive Tracker",
+                "mission-card-desc": "LLM (Large Language Model) এর \"behind the scene\" বা ভেতরের মেকানিজম স্পষ্টভাবে বোঝা। কোনো জটিল গাণিতিক ফর্মুলা বা কোডিং জটলা ছাড়া <strong>Conceptual Intuition</strong> নিজের আয়ত্তে আনা, যাতে পরবর্তীতে যেকোনো advanced LLM concept সহজে ধরতে পারেন।",
+                "goal-text-0": "<strong>Big Picture Pipeline:</strong> একটি মানুষের লেখা বাক্য বা প্রম্পট কীভাবে ধাপে ধাপে প্রসেস হয়ে পরবর্তী শব্দ অনুমান করে, তার সামগ্রিক উচ্চস্তরের (High-Level) রূপরেখা বোঝা।",
+                "goal-text-1": "<strong>Input Pipeline:</strong> মানুষের বাক্য কীভাবে Tokenization, Sub-words, Vectors (Embedding) ও Positional Encoding অতিক্রম করে গাণিতিক ফিঙ্গারপ্রিন্ট তৈরি করে তা শেখা।",
+                "goal-text-2": "<strong>Core Attention Intuition:</strong> Self-Attention, Query (Q), Key (K), Value (V) এবং Softmax-এর ভেতরের মেকানিজম অনুধাবন করা।",
+                "goal-text-3": "<strong>Multi-Head Stacking:</strong> একাধিক মনোযোগ হেড কেন লাগে, Dimension Splitting কী এবং Residual Skip Connections ও LayerNorm কীভাবে ট্রেনিং স্থিতিশীল করে তা বোঝা।",
+                "goal-text-4": "<strong>LLM Gen Architecture:</strong> Modern Decoder-Only Transformers (যেমন GPT, LLaMA) কেন ব্যবহৃত হয় এবং Causal Masking কী তা জানা।",
+                "quick-start-title": "Quick Start Guide",
+                "quick-start-desc": "শেখ শুরু করার জন্য <strong>\"Syllabus (লেসন ম্যাপ)\"</strong> ট্যাবে চলে যান। সেখানে সিরিয়ালি সাজানো লেসনগুলো পড়তে পারবেন। প্রতিটি লেসন পড়ার সময় আপনি তা <strong>\"In Progress\"</strong> বা <strong>\"Completed\"</strong> হিসেবে চিহ্নিত করতে পারেন, যা উপরে আপনার ড্যাশবোর্ডের প্রোগ্রেস ও ট্র্যাকার আপডেট করে রাখবে!",
+                "quick-start-btn-1": "লেসন ম্যাপে যান",
+                "quick-start-btn-2": "শব্দকোষ সার্চ করুন",
+                "glossary-search-placeholder": "পদক্ষেপ বা ইংরেজি Term দিয়ে সার্চ করুন (যেমন: Attention)...",
+                "glossary-cat-all-opt": "সব ক্যাটাগরি",
+                "resources-intro-title": "সহায়ক রিসোর্স গাইড",
+                "resources-intro-desc": "ট্রান্সফরমার আর্কিটেকচার নিয়ে ভিজ্যুয়াল অ্যানিমেশন, অরিজিনাল পেপার এবং মডার্ন লার্জ ল্যাঙ্গুয়েজ মডেল শেখার জন্য নিচে চমৎকার কিছু সহায়ক রিসোর্স সাজানো রয়েছে। প্রতিটি রিসোর্সের সংক্ষিপ্ত বিবরণও দেওয়া হলো যাতে আপনি আপনি আপনার সুবিধামতো বেছে নিতে পারেন।",
+                "quiz-intro-title": "Transformer Architecture Assessment",
+                "quiz-intro-desc": "৬টি লেসন শেষ করার পর আপনার অর্জিত জ্ঞান যাচাইয়ের জন্য প্রস্তুত? ৫টি বহুনির্বাচনী প্রশ্নের সঠিক উত্তর দিয়ে সফলতার সাথে উত্তীর্ণ হয়ে অর্জন করুন আপনার <strong>\"Transformer Hub Completion Certificate\"</strong>!",
+                "quiz-start-btn": "কুইজ শুরু করুন",
+                "preview-opt-not-started": "Not Started",
+                "preview-opt-in-progress": "In Progress",
+                "preview-opt-completed": "Completed",
+                "preview-open-tab-text": "New Tab",
+                "quiz-restart-btn": "পুনরায় কুইজ দিন",
+                "quiz-back-btn": "ড্যাশবোর্ডে ফিরে যান"
+            },
+            en: {
+                "nav-text-dashboard": "Dashboard Overview",
+                "nav-text-lessons": "Syllabus / Lessons",
+                "nav-text-glossary": "Glossary Terminology",
+                "nav-text-resources": "References & Links",
+                "nav-text-quiz": "Final Assessment",
+                "syllabus-progress-lbl": "Syllabus Progress",
+                "total-glossary-lbl": "Total Glossary Terms",
+                "total-glossary-count": "25+",
+                "total-glossary-desc": "Key terms with simple explanations",
+                "final-assessment-lbl": "Final Assessment",
+                "mission-card-title": "Learning Mission",
+                "mission-tracker-badge": "Interactive Tracker",
+                "mission-card-desc": "To clearly understand the \"behind the scenes\" mechanisms of Large Language Models (LLMs). Master the <strong>conceptual intuition</strong> without complex mathematical derivations or coding details, allowing you to easily grasp advanced LLM concepts later.",
+                "goal-text-0": "<strong>Big Picture Pipeline:</strong> Get the high-level overview of how a human sentence or prompt flows step-by-step through the model to predict the next word.",
+                "goal-text-1": "<strong>Input Pipeline:</strong> Learn how human text is processed through Tokenization, Sub-words, Vectors (Embedding), and Positional Encoding to create mathematical fingerprints.",
+                "goal-text-2": "<strong>Core Attention Intuition:</strong> Understand the internal mechanisms of Self-Attention, Query (Q), Key (K), Value (V), and Softmax.",
+                "goal-text-3": "<strong>Multi-Head Stacking:</strong> Understand why multiple attention heads are needed, what Dimension Splitting is, and how Residual Skip Connections and LayerNorm stabilize training.",
+                "goal-text-4": "<strong>LLM Gen Architecture:</strong> Know why modern Decoder-Only Transformers (like GPT, LLaMA) are used and what Causal Masking does.",
+                "quick-start-title": "Quick Start Guide",
+                "quick-start-desc": "Go to the <strong>\"Syllabus (Lessons Map)\"</strong> tab to start learning. You can read the lessons sequentially and mark them as <strong>\"In Progress\"</strong> or <strong>\"Completed\"</strong> to update your progress metrics and mission tracker.",
+                "quick-start-btn-1": "Go to Lessons Map",
+                "quick-start-btn-2": "Search Glossary",
+                "glossary-search-placeholder": "Search by term or definition (e.g. Attention)...",
+                "glossary-cat-all-opt": "All Categories",
+                "resources-intro-title": "Reference Resources Guide",
+                "resources-intro-desc": "A curated list of reference resources to learn the Transformer architecture, visual animations, original papers, and modern LLMs. Brief descriptions are provided to help you choose.",
+                "quiz-intro-title": "Transformer Architecture Assessment",
+                "quiz-intro-desc": "Ready to test your knowledge after completing the 6 modules? Answer 5 multiple-choice questions correctly to earn your <strong>\"Transformer Hub Completion Certificate\"</strong>!",
+                "quiz-start-btn": "Start Quiz",
+                "preview-opt-not-started": "Not Started",
+                "preview-opt-in-progress": "In Progress",
+                "preview-opt-completed": "Completed",
+                "preview-open-tab-text": "New Tab",
+                "quiz-restart-btn": "Retake Quiz",
+                "quiz-back-btn": "Back to Dashboard"
+            }
+        };
+
+        const tabTranslations = {
+            bn: {
+                dashboard: {
+                    title: "Dashboard Overview",
+                    subtitle: "স্বাগতম! ট্রান্সফরমার আর্কিটেকচার শেখার যাত্রা শুরু হোক।"
+                },
+                lessons: {
+                    title: "Lessons Map",
+                    subtitle: "৬টি মডিউলের মাধ্যমে ট্রান্সফরমারের প্রতিটি ব্লকের খুঁটিনাটি বিস্তারিত বুঝে নিন।"
+                },
+                glossary: {
+                    title: "Interactive Glossary",
+                    subtitle: "শব্দকোষ এবং জটিল টেকনিক্যাল টার্মগুলোর সহজ বাংলা ব্যাখ্যা।"
+                },
+                resources: {
+                    title: "Reference Resources",
+                    subtitle: "শেখার গভীরতা বাড়াতে ও ধারণা পাকা করতে সহায়ক নিবন্ধ, ভিডিও ও পেপারস।"
+                },
+                quiz: {
+                    title: "Final Assessment",
+                    subtitle: "সম্পূর্ণ মডিউলের জ্ঞান যাচাই করুন এবং সার্টিফিকেট অর্জন করুন।"
+                }
+            },
+            en: {
+                dashboard: {
+                    title: "Dashboard Overview",
+                    subtitle: "Welcome! Begin your journey of learning Transformer architecture."
+                },
+                lessons: {
+                    title: "Lessons Map",
+                    subtitle: "Understand the fine details of each Transformer block across 6 modules."
+                },
+                glossary: {
+                    title: "Interactive Glossary",
+                    subtitle: "Simple explanations for terminology and complex technical terms."
+                },
+                resources: {
+                    title: "Reference Resources",
+                    subtitle: "Articles, videos, and papers to deepen your understanding."
+                },
+                quiz: {
+                    title: "Final Assessment",
+                    subtitle: "Test your knowledge of the entire module set and earn a certificate."
+                }
+            }
+        };
+
+        // --- 3. Initial Load Hook ---
+        window.addEventListener('load', () => {
+            loadStateFromLocalStorage();
+            syncLanguage();
+            
+            // Check for hash navigation
+            const hash = window.location.hash.substring(1);
+            if (['dashboard', 'lessons', 'glossary', 'resources', 'quiz'].includes(hash)) {
+                switchTab(hash);
+            }
+        });
+
+        // --- 4. LocalStorage Syncing ---
+        function loadStateFromLocalStorage() {
+            // Load language
+            currentLang = localStorage.getItem('lang') || 'bn';
+            
+            // Load lesson progress
+            const storedProgress = localStorage.getItem('transformer_lessons_progress');
+            if (storedProgress) {
+                lessonProgress = JSON.parse(storedProgress);
+            } else {
+                // Initialize default
+                activeLessonsData.forEach(l => {
+                    lessonProgress[l.id] = 'not-started';
+                });
+                saveStateToLocalStorage();
+            }
+
+            // Load goals
+            const storedGoals = localStorage.getItem('transformer_goals');
+            if (storedGoals) {
+                missionGoals = JSON.parse(storedGoals);
+            }
+            // Sync goal checkbox UI
+            missionGoals.forEach((val, idx) => {
+                const el = document.getElementById(`goal-${idx}`);
+                if (el) {
+                    if (val) el.classList.add('checked');
+                    else el.classList.remove('checked');
+                }
+            });
+
+            // Load quiz score
+            const storedQuiz = localStorage.getItem('transformer_quiz_score');
+            if (storedQuiz) {
+                quizScore = parseInt(storedQuiz);
+            }
+        }
+
+        function saveStateToLocalStorage() {
+            localStorage.setItem('transformer_lessons_progress', JSON.stringify(lessonProgress));
+            localStorage.setItem('transformer_goals', JSON.stringify(missionGoals));
+            if (quizScore !== null) {
+                localStorage.setItem('transformer_quiz_score', quizScore.toString());
+            }
+        }
+
+        // --- 5. UI Renderers ---
+        function renderRoadmap() {
+            const container = document.getElementById('lessons-roadmap-nodes');
+            if (!container) return;
+            container.innerHTML = activeLessonsData.map((lesson, idx) => {
+                const status = lessonProgress[lesson.id] || 'not-started';
+                let nodeClass = '';
+                if (status === 'completed') nodeClass = 'completed';
+                else if (status === 'in-progress') nodeClass = 'in-progress';
+
+                const isEn = (currentLang === 'en');
+                const quickReadText = isEn ? "Quick Read" : "Quick Read";
+                const optNotStarted = isEn ? "Not Started" : "শুরু করা হয়নি";
+                const optInProgress = isEn ? "In Progress" : "চলমান";
+                const optCompleted = isEn ? "Completed" : "সম্পন্ন";
+
+                return `
+                    <div class="roadmap-node ${nodeClass}" id="node-${lesson.id}">
+                        <div class="roadmap-marker"></div>
+                        <div class="roadmap-card">
+                            <div class="roadmap-card-info">
+                                <span class="roadmap-card-badge">${isEn ? 'Module' : 'মডিউল'} ${lesson.num} • ${lesson.duration}</span>
+                                <h3 class="roadmap-card-title">${lesson.title}</h3>
+                                <p class="roadmap-card-desc">${lesson.desc}</p>
+                            </div>
+                            <div class="roadmap-card-actions">
+                                <select class="status-dropdown" onchange="updateLessonStatus('${lesson.id}', this.value)">
+                                    <option value="not-started" ${status === 'not-started' ? 'selected' : ''}>${optNotStarted}</option>
+                                    <option value="in-progress" ${status === 'in-progress' ? 'selected' : ''}>${optInProgress}</option>
+                                    <option value="completed" ${status === 'completed' ? 'selected' : ''}>${optCompleted}</option>
+                                </select>
+                                <button class="btn btn-primary" onclick="openLessonPreview('${lesson.id}')">
+                                    ${quickReadText}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderGlossary() {
+            const container = document.getElementById('glossary-container');
+            if (!container) return;
+            container.innerHTML = activeGlossaryData.map((term, idx) => `
+                <div class="glossary-card" data-category="${term.category}" data-searchable="${term.term.toLowerCase()} ${term.bnTerm} ${term.def.toLowerCase()}">
+                    <div class="glossary-card-header">
+                        <div class="glossary-card-category">${term.category}</div>
+                        <h3 class="glossary-card-title">${term.term} <span>(${term.bnTerm})</span></h3>
+                    </div>
+                    <p class="glossary-card-def">${term.def}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderResources() {
+            const container = document.getElementById('resources-container');
+            if (!container) return;
+            const isEn = (currentLang === 'en');
+            const resourceBtnText = isEn ? "View Resource ↗" : "Resource দেখুন ↗";
+            
+            container.innerHTML = activeResourcesData.map((res, idx) => `
+                <div class="resource-card">
+                    <span class="resource-type-badge resource-type-${res.type}">${res.type}</span>
+                    <h3 class="resource-title">${res.title}</h3>
+                    <p class="resource-desc">${res.desc}</p>
+                    <a href="${res.url}" class="resource-link" target="_blank">
+                        ${resourceBtnText}
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        function updateDashboardAnalytics() {
+            // Calculate progress percentage
+            const total = activeLessonsData.length;
+            const completed = Object.values(lessonProgress).filter(v => v === 'completed').length;
+            const percentage = Math.round((completed / total) * 100);
+
+            // Update rings & numbers
+            document.getElementById('dash-progress-text').innerText = `${percentage}%`;
+            document.getElementById('dash-progress-ring-label').innerText = `${percentage}%`;
+
+            // SVG ring calculation (2 * PI * r = 2 * 3.14159 * 40 = 251.2)
+            const circumference = 251.2;
+            const strokeDashoffset = circumference - (percentage / 100) * circumference;
+            document.getElementById('dash-progress-ring').style.strokeDashoffset = strokeDashoffset;
+
+            // Update remaining label
+            const isEn = (currentLang === 'en');
+            let remainingText = '';
+            if (completed === total) {
+                remainingText = isEn ? 'Excellent! All lessons completed!' : 'অসাধারণ! সবগুলো লেসন সম্পন্ন হয়েছে!';
+            } else {
+                remainingText = isEn ? `${completed} completed, ${total - completed} remaining` : `${completed} সম্পন্ন, ${total - completed}টি বাকি`;
+            }
+            document.getElementById('dash-remaining-text').innerText = remainingText;
+
+            // Quiz Badge status
+            const statusEl = document.getElementById('dash-quiz-status');
+            const scoreSubEl = document.getElementById('dash-quiz-score-sub');
+            const badgeEl = document.getElementById('dash-quiz-badge');
+
+            if (quizScore !== null) {
+                statusEl.innerText = isEn ? `Certified (${quizScore}/5)` : `Certified (${quizScore}/5)`;
+                scoreSubEl.innerText = isEn ? `Latest Score: ${Math.round((quizScore/5)*100)}% • Quiz Completed` : `সর্বশেষ স্কোর: ${Math.round((quizScore/5)*100)}% • কুইজ সম্পন্ন`;
+                badgeEl.innerText = "★";
+                badgeEl.style.filter = "drop-shadow(0 0 10px rgba(16, 185, 129, 0.4))";
+            } else {
+                statusEl.innerText = isEn ? "Not Attempted" : "অংশগ্রহণ করা হয়নি";
+                scoreSubEl.innerText = isEn ? "Complete the quiz to earn your certificate" : "কুইজ দিয়ে সার্টিফিকেট অর্জন করুন";
+                badgeEl.innerText = "—";
+                badgeEl.style.filter = "none";
+            }
+        }
+
+        // --- 6. Event Handlers & Interactions ---
+        function switchTab(tabId) {
+            currentTab = tabId;
+            window.location.hash = tabId;
+
+            // Update sidebar buttons
+            document.querySelectorAll('.nav-menu li').forEach(li => {
+                li.classList.remove('active');
+            });
+            document.getElementById(`nav-${tabId}`).classList.add('active');
+
+            // Close mobile menu if open
+            document.getElementById('nav-menu').classList.remove('open');
+            const hb = document.getElementById('hamburger-btn');
+            hb.innerText = "☰";
+            hb.setAttribute('aria-expanded', 'false');
+
+            // Update main headings
+            const heading = document.getElementById('page-heading');
+            const subheading = document.getElementById('page-subheading');
+
+            if (tabId === 'dashboard') {
+                heading.innerText = 'Dashboard Overview';
+                subheading.innerText = 'স্বাগতম! ট্রান্সফরমার আর্কিটেকচার শেখার যাত্রা শুরু হোক।';
+            } else if (tabId === 'lessons') {
+                heading.innerText = 'Lessons Map';
+                subheading.innerText = '৬টি মডিউলের মাধ্যমে ট্রান্সফরমারের প্রতিটি ব্লকের খুঁটিনাটি বিস্তারিত বুঝে নিন।';
+            } else if (tabId === 'glossary') {
+                heading.innerText = 'Interactive Glossary';
+                subheading.innerText = 'শব্দকোষ এবং জটিল টেকনিক্যাল টার্মগুলোর সহজ বাংলা ব্যাখ্যা।';
+            } else if (tabId === 'resources') {
+                heading.innerText = 'Reference Resources';
+                subheading.innerText = 'শেখার গভীরতা বাড়াতে ও ধারণা পাকা করতে সহায়ক নিবন্ধ, ভিডিও ও পেপারস।';
+            } else if (tabId === 'quiz') {
+                heading.innerText = 'Final Assessment';
+                subheading.innerText = 'সম্পূর্ণ মডিউলের জ্ঞান যাচাই করুন এবং সার্টিফিকেট অর্জন করুন।';
+            }
+
+            // Show appropriate sections
+            document.querySelectorAll('.view-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.getElementById(`view-${tabId}`).classList.add('active');
+
+            // Analytics updates
+            if (tabId === 'dashboard') {
+                updateDashboardAnalytics();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('nav-menu');
+            const btn = document.getElementById('hamburger-btn');
+            if (menu.classList.contains('open')) {
+                menu.classList.remove('open');
+                btn.innerText = "☰";
+                btn.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.classList.add('open');
+                btn.innerText = "✕";
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        function toggleGoal(idx) {
+            missionGoals[idx] = !missionGoals[idx];
+            const el = document.getElementById(`goal-${idx}`);
+            if (missionGoals[idx]) {
+                el.classList.add('checked');
+            } else {
+                el.classList.remove('checked');
+            }
+            saveStateToLocalStorage();
+        }
+
+        function updateLessonStatus(lessonId, newStatus) {
+            lessonProgress[lessonId] = newStatus;
+            saveStateToLocalStorage();
+            renderRoadmap();
+            updateDashboardAnalytics();
+
+            // Sync visual status node class directly for smoother feel
+            const node = document.getElementById(`node-${lessonId}`);
+            if (node) {
+                node.className = 'roadmap-node';
+                if (newStatus === 'completed') node.classList.add('completed');
+                else if (newStatus === 'in-progress') node.classList.add('in-progress');
+            }
+        }
+
+        // --- 7. Lesson Preview Drawer System (iframe inline) ---
+        function openLessonPreview(lessonId) {
+            const lesson = activeLessonsData.find(l => l.id === lessonId);
+            if (!lesson) return;
+            
+            activeLessonPreviewId = lessonId;
+            
+            // Set header parameters
+            const titleEl = document.getElementById('preview-lesson-title');
+            const openTabBtn = document.getElementById('preview-open-tab-btn');
+            if (titleEl) titleEl.innerText = lesson.title;
+            if (openTabBtn) openTabBtn.href = lesson.file;
+            
+            // Sync status select
+            const status = lessonProgress[lessonId] || 'not-started';
+            const statusDropdown = document.getElementById('preview-status-dropdown');
+            if (statusDropdown) statusDropdown.value = status;
+            
+            // Load iframe src — force reload by clearing src first (fixes lesson-switching bug)
+            const iframe = document.getElementById('preview-iframe');
+            if (iframe) {
+                iframe.src = "";
+                // Use setTimeout to ensure the src reset is processed before setting the new URL
+                setTimeout(() => { iframe.src = lesson.file; }, 50);
+            }
+            
+            // Open drawer
+            const drawer = document.getElementById('preview-drawer');
+            const backdrop = document.getElementById('preview-backdrop');
+            if (drawer) drawer.classList.add('open');
+            if (backdrop) backdrop.classList.add('active');
+        }
+
+        function closeLessonPreview() {
+            const drawer = document.getElementById('preview-drawer');
+            const backdrop = document.getElementById('preview-backdrop');
+            if (drawer) drawer.classList.remove('open');
+            if (backdrop) backdrop.classList.remove('active');
+            
+            // Unload iframe source to stop video/animations in background
+            const iframe = document.getElementById('preview-iframe');
+            if (iframe) iframe.src = "";
+            activeLessonPreviewId = null;
+        }
+
+        function onPreviewStatusChange(newStatus) {
+            if (activeLessonPreviewId) {
+                updateLessonStatus(activeLessonPreviewId, newStatus);
+            }
+        }
+
+        // --- 8. Glossary Filter Engine ---
+        function filterGlossary() {
+            const searchInput = document.getElementById('glossary-search');
+            const catFilter = document.getElementById('glossary-cat-filter');
+            if (!searchInput || !catFilter) return;
+
+            const query = searchInput.value.toLowerCase().trim();
+            const cat = catFilter.value;
+            
+            const cards = document.querySelectorAll('.glossary-card');
+            
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                const cardText = card.getAttribute('data-searchable');
+                
+                const matchesCat = (cat === 'all' || cardCat === cat);
+                const matchesQuery = (query === '' || cardText.includes(query));
+                
+                if (matchesCat && matchesQuery) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // --- 9. Final Quiz Engine ---
+        function startQuiz() {
+            const intro = document.getElementById('quiz-intro');
+            const area = document.getElementById('quiz-questions-area');
+            const result = document.getElementById('quiz-result');
+            if (intro) intro.style.display = 'none';
+            if (area) area.style.display = 'block';
+            if (result) result.style.display = 'none';
+            
+            quizCurrentStep = 0;
+            quizUserAnswers = new Array(activeQuizQuestions.length).fill(null);
+            
+            renderQuizQuestions();
+            showQuizQuestion(0);
+        }
+
+        function renderQuizQuestions() {
+            const container = document.getElementById('quiz-cards-container');
+            if (!container) return;
+            container.innerHTML = activeQuizQuestions.map((q, qIdx) => `
+                <div class="quiz-card" id="quiz-card-${qIdx}">
+                    <div class="quiz-question-number">${currentLang === 'en' ? `Question ${qIdx + 1} of ${activeQuizQuestions.length}` : `প্রশ্ন ${qIdx + 1}/${activeQuizQuestions.length}`}</div>
+                    <div class="quiz-question-text">${q.question}</div>
+                    <div class="quiz-options-list">
+                        ${q.options.map((opt, oIdx) => `
+                            <div class="quiz-option-item" id="q-${qIdx}-opt-${oIdx}" onclick="selectQuizOption(${qIdx}, ${oIdx})">
+                                <span class="quiz-bullet">${String.fromCharCode(65 + oIdx)}</span>
+                                <span class="quiz-option-text">${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div id="quiz-feedback-box-${qIdx}" class="quiz-feedback"></div>
+                </div>
+            `).join('');
+        }
+
+        function showQuizQuestion(idx) {
+            document.querySelectorAll('.quiz-card').forEach(c => c.classList.remove('active'));
+            const card = document.getElementById(`quiz-card-${idx}`);
+            if (card) card.classList.add('active');
+            
+            const isEn = (currentLang === 'en');
+            const counterEl = document.getElementById('quiz-counter');
+            if (counterEl) {
+                counterEl.innerText = isEn 
+                    ? `Question ${idx + 1} of ${activeQuizQuestions.length}`
+                    : `প্রশ্ন ${idx + 1}/${activeQuizQuestions.length}`;
+            }
+            
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if (nextBtn) {
+                if (idx === activeQuizQuestions.length - 1) {
+                    nextBtn.innerText = isEn ? "View Results" : "ফলাফল দেখুন";
+                } else {
+                    nextBtn.innerText = isEn ? "Next Question" : "পরবর্তী প্রশ্ন";
+                }
+                
+                // Enable next button only if already answered
+                if (quizUserAnswers[idx] !== null) {
+                    nextBtn.removeAttribute('disabled');
+                } else {
+                    nextBtn.setAttribute('disabled', 'true');
+                }
+            }
+        }
+
+        function selectQuizOption(qIdx, oIdx) {
+            // Prevent changing answer once selected
+            if (quizUserAnswers[qIdx] !== null) return;
+            
+            quizUserAnswers[qIdx] = oIdx;
+            
+            const q = activeQuizQuestions[qIdx];
+            const isCorrect = (oIdx === q.answer);
+            
+            // Color selection UI
+            const selectedEl = document.getElementById(`q-${qIdx}-opt-${oIdx}`);
+            const feedbackEl = document.getElementById(`quiz-feedback-box-${qIdx}`);
+            
+            const isEn = (currentLang === 'en');
+            if (selectedEl && feedbackEl) {
+                if (isCorrect) {
+                    selectedEl.classList.add('correct');
+                    feedbackEl.className = 'quiz-feedback success';
+                    feedbackEl.innerHTML = isEn 
+                        ? `✓ Correct Answer! ${q.explain}`
+                        : `✓ সঠিক উত্তর! ${q.explain}`;
+                } else {
+                    selectedEl.classList.add('incorrect');
+                    
+                    // Highlight correct option too
+                    const correctEl = document.getElementById(`q-${qIdx}-opt-${q.answer}`);
+                    if (correctEl) correctEl.classList.add('correct');
+                    
+                    feedbackEl.className = 'quiz-feedback error';
+                    feedbackEl.innerHTML = isEn 
+                        ? `✕ Incorrect Answer. Correct option: ${String.fromCharCode(65 + q.answer)}. ${q.explain}`
+                        : `✕ ভুল উত্তর। সঠিক উত্তর: ${String.fromCharCode(65 + q.answer)}। ${q.explain}`;
+                }
+            }
+            
+            // Enable navigation button
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if (nextBtn) nextBtn.removeAttribute('disabled');
+        }
+
+        function nextQuizStep() {
+            if (quizCurrentStep < activeQuizQuestions.length - 1) {
+                quizCurrentStep++;
+                showQuizQuestion(quizCurrentStep);
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            // Calculate final score
+            let correctCount = 0;
+            activeQuizQuestions.forEach((q, idx) => {
+                if (quizUserAnswers[idx] === q.answer) {
+                    correctCount++;
+                }
+            });
+            
+            quizScore = correctCount;
+            saveStateToLocalStorage();
+            
+            // Render certificate in correct language
+            renderCertificateLang();
+            
+            // Hide questions, show results
+            const qaArea = document.getElementById('quiz-questions-area');
+            const resultArea = document.getElementById('quiz-result');
+            if (qaArea) qaArea.style.display = 'none';
+            if (resultArea) resultArea.style.display = 'block';
+            
+            updateDashboardAnalytics();
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+
+
+
+
+
+        // --- Bilingual Language System ---
+        function toggleLanguage() {
+            currentLang = currentLang === 'bn' ? 'en' : 'bn';
+            localStorage.setItem('lang', currentLang);
+            syncLanguage();
+        }
+
+        function syncLanguage() {
+            // 1. Update language button text
+            const langBtn = document.getElementById('lang-toggle-btn');
+            if (langBtn) {
+                langBtn.innerText = currentLang === 'bn' ? 'English' : 'বাংলা';
+            }
+
+            // 2. Set active data arrays
+            if (currentLang === 'en') {
+                activeLessonsData = lessonsDataEn;
+                activeGlossaryData = glossaryDataEn;
+                activeResourcesData = resourcesDataEn;
+                activeQuizQuestions = quizQuestionsEn;
+            } else {
+                activeLessonsData = lessonsData;
+                activeGlossaryData = glossaryData;
+                activeResourcesData = resourcesData;
+                activeQuizQuestions = quizQuestions;
+            }
+
+            // 3. Dynamically translate static UI elements in DOM
+            translateDOM();
+
+            // 4. Re-render dynamic list containers
+            renderRoadmap();
+            renderGlossary();
+            renderResources();
+            updateDashboardAnalytics();
+
+            // 5. Update certificate if completed
+            if (quizScore !== null) {
+                renderCertificateLang();
+            }
+
+            // 6. Reload active preview lesson with the correct language version if drawer open
+            if (activeLessonPreviewId) {
+                const lesson = activeLessonsData.find(l => l.id === activeLessonPreviewId);
+                if (lesson) {
+                    const titleEl = document.getElementById('preview-lesson-title');
+                    const openTabBtn = document.getElementById('preview-open-tab-btn');
+                    const iframe = document.getElementById('preview-iframe');
+                    
+                    if (titleEl) titleEl.innerText = lesson.title;
+                    if (openTabBtn) openTabBtn.href = lesson.file;
+                    if (iframe) iframe.src = lesson.file;
+                }
+            }
+        }
+
+        function translateDOM() {
+            const dict = uiTranslations[currentLang];
+            
+            // Update text content or innerHTML of elements by ID
+            for (const [id, text] of Object.entries(dict)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (text.includes('<') || text.includes('&') || text.includes('strong>')) {
+                        el.innerHTML = text;
+                    } else {
+                        el.innerText = text;
+                    }
+                }
+            }
+            
+            // Specially translate placeholder for search input
+            const searchInput = document.getElementById('glossary-search');
+            if (searchInput) {
+                searchInput.placeholder = dict["glossary-search-placeholder"];
+            }
+
+            // Specially update headings and subheadings for active tab
+            const heading = document.getElementById('page-heading');
+            const subheading = document.getElementById('page-subheading');
+            const trans = tabTranslations[currentLang][currentTab];
+            if (trans && heading && subheading) {
+                heading.innerText = trans.title;
+                subheading.innerText = trans.subtitle;
+            }
+        }
+
+        function renderCertificateLang() {
+            if (quizScore === null) return;
+            
+            const isEn = (currentLang === 'en');
+            
+            // Title & Subtitle
+            const titleEl = document.getElementById('cert-title');
+            const subtitleEl = document.getElementById('cert-subtitle');
+            if (titleEl) titleEl.innerText = isEn ? "Certificate of Completion" : "Certificate of Completion";
+            if (subtitleEl) subtitleEl.innerText = isEn ? "Transformer Learning Hub" : "Bengali Transformer Learning Hub";
+            
+            // Statement
+            const statementEl = document.getElementById('cert-statement');
+            if (statementEl) {
+                if (isEn) {
+                    statementEl.innerHTML = `This is to certify that<br>
+                        <strong style="font-size: 1.6rem; color: var(--text-primary); display: inline-block; margin: 0.5rem 0;" id="cert-user-name">Student</strong><br>
+                        has successfully completed the assessment for <strong>Transformer Architecture and LLM Mechanics</strong>.`;
+                } else {
+                    statementEl.innerHTML = `গর্বের সাথে প্রত্যয়ন করা যাচ্ছে যে,<br>
+                        <strong style="font-size: 1.6rem; color: var(--text-primary); display: inline-block; margin: 0.5rem 0;" id="cert-user-name">শিক্ষার্থী</strong><br>
+                        সাফল্যের সাথে <strong>Transformer Architecture and LLM Mechanics</strong>-এর কুইজ সম্পন্ন করেছেন।`;
+                }
+            }
+            
+            // Score
+            const scoreEl = document.getElementById('cert-final-score');
+            if (scoreEl) {
+                scoreEl.innerText = isEn 
+                    ? `Score: ${quizScore} / ${activeQuizQuestions.length} (${Math.round((quizScore/activeQuizQuestions.length)*100)}%)`
+                    : `স্কোর: ${quizScore} / ${activeQuizQuestions.length} (${Math.round((quizScore/activeQuizQuestions.length)*100)}%)`;
+            }
+            
+            // Date
+            const dateEl = document.getElementById('cert-date-text');
+            if (dateEl) {
+                const today = new Date();
+                if (isEn) {
+                    const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                    dateEl.innerText = `Date: ${dateStr}`;
+                } else {
+                    const dateStr = today.toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' });
+                    dateEl.innerText = `তারিখ: ${dateStr}`;
+                }
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>
