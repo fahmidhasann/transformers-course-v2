@@ -252,29 +252,214 @@
 
         .vector-display-row {
             display: flex;
-            gap: 0.35rem;
+            gap: 0.45rem;
             align-items: center;
+            overflow: visible; /* Prevent row clipping or scrollbars when scaling blocks */
+            padding: 6px 0;    /* Vertical buffer space for transform scale */
+            margin: -6px 0;    /* Compensate parent padding */
         }
 
         .vector-block {
-            flex-grow: 1;
-            max-width: 60px;
-            text-align: center;
+            width: 48px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-family: 'Outfit', sans-serif;
-            font-size: 0.85rem;
-            padding: 0.5rem 0.2rem;
-            border-radius: 4px;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: #0f172a;
-            box-shadow: inset 0 0 5px rgba(255,255,255,0.2);
-            transition: all 0.5s ease;
+            border-radius: 6px;
+            color: white !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        background-color 0.2s ease,
+                        border-color 0.2s ease,
+                        box-shadow 0.2s ease;
+            flex-shrink: 0;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid transparent;
         }
 
         .vector-math-symbol {
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--text-secondary);
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.5rem;
+        }
+
+        /* Positional Encoding wave visualizer styles */
+        .pe-simulator-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pe-table-section {
+            width: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .pe-wave-details {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.85rem 1.25rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .pe-wave-details[open] {
+            background: rgba(15, 23, 42, 0.45);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow);
+        }
+
+        .pe-wave-summary {
+            font-weight: 600;
+            color: var(--accent-cyan);
+            cursor: pointer;
+            outline: none;
+            user-select: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            list-style: none; /* Hide default arrow */
+        }
+
+        .pe-wave-summary::-webkit-details-marker {
+            display: none; /* Hide default arrow */
+        }
+        .pe-wave-summary::marker {
+            display: none; /* Hide default arrow */
+        }
+
+        .pe-wave-summary::after {
+            content: '▾';
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: transform 0.25s ease;
+            margin-left: auto;
+        }
+
+        .pe-wave-details[open] .pe-wave-summary::after {
+            transform: rotate(180deg);
+            color: var(--accent-cyan);
+        }
+
+        .pe-wave-section {
+            width: 100%;
+            margin-top: 1.25rem;
+            animation: slideDown 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (min-width: 900px) {
+            .pe-simulator-layout.wave-expanded {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+            .pe-simulator-layout.wave-expanded .pe-table-section {
+                flex: 1.25;
+                width: auto;
+            }
+            .pe-simulator-layout.wave-expanded .pe-wave-details {
+                flex: 1;
+                width: auto;
+            }
+        }
+
+        .vector-block.active-dim {
+            border-color: #fff !important;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
+            transform: scale(1.15); /* Pop out scale */
+            z-index: 10;
+        }
+
+        .pe-wave-path {
+            fill: none;
+            stroke-width: 2px;
+            stroke-opacity: 0.35;
+            transition: stroke-width 0.25s ease, stroke-opacity 0.25s ease, filter 0.25s ease;
+        }
+
+        .pe-wave-path.active {
+            stroke-width: 4.5px !important;
+            stroke-opacity: 1.0 !important;
+            filter: drop-shadow(0 0 4px var(--accent-color));
+        }
+
+        .pe-grid-line {
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 1;
+            stroke-dasharray: 4 4;
+        }
+
+        /* Smooth coordinate and size transitions for visualizer elements */
+        #pe-wave-svg circle {
+            transition: cx 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        cy 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        r 0.2s ease, 
+                        opacity 0.2s ease;
+        }
+
+        #pe-vertical-indicator {
+            transition: x1 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        x2 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .pe-legend-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .pe-legend-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .pe-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .pe-legend-item:hover, .pe-legend-item.active {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--hover-color);
+            color: var(--text-primary);
+        }
+
+        .pe-legend-color-box {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            flex-shrink: 0;
         }
 
         /* Quiz Styles */
@@ -1003,48 +1188,127 @@
                 <button class="pe-word-btn" onclick="selectPEWord(4)">mouse (Index 4)</button>
             </div>
 
-            <table class="vector-table">
-                <thead>
-                    <tr>
-                        <th style="width: 25%;">Vector Type</th>
-                        <th style="width: 75%;">Vector Value (6-Dimensions Heatmap)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="font-weight: 600;">
-                            Word Vector (<span style="color: var(--accent-cyan);">W</span>)
-                            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: normal; margin-top: 0.2rem;">Meaning representation</div>
-                        </td>
-                        <td>
-                            <div class="vector-display-row" id="pe-word-vector"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600; vertical-align: middle;">
-                            <span class="vector-math-symbol" style="position: absolute; margin-top: -1.7rem; margin-left: 2rem;">+</span>
-                            Position Vector (<span style="color: var(--accent-purple);">P</span>)
-                            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: normal; margin-top: 0.2rem;">Position representation</div>
-                        </td>
-                        <td>
-                            <div class="vector-display-row" id="pe-pos-vector"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600; vertical-align: middle;">
-                            <span class="vector-math-symbol" style="position: absolute; margin-top: -1.7rem; margin-left: 2rem;">=</span>
-                            Combined Vector (<span style="color: var(--accent-green);">C</span>)
-                            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: normal; margin-top: 0.2rem;">Input to model (W + P)</div>
-                        </td>
-                        <td>
-                            <div class="vector-display-row" id="pe-combined-vector"></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="pe-simulator-layout">
+                <div class="pe-table-section">
+                    <table class="vector-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Vector Type</th>
+                                <th style="width: 75%;">Vector Value (6-Dimensions Heatmap)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span class="vector-math-symbol" style="visibility: hidden; font-weight: 700; width: 20px;">+</span>
+                                        <div>
+                                            Word Vector (<span style="color: var(--accent-cyan);">W</span>)
+                                            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: normal; margin-top: 0.2rem;">Meaning representation</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="vector-display-row" id="pe-word-vector"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span class="vector-math-symbol" style="color: var(--accent-purple); font-weight: 700; width: 20px;">+</span>
+                                        <div>
+                                            Position Vector (<span style="color: var(--accent-purple);">P</span>)
+                                            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: normal; margin-top: 0.2rem;">Position representation</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="vector-display-row" id="pe-pos-vector"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span class="vector-math-symbol" style="color: var(--accent-green); font-weight: 700; width: 20px;">=</span>
+                                        <div>
+                                            Combined Vector (<span style="color: var(--accent-green);">C</span>)
+                                            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: normal; margin-top: 0.2rem;">Input to model (W + P)</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="vector-display-row" id="pe-combined-vector"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-            <div id="pe-explanation" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-top: 1rem; font-size: 0.95rem;">
-                <!-- Dynamically loaded -->
+                    <div id="pe-explanation" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-top: 1rem; font-size: 0.95rem;">
+                        <!-- Dynamically loaded -->
+                    </div>
+                </div>
+
+                <details class="pe-wave-details" id="pe-wave-details" ontoggle="toggleWaveLayout()">
+                    <summary class="pe-wave-summary">
+                        📈 Sine-Cosine Wave Mathematical Visualizer (Optional)
+                    </summary>
+                    <div class="pe-wave-section">
+                        <h3 style="font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3rem; display: flex; justify-content: space-between; align-items: center;">
+                            <span>Wave Visualizer</span>
+                            <div id="pe-wave-tooltip" style="font-family: 'Outfit', sans-serif; font-size: 0.8rem; background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border-color); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--accent-purple); font-weight: 600; transition: all 0.2s;">Hover to inspect...</div>
+                        </h3>
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.75rem; line-height: 1.4;">
+                            The values of the Position Vector (<span style="color: var(--accent-purple);">P</span>) are sampled from the sine-cosine waves below. Hover over any block in the vector rows to highlight its corresponding wave.
+                        </p>
+                        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 12px; padding: 0.75rem; display: flex; align-items: center; justify-content: center; position: relative;">
+                            <svg id="pe-wave-svg" viewBox="0 0 600 320" style="width: 100%; height: auto; display: block; overflow: visible;">
+                                <!-- y grid lines -->
+                                <line x1="50" y1="54" x2="560" y2="54" class="pe-grid-line" />
+                                <line x1="50" y1="102" x2="560" y2="102" class="pe-grid-line" />
+                                <line x1="50" y1="150" x2="560" y2="150" class="pe-grid-line" style="stroke: rgba(255,255,255,0.15); stroke-dasharray: 0;" />
+                                <line x1="50" y1="198" x2="560" y2="198" class="pe-grid-line" />
+                                <line x1="50" y1="246" x2="560" y2="246" class="pe-grid-line" />
+                                
+                                <!-- y axis labels -->
+                                <text x="35" y="58" class="axis-label" text-anchor="end">+1.0</text>
+                                <text x="35" y="154" class="axis-label" text-anchor="end">0.0</text>
+                                <text x="35" y="250" class="axis-label" text-anchor="end">-1.0</text>
+                                
+                                <!-- vertical grid lines for pos = 0, 1, 2, 3, 4, 5 -->
+                                <line x1="50" y1="20" x2="50" y2="280" class="pe-grid-line" />
+                                <line x1="152" y1="20" x2="152" y2="280" class="pe-grid-line" />
+                                <line x1="254" y1="20" x2="254" y2="280" class="pe-grid-line" />
+                                <line x1="356" y1="20" x2="356" y2="280" class="pe-grid-line" />
+                                <line x1="458" y1="20" x2="458" y2="280" class="pe-grid-line" />
+                                <line x1="560" y1="20" x2="560" y2="280" class="pe-grid-line" />
+                                
+                                <!-- x axis labels -->
+                                <text x="50" y="300" class="axis-label" text-anchor="middle">The (0)</text>
+                                <text x="152" y="300" class="axis-label" text-anchor="middle">cat (1)</text>
+                                <text x="254" y="300" class="axis-label" text-anchor="middle">ate (2)</text>
+                                <text x="356" y="300" class="axis-label" text-anchor="middle">the (3)</text>
+                                <text x="458" y="300" class="axis-label" text-anchor="middle">mouse (4)</text>
+                                <text x="560" y="300" class="axis-label" text-anchor="middle">Index 5</text>
+                                
+                                <!-- Wave curves container -->
+                                <g id="pe-wave-paths"></g>
+                                
+                                <!-- Vertical selection indicator -->
+                                <line id="pe-vertical-indicator" x1="50" y1="20" x2="50" y2="280" stroke="var(--accent-cyan)" stroke-width="2" stroke-dasharray="4 4" style="transition: all 0.3s ease;"></line>
+                                
+                                <!-- Intersection dots -->
+                                <circle id="pe-dot-0" cx="50" cy="150" r="6" fill="#06b6d4" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #06b6d4);"></circle>
+                                <circle id="pe-dot-1" cx="50" cy="150" r="6" fill="#a855f7" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #a855f7);"></circle>
+                                <circle id="pe-dot-2" cx="50" cy="150" r="6" fill="#10b981" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #10b981);"></circle>
+                                <circle id="pe-dot-3" cx="50" cy="150" r="6" fill="#f59e0b" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #f59e0b);"></circle>
+                                <circle id="pe-dot-4" cx="50" cy="150" r="6" fill="#ef4444" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #ef4444);"></circle>
+                                <circle id="pe-dot-5" cx="50" cy="150" r="6" fill="#3b82f6" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #3b82f6);"></circle>
+                            </svg>
+                        </div>
+                        
+                        <div id="pe-wave-legend"></div>
+                    </div>
+                </details>
             </div>
         </div>
 
@@ -1382,35 +1646,57 @@
 
             // Render W Row
             const wordRow = document.getElementById('pe-word-vector');
-            wordRow.innerHTML = wordEmbed.map(val => `
-                <div class="vector-block" style="background-color: ${getColorForVal(val, 'word')}">
+            wordRow.innerHTML = wordEmbed.map((val, dIdx) => `
+                <div class="vector-block" data-dim="${dIdx}" style="background-color: ${getColorForVal(val, 'word')}">
                     ${val.toFixed(2)}
                 </div>
             `).join('');
 
             // Render P Row
             const posRow = document.getElementById('pe-pos-vector');
-            posRow.innerHTML = posEmbed.map(val => `
-                <div class="vector-block" style="background-color: ${getColorForVal(val, 'pos')}">
+            posRow.innerHTML = posEmbed.map((val, dIdx) => `
+                <div class="vector-block" data-dim="${dIdx}" style="background-color: ${getColorForVal(val, 'pos')}">
                     ${val.toFixed(2)}
                 </div>
             `).join('');
 
             // Render C Row
             const combRow = document.getElementById('pe-combined-vector');
-            combRow.innerHTML = combined.map(val => `
-                <div class="vector-block" style="background-color: ${getColorForVal(val, 'comb')}">
+            combRow.innerHTML = combined.map((val, dIdx) => `
+                <div class="vector-block" data-dim="${dIdx}" style="background-color: ${getColorForVal(val, 'comb')}">
                     ${val.toFixed(2)}
                 </div>
             `).join('');
+
+            // Update wave visualizer line position
+            const xPos = 50 + (idx / 5) * 510;
+            const vertLine = document.getElementById('pe-vertical-indicator');
+            if (vertLine) {
+                vertLine.setAttribute('x1', xPos);
+                vertLine.setAttribute('x2', xPos);
+            }
+
+            // Update wave visualizer intersection dots
+            for (let d = 0; d < 6; d++) {
+                const yVal = posEmbed[d];
+                const yDot = 150 - (yVal / 1.2) * 115;
+                const dot = document.getElementById(`pe-dot-${d}`);
+                if (dot) {
+                    dot.setAttribute('cx', xPos);
+                    dot.setAttribute('cy', yDot);
+                }
+            }
 
             // Set Explanation
             const expDiv = document.getElementById('pe-explanation');
             let explanationText = `
                 <p>You selected: <strong class="highlight">"${data.word}" (Position Index: ${data.idx})</strong></p>
                 <p>• Word Vector <code>W</code> represents the word's semantic meaning.</p>
-                <p>• Position Vector <code>P</code> is generated via sine/cosine waves for <code>pos = ${data.idx}</code>.</p>
+                <p>• Position Vector <code>P</code> is generated via sine/cosine waves for <code>pos = ${data.idx}</code> (see dots on the right graph).</p>
                 <p>• The final vector <code>C = W + P</code> is sent directly to the Transformer blocks.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45;">
+                    💡 <strong>Clock Hands Metaphor:</strong> Positional encoding works like the hands of a clock. Each dimension rotates at a different frequency. High-frequency waves (like Dim 0/1, cyan/purple) are like the second hand, changing rapidly to capture short-range positions. Low-frequency waves (like Dim 4/5, red/blue) are like the hour hand, changing slowly to help track positions in long sequences.
+                </p>
             `;
 
             if (data.idx === 0 || data.idx === 3) {
@@ -1427,35 +1713,193 @@
             expDiv.innerHTML = explanationText;
         }
 
-        // ------------------ Quiz Functions ------------------
-        function checkQAnswer(element, questionId, status, feedback) {
-            const questionBox = document.getElementById(`q${questionId}`);
-            const options = questionBox.querySelectorAll('.quiz-option');
-            const feedbackBox = document.getElementById(`q${questionId}-feedback`);
+        // ------------------ PE Waves Dynamic Initialization ------------------
+        function initPEWaveChart() {
+            const svg = document.getElementById('pe-wave-svg');
+            if (!svg) return;
 
-            // Reset option states
-            options.forEach(opt => {
-                opt.classList.remove('correct', 'incorrect');
-            });
+            const colors = ['#06b6d4', '#a855f7', '#10b981', '#f59e0b', '#ef4444', '#3b82f6'];
+            const base = 100;
+            const d_model = 6;
+            
+            // Draw paths for the 6 waves
+            const pathsG = document.getElementById('pe-wave-paths');
+            if (pathsG) {
+                let pathsHTML = '';
+                for (let dim = 0; dim < 6; dim++) {
+                    const denom = Math.pow(base, Math.floor(dim / 2) * 2 / d_model);
+                    const pathPoints = [];
+                    for (let p = 0; p <= 5; p += 0.05) {
+                        const val = (dim % 2 === 0) ? Math.sin(p / denom) : Math.cos(p / denom);
+                        const xSvg = 50 + (p / 5) * 510;
+                        const ySvg = 150 - (val / 1.2) * 115;
+                        pathPoints.push(`${p === 0 ? 'M' : 'L'} ${xSvg.toFixed(1)} ${ySvg.toFixed(1)}`);
+                    }
+                    const pathD = pathPoints.join(' ');
+                    pathsHTML += `
+                        <path id="pe-wave-path-${dim}" d="${pathD}" class="pe-wave-path" stroke="${colors[dim]}" style="--accent-color: ${colors[dim]}" />
+                    `;
+                }
+                pathsG.innerHTML = pathsHTML;
+            }
 
-            feedbackBox.className = 'quiz-feedback';
-
-            if (status === 'correct') {
-                element.classList.add('correct');
-                feedbackBox.classList.add('success');
-                feedbackBox.innerHTML = `${feedback}`;
-            } else {
-                element.classList.add('incorrect');
-                feedbackBox.classList.add('error');
-                feedbackBox.innerHTML = `${feedback}`;
+            // Render the Legend
+            const legendContainer = document.getElementById('pe-wave-legend');
+            if (legendContainer) {
+                const isEn = /-en\.html$/.test((location.pathname.split('/').pop() || '').toLowerCase());
+                let legendHTML = '<div class="pe-legend-container">';
+                for (let dim = 0; dim < 6; dim++) {
+                    const label = isEn 
+                        ? `Dim ${dim} (${dim % 2 === 0 ? 'Sin' : 'Cos'})` 
+                        : `Dim ${dim} (${dim % 2 === 0 ? 'সাইন' : 'কোসাইন'})`;
+                    legendHTML += `
+                        <div id="pe-legend-item-${dim}" class="pe-legend-item" style="--hover-color: ${colors[dim]}" onmouseover="highlightDimension(${dim})" onmouseout="clearDimensionHighlight()">
+                            <span class="pe-legend-color-box" style="background-color: ${colors[dim]};"></span>
+                            <span>${label}</span>
+                        </div>
+                    `;
+                }
+                legendHTML += '</div>';
+                legendContainer.innerHTML = legendHTML;
             }
         }
 
+        function toggleWaveLayout() {
+            const details = document.getElementById('pe-wave-details');
+            const layout = document.querySelector('.pe-simulator-layout');
+            if (details && layout) {
+                if (details.open) {
+                    layout.classList.add('wave-expanded');
+                } else {
+                    layout.classList.remove('wave-expanded');
+                }
+            }
+        }
 
+        // ------------------ Dimension Hover Sync Logic ------------------
+        function initPEHoverSync() {
+            const table = document.querySelector('.vector-table');
+            if (!table) return;
+
+            table.addEventListener('mouseover', function(e) {
+                const block = e.target.closest('.vector-block');
+                if (!block) return;
+                const dim = parseInt(block.getAttribute('data-dim'));
+                highlightDimension(dim);
+            });
+
+            table.addEventListener('mouseout', function(e) {
+                const block = e.target.closest('.vector-block');
+                if (!block) return;
+                clearDimensionHighlight();
+            });
+        }
+
+        function highlightDimension(dim) {
+            // Highlight blocks in table
+            const blocks = document.querySelectorAll('.vector-block');
+            blocks.forEach(b => {
+                if (parseInt(b.getAttribute('data-dim')) === dim) {
+                    b.classList.add('active-dim');
+                } else {
+                    b.classList.remove('active-dim');
+                }
+            });
+
+            // Highlight wave path
+            const paths = document.querySelectorAll('.pe-wave-path');
+            paths.forEach(p => {
+                if (p.id === `pe-wave-path-${dim}`) {
+                    p.classList.add('active');
+                } else {
+                    p.classList.remove('active');
+                }
+            });
+
+            // Highlight legend item
+            const legendItems = document.querySelectorAll('.pe-legend-item');
+            legendItems.forEach(item => {
+                if (item.id === `pe-legend-item-${dim}`) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Highlight intersection dot
+            for (let d = 0; d < 6; d++) {
+                const dot = document.getElementById(`pe-dot-${d}`);
+                if (dot) {
+                    if (d === dim) {
+                        dot.setAttribute('r', '9');
+                        dot.style.opacity = '1.0';
+                    } else {
+                        dot.setAttribute('r', '4');
+                        dot.style.opacity = '0.35';
+                    }
+                }
+            }
+
+            // Update tooltip text with formula and value
+            const tooltip = document.getElementById('pe-wave-tooltip');
+            if (tooltip) {
+                const activeBtn = document.querySelector('.pe-word-btn.active');
+                const posStr = activeBtn ? activeBtn.textContent.match(/\d+/) : '0';
+                const pos = parseInt(posStr ? posStr[0] : '0');
+                
+                const base = 100;
+                const denom = Math.pow(base, Math.floor(dim / 2) * 2 / 6);
+                const isEven = (dim % 2 === 0);
+                const funcName = isEven ? 'sin' : 'cos';
+                const val = isEven ? Math.sin(pos / denom) : Math.cos(pos / denom);
+                
+                const formula = `${funcName}(pos / ${denom.toFixed(2)})`;
+                const finalText = `Dim ${dim}: ${formula} = ${val.toFixed(3)}`;
+                tooltip.textContent = finalText;
+                
+                const colors = ['#06b6d4', '#a855f7', '#10b981', '#f59e0b', '#ef4444', '#3b82f6'];
+                tooltip.style.borderColor = colors[dim];
+                tooltip.style.color = '#fff';
+            }
+        }
+
+        function clearDimensionHighlight() {
+            // Clear blocks
+            const blocks = document.querySelectorAll('.vector-block');
+            blocks.forEach(b => b.classList.remove('active-dim'));
+
+            // Clear paths
+            const paths = document.querySelectorAll('.pe-wave-path');
+            paths.forEach(p => p.classList.remove('active'));
+
+            // Clear legend items
+            const legendItems = document.querySelectorAll('.pe-legend-item');
+            legendItems.forEach(item => item.classList.remove('active'));
+
+            // Restore dot sizes
+            for (let d = 0; d < 6; d++) {
+                const dot = document.getElementById(`pe-dot-${d}`);
+                if (dot) {
+                    dot.setAttribute('r', '6');
+                    dot.style.opacity = '1.0';
+                }
+            }
+
+            // Reset tooltip
+            const tooltip = document.getElementById('pe-wave-tooltip');
+            if (tooltip) {
+                const isEn = /-en\.html$/.test((location.pathname.split('/').pop() || '').toLowerCase());
+                tooltip.textContent = isEn ? 'Hover to inspect...' : 'হোভার করুন...';
+                tooltip.style.borderColor = 'var(--border-color)';
+                tooltip.style.color = 'var(--accent-purple)';
+            }
+        }
 
         // Window load initializer
         window.onload = () => {
             initVisualizer();
+            initPEWaveChart();
+            initPEHoverSync();
             selectPEWord(0); // init PE widget
         };
     </script>
