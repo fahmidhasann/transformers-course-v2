@@ -65,7 +65,7 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #fff, #94a3b8);
@@ -120,117 +120,128 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Vector Visualizer Specific Styles */
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            color: #cbd5e1;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Vector Space Visualizer Styles */
         .vector-container {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
+            display: flex;
+            flex-direction: column;
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
 
-        @media(max-width: 768px) {
+        @media (min-width: 768px) {
             .vector-container {
-                grid-template-columns: 1fr;
+                flex-direction: row;
             }
         }
 
         .vector-controls {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
 
         .vector-visualizer {
-            background: rgba(15, 23, 42, 0.6);
+            flex: 1.8;
+            background: rgba(15, 23, 42, 0.8);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 0.5rem;
+            padding: 1rem;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-height: 350px;
         }
 
         .svg-grid {
             width: 100%;
             height: auto;
-            max-height: 350px;
-        }
-
-        .grid-line {
-            stroke: rgba(255, 255, 255, 0.04);
-            stroke-width: 1;
-        }
-
-        .axis-line {
-            stroke: #94a3b8;
-            stroke-width: 1.5;
+            max-width: 450px;
         }
 
         .axis-label {
-            fill: #94a3b8;
+            fill: var(--text-secondary);
             font-size: 11px;
             font-family: 'Outfit', sans-serif;
         }
 
-        .word-point circle {
-            fill: var(--accent-purple);
-            stroke: #0f172a;
-            stroke-width: 2;
+        .grid-line {
+            stroke: rgba(255, 255, 255, 0.06);
+            stroke-width: 1;
+        }
+
+        .axis-line {
+            stroke: var(--text-secondary);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .word-point {
             transition: all 0.3s ease;
+        }
+
+        .word-point circle {
+            fill: var(--accent-cyan);
+            stroke: var(--bg-color);
+            stroke-width: 2;
+            transition: all 0.3s;
         }
 
         .word-point text {
             fill: var(--text-primary);
             font-size: 11px;
             font-weight: 600;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
         }
 
-        .formula-box {
-            background: rgba(168, 85, 247, 0.15);
-            border: 1.5px dashed var(--accent-purple);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.1rem;
-            text-align: center;
-            margin: 1.5rem 0;
-            color: #f8fafc;
-            font-weight: 500;
-        }
-
-        /* Positional Encoding Widgets */
+        /* Positional Encoding visualizer styles */
         .pe-selector {
             display: flex;
             gap: 0.5rem;
-            flex-wrap: wrap;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .pe-word-btn {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+
+        .pe-word-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-purple);
         }
 
         .pe-word-btn.active {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            background: var(--accent-purple);
             color: white;
-            border-color: transparent;
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
         }
 
         .vector-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 1rem;
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(15, 23, 42, 0.5);
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--border-color);
@@ -243,11 +254,9 @@
         }
 
         .vector-table th {
-            background: rgba(0, 0, 0, 0.2);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
             color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .vector-display-row {
@@ -269,7 +278,7 @@
             font-size: 0.8rem;
             font-weight: 600;
             border-radius: 6px;
-            color: white !important;
+            color: white;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
             transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
                         background-color 0.2s ease,
@@ -283,12 +292,23 @@
 
         .vector-math-symbol {
             font-size: 1.5rem;
-            font-weight: bold;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0 0.5rem;
+        }
+
+        .formula-box {
+            font-family: 'Outfit', sans-serif;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            color: var(--accent-cyan);
         }
 
         /* Positional Encoding wave visualizer styles */
@@ -304,85 +324,6 @@
             transition: width 0.3s ease;
         }
 
-        .pe-wave-details {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 0.85rem 1.25rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-
-        .pe-wave-details[open] {
-            background: rgba(15, 23, 42, 0.45);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: var(--shadow);
-        }
-
-        .pe-wave-summary {
-            font-weight: 600;
-            color: var(--accent-cyan);
-            cursor: pointer;
-            outline: none;
-            user-select: none;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            list-style: none; /* Hide default arrow */
-        }
-
-        .pe-wave-summary::-webkit-details-marker {
-            display: none; /* Hide default arrow */
-        }
-        .pe-wave-summary::marker {
-            display: none; /* Hide default arrow */
-        }
-
-        .pe-wave-summary::after {
-            content: '▾';
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            transition: transform 0.25s ease;
-            margin-left: auto;
-        }
-
-        .pe-wave-details[open] .pe-wave-summary::after {
-            transform: rotate(180deg);
-            color: var(--accent-cyan);
-        }
-
-        .pe-wave-section {
-            width: 100%;
-            margin-top: 1.25rem;
-            animation: slideDown 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (min-width: 900px) {
-            .pe-simulator-layout.wave-expanded {
-                flex-direction: row;
-                align-items: flex-start;
-                gap: 2rem;
-            }
-            .pe-simulator-layout.wave-expanded .pe-table-section {
-                flex: 1.25;
-                width: auto;
-            }
-            .pe-simulator-layout.wave-expanded .pe-wave-details {
-                flex: 1;
-                width: auto;
-            }
-        }
-
         .vector-block.active-dim {
             border-color: #fff !important;
             box-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
@@ -390,81 +331,9 @@
             z-index: 10;
         }
 
-        .pe-wave-path {
-            fill: none;
-            stroke-width: 2px;
-            stroke-opacity: 0.35;
-            transition: stroke-width 0.25s ease, stroke-opacity 0.25s ease, filter 0.25s ease;
-        }
-
-        .pe-wave-path.active {
-            stroke-width: 4.5px !important;
-            stroke-opacity: 1.0 !important;
-            filter: drop-shadow(0 0 4px var(--accent-color));
-        }
-
-        .pe-grid-line {
-            stroke: rgba(255, 255, 255, 0.05);
-            stroke-width: 1;
-            stroke-dasharray: 4 4;
-        }
-
-        /* Smooth coordinate and size transitions for visualizer elements */
-        #pe-wave-svg circle {
-            transition: cx 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                        cy 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                        r 0.2s ease, 
-                        opacity 0.2s ease;
-        }
-
-        #pe-vertical-indicator {
-            transition: x1 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                        x2 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .pe-legend-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        @media (max-width: 480px) {
-            .pe-legend-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .pe-legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 0.35rem 0.5rem;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            transition: all 0.2s;
-        }
-
-        .pe-legend-item:hover, .pe-legend-item.active {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--hover-color);
-            color: var(--text-primary);
-        }
-
-        .pe-legend-color-box {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-            flex-shrink: 0;
-        }
-
         /* Quiz Styles */
         .quiz-question {
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(15, 23, 42, 0.4);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
@@ -473,20 +342,20 @@
 
         .quiz-q-text {
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 1rem;
-            color: var(--text-primary);
         }
 
         .quiz-option {
             display: block;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
-            padding: 1rem;
+            padding: 0.85rem 1rem;
             border-radius: 8px;
             margin-bottom: 0.75rem;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
         .quiz-option:hover {
@@ -505,11 +374,12 @@
         }
 
         .quiz-feedback {
-            margin-top: 1rem;
-            padding: 1rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
             border-radius: 8px;
             display: none;
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .quiz-feedback.success {
@@ -549,6 +419,39 @@
             margin-top: 4rem;
             color: var(--text-secondary);
             font-size: 0.85rem;
+        }
+
+        select, button {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            font-family: inherit;
+        }
+
+        select {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.97); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
 
@@ -921,6 +824,242 @@
 .tb-legend-active { background: rgba(6, 182, 212, 0.5); box-shadow: 0 0 6px rgba(6, 182, 212, 0.7); border: 1px solid var(--accent-cyan); }
 .tb-legend-rest { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--accent-purple); opacity: 0.45; }
 
+/* 3D Embedding Space Styles */
+.collapsible-card {
+    transition: all 0.3s ease;
+}
+.collapsible-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+.collapsible-card .card-header h2 {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.collapsible-card .collapse-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: background 0.2s, transform 0.3s ease;
+}
+.collapsible-card.collapsed .collapse-toggle {
+    transform: rotate(-90deg);
+}
+.collapsible-card .card-content {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.3s ease;
+}
+.collapsible-card.collapsed .card-content {
+    grid-template-rows: 0fr;
+}
+.collapsible-card .card-content-inner {
+    overflow: hidden;
+    margin-top: 1.5rem;
+}
+
+/* Tabs */
+.visualizer-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+}
+.visualizer-tab-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.25s ease;
+}
+.visualizer-tab-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+.visualizer-tab-btn.active {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+}
+
+.visualizer-view {
+    display: none;
+}
+.visualizer-view.active {
+    display: block;
+}
+
+/* 3D view styling */
+.three-d-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}
+@media (max-width: 768px) {
+    .three-d-container {
+        flex-direction: column;
+    }
+}
+.three-d-viewport-wrapper {
+    flex: 1.2;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    position: relative;
+    cursor: grab;
+    user-select: none;
+    overflow: hidden;
+    aspect-ratio: 5/4;
+}
+.three-d-viewport-wrapper:active {
+    cursor: grabbing;
+}
+.three-d-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+}
+.three-d-controls {
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.three-d-tooltip {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid var(--border-color);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    color: var(--accent-purple);
+    font-weight: 600;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+}
+.three-d-guide-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+/* Grid & Dots styling */
+.three-d-axis {
+    stroke-width: 1.5;
+    stroke-linecap: round;
+}
+.three-d-axis-dash {
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+}
+.three-d-axis-label {
+    font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+    font-size: 11px;
+    fill: var(--text-secondary);
+    font-weight: 600;
+}
+.three-d-axis-limit-label {
+    font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+    font-size: 9.5px;
+    fill: var(--text-secondary);
+    opacity: 0.7;
+}
+.three-d-word-node {
+    cursor: pointer;
+}
+.three-d-word-node circle {
+    stroke-width: 1.5;
+    transition: r 0.2s ease, stroke-width 0.2s ease;
+}
+.three-d-word-node:hover circle {
+    r: 7.5;
+    stroke-width: 2.5;
+}
+.three-d-word-node text {
+    font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+    font-size: 11.5px;
+    fill: var(--text-primary);
+    font-weight: 600;
+    paint-order: stroke;
+    stroke: var(--bg-color);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+    pointer-events: none;
+}
+.three-d-word-node.highlighted circle {
+    r: 9;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 6px var(--node-color));
+}
+.three-d-relation-line {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-dasharray: 4 3;
+    opacity: 0.85;
+}
+
+/* Heatmap Grid View styling */
+.heatmap-table-container {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.4);
+}
+.heatmap-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    text-align: left;
+}
+.heatmap-table th, .heatmap-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.heatmap-table th {
+    background: rgba(15, 23, 42, 0.6);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.heatmap-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+.heatmap-cell {
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    border-radius: 6px;
+    text-align: center;
+    min-width: 60px;
+    transition: all 0.25s ease;
+}
+.heatmap-word {
+    font-weight: 600;
+    color: var(--accent-cyan);
+}
+
         </style>
 </head>
 <body>
@@ -1056,7 +1195,7 @@
             <p><span class="tech-term">Tokenization</span> is like slicing a pizza. It cuts the input text into small pieces called <span class="tech-term">Tokens</span>. Then, it checks its massive dictionary and assigns an ID number to each piece.</p>
             
             <ul>
-                <li><strong>Vocabulary:</strong> The model's dictionary. For example, GPT-4 has around 100,000 pieces in its dictionary.</li>
+                <li><strong>Vocabulary:</strong> The model's dictionary. For example, GPT-4 has around 100,000 <span class="tech-term">Tokens</span> in its dictionary.</li>
                 <li><strong>Token IDs:</strong> Once tokenized, the word <code>"cat"</code> is mapped to a unique ID number, such as <code>3797</code>.</li>
             </ul>
 
@@ -1082,6 +1221,90 @@
             <p>Because they are just lists of numbers, we can actually do math with words! For example:</p>
             <div class="formula-box">
                 Vector("King") - Vector("Man") + Vector("Woman") ≈ Vector("Queen")
+            </div>
+        </div>
+
+        <!-- Collapsible Interactive 3D Embedding space -->
+        <div class="card collapsible-card" id="embedding-3d-card">
+            <div class="card-header" onclick="toggle3DCollapse()">
+                <h2>3D Embedding Space Visualizer</h2>
+                <button class="collapse-toggle" aria-label="Toggle card expansion">▾</button>
+            </div>
+            <div class="card-content">
+                <div class="card-content-inner">
+                    <p style="margin-bottom: 1rem;">
+                        In real embedding models, word meanings are stored in 100 to 1000 different dimensions of feature representation. For simplicity, here we constrain the embedding space to just 3 semantic dimensions: 
+                        <span class="tech-term">Gender</span> (Male vs. Female), <span class="tech-term">Royalty</span> (Royal vs. Common), and <span class="tech-term">Age</span> (Adult vs. Child).
+                    </p>
+
+                    <div class="visualizer-tabs">
+                        <button class="visualizer-tab-btn active" onclick="switch3DTab('three-d-view')">3D Vector Space</button>
+                        <button class="visualizer-tab-btn" onclick="switch3DTab('heatmap-view')">Feature Profile</button>
+                    </div>
+
+                    <!-- 3D Vector Space View -->
+                    <div id="three-d-view" class="visualizer-view active">
+                        <div class="three-d-container">
+                            <div class="three-d-viewport-wrapper" id="three-d-viewport">
+                                <div class="three-d-tooltip" id="three-d-tooltip">Drag to rotate 3D Space</div>
+                                <svg class="three-d-svg" id="three-d-svg" viewBox="0 0 500 400">
+                                    <defs>
+                                        <marker id="arrow-axis" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#94a3b8" />
+                                        </marker>
+                                    </defs>
+                                    <!-- Axes and geometry will be injected dynamically -->
+                                    <g id="three-d-axes-group"></g>
+                                    <g id="three-d-lines-group"></g>
+                                    <g id="three-d-nodes-group"></g>
+                                </svg>
+                            </div>
+                            <div class="three-d-controls">
+                                <div class="three-d-guide-text">
+                                    <strong>How to use:</strong><br>
+                                    • <strong>Drag or swipe</strong> on the viewport to rotate the vector space in any direction.<br>
+                                    • Hover over any word to inspect its 3D coordinate values.<br>
+                                    • Toggle Gender Vector Lines to visualize how male-female pairs are shifted by the exact same gender direction.
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-top: 0.5rem;">
+                                    <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.95rem; font-weight: 600;">
+                                        <input type="checkbox" id="show-gender-lines-chk" onchange="render3D()" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                        Show Gender Vector Lines
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.95rem; font-weight: 600;">
+                                        <input type="checkbox" id="show-axes-labels-chk" onchange="render3D()" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                        Show Axes Labels
+                                    </label>
+                                    <button class="site-nav-icon-btn" onclick="reset3DRotation()" style="justify-content: center; height: 40px; font-weight: 600; width: 100%;">
+                                        Reset View
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Heatmap Grid View -->
+                    <div id="heatmap-view" class="visualizer-view">
+                        <p style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-secondary);">
+                            Word embeddings are essentially lists of numbers. Inspect the values across the 3 different feature axes in the table below. Notice how masculine words have positive values (+0.8) on the first dimension, while feminine words have negative values (-0.8).
+                        </p>
+                        <div class="heatmap-table-container">
+                            <table class="heatmap-table">
+                                <thead>
+                                    <tr>
+                                        <th>Word</th>
+                                        <th style="text-align: center;">Gender<br><span style="font-size:0.75rem; font-weight:normal; color:var(--text-secondary);">Positive = Male, Negative = Female</span></th>
+                                        <th style="text-align: center;">Royalty<br><span style="font-size:0.75rem; font-weight:normal; color:var(--text-secondary);">Positive = Royal, Negative = Common</span></th>
+                                        <th style="text-align: center;">Age<br><span style="font-size:0.75rem; font-weight:normal; color:var(--text-secondary);">Positive = Adult, Negative = Child</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="heatmap-table-body">
+                                    <!-- Dynamic rows will be injected -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1247,68 +1470,6 @@
                         <!-- Dynamically loaded -->
                     </div>
                 </div>
-
-                <details class="pe-wave-details" id="pe-wave-details" ontoggle="toggleWaveLayout()">
-                    <summary class="pe-wave-summary">
-                        📈 Sine-Cosine Wave Mathematical Visualizer (Optional)
-                    </summary>
-                    <div class="pe-wave-section">
-                        <h3 style="font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3rem; display: flex; justify-content: space-between; align-items: center;">
-                            <span>Wave Visualizer</span>
-                            <div id="pe-wave-tooltip" style="font-family: 'Outfit', sans-serif; font-size: 0.8rem; background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border-color); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--accent-purple); font-weight: 600; transition: all 0.2s;">Hover to inspect...</div>
-                        </h3>
-                        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.75rem; line-height: 1.4;">
-                            The values of the Position Vector (<span style="color: var(--accent-purple);">P</span>) are sampled from the sine-cosine waves below. Hover over any block in the vector rows to highlight its corresponding wave.
-                        </p>
-                        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 12px; padding: 0.75rem; display: flex; align-items: center; justify-content: center; position: relative;">
-                            <svg id="pe-wave-svg" viewBox="0 0 600 320" style="width: 100%; height: auto; display: block; overflow: visible;">
-                                <!-- y grid lines -->
-                                <line x1="50" y1="54" x2="560" y2="54" class="pe-grid-line" />
-                                <line x1="50" y1="102" x2="560" y2="102" class="pe-grid-line" />
-                                <line x1="50" y1="150" x2="560" y2="150" class="pe-grid-line" style="stroke: rgba(255,255,255,0.15); stroke-dasharray: 0;" />
-                                <line x1="50" y1="198" x2="560" y2="198" class="pe-grid-line" />
-                                <line x1="50" y1="246" x2="560" y2="246" class="pe-grid-line" />
-                                
-                                <!-- y axis labels -->
-                                <text x="35" y="58" class="axis-label" text-anchor="end">+1.0</text>
-                                <text x="35" y="154" class="axis-label" text-anchor="end">0.0</text>
-                                <text x="35" y="250" class="axis-label" text-anchor="end">-1.0</text>
-                                
-                                <!-- vertical grid lines for pos = 0, 1, 2, 3, 4, 5 -->
-                                <line x1="50" y1="20" x2="50" y2="280" class="pe-grid-line" />
-                                <line x1="152" y1="20" x2="152" y2="280" class="pe-grid-line" />
-                                <line x1="254" y1="20" x2="254" y2="280" class="pe-grid-line" />
-                                <line x1="356" y1="20" x2="356" y2="280" class="pe-grid-line" />
-                                <line x1="458" y1="20" x2="458" y2="280" class="pe-grid-line" />
-                                <line x1="560" y1="20" x2="560" y2="280" class="pe-grid-line" />
-                                
-                                <!-- x axis labels -->
-                                <text x="50" y="300" class="axis-label" text-anchor="middle">The (0)</text>
-                                <text x="152" y="300" class="axis-label" text-anchor="middle">cat (1)</text>
-                                <text x="254" y="300" class="axis-label" text-anchor="middle">ate (2)</text>
-                                <text x="356" y="300" class="axis-label" text-anchor="middle">the (3)</text>
-                                <text x="458" y="300" class="axis-label" text-anchor="middle">mouse (4)</text>
-                                <text x="560" y="300" class="axis-label" text-anchor="middle">Index 5</text>
-                                
-                                <!-- Wave curves container -->
-                                <g id="pe-wave-paths"></g>
-                                
-                                <!-- Vertical selection indicator -->
-                                <line id="pe-vertical-indicator" x1="50" y1="20" x2="50" y2="280" stroke="var(--accent-cyan)" stroke-width="2" stroke-dasharray="4 4" style="transition: all 0.3s ease;"></line>
-                                
-                                <!-- Intersection dots -->
-                                <circle id="pe-dot-0" cx="50" cy="150" r="6" fill="#06b6d4" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #06b6d4);"></circle>
-                                <circle id="pe-dot-1" cx="50" cy="150" r="6" fill="#a855f7" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #a855f7);"></circle>
-                                <circle id="pe-dot-2" cx="50" cy="150" r="6" fill="#10b981" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #10b981);"></circle>
-                                <circle id="pe-dot-3" cx="50" cy="150" r="6" fill="#f59e0b" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #f59e0b);"></circle>
-                                <circle id="pe-dot-4" cx="50" cy="150" r="6" fill="#ef4444" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #ef4444);"></circle>
-                                <circle id="pe-dot-5" cx="50" cy="150" r="6" fill="#3b82f6" style="transition: all 0.3s ease; filter: drop-shadow(0 0 3px #3b82f6);"></circle>
-                            </svg>
-                        </div>
-                        
-                        <div id="pe-wave-legend"></div>
-                    </div>
-                </details>
             </div>
         </div>
 
@@ -1668,31 +1829,12 @@
                 </div>
             `).join('');
 
-            // Update wave visualizer line position
-            const xPos = 50 + (idx / 5) * 510;
-            const vertLine = document.getElementById('pe-vertical-indicator');
-            if (vertLine) {
-                vertLine.setAttribute('x1', xPos);
-                vertLine.setAttribute('x2', xPos);
-            }
-
-            // Update wave visualizer intersection dots
-            for (let d = 0; d < 6; d++) {
-                const yVal = posEmbed[d];
-                const yDot = 150 - (yVal / 1.2) * 115;
-                const dot = document.getElementById(`pe-dot-${d}`);
-                if (dot) {
-                    dot.setAttribute('cx', xPos);
-                    dot.setAttribute('cy', yDot);
-                }
-            }
-
             // Set Explanation
             const expDiv = document.getElementById('pe-explanation');
             let explanationText = `
                 <p>You selected: <strong class="highlight">"${data.word}" (Position Index: ${data.idx})</strong></p>
                 <p>• Word Vector <code>W</code> represents the word's semantic meaning.</p>
-                <p>• Position Vector <code>P</code> is generated via sine/cosine waves for <code>pos = ${data.idx}</code> (see dots on the right graph).</p>
+                <p>• Position Vector <code>P</code> is generated via sine/cosine functions for <code>pos = ${data.idx}</code>.</p>
                 <p>• The final vector <code>C = W + P</code> is sent directly to the Transformer blocks.</p>
                 <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45;">
                     💡 <strong>Clock Hands Metaphor:</strong> Positional encoding works like the hands of a clock. Each dimension rotates at a different frequency. High-frequency waves (like Dim 0/1, cyan/purple) are like the second hand, changing rapidly to capture short-range positions. Low-frequency waves (like Dim 4/5, red/blue) are like the hour hand, changing slowly to help track positions in long sequences.
@@ -1711,69 +1853,6 @@
             }
 
             expDiv.innerHTML = explanationText;
-        }
-
-        // ------------------ PE Waves Dynamic Initialization ------------------
-        function initPEWaveChart() {
-            const svg = document.getElementById('pe-wave-svg');
-            if (!svg) return;
-
-            const colors = ['#06b6d4', '#a855f7', '#10b981', '#f59e0b', '#ef4444', '#3b82f6'];
-            const base = 100;
-            const d_model = 6;
-            
-            // Draw paths for the 6 waves
-            const pathsG = document.getElementById('pe-wave-paths');
-            if (pathsG) {
-                let pathsHTML = '';
-                for (let dim = 0; dim < 6; dim++) {
-                    const denom = Math.pow(base, Math.floor(dim / 2) * 2 / d_model);
-                    const pathPoints = [];
-                    for (let p = 0; p <= 5; p += 0.05) {
-                        const val = (dim % 2 === 0) ? Math.sin(p / denom) : Math.cos(p / denom);
-                        const xSvg = 50 + (p / 5) * 510;
-                        const ySvg = 150 - (val / 1.2) * 115;
-                        pathPoints.push(`${p === 0 ? 'M' : 'L'} ${xSvg.toFixed(1)} ${ySvg.toFixed(1)}`);
-                    }
-                    const pathD = pathPoints.join(' ');
-                    pathsHTML += `
-                        <path id="pe-wave-path-${dim}" d="${pathD}" class="pe-wave-path" stroke="${colors[dim]}" style="--accent-color: ${colors[dim]}" />
-                    `;
-                }
-                pathsG.innerHTML = pathsHTML;
-            }
-
-            // Render the Legend
-            const legendContainer = document.getElementById('pe-wave-legend');
-            if (legendContainer) {
-                const isEn = /-en\.html$/.test((location.pathname.split('/').pop() || '').toLowerCase());
-                let legendHTML = '<div class="pe-legend-container">';
-                for (let dim = 0; dim < 6; dim++) {
-                    const label = isEn 
-                        ? `Dim ${dim} (${dim % 2 === 0 ? 'Sin' : 'Cos'})` 
-                        : `Dim ${dim} (${dim % 2 === 0 ? 'সাইন' : 'কোসাইন'})`;
-                    legendHTML += `
-                        <div id="pe-legend-item-${dim}" class="pe-legend-item" style="--hover-color: ${colors[dim]}" onmouseover="highlightDimension(${dim})" onmouseout="clearDimensionHighlight()">
-                            <span class="pe-legend-color-box" style="background-color: ${colors[dim]};"></span>
-                            <span>${label}</span>
-                        </div>
-                    `;
-                }
-                legendHTML += '</div>';
-                legendContainer.innerHTML = legendHTML;
-            }
-        }
-
-        function toggleWaveLayout() {
-            const details = document.getElementById('pe-wave-details');
-            const layout = document.querySelector('.pe-simulator-layout');
-            if (details && layout) {
-                if (details.open) {
-                    layout.classList.add('wave-expanded');
-                } else {
-                    layout.classList.remove('wave-expanded');
-                }
-            }
         }
 
         // ------------------ Dimension Hover Sync Logic ------------------
@@ -1805,102 +1884,340 @@
                     b.classList.remove('active-dim');
                 }
             });
-
-            // Highlight wave path
-            const paths = document.querySelectorAll('.pe-wave-path');
-            paths.forEach(p => {
-                if (p.id === `pe-wave-path-${dim}`) {
-                    p.classList.add('active');
-                } else {
-                    p.classList.remove('active');
-                }
-            });
-
-            // Highlight legend item
-            const legendItems = document.querySelectorAll('.pe-legend-item');
-            legendItems.forEach(item => {
-                if (item.id === `pe-legend-item-${dim}`) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-
-            // Highlight intersection dot
-            for (let d = 0; d < 6; d++) {
-                const dot = document.getElementById(`pe-dot-${d}`);
-                if (dot) {
-                    if (d === dim) {
-                        dot.setAttribute('r', '9');
-                        dot.style.opacity = '1.0';
-                    } else {
-                        dot.setAttribute('r', '4');
-                        dot.style.opacity = '0.35';
-                    }
-                }
-            }
-
-            // Update tooltip text with formula and value
-            const tooltip = document.getElementById('pe-wave-tooltip');
-            if (tooltip) {
-                const activeBtn = document.querySelector('.pe-word-btn.active');
-                const posStr = activeBtn ? activeBtn.textContent.match(/\d+/) : '0';
-                const pos = parseInt(posStr ? posStr[0] : '0');
-                
-                const base = 100;
-                const denom = Math.pow(base, Math.floor(dim / 2) * 2 / 6);
-                const isEven = (dim % 2 === 0);
-                const funcName = isEven ? 'sin' : 'cos';
-                const val = isEven ? Math.sin(pos / denom) : Math.cos(pos / denom);
-                
-                const formula = `${funcName}(pos / ${denom.toFixed(2)})`;
-                const finalText = `Dim ${dim}: ${formula} = ${val.toFixed(3)}`;
-                tooltip.textContent = finalText;
-                
-                const colors = ['#06b6d4', '#a855f7', '#10b981', '#f59e0b', '#ef4444', '#3b82f6'];
-                tooltip.style.borderColor = colors[dim];
-                tooltip.style.color = '#fff';
-            }
         }
 
         function clearDimensionHighlight() {
             // Clear blocks
             const blocks = document.querySelectorAll('.vector-block');
             blocks.forEach(b => b.classList.remove('active-dim'));
+        }
 
-            // Clear paths
-            const paths = document.querySelectorAll('.pe-wave-path');
-            paths.forEach(p => p.classList.remove('active'));
+        // ------------------ 3D Embedding Space Engine ------------------
+        let is3DCollapsed = false;
+        let active3DTab = 'three-d-view';
+        
+        // Curated set of words with Gender, Royalty, Age dimensions
+        const words3D = [
+            { name: "King",     coords: [ 0.8,  0.9,  0.7], color: "var(--accent-cyan)" },
+            { name: "Queen",    coords: [-0.8,  0.9,  0.7], color: "var(--accent-purple)" },
+            { name: "Man",      coords: [ 0.8, -0.9,  0.7], color: "var(--accent-cyan)" },
+            { name: "Woman",    coords: [-0.8, -0.9,  0.7], color: "var(--accent-purple)" },
+            { name: "Boy",      coords: [ 0.8, -0.9, -0.7], color: "var(--accent-cyan)" },
+            { name: "Girl",     coords: [-0.8, -0.9, -0.7], color: "var(--accent-purple)" },
+            { name: "Prince",   coords: [ 0.8,  0.9, -0.7], color: "var(--accent-cyan)" },
+            { name: "Princess", coords: [-0.8,  0.9, -0.7], color: "var(--accent-purple)" }
+        ];
 
-            // Clear legend items
-            const legendItems = document.querySelectorAll('.pe-legend-item');
-            legendItems.forEach(item => item.classList.remove('active'));
+        // 3D Engine State
+        let yaw3D = 0.6;    // Rotation around Y axis
+        let pitch3D = -0.5; // Rotation around X axis
+        let scale3D = 130;  // Scale coordinate to screen pixels
+        const center3D = { x: 250, y: 180 };
+        
+        let isDragging3D = false;
+        let lastMousePos3D = { x: 0, y: 0 };
 
-            // Restore dot sizes
-            for (let d = 0; d < 6; d++) {
-                const dot = document.getElementById(`pe-dot-${d}`);
-                if (dot) {
-                    dot.setAttribute('r', '6');
-                    dot.style.opacity = '1.0';
+        function init3DSpace() {
+            // Setup dragging event handlers for the viewport
+            const viewport = document.getElementById('three-d-viewport');
+            
+            viewport.addEventListener('mousedown', (e) => {
+                isDragging3D = true;
+                lastMousePos3D = { x: e.clientX, y: e.clientY };
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging3D) return;
+                const dx = e.clientX - lastMousePos3D.x;
+                const dy = e.clientY - lastMousePos3D.y;
+                
+                yaw3D += dx * 0.007;
+                pitch3D += dy * 0.007;
+                
+                // Limit pitch rotation
+                pitch3D = Math.max(-1.4, Math.min(1.4, pitch3D));
+                
+                lastMousePos3D = { x: e.clientX, y: e.clientY };
+                render3D();
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging3D = false;
+            });
+
+            // Touch events for mobile
+            viewport.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging3D = true;
+                    lastMousePos3D = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                    e.preventDefault(); // Prevents scrolling while interacting
                 }
+            }, { passive: false });
+
+            viewport.addEventListener('touchmove', (e) => {
+                if (!isDragging3D || e.touches.length !== 1) return;
+                const dx = e.touches[0].clientX - lastMousePos3D.x;
+                const dy = e.touches[0].clientY - lastMousePos3D.y;
+                
+                yaw3D += dx * 0.007;
+                pitch3D += dy * 0.007;
+                
+                // Limit pitch
+                pitch3D = Math.max(-1.4, Math.min(1.4, pitch3D));
+                
+                lastMousePos3D = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                render3D();
+                e.preventDefault();
+            }, { passive: false });
+
+            viewport.addEventListener('touchend', () => {
+                isDragging3D = false;
+            });
+
+            // Populate Heatmap Table
+            populateHeatmapTable();
+            
+            // Initial Render
+            render3D();
+        }
+
+        function toggle3DCollapse() {
+            const card = document.getElementById('embedding-3d-card');
+            is3DCollapsed = !is3DCollapsed;
+            if (is3DCollapsed) {
+                card.classList.add('collapsed');
+            } else {
+                card.classList.remove('collapsed');
+                // Re-render when expanding to handle sizing correctly
+                setTimeout(render3D, 100);
+            }
+        }
+
+        function switch3DTab(tabId) {
+            active3DTab = tabId;
+            document.querySelectorAll('.visualizer-tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Update active button (the tabs are sequentially ordered: 3D tab is first, Heatmap tab is second)
+            const btns = document.querySelectorAll('.visualizer-tab-btn');
+            if (tabId === 'three-d-view') {
+                btns[0].classList.add('active');
+            } else {
+                btns[1].classList.add('active');
             }
 
-            // Reset tooltip
-            const tooltip = document.getElementById('pe-wave-tooltip');
-            if (tooltip) {
-                const isEn = /-en\.html$/.test((location.pathname.split('/').pop() || '').toLowerCase());
-                tooltip.textContent = isEn ? 'Hover to inspect...' : 'হোভার করুন...';
-                tooltip.style.borderColor = 'var(--border-color)';
-                tooltip.style.color = 'var(--accent-purple)';
+            document.querySelectorAll('.visualizer-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+
+            if (tabId === 'three-d-view') {
+                render3D();
             }
+        }
+
+        function reset3DRotation() {
+            yaw3D = 0.6;
+            pitch3D = -0.5;
+            render3D();
+        }
+
+        // 3D math projection
+        function project3D(x, y, z) {
+            // Y-rotation (Yaw)
+            const cosY = Math.cos(yaw3D);
+            const sinY = Math.sin(yaw3D);
+            const x1 = x * cosY - z * sinY;
+            const z1 = x * sinY + z * cosY;
+
+            // X-rotation (Pitch)
+            const cosP = Math.cos(pitch3D);
+            const sinP = Math.sin(pitch3D);
+            const y2 = y * cosP - z1 * sinP;
+            
+            return {
+                x: center3D.x + x1 * scale3D,
+                y: center3D.y - y2 * scale3D,
+                z: z1 // store depth for sorting/z-index later
+            };
+        }
+
+        function render3D() {
+            const axesGroup = document.getElementById('three-d-axes-group');
+            const linesGroup = document.getElementById('three-d-lines-group');
+            const nodesGroup = document.getElementById('three-d-nodes-group');
+            if (!axesGroup || !linesGroup || !nodesGroup) return;
+
+            axesGroup.innerHTML = '';
+            linesGroup.innerHTML = '';
+            nodesGroup.innerHTML = '';
+
+            const showGenderLines = document.getElementById('show-gender-lines-chk').checked;
+            const showAxesLabels = document.getElementById('show-axes-labels-chk').checked;
+
+            // 1. Draw Axes
+            // X-axis: Gender [-1.4 to 1.4]
+            const xAxisStart = project3D(-1.3, 0, 0);
+            const xAxisEnd = project3D(1.3, 0, 0);
+            axesGroup.innerHTML += `<line x1="${xAxisStart.x}" y1="${xAxisStart.y}" x2="${xAxisEnd.x}" y2="${xAxisEnd.y}" class="three-d-axis" stroke="#94a3b8" marker-end="url(#arrow-axis)" />`;
+
+            // Y-axis: Royalty [-1.4 to 1.4]
+            const yAxisStart = project3D(0, -1.3, 0);
+            const yAxisEnd = project3D(0, 1.3, 0);
+            axesGroup.innerHTML += `<line x1="${yAxisStart.x}" y1="${yAxisStart.y}" x2="${yAxisEnd.x}" y2="${yAxisEnd.y}" class="three-d-axis" stroke="#94a3b8" marker-end="url(#arrow-axis)" />`;
+
+            // Z-axis: Age [-1.4 to 1.4]
+            const zAxisStart = project3D(0, 0, -1.3);
+            const zAxisEnd = project3D(0, 0, 1.3);
+            axesGroup.innerHTML += `<line x1="${zAxisStart.x}" y1="${zAxisStart.y}" x2="${zAxisEnd.x}" y2="${zAxisEnd.y}" class="three-d-axis" stroke="#94a3b8" marker-end="url(#arrow-axis)" />`;
+
+            // Draw axis divisions / ticks
+            const ticks = [-1.0, 1.0];
+            ticks.forEach(t => {
+                const ptX = project3D(t, 0, 0);
+                axesGroup.innerHTML += `<line x1="${ptX.x}" y1="${ptX.y - 4}" x2="${ptX.x}" y2="${ptX.y + 4}" stroke="#94a3b8" stroke-width="1.2" />`;
+                const ptY = project3D(0, t, 0);
+                axesGroup.innerHTML += `<line x1="${ptY.x - 4}" y1="${ptY.y}" x2="${ptY.x + 4}" y2="${ptY.y}" stroke="#94a3b8" stroke-width="1.2" />`;
+                const ptZ = project3D(0, 0, t);
+                axesGroup.innerHTML += `<line x1="${ptZ.x - 3}" y1="${ptZ.y - 3}" x2="${ptZ.x + 3}" y2="${ptZ.y + 3}" stroke="#94a3b8" stroke-width="1.2" />`;
+            });
+
+            // Axis labels (positive and negative ends)
+            if (showAxesLabels) {
+                const isEn = /-en\.html$/.test((location.pathname.split('/').pop() || '').toLowerCase());
+                
+                // X labels
+                const labelXPlus = project3D(1.45, 0, 0);
+                axesGroup.innerHTML += `<text x="${labelXPlus.x}" y="${labelXPlus.y + 4}" class="three-d-axis-label" text-anchor="middle">${isEn ? 'Gender (Male)' : 'Gender (পুরুষ)'}</text>`;
+                const labelXMinus = project3D(-1.45, 0, 0);
+                axesGroup.innerHTML += `<text x="${labelXMinus.x}" y="${labelXMinus.y + 4}" class="three-d-axis-label" text-anchor="middle">${isEn ? 'Gender (Female)' : 'Gender (নারী)'}</text>`;
+
+                // Y labels
+                const labelYPlus = project3D(0, 1.45, 0);
+                axesGroup.innerHTML += `<text x="${labelYPlus.x}" y="${labelYPlus.y - 5}" class="three-d-axis-label" text-anchor="middle">${isEn ? 'Royalty (Royal)' : 'Royalty (রাজকীয়)'}</text>`;
+                const labelYMinus = project3D(0, -1.45, 0);
+                axesGroup.innerHTML += `<text x="${labelYMinus.x}" y="${labelYMinus.y + 12}" class="three-d-axis-label" text-anchor="middle">${isEn ? 'Royalty (Common)' : 'Royalty (সাধারণ)'}</text>`;
+
+                // Z labels
+                const labelZPlus = project3D(0, 0, 1.45);
+                axesGroup.innerHTML += `<text x="${labelZPlus.x}" y="${labelZPlus.y + 12}" class="three-d-axis-label" text-anchor="middle">${isEn ? 'Age (Adult)' : 'Age (পরিপক্ক)'}</text>`;
+                const labelZMinus = project3D(0, 0, -1.45);
+                axesGroup.innerHTML += `<text x="${labelZMinus.x}" y="${labelZMinus.y - 5}" class="three-d-axis-label" text-anchor="middle">${isEn ? 'Age (Child)' : 'Age (শিশু)'}</text>`;
+            }
+
+            // 2. Draw relationship connection lines in 3D
+            if (showGenderLines) {
+                const pairs = [
+                    { from: "King", to: "Queen" },
+                    { from: "Man", to: "Woman" },
+                    { from: "Prince", to: "Princess" },
+                    { from: "Boy", to: "Girl" }
+                ];
+
+                pairs.forEach(pair => {
+                    const w1 = words3D.find(w => w.name === pair.from);
+                    const w2 = words3D.find(w => w.name === pair.to);
+                    if (w1 && w2) {
+                        const p1 = project3D(...w1.coords);
+                        const p2 = project3D(...w2.coords);
+                        // Draw vector arrow from Male -> Female
+                        linesGroup.innerHTML += `
+                            <line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" 
+                                  class="three-d-relation-line" 
+                                  stroke="var(--accent-purple)" 
+                                  stroke-width="1.8" />
+                        `;
+                    }
+                });
+            }
+
+            // 3. Project and Render Nodes (sorted by depth Z for correct drawing overlap)
+            const projectedNodes = words3D.map((w, idx) => {
+                const proj = project3D(...w.coords);
+                return {
+                    name: w.name,
+                    color: w.color,
+                    coords: w.coords,
+                    x: proj.x,
+                    y: proj.y,
+                    z: proj.z,
+                    idx: idx
+                };
+            });
+
+            // Sort nodes back-to-front (smaller z means further away)
+            projectedNodes.sort((a, b) => a.z - b.z);
+
+            projectedNodes.forEach(node => {
+                nodesGroup.innerHTML += `
+                    <g class="three-d-word-node" id="node-${node.name}" 
+                       style="--node-color: ${node.color};"
+                       onmouseenter="highlight3DNode('${node.name}', true)"
+                       onmouseleave="highlight3DNode('${node.name}', false)">
+                        <circle cx="${node.x}" cy="${node.y}" r="6" fill="${node.color}" stroke="var(--bg-color)" stroke-width="1.5" />
+                        <text x="${node.x}" y="${node.y - 12}" text-anchor="middle">${node.name}</text>
+                    </g>
+                `;
+            });
+        }
+
+        function highlight3DNode(name, highlight) {
+            const nodeEl = document.getElementById(`node-${name}`);
+            if (!nodeEl) return;
+            
+            if (highlight) {
+                nodeEl.classList.add('highlighted');
+                
+                // Show coordinate details in a tooltip/overlay
+                const w = words3D.find(word => word.name === name);
+                const isEn = /-en\.html$/.test((location.pathname.split('/').pop() || '').toLowerCase());
+                const genderTxt = w.coords[0] > 0 ? (isEn ? 'Male' : 'পুরুষ') : (isEn ? 'Female' : 'নারী');
+                const royaltyTxt = w.coords[1] > 0 ? (isEn ? 'Royal' : 'রাজকীয়') : (isEn ? 'Common' : 'সাধারণ');
+                const ageTxt = w.coords[2] > 0 ? (isEn ? 'Adult' : 'পরিপক্ক') : (isEn ? 'Child' : 'শিশু');
+
+                document.getElementById('three-d-tooltip').innerHTML = `
+                    <strong>${name}</strong>: [${w.coords.map(v => (v > 0 ? '+' : '') + v).join(', ')}]<br>
+                    <span style="font-size: 0.75rem; opacity: 0.85;">${genderTxt} | ${royaltyTxt} | ${ageTxt}</span>
+                `;
+            } else {
+                nodeEl.classList.remove('highlighted');
+                const isEn = /-en\.html$/.test((location.pathname.split('/').pop() || '').toLowerCase());
+                document.getElementById('three-d-tooltip').innerHTML = isEn ? 'Drag to rotate 3D Space' : 'ঘুরিয়ে দেখতে ড্র্যাগ (Drag) করুন';
+            }
+        }
+
+        function populateHeatmapTable() {
+            const tbody = document.getElementById('heatmap-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            words3D.forEach(w => {
+                const tr = document.createElement('tr');
+                
+                const getHeatCell = (val, type) => {
+                    const color = val > 0 ? `rgba(6, 182, 212, ${Math.abs(val) * 0.4})` : `rgba(168, 85, 247, ${Math.abs(val) * 0.4})`;
+                    const border = val > 0 ? 'rgba(6, 182, 212, 0.3)' : 'rgba(168, 85, 247, 0.3)';
+                    const textCol = val > 0 ? '#22d3ee' : '#d8b4fe';
+                    const sign = val > 0 ? '+' : '';
+                    return `<td style="text-align: center;"><div class="heatmap-cell" style="background:${color}; border:1px solid ${border}; color:${textCol}; padding:0.4rem 0.2rem;">${sign}${val.toFixed(1)}</div></td>`;
+                };
+
+                tr.innerHTML = `
+                    <td class="heatmap-word">${w.name}</td>
+                    ${getHeatCell(w.coords[0], 'gender')}
+                    ${getHeatCell(w.coords[1], 'royalty')}
+                    ${getHeatCell(w.coords[2], 'age')}
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         // Window load initializer
         window.onload = () => {
             initVisualizer();
-            initPEWaveChart();
             initPEHoverSync();
             selectPEWord(0); // init PE widget
+            init3DSpace();   // init our new 3D space
         };
     </script>
 

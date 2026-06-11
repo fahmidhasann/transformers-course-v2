@@ -17,6 +17,7 @@
             --accent-cyan: #06b6d4;
             --accent-purple: #a855f7;
             --accent-green: #10b981;
+            --accent-orange: #f59e0b;
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
@@ -120,120 +121,125 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Multi-Head Simulator Widgets */
+        /* Interactive Attention Visualizer Styles */
         .head-selector {
             display: flex;
-            gap: 0.5rem;
             flex-wrap: wrap;
+            gap: 0.5rem;
             margin-bottom: 1.5rem;
         }
 
         .head-btn {
-            background: rgba(255,255,255,0.03);
+            background: rgba(30, 41, 59, 0.9);
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
             padding: 0.6rem 1rem;
             border-radius: 8px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
             font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .head-btn:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
         }
 
         .head-btn.active {
-            color: white !important;
-            border-color: transparent;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+            color: white;
+            font-weight: 600;
         }
 
-        .head1-active.active { background: var(--accent-cyan); }
-        .head2-active.active { background: var(--accent-purple); }
-        .head3-active.active { background: var(--accent-green); }
-        .head4-active.active { background: var(--accent-orange); }
+        .head-btn.head1-active {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+        .head-btn.head2-active {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+        }
+        .head-btn.head3-active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+        }
+        .head-btn.head4-active {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+        }
 
         .visualizer-tokens {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
             display: flex;
             flex-wrap: wrap;
-            gap: 0.75rem;
+            gap: 0.6rem;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
         .viz-token {
-            background: #1e293b;
-            border: 1.5px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 0.9rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             font-family: 'Outfit', sans-serif;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
             font-size: 1.05rem;
+            text-align: center;
         }
 
         .viz-token:hover {
-            border-color: var(--accent-cyan);
-            color: var(--text-primary);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .viz-token.query-token {
-            background: var(--text-primary) !important;
+            font-weight: 700;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+            background: white !important;
             color: #0f172a !important;
-            border-color: var(--text-primary) !important;
-            box-shadow: 0 4px 20px rgba(255,255,255,0.25);
-            transform: scale(1.05);
+            border-color: white !important;
         }
 
         .viz-details-panel {
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.25rem;
+            padding: 1.5rem;
             margin-top: 1.5rem;
         }
 
-        .layer-detail-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
         .viz-explanation {
-            font-size: 0.95rem;
-            color: #cbd5e1;
-            padding: 0.75rem;
-            border-left: 3.5px solid;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 0 6px 6px 0;
             margin-bottom: 1.5rem;
-            min-height: 50px;
+            font-size: 1rem;
+            color: #cbd5e1;
+            padding-left: 0.75rem;
+            min-height: 2.5rem;
             display: flex;
             align-items: center;
         }
 
-        .border-head1 { border-color: var(--accent-cyan); }
-        .border-head2 { border-color: var(--accent-purple); }
-        .border-head3 { border-color: var(--accent-green); }
-        .border-head4 { border-color: var(--accent-orange); }
+        /* Color-coded left borders for explanation according to head */
+        .border-head1 { border-left: 3px solid var(--accent-cyan); }
+        .border-head2 { border-left: 3px solid var(--accent-purple); }
+        .border-head3 { border-left: 3px solid var(--accent-green); }
+        .border-head4 { border-left: 3px solid var(--accent-orange); }
 
-        .color-head1 { background: var(--accent-cyan); }
-        .color-head2 { background: var(--accent-purple); }
-        .color-head3 { background: var(--accent-green); }
-        .color-head4 { background: var(--accent-orange); }
-
+        /* Attention Bar Chart */
         .attention-chart {
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.8rem;
         }
 
         .chart-row {
@@ -243,7 +249,7 @@
         }
 
         .chart-label {
-            width: 80px;
+            width: 90px;
             font-family: 'Outfit', sans-serif;
             font-size: 0.9rem;
             font-weight: 600;
@@ -252,104 +258,137 @@
         .chart-bar-container {
             flex-grow: 1;
             background: rgba(255, 255, 255, 0.05);
-            height: 10px;
-            border-radius: 5px;
+            height: 12px;
+            border-radius: 6px;
             overflow: hidden;
         }
 
         .chart-bar {
             height: 100%;
             width: 0%;
-            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            border-radius: 5px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 6px;
         }
+
+        .chart-bar.color-head1 { background: var(--accent-cyan); }
+        .chart-bar.color-head2 { background: var(--accent-purple); }
+        .chart-bar.color-head3 { background: var(--accent-green); }
+        .chart-bar.color-head4 { background: var(--accent-orange); }
 
         .chart-value {
-            width: 40px;
-            text-align: right;
             font-size: 0.85rem;
-            font-weight: bold;
+            width: 45px;
+            text-align: right;
             font-family: 'Outfit', sans-serif;
+            color: var(--text-secondary);
         }
 
-        /* Layer Stacking visual block */
+        /* Layer Stacking Explorer Styles */
         .layer-stack {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
             align-items: center;
-            margin: 1.5rem 0;
+            margin: 2rem 0;
         }
 
         .layer-group {
             width: 100%;
-            background: rgba(15, 23, 42, 0.5);
+            padding: 1.2rem;
+            background: rgba(30, 41, 59, 0.4);
             border: 1px solid var(--border-color);
-            padding: 1.25rem;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
         }
 
         .layer-group:hover {
             background: rgba(30, 41, 59, 0.8);
-            border-color: var(--accent-purple);
             transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .layer-group.active {
-            border-color: var(--accent-cyan);
             background: rgba(30, 41, 59, 0.9);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+        }
+
+        .layer-group.bottom-group.active {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .layer-group.mid-group.active {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+        }
+
+        .layer-group.top-group.active {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
         }
 
         .layer-title {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.3rem;
+            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
         }
 
+        .layer-group.bottom-group .layer-title { color: var(--accent-green); }
+        .layer-group.mid-group .layer-title { color: var(--accent-purple); }
+        .layer-group.top-group .layer-title { color: var(--accent-cyan); }
+
         .layer-desc {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
         }
 
         .layer-arrow {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
             font-weight: bold;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(3px); }
         }
 
         .layer-detail-box {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.25rem;
+            padding: 1.5rem;
             margin-top: 1rem;
-            animation: fadeIn 0.3s ease;
+            min-height: 180px;
+            transition: all 0.3s ease;
+        }
+
+        .layer-detail-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         /* Quiz Styles */
+        .quiz-container {
+            margin-top: 1.5rem;
+        }
+
         .quiz-question-card {
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
             margin-bottom: 1.5rem;
+        }
+
+        .quiz-question-card:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
         }
 
         .quiz-question {
             font-weight: 600;
             font-size: 1.1rem;
             margin-bottom: 1rem;
-            color: var(--text-primary);
         }
 
         .quiz-option {
@@ -371,6 +410,7 @@
         .quiz-option.correct {
             background: rgba(16, 185, 129, 0.15);
             border-color: var(--accent-green);
+            font-weight: 600;
         }
 
         .quiz-option.incorrect {
