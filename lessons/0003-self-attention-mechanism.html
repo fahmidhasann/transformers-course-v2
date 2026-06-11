@@ -920,7 +920,17 @@
 
         <!-- Transformer Block Map -->
         <div class="card tb-architecture-map">
-            <h2>Transformer Block ম্যাপ — তুমি এখন কোথায়</h2>
+            <h2>Transformer Block ম্যাপ — বর্তমান অবস্থান</h2>
+            <div class="tb-map-legend"><span><i class="tb-legend-dot tb-legend-active"></i> এই লেসনের ফোকাস</span><span><i class="tb-legend-dot tb-legend-rest"></i> বাকি অংশ (অন্য লেসনে)</span></div>
+            <p class="tb-map-caption"><strong>তুম�        <!-- Context Problem Card -->
+        <div class="card">
+            <h2>The Context Problem (প্রসঙ্গের সংকট)</h2>
+            <p>একটি সাধারণ ইংরেজি শব্দ যেমন <span class="tech-term">bank</span> বিবেচনা করুন। এর নিচে দেওয়া দুটি একদম ভিন্ন অর্থ হতে পারে:</p>
+            <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--accent-cyan);">
+                <p style="margin-bottom: 0.5rem;"><strong>বাক্য ১:</strong> "I deposited my money at the <span class="highlight">bank</span>." <br>
+                → এখানে <span class="highlight">bank</span> মানে অর্থনৈতিক ব্যাংক।</p>
+                <p style="margin: 0;"><strong>বাক্য ২:</strong> "We sat on the muddy <span class="highlight">bank</span> of the river." <br>
+                → এখানে <span class="highlight">bank</span> মানে নদীর তীর বা পাড়।</p>
             <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -992,17 +1002,7 @@
     <text x="190" y="467">Input Tokens</text>
   </g>
 </svg>
-            <div class="tb-map-legend"><span><i class="tb-legend-dot tb-legend-active"></i> এই লেসনের ফোকাস</span><span><i class="tb-legend-dot tb-legend-rest"></i> বাকি অংশ (অন্য লেসনে)</span></div>
-            <p class="tb-map-caption"><strong>তুম�        <!-- Context Problem Card -->
-        <div class="card">
-            <h2>The Context Problem (প্রসঙ্গের সংকট)</h2>
-            <p>একটি সাধারণ ইংরেজি শব্দ যেমন <span class="tech-term">bank</span> বিবেচনা করুন। এর নিচে দেওয়া দুটি একদম ভিন্ন অর্থ হতে পারে:</p>
-            <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--accent-cyan);">
-                <p style="margin-bottom: 0.5rem;"><strong>বাক্য ১:</strong> "I deposited my money at the <span class="highlight">bank</span>." <br>
-                → এখানে <span class="highlight">bank</span> মানে অর্থনৈতিক ব্যাংক।</p>
-                <p style="margin: 0;"><strong>বাক্য ২:</strong> "We sat on the muddy <span class="highlight">bank</span> of the river." <br>
-                → এখানে <span class="highlight">bank</span> মানে নদীর তীর বা পাড়।</p>
-            </div>
+        </div>
             <p>মানুষ হিসেবে আমরা পুরো বাক্যটি পড়ে নিমেষেই বুঝে যাই কোন "bank" বোঝানো হয়েছে। কিন্তু কম্পিউটারের কাছে প্রতিটি শব্দ কেবল সংখ্যার একটি তালিকা বা স্ট্রিং।</p>
             <p>Transformer-এর পূর্বে AI শব্দগুলোকে একে একে (one by one) পড়ত। ফলে বাক্য অনেক লম্বা হলে, শেষে পৌঁছানোর আগেই সে শুরুর কথা ভুলে যেত!</p>
             <p>এই সমস্যার জাদুকরী সমাধান হলো Transformer-এর <span class="tech-term">Self-Attention</span>। এটি প্রতিটি শব্দকে বাক্যের অন্য সব শব্দের সাথে একই সাথে কথা বলতে দেয়, যাতে সে সঠিক অর্থ বুঝতে পারে। এটি অনেকটা একটি গ্রুপ চ্যাটের মতো, যেখানে সবাই একসাথে সবার সাথে কথা বলে কোনো রহস্যের সমাধান করে।</p>
