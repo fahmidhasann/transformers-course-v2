@@ -1661,171 +1661,165 @@
         const glossaryData = [
             {
                 category: "Input Representation",
-                term: "Tokenization",
-                bnTerm: "টোকেনাইজেশন",
-                def: "মানুষের লেখা টেক্সটকে ক্ষুদ্র ক্ষুদ্র অর্থপূর্ণ অংশ বা টোকেনে (যেমন শব্দ বা উপ-শব্দ) বিভক্ত করার প্রক্রিয়া, যা কম্পিউটার সহজে প্রসেস করতে পারে।"
+                term: "Vocabulary",
+                bnTerm: "ভোকাবুলারি",
+                def: "এটি মূলত মডেলের নিজস্ব শব্দভাণ্ডার বা ডিকশনারি—যেখানে তার পরিচিত সকল স্বতন্ত্র টোকেনের তালিকা সংরক্ষিত থাকে। কোনো শব্দ এই তালিকায় না থাকলে মডেল তা সরাসরি চিনতে পারে না। উদাহরণস্বরূপ, GPT-4 এর শব্দভাণ্ডারে প্রায় ১,০০,০০০ এর মতো টোকেন রয়েছে।"
             },
             {
                 category: "Input Representation",
-                term: "Vocabulary",
-                bnTerm: "ভোকাবুলারি",
-                def: "একটি মডেল যতগুলো অনন্য টোকেন বা শব্দ চিনতে পারে, তার সম্পূর্ণ সংগ্রহ বা নিজস্ব ডিকশনারি।"
+                term: "Tokenization",
+                bnTerm: "টোকেনাইজেশন",
+                def: "কম্পিউটারের প্রসেস করার সুবিধার্থে মানুষের লেখা বাক্যকে ছোট ছোট অংশে বা 'টোকেনে' (পূর্ণাঙ্গ শব্দ বা শব্দের ক্ষুদ্র অংশ) বিভক্ত করার প্রক্রিয়া। এটিকে পিৎজা খাওয়ার আগে স্লাইস করে নেওয়ার সাথে তুলনা করা যেতে পারে—মডেল সম্পূর্ণ বাক্যটি একসাথে না পড়ে বরং এই ছোট টোকেনগুলো ধাপে ধাপে বিশ্লেষণ করে।"
             },
             {
                 category: "Input Representation",
                 term: "BPE (Byte Pair Encoding)",
                 bnTerm: "বাইট পেয়ার এনকোডিং",
-                def: "একটি সাব-ওয়ার্ড টোকেনাইজেশন অ্যালগরিদম যা পরিচিত শব্দগুলোকে আস্ত রাখে এবং অপরিচিত শব্দগুলোকে ছোট পরিচিত উপ-শব্দে বিভক্ত করে OOV সমস্যা এড়ায়।"
+                def: "মডেলের শব্দভাণ্ডার তৈরির একটি অত্যন্ত কার্যকরী অ্যালগরিদম। এটি পরিচিত ও সাধারণ শব্দগুলোকে আস্ত রাখে এবং অপরিচিত শব্দগুলোকে পরিচিত ক্ষুদ্রতর অংশে ভেঙে ফেলে। যেমন, 'unhappiness' শব্দটি ভেঙে 'un', 'happi' এবং 'ness' এ পরিণত হয়—ফলে একেবারে নতুন কোনো শব্দ দেখলেও মডেল বিভ্রান্ত হয় না।"
+            },
+            {
+                category: "Input Representation",
+                term: "Vector",
+                bnTerm: "ভেক্টর",
+                def: "সহজ ভাষায়, ভেক্টর হলো সংখ্যার একটি সুশৃঙ্খল তালিকা। লার্জ ল্যাঙ্গুয়েজ মডেল বা LLM-এ প্রতিটি শব্দ একটি ভেক্টর হিসেবে সংরক্ষিত থাকে। এই সংখ্যার সারিটি মূলত শব্দের অর্থকে ধারণ করে, যাতে কম্পিউটার কেবল অক্ষর নয়, বরং শব্দের মূল অর্থ নিয়ে গাণিতিক বিশ্লেষণ বা 'অঙ্ক' কষতে পারে।"
             },
             {
                 category: "Input Representation",
                 term: "Embedding",
                 bnTerm: "এম্বেডিং",
-                def: "টোকেন আইডিকে একটি উচ্চ-মাত্রিক সেমান্টিক ভেক্টরে রূপান্তর করা, যা শব্দের অর্থ ও পারস্পরিক সম্পর্ক গাণিতিকভাবে প্রকাশ করে।"
+                def: "প্রতিটি টোকেনকে একটি দীর্ঘ গাণিতিক সংখ্যার তালিকায় রূপান্তর করার প্রক্রিয়া, যা ওই শব্দের একটি চারিত্রিক 'প্রোফাইল' হিসেবে কাজ করে। এটি শব্দের অন্তর্নিহিত অর্থ (যেমন- এটি কি প্রাণী, রাজকীয় নাকি পুরুষবাচক?) গাণিতিকভাবে ধারণ করে। সমার্থক শব্দগুলো ভেক্টর স্পেসে কাছাকাছি অবস্থান করে, আর এ কারণেই Vector(King) - Vector(Man) + Vector(Woman) ≈ Vector(Queen) এর মতো চমৎকার গাণিতিক সম্পর্ক কাজ করে।"
+            },
+            {
+                category: "Input Representation",
+                term: "Parallel Processing",
+                bnTerm: "প্যারালাল প্রসেসিং",
+                def: "মডেল বাক্যের শব্দগুলোকে বাম-থেকে-ডানে একটির পর একটি প্রসেস করার বদলে সবগুলো শব্দকে একই সাথে বিশ্লেষণ করে। এই পদ্ধতির কারণে প্রসেসিং অনেক দ্রুত হয়—তবে একসাথে পড়ার কারণেই শব্দের ক্রম মনে রাখার জন্য পজিশনাল এনকোডিং বা 'পজিশন ট্যাগ' এর প্রয়োজনীয়তা দেখা দেয়।"
             },
             {
                 category: "Input Representation",
                 term: "Positional Encoding",
                 bnTerm: "পজিশনাল এনকোডিং",
-                def: "সমান্তরালভাবে প্রসেস হওয়া টোকেনগুলোর ক্রমানুসার বা বাক্যে তাদের অবস্থান নির্দেশ করার জন্য এম্বেডিং ভেক্টরের সাথে যোগ করা একটি নির্দিষ্ট গাণিতিক ভেক্টর।"
+                def: "প্রতিটি শব্দের ভেক্টরের সাথে যুক্ত করা একটি বিশেষ 'পজিশন ট্যাগ', যার মাধ্যমে মডেল বাক্যে শব্দের ক্রম বা অবস্থান বুঝতে পারে। এটি না থাকলে, 'The cat ate the mouse' এবং 'The mouse ate the cat' বাক্য দুটির মধ্যকার পার্থক্য মডেল কোনোভাবেই ধরতে পারতো না, কারণ তার কাছে উভয় বাক্যেই একই শব্দ রয়েছে।"
             },
             {
                 category: "Attention Mechanism",
                 term: "Self-Attention Mechanism",
                 bnTerm: "সেলফ-অ্যাটেনশন মেকানিজম",
-                def: "একটি শব্দ বাক্যের অন্যান্য শব্দের সাথে কতটা সম্পর্কযুক্ত তা পরিমাপ করে প্রতিটি শব্দের অর্থ ও কনটেক্সট নির্ধারণ করার পদ্ধতি।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Query (Q)",
-                bnTerm: "কোয়েরি",
-                def: "বাক্যের একটি শব্দ যখন অন্য শব্দের সাথে তার সম্পর্ক খুঁজে বেড়ায়, তখন সেই অনুসন্ধানকারী ভেক্টরটিকে Query বলা হয় (সার্চ ইঞ্জিনে টাইপ করা শব্দ)।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Key (K)",
-                bnTerm: "কী",
-                def: "বাক্যের প্রতিটি শব্দের বিবরণ বা লেবেল ভেক্টর, যার সাথে Query ভেক্টরটির মিল পরীক্ষা করা হয় (ইউটিউব ভিডিওর টাইটেল/লেবেল)।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Value (V)",
-                bnTerm: "ভ্যালু",
-                def: "শব্দের মূল তথ্য বা কন্টেন্ট ধারণকারী ভেক্টর, যা Attention Weight অনুযায়ী সমন্বয় করে আউটপুট তৈরি করা হয় (ইউটিউবের মূল ভিডিও কন্টেন্ট)।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Attention Weights",
-                bnTerm: "অ্যাটেনশন ওয়েটস",
-                def: "Softmax ফাংশন প্রয়োগ করে প্রাপ্ত ভগ্নাংশ বা পারসেন্টেজ মান, যা নির্দেশ করে একটি শব্দ অন্য শব্দগুলোর ওপর কত শতাংশ মনোযোগ দিবে।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Dot-Product Similarity",
-                bnTerm: "ডট-প্রোডাক্ট সিমিলারিটি",
-                def: "দুটি ভেক্টরের সামঞ্জস্যতা বা মিল পরিমাপ করার গাণিতিক পদ্ধতি, যা Self-Attention-এ স্কোর গণনায় ব্যবহৃত হয়।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Scaling",
-                bnTerm: "স্কেলিং",
-                def: "ডট প্রোডাক্টের বিশাল মান নিয়ন্ত্রণ করার জন্য ভেক্টরের সাইজের বর্গমূল (sqrt(d_k)) দিয়ে ভাগ করার প্রক্রিয়া।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Multi-Head Attention",
-                bnTerm: "মাল্টি-হেড অ্যাটেনশন",
-                def: "একাধিক Attention Mechanism যা সমান্তরালভাবে (in parallel) ইনপুটের ভিন্ন ভিন্ন অংশের সম্পর্ক এবং কনটেক্সট ক্যাপচার করতে ব্যবহৃত হয়।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Single-Head Attention",
-                bnTerm: "সিঙ্গেল-হেড অ্যাটেনশন",
-                def: "মাত্র একটি Attention Head বিশিষ্ট মনোযোগ মেকানিজম, যা বাক্যের বহুবিধ সম্পর্ক একসাথে বুঝতে সীমাবদ্ধ থাকে।"
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Bidirectional Attention",
-                bnTerm: "বাইডাইরেকশনাল অ্যাটেনশন",
-                def: "অ্যাটেনশন মেকানিজম যা একটি টোকেনকে বাক্যের বাম ও ডান—উভয় পাশের শব্দগুলোর ওপর সমান মনোযোগ দিতে দেয় (যেমন- BERT)।"
+                def: "এমন একটি মেকানিজম যেখানে একটি শব্দ বাক্যের অন্যান্য সমস্ত শব্দের দিকে একসাথে দৃষ্টিপাত করে নিজের সঠিক অর্থ অনুধাবন করে। এটিকে একটি গ্রুপ চ্যাটের সাথে তুলনা করা যায়, যেখানে সবাই একে অপরের সাথে তথ্য আদান-প্রদানের মাধ্যমে একটি সিদ্ধান্তে পৌঁছায়। এই কৌশলের মাধ্যমেই মডেল বুঝতে পারে কখন 'bank' বলতে নদীর তীর আর কখন আর্থিক প্রতিষ্ঠানকে বোঝানো হচ্ছে।"
             },
             {
                 category: "Attention Mechanism",
                 term: "Pronoun Resolution",
                 bnTerm: "প্রোনাউন রেজোলিউশন",
-                def: "বাক্যে কোনো সর্বনাম (pronoun যেমন - 'it') কোন বিশেষ্যকে (noun যেমন - 'dog' বা 'street') নির্দেশ করছে তা খুঁজে বের করার প্রক্রিয়া।"
+                def: "বাক্যের কোনো সর্বনাম (Pronoun) ঠিক কোন বিশেষ্যকে নির্দেশ করছে তা সুনির্দিষ্টভাবে চিহ্নিত করা। যেমন- 'The cat drank the milk because it was hungry' বাক্যটিতে Self-Attention মেকানিজম সফলভাবে বুঝতে পারে যে 'it' বলতে এখানে 'cat' কেই বোঝানো হচ্ছে, 'milk' কে নয়।"
             },
             {
-                category: "Model Block & Optimization",
-                term: "Layer Stacking",
-                bnTerm: "লেয়ার স্ট্যাকিং",
-                def: "ট্রান্সফরমার ব্লকের একাধিক স্তর একের পর এক সাজানো, যা মডেলকে পর্যায়ক্রমিক ও গভীর যৌক্তিক কাঠামো তৈরি করতে সাহায্য করে।"
+                category: "Attention Mechanism",
+                term: "Query (Q)",
+                bnTerm: "কোয়েরি",
+                def: "একটি শব্দ বাক্যের অন্য শব্দগুলোর কাছ থেকে কী তথ্য খুঁজছে—এটি মূলত তার একটি অনুসন্ধান বা প্রশ্ন। কল্পনা করুন, আপনি লাইব্রেরিতে গিয়ে লাইব্রেরিয়ানকে বলছেন, 'আমার কৃত্রিম বুদ্ধিমত্তা (AI) সম্পর্কে একটি বই দরকার'—এখানে আপনার এই চাওয়াই হলো Query।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Key (K)",
+                bnTerm: "কী",
+                def: "এটি হলো একটি শব্দের নিজস্ব পরিচিতি বা লেবেল—অর্থাৎ সে অন্যান্য শব্দকে কী ধরনের তথ্য প্রদান করতে পারে। লাইব্রেরির উদাহরণে, এটি হলো তাকের ওপর রাখা বইয়ের মলাটে থাকা শিরোনাম বা বিষয়বস্তুর ট্যাগ, যার সাথে আপনার Query বা অনুসন্ধানটি মিলিয়ে দেখা হয়।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Value (V)",
+                bnTerm: "ভ্যালু",
+                def: "এটি হলো একটি শব্দের মূল তথ্য বা কন্টেন্ট, যা Query এবং Key এর মধ্যে সামঞ্জস্য বা মিল পাওয়া গেলে প্রদান করা হয়। লাইব্রেরির উদাহরণ অনুযায়ী, এটি হলো সেই কাঙ্ক্ষিত বইয়ের ভেতরের পাতাগুলোর আসল জ্ঞান, যা আপনি পড়ে গ্রহণ করেন। যেমন, বাক্যে 'it' যখন 'cat' এর সাথে মিলে যায়, তখন 'it' শব্দটি 'cat' এর Value বা মূল অর্থটি নিজের মধ্যে ধারণ করে।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Dot-Product Similarity",
+                bnTerm: "ডট-প্রোডাক্ট সিমিলারিটি",
+                def: "এটি একটি ম্যাচমেকিং বা তুলনামূলক ধাপ: যেখানে একটি শব্দের Query-এর সাথে বাক্যের অন্য সকল শব্দের Key-এর গাণিতিক গুণন (Dot-Product) করে একটি 'কম্প্যাটিবিলিটি স্কোর' বা সামঞ্জস্যতা বের করা হয়—যার মাধ্যমে বোঝা যায় তারা একে অপরের সাথে কতটা প্রাসঙ্গিক।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Scaling",
+                bnTerm: "স্কেলিং",
+                def: "প্রাপ্ত কম্প্যাটিবিলিটি স্কোরগুলোকে একটি নির্দিষ্ট গাণিতিক মান (ভেক্টর ডাইমেনশনের বর্গমূল) দিয়ে ভাগ করে সেগুলোর আকার ছোট ও সুষম করার প্রক্রিয়া। এর ফলে মানগুলো খুব বেশি বড় হয়ে গিয়ে পরবর্তী ধাপের (Softmax) হিসাব-নিকাশকে অস্থিতিশীল করতে পারে না।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Softmax",
+                bnTerm: "সফটম্যাক্স",
+                def: "এটি এমন একটি গাণিতিক ফাংশন যা কাঁচা স্কোরগুলোকে (Raw Scores) একটি সুষম শতকরা হারে (Probability Distribution) রূপান্তর করে, যার মোট যোগফল সর্বদা ১০০% হয়। এর মাধ্যমেই মডেল সুনির্দিষ্টভাবে নির্ধারণ করতে পারে যে তাকে কোন শব্দের প্রতি ঠিক কত শতাংশ মনোযোগ (যেমন- এখানে ৫৫%, ওখানে ৩০%) দিতে হবে।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Attention Weights",
+                bnTerm: "অ্যাটেনশন ওয়েটস",
+                def: "Softmax ধাপ থেকে প্রাপ্ত এই চূড়ান্ত শতকরা হার বা ওয়েটগুলোই নির্ধারণ করে দেয় যে, একটি নির্দিষ্ট শব্দ বাক্যের অন্য প্রতিটি শব্দের ওপর ঠিক কতটুকু গুরুত্ব বা মনোযোগ আরোপ করবে—যার সর্বমোট মান হবে ১০০%।"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Multi-Head Attention",
+                bnTerm: "মাল্টি-হেড অ্যাটেনশন",
+                def: "মডেলকে একাধিক 'Head' বা মনোযোগের ধারা প্রদান করা, যা সমান্তরালভাবে কাজ করে এবং প্রতিটি Head আলাদা আলাদা বিষয়ে বিশেষজ্ঞ হিসেবে ভূমিকা রাখে। উদাহরণস্বরূপ, একটি Head হয়তো বাক্যের ক্রিয়া বা কাজ খুঁজছে, আরেকটি Head 'it' দ্বারা কাকে বোঝানো হচ্ছে তা বের করছে। এটিকে একসাথে একাধিক দিক থেকে শোনার বা বিশ্লেষণ করার সাথে তুলনা করা যেতে পারে।"
             },
             {
                 category: "Model Block & Optimization",
                 term: "Dimension Splitting",
                 bnTerm: "ডাইমেনশন স্প্লিটিং",
-                def: "Multi-Head Attention-এ মূল এম্বেডিং সাইজকে সমান ভাগে ভাগ করে প্রতিটি হেডের জন্য ছোট সাবস্পেস তৈরি করার পদ্ধতি।"
+                def: "একটি শব্দের এম্বেডিং ভেক্টরের ডাইমেনশনগুলোকে সমপরিমাণে বিভিন্ন Head-এর মধ্যে ভাগ করে দেওয়া। যেমন- ৫১২ ডাইমেনশনের একটি ভেক্টরকে ৮টি Head-এর মধ্যে ভাগ করলে প্রত্যেকে ৬৪টি করে ডাইমেনশন পায়। এর ফলে কোনো অতিরিক্ত কম্পিউটেশনাল খরচ ছাড়াই একাধিক Head সমান্তরালভাবে কাজ করতে সক্ষম হয়।"
             },
             {
                 category: "Model Block & Optimization",
                 term: "Feed-Forward Network (FFN)",
                 bnTerm: "ফিড-ফরোয়ার্ড নেটওয়ার্ক",
-                def: "Transformer-এর একটি সাব-লেয়ার, যা প্রতিটি টোকেন রিপ্রেজেন্টেশনকে পজিশন-অনুযায়ী স্বাধীনভাবে প্রসেস করে গভীর ফিচার তৈরি করে ও মডেলের লার্নড নলেজ যুক্ত করে।"
+                def: "এটি মূলত মডেলের নিজস্ব 'তথ্যের মেমোরি ব্যাংক'। Attention মেকানিজম যখন নির্ধারণ করে দেয় কোন শব্দের সাথে কার সম্পর্ক রয়েছে, এরপর FFN প্রতিটি শব্দকে আলাদাভাবে প্রসেস করে এবং তার পূর্বে শেখা জ্ঞান থেকে নতুন তথ্য যুক্ত করে (যেমন- 'dog + barking, সুতরাং এটি একটি প্রাণী')।"
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Vanishing Gradient",
+                bnTerm: "ভ্যানিশিং গ্র্যাডিয়েন্ট",
+                def: "গভীর নিউরাল নেটওয়ার্কে একটি সাধারণ সমস্যা, যেখানে মডেলের 'শেখার সিগন্যাল' (Gradient) পেছনের লেয়ারগুলোতে যেতে যেতে এতই দুর্বল হয়ে পড়ে যে তা প্রায় নিশ্চিহ্ন হয়ে যায়। এর ফলে শুরুর দিকের লেয়ারগুলো নতুন কিছু শেখা বন্ধ করে দেয়। Residual Connection এবং Layer Normalization-এর মতো চমৎকার কৌশলগুলো মূলত এই সমস্যা প্রতিরোধের জন্যই তৈরি করা হয়েছে।"
             },
             {
                 category: "Model Block & Optimization",
                 term: "Residual Connection",
                 bnTerm: "রেজিসডুয়াল কানেকশন",
-                def: "একটি আর্কিটেকচারাল মেকানিজম যেখানে সাব-লেয়ারের ইনপুট সরাসরি তার আউটপুটের সাথে যোগ করা হয়, যা ভ্যানিশিং গ্র্যাডিয়েন্ট সমস্যা রোধ করে।"
+                def: "এটি মডেলের ভেতরের একটি বাইপাস বা শর্টকাট রাস্তা, যা একটি শব্দের প্রাথমিক রূপটিকে মাঝখানের প্রসেসিং লেয়ারগুলো পাশ কাটিয়ে সরাসরি পরবর্তী ধাপে নিয়ে যায়। এর ফলে যদি কোনো লেয়ারে তথ্য প্রসেস করতে ত্রুটিও হয়, তবুও শব্দের মূল তথ্যটি হারিয়ে যায় না এবং মডেলের শেখার প্রক্রিয়া (Learning Signal) বাধাগ্রস্ত হয় না।"
             },
             {
                 category: "Model Block & Optimization",
                 term: "Layer Normalization",
                 bnTerm: "লেয়ার নরমালাইজেশন",
-                def: "একটি ভেক্টর ফিচার স্কেলিং অপারেশন যা প্রতিটি টোকেন ভেক্টরের উপাদানগুলোর গড় ০ ও ভ্যারিয়েন্স ১ বজায় রাখে, যা ট্রেনিং স্থিতিশীল করে।"
+                def: "এটি মডেলের ভেতরের একটি স্বয়ংক্রিয় 'ভলিউম কন্ট্রোলার' বা ব্যালেন্সিং সিস্টেম। এটি ভেক্টরের মানগুলো খুব বেশি বড় হয়ে গেলে কমিয়ে আনে এবং খুব ছোট হয়ে গেলে বাড়িয়ে একটি নির্দিষ্ট রেঞ্জের মধ্যে রাখে, ফলে মডেলের ট্রেনিং মসৃণ হয়। আধুনিক LLM-গুলোতে (যেমন Gemini বা Claude) এটি প্রতিটি মূল ধাপের আগেই প্রয়োগ করা হয় (Pre-LN), যা ট্রেনিংকে আরও স্থিতিশীল করে তোলে।"
             },
             {
                 category: "Model Block & Optimization",
-                term: "Pre-LN",
-                bnTerm: "প্রি-এলএন",
-                def: "একটি আধুনিক ট্রান্সফরমার ডিজাইন যেখানে ইনপুটটি সাব-লেয়ারে প্রবেশ করার পূর্বেই লেয়ার নরমালাইজেশন প্রয়োগ করা হয়, যা ট্রেনিং প্রারম্ভিক স্থিতিশীলতা রক্ষা করে।"
-            },
-            {
-                category: "Model Block & Optimization",
-                term: "Post-LN",
-                bnTerm: "পোস্ট-এলএন",
-                def: "আদি ট্রান্সফরমার আর্কিটেকচার যেখানে সাব-লেয়ারের প্রসেসিং এবং রেজিসডুয়াল অ্যাডিশন সম্পন্ন করার পরে লেয়ার নরমালাইজেশন প্রয়োগ করা হয়।"
+                term: "Layer Stacking",
+                bnTerm: "লেয়ার স্ট্যাকিং",
+                def: "একই ধরণের Transformer ব্লককে বারবার একটার ওপর আরেকটা সাজিয়ে একটি গভীর মডেল তৈরি করার পদ্ধতি। সাধারণত, নিচের দিকের লেয়ারগুলো শব্দের প্রাথমিক গঠন ও ব্যাকরণ বিশ্লেষণ করে, আর ওপরের লেয়ারগুলো বাক্যের গভীর অর্থ ও যুক্তি নিয়ে কাজ করে। উদাহরণস্বরূপ, GPT-4 মডেলে এমন ১০০-এরও বেশি লেয়ার স্তরে স্তরে সাজানো থাকে।"
             },
             {
                 category: "Generation & LLM Architecture",
                 term: "Decoder-Only Architecture",
                 bnTerm: "ডিকোডার-অনলি আর্কিটেকচার",
-                def: "যে ট্রান্সফরমার আর্কিটেকচার কেবল ডিকোডারের ওপর ভিত্তি করে তৈরি এবং মূলত পরবর্তী টোকেন জেনারেট করার কাজে ব্যবহৃত হয় (যেমন- ChatGPT, Gemini, Claude)।"
+                def: "বর্তমান সময়ের জনপ্রিয় এআই চ্যাটবটগুলোর (যেমন- ChatGPT, Gemini, Claude) মূল আর্কিটেকচারাল ডিজাইন। এই ধরণের মডেল কেবল এ পর্যন্ত লেখা হওয়া বা জেনারেট হওয়া পূর্ববর্তী শব্দগুলোই দেখতে পারে এবং তার ওপর ভিত্তি করে ধাপে ধাপে পরবর্তী শব্দ অনুমান করে নতুন টেক্সট তৈরি করে যায়।"
             },
             {
                 category: "Generation & LLM Architecture",
                 term: "Causal Masking",
                 bnTerm: "কজাল মাস্কিং",
-                def: "ট্রেনিংয়ের সময় মডেল যাতে ভবিষ্যতের টোকেন বা শব্দগুলো দেখে চিট করতে না পারে, সেজন্য একটি আপার-ট্রায়াঙ্গুলার ম্যাট্রিক্স দিয়ে ভবিষ্যতের অ্যাটেনশন স্কোর ব্লক করার পদ্ধতি।"
+                def: "মডেলের ভবিষ্যতের টোকেনগুলো দেখার ক্ষমতা সীমাবদ্ধ করার একটি কৌশল বা মাস্কিং। ট্রেনিংয়ের সময় যেহেতু মডেল পুরো বাক্যটি একসাথে দেখতে পায়, তাই সামনের শব্দগুলোকে এই মাস্কিংয়ের মাধ্যমে আড়াল করে রাখা হয়—যাতে মডেল 'চিটিং' করে উত্তর দেখে ফেলতে না পারে। ফলে তাকে কেবল আগের শব্দগুলোর ওপর ভিত্তি করেই পরের শব্দটি অনুমান করতে হয়।"
             },
             {
                 category: "Generation & LLM Architecture",
                 term: "Autoregressive Generation",
-                bnTerm: "অটো-রিগ্রেসিভ জেনারেট",
-                def: "মডেল দ্বারা পূর্ববর্তী জেনারেট করা টোকেনগুলোকে পুনরায় ইনপুট হিসেবে ব্যবহার করে এক এক করে পরবর্তী টোকেন জেনারেশন করার প্রক্রিয়া।"
-            },
-            {
-                category: "Generation & LLM Architecture",
-                term: "Sequence-to-Sequence (Seq2Seq)",
-                bnTerm: "সিকোয়েন্স-টু-সিকোয়েন্স",
-                def: "নক ডিজাইন করাSeq2Seq আর্কিটেকচার যেখানে একটি সিকোয়েন্সকে (যেমন ইংরেজি বাক্য) অন্য একটি সিকোয়েন্সকে (যেমন বাংলা বাক্য) রূপান্তর করা হয়।"
+                bnTerm: "অটো-রিগ্রেসিভ জেনারেশন",
+                def: "একটি লুপ বা চক্রাকার প্রক্রিয়া, যেখানে মডেল একবারে একটি শব্দ জেনারেট করে এবং সেই নতুন শব্দটিকে পুনরায় ইনপুট হিসেবে ব্যবহার করে পরবর্তী শব্দটি অনুমান করে। এই স্বয়ংক্রিয় প্রক্রিয়ার কারণেই আমরা দেখতে পাই যে ChatGPT-র মতো এআইগুলো একবারে একটি করে শব্দ টাইপ করে উত্তর প্রদান করে।"
             },
             {
                 category: "Generation & LLM Architecture",
                 term: "End of Sequence (EOS) Token",
                 bnTerm: "ইওএস টোকেন",
-                def: "একটি বিশেষ টোকেন যা নির্দেশ করে যে টেক্সট জেনারেশন প্রক্রিয়াটি শেষ হয়েছে এবং মডেল আর কোনো নতুন টোকেন তৈরি করবে না।"
+                def: "এটি একটি বিশেষ সিগন্যাল বা 'থামো' টোকেন। মডেল যখন তার উত্তর জেনারেট করার সময় এই টোকেনটিতে পৌঁছায়, তখন সে বুঝতে পারে যে বাক্য বা অনুচ্ছেদটি সম্পূর্ণ হয়েছে এবং সে তার টেক্সট জেনারেশন প্রক্রিয়া সেখানেই থামিয়ে দেয়।"
             }
         ];
 
@@ -1987,165 +1981,165 @@
         const glossaryDataEn = [
             {
                 category: "Input Representation",
+                term: "Vocabulary",
+                bnTerm: "ভোকাবুলারি",
+                def: "The model's complete dictionary — every unique token it knows. If a token isn't on this list, the model can't read it directly. (GPT-4's dictionary holds roughly 100,000 pieces.)"
+            },
+            {
+                category: "Input Representation",
                 term: "Tokenization",
                 bnTerm: "টোকেনাইজেশন",
-                def: "The complete collection of unique tokens or words that a model can recognize, essentially its dictionary."
+                def: "Chopping a sentence into bite-sized pieces called 'tokens' (whole words or word-parts) so a computer can handle text. Think of slicing a pizza before eating — the model reads the slices, not the whole pie at once."
             },
             {
                 category: "Input Representation",
                 term: "BPE (Byte Pair Encoding)",
                 bnTerm: "বাইট পেয়ার এনকোডিং",
-                def: "A sub-word tokenization algorithm that keeps frequent words intact and splits rare words into smaller subwords to prevent Out-Of-Vocabulary (OOV) issues."
+                def: "A clever way to build the dictionary: keep common words whole, but break rare ones into familiar chunks. 'unhappiness' becomes 'un' + 'happi' + 'ness' — so the model is never completely stumped by a new word."
+            },
+            {
+                category: "Input Representation",
+                term: "Vector",
+                bnTerm: "ভেক্টর",
+                def: "Simply a list of numbers. Inside an LLM every word is stored as a vector — a row of numbers capturing its meaning — so the computer can do 'math' on meaning instead of on letters."
             },
             {
                 category: "Input Representation",
                 term: "Embedding",
                 bnTerm: "এম্বেডিং",
-                def: "Converting a token ID into a high-dimensional semantic vector that mathematically represents the word's meaning and relationships."
+                def: "Turning each token into a long list of numbers that works like a personality profile — scoring the word on hidden traits (Is it an animal? Royal? Masculine?). Similar words sit close together, which is why Vector(King) - Vector(Man) + Vector(Woman) lands near Vector(Queen)."
+            },
+            {
+                category: "Input Representation",
+                term: "Parallel Processing",
+                bnTerm: "প্যারালাল প্রসেসিং",
+                def: "The model reads every word in a sentence at the same time instead of one-by-one, left to right. This makes it extremely fast — but it's also why a separate 'position tag' is needed to remember the order."
             },
             {
                 category: "Input Representation",
                 term: "Positional Encoding",
                 bnTerm: "পজিশনাল এনকোডিং",
-                def: "A specific mathematical vector added to embedding vectors to convey the order or position of tokens processed in parallel."
+                def: "A 'position tag' added to each word's numbers so the model knows the word order. Without it, 'The cat ate the mouse' and 'The mouse ate the cat' would look identical to the model."
             },
             {
                 category: "Attention Mechanism",
                 term: "Self-Attention Mechanism",
                 bnTerm: "সেলফ-অ্যাটেনশন মেকানিজম",
-                def: "A mechanism that measures how related a word is to other words in the same sentence to determine its context-rich meaning."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Query (Q)",
-                bnTerm: "কোয়েরি",
-                def: "A vector representing the current word searching for relationships with other words in the sentence (like a search query typed in a search engine)."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Key (K)",
-                bnTerm: "কী",
-                def: "A label vector for every word in the sentence used to check compatibility with the Query vector (like video titles or tags matching a search)."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Value (V)",
-                bnTerm: "ভ্যালু",
-                def: "A vector containing the actual semantic information of the word, which is weighted by attention scores to construct the output representation."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Attention Weights",
-                bnTerm: "অ্যাটেনশন ওয়েটস",
-                def: "Percentages or probability distributions obtained via Softmax that indicate how much attention a word should pay to other words."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Dot-Product Similarity",
-                bnTerm: "ডট-প্রোডাক্ট সিমিলারিটি",
-                def: "A mathematical method to compute compatibility or similarity between two vectors, used to obtain raw attention logits."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Scaling",
-                bnTerm: "স্কেলিং",
-                def: "Dividing dot-product values by the square root of the query/key dimension (sqrt(d_k)) to prevent large scores from saturating the Softmax function."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Multi-Head Attention",
-                bnTerm: "মাল্টি-হেড অ্যাটেনশন",
-                def: "Using multiple attention mechanisms in parallel to focus on different aspects of relationships and context in a sentence."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Single-Head Attention",
-                bnTerm: "সিঙ্গেল-হেড অ্যাটেনশন",
-                def: "An attention mechanism with only one head, which has limited capacity to capture multiple relationships simultaneously."
-            },
-            {
-                category: "Attention Mechanism",
-                term: "Bidirectional Attention",
-                bnTerm: "বাইডাইরেকশনাল অ্যাটেনশন",
-                def: "An attention mechanism where a token can look at words to both its left and right sides (e.g., in BERT)."
+                def: "How each word figures out its meaning by looking at every other word in the sentence at once — like a group chat where everyone talks to everyone to solve a mystery. This is how the model tells a river 'bank' from a money 'bank'."
             },
             {
                 category: "Attention Mechanism",
                 term: "Pronoun Resolution",
                 bnTerm: "প্রোনাউন রেজোলিউশন",
-                def: "The task of determining which noun a pronoun (e.g., 'it') refers to in a sentence."
+                def: "Working out who a pronoun points to. In 'The cat drank the milk because it was hungry,' attention helps decide that 'it' means the cat, not the milk."
             },
             {
-                category: "Model Block & Optimization",
-                term: "Layer Stacking",
-                bnTerm: "লেয়ার স্ট্যাকিং",
-                def: "Stacking multiple Transformer blocks sequentially to help the model build hierarchical, high-level logical abstractions."
+                category: "Attention Mechanism",
+                term: "Query (Q)",
+                bnTerm: "কোয়েরি",
+                def: "What a word is looking for — its search request. Like walking up to a librarian and saying, 'I need a book about AI.'"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Key (K)",
+                bnTerm: "কী",
+                def: "A word's label or advertisement — what it offers to others. Like the title printed on a book's spine that a search can be matched against."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Value (V)",
+                bnTerm: "ভ্যালু",
+                def: "The actual content a word carries, handed over once it is matched. Like the pages inside the book you actually read. When 'it' strongly matches 'cat', it absorbs cat's Value."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Dot-Product Similarity",
+                bnTerm: "ডট-প্রোডাক্ট সিমিলারিটি",
+                def: "The matchmaker step: compare one word's Query against every other word's Key to get a 'compatibility score' — how well they fit together."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Scaling",
+                bnTerm: "স্কেলিং",
+                def: "Shrinking those compatibility scores down (dividing by a fixed amount, the square root of the vector size) so they don't blow up too large and break the next step's math."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Softmax",
+                bnTerm: "সফটম্যাক্স",
+                def: "A step that turns a pile of raw scores into clean percentages that add up to 100%. It is what lets the model say 'pay 55% attention here, 30% there.'"
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Attention Weights",
+                bnTerm: "অ্যাটেনশন ওয়েটস",
+                def: "The final percentages from Softmax that say exactly how much each word should focus on every other word — together adding up to 100%."
+            },
+            {
+                category: "Attention Mechanism",
+                term: "Multi-Head Attention",
+                bnTerm: "মাল্টি-হেড অ্যাটেনশন",
+                def: "Giving the model several 'heads' that pay attention in parallel, each a specialist: one tracks who-did-what, another resolves what 'it' refers to, another links describing words. Like listening with many ears instead of one."
             },
             {
                 category: "Model Block & Optimization",
                 term: "Dimension Splitting",
                 bnTerm: "ডাইমেনশন স্প্লিটিং",
-                def: "Splitting the main embedding dimension into equal pieces for each head (d_head = d_model / h) to build parallel attention subspaces."
+                def: "Sharing the work among the attention heads by splitting a word's numbers equally between them — e.g. 512 numbers / 8 heads = 64 each — so many heads run at once without extra cost."
             },
             {
                 category: "Model Block & Optimization",
                 term: "Feed-Forward Network (FFN)",
                 bnTerm: "ফিড-ফরোয়ার্ড নেটওয়ার্ক",
-                def: "A sub-layer in a Transformer block that processes each token representation position-by-position independently to build deep features and add factual knowledge."
+                def: "The model's 'memory bank of facts.' After attention figures out who is connected to whom, the FFN thinks about each word on its own and adds what it knows ('dog + barking, so this is a pet')."
+            },
+            {
+                category: "Model Block & Optimization",
+                term: "Vanishing Gradient",
+                bnTerm: "ভ্যানিশিং গ্র্যাডিয়েন্ট",
+                def: "When a deep model's 'learning signal' grows weaker and weaker as it travels back through many layers, until it nearly disappears and the early layers stop learning. Tricks like residual connections and normalization exist to prevent it."
             },
             {
                 category: "Model Block & Optimization",
                 term: "Residual Connection",
                 bnTerm: "রেজিসডুয়াল কানেকশন",
-                def: "An architectural shortcut where the sub-layer's input is directly added to its output, preventing vanishing gradients in deep training."
+                def: "An express-highway shortcut that carries a word's original version straight past a processing layer and adds it back at the end. So if a layer makes a mistake, the original is never lost — and learning signals don't fade away."
             },
             {
                 category: "Model Block & Optimization",
                 term: "Layer Normalization",
                 bnTerm: "লেয়ার নরমালাইজেশন",
-                def: "A vector feature scaling operation that stabilizes training by maintaining a mean of 0 and a variance of 1 across the features of a single token."
+                def: "An automatic volume knob inside the model: it turns the numbers down when they get too loud and up when too quiet, keeping everything balanced so training stays smooth. Modern models (Gemini, Claude) apply it before each step (called Pre-LN) for extra stability."
             },
             {
                 category: "Model Block & Optimization",
-                term: "Pre-LN",
-                bnTerm: "প্রি-এলএন",
-                def: "A modern design choice where Layer Normalization is applied to the input before it enters a sub-layer, ensuring early training stability."
-            },
-            {
-                category: "Model Block & Optimization",
-                term: "Post-LN",
-                bnTerm: "পোস্ট-এলএন",
-                def: "The original Transformer design where Layer Normalization is applied after sub-layer processing and residual addition."
+                term: "Layer Stacking",
+                bnTerm: "লেয়ার স্ট্যাকিং",
+                def: "Repeating the same Transformer block over and over, like a tower of blocks. Lower layers handle spelling and grammar; higher layers handle meaning and reasoning. GPT-4 stacks over 100 of them."
             },
             {
                 category: "Generation & LLM Architecture",
                 term: "Decoder-Only Architecture",
                 bnTerm: "ডিকোডার-অনলি আর্কিটেকচার",
-                def: "A Transformer architecture composed solely of decoders, primarily used for generating next tokens autoregressively (e.g., ChatGPT, Gemini, Claude)."
+                def: "The design behind today's chatbots (ChatGPT, Gemini, Claude): a model that only looks at the words so far (never ahead) and writes the next word, again and again, to generate text."
             },
             {
                 category: "Generation & LLM Architecture",
                 term: "Causal Masking",
                 bnTerm: "কজাল মাস্কিং",
-                def: "A technique using an upper-triangular mask matrix to block attention to future tokens during training, preventing cheating."
+                def: "A blindfold over the future: during training the model sees the whole sentence at once, so we hide the upcoming words to stop it from 'cheating' by peeking ahead. It must guess the next word using only what came before."
             },
             {
                 category: "Generation & LLM Architecture",
                 term: "Autoregressive Generation",
-                bnTerm: "অটো-রিগ্রেসিভ জেনারেট",
-                def: "An iterative text generation process where previously generated tokens are appended back to the input to generate the next token, one by one."
-            },
-            {
-                category: "Generation & LLM Architecture",
-                term: "Sequence-to-Sequence (Seq2Seq)",
-                bnTerm: "সিকোয়েন্স-টু-সিকোয়েন্স",
-                def: "A machine learning framework or problem where a model maps an input sequence (e.g., English) to an output sequence (e.g., Bengali)."
+                bnTerm: "অটো-রিগ্রেসিভ জেনারেশন",
+                def: "Writing one word at a time, then feeding that word back in to write the next — the reason you see ChatGPT type out its answer word by word, until it decides to stop."
             },
             {
                 category: "Generation & LLM Architecture",
                 term: "End of Sequence (EOS) Token",
                 bnTerm: "ইওএস টোকেন",
-                def: "A special token that signals the end of text generation, indicating that the model should stop producing new tokens."
+                def: "A special 'stop' token (End of Sequence). When the model produces it, it knows the answer is finished and stops generating."
             }
         ];
 

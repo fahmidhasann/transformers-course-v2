@@ -1,122 +1,122 @@
 {
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.local.json": {
-    "mtime": 1781015337.8018804,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/.claude/settings.json": {
+    "mtime": 1781058187.0,
+    "ast_hash": "87f0d903477984d0587a02f8fe185263",
+    "semantic_hash": ""
+  },
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/.claude/settings.local.json": {
+    "mtime": 1781015337.0,
     "ast_hash": "101c05b77f825dad5f4c5b775c140d8a",
-    "semantic_hash": "101c05b77f825dad5f4c5b775c140d8a"
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md": {
-    "mtime": 1781034214.4474442,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/AGENTS.md": {
+    "mtime": 1781034214.0,
     "ast_hash": "d279d0281131ea2f3594e3c16db7bc72",
-    "semantic_hash": "d279d0281131ea2f3594e3c16db7bc72"
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/CLAUDE.md": {
-    "mtime": 1781058187.1808226,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/CLAUDE.md": {
+    "mtime": 1781058187.0,
     "ast_hash": "ddef8d0be3a5d96916842f9079053b5c",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/GLOSSARY.md": {
-    "mtime": 1780984599.2316961,
-    "ast_hash": "f8c30d119d7a94fb69b7fe85e898c267",
-    "semantic_hash": "f8c30d119d7a94fb69b7fe85e898c267"
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/GLOSSARY.md": {
+    "mtime": 1781169145.8262382,
+    "ast_hash": "76533094383ac65d274ce4055b919c09",
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/MISSION.md": {
-    "mtime": 1780984360.4271584,
-    "ast_hash": "985eefa3ba7210b241f914527a39566d",
-    "semantic_hash": "985eefa3ba7210b241f914527a39566d"
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/MISSION.md": {
+    "mtime": 1781167123.9067943,
+    "ast_hash": "42b064e3058d5f6e82ae91daed5a0246",
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/NOTES.md": {
-    "mtime": 1780984361.7375858,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/NOTES.md": {
+    "mtime": 1780984361.0,
     "ast_hash": "cd15d3eca07fba57f08f50630ff7fe69",
-    "semantic_hash": "cd15d3eca07fba57f08f50630ff7fe69"
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/RESOURCES.md": {
-    "mtime": 1780984364.8110447,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/RESOURCES.md": {
+    "mtime": 1780984364.0,
     "ast_hash": "eece0a57107046dbebb00b84118a0d7a",
-    "semantic_hash": "eece0a57107046dbebb00b84118a0d7a"
-  },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/index.html": {
-    "mtime": 1781115530.8112829,
-    "ast_hash": "e88da71b02dfad0bc543f4cd3ee10fb8",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0001-prior-knowledge.md": {
-    "mtime": 1780984386.315282,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/index.html": {
+    "mtime": 1781169145.8260307,
+    "ast_hash": "3a08e80d1d10caf439c7b84d0035f467",
+    "semantic_hash": ""
+  },
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0001-prior-knowledge.md": {
+    "mtime": 1780984386.0,
     "ast_hash": "e98af4aeb912ea7c79b14e9e7661e7bc",
-    "semantic_hash": "e98af4aeb912ea7c79b14e9e7661e7bc"
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0003-self-attention-mechanism.md": {
-    "mtime": 1780984563.0375068,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0003-self-attention-mechanism.md": {
+    "mtime": 1780984563.0,
     "ast_hash": "3c90080ff10ff6147ff8dd785cd8583f",
-    "semantic_hash": "3c90080ff10ff6147ff8dd785cd8583f"
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0004-multi-head-attention-layer-stacking.md": {
-    "mtime": 1780984565.2274423,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0004-multi-head-attention-layer-stacking.md": {
+    "mtime": 1780984565.0,
     "ast_hash": "ec9e4f5f51a9d6f8d83a9941e5ec7068",
-    "semantic_hash": "ec9e4f5f51a9d6f8d83a9941e5ec7068"
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0005-ffn-residual-connections-layer-norm.md": {
-    "mtime": 1780984585.614542,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0005-ffn-residual-connections-layer-norm.md": {
+    "mtime": 1780984585.0,
     "ast_hash": "ec7c618c6b0585a5b0cdd96563389589",
-    "semantic_hash": "ec7c618c6b0585a5b0cdd96563389589"
+    "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0006-decoder-only-vs-encoder-decoder.md": {
-    "mtime": 1780984566.6113167,
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0006-decoder-only-vs-encoder-decoder.md": {
+    "mtime": 1780984566.0,
     "ast_hash": "851697ff7559795edd51cb9d81ceb455",
-    "semantic_hash": "851697ff7559795edd51cb9d81ceb455"
-  },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0001-high-level-llm-pipeline-en.html": {
-    "mtime": 1781115348.1475637,
-    "ast_hash": "ee276094fc6edaf4e1860af5935587a5",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0001-high-level-llm-pipeline.html": {
-    "mtime": 1781115348.1478627,
-    "ast_hash": "b9fd835bf8ca299d55536a01950fa5e8",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0001-high-level-llm-pipeline-en.html": {
+    "mtime": 1781167160.165536,
+    "ast_hash": "30b9adc0fccaeba9e3ea267801cd4314",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0003-self-attention-mechanism-en.html": {
-    "mtime": 1781115374.2709963,
-    "ast_hash": "a2a8e18dab2214ccbfde35642bc0f0fb",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0001-high-level-llm-pipeline.html": {
+    "mtime": 1781167160.1596062,
+    "ast_hash": "5ad165e3a1bd67a2959a1525844d2909",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0003-self-attention-mechanism.html": {
-    "mtime": 1781115374.270325,
-    "ast_hash": "69d8859199c0761dcbec3ead7ccf6a22",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0003-self-attention-mechanism-en.html": {
+    "mtime": 1781165531.6317515,
+    "ast_hash": "38346b326abc1e7a12a251dcef70256e",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0004-multi-head-attention-layer-stacking-en.html": {
-    "mtime": 1781115348.148882,
-    "ast_hash": "b5a2a3f6208a594100e4453e7b0943a5",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0003-self-attention-mechanism.html": {
+    "mtime": 1781165531.630421,
+    "ast_hash": "3d941d82337c1f6c58674eb76629c78f",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0004-multi-head-attention-layer-stacking.html": {
-    "mtime": 1781115348.1459634,
-    "ast_hash": "321da50c963b53933a00b69cf292e3a7",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0004-multi-head-attention-layer-stacking-en.html": {
+    "mtime": 1781167180.1848407,
+    "ast_hash": "a41d3629840cad6582d87bc993f9311d",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0005-ffn-residual-connections-layer-norm-en.html": {
-    "mtime": 1781121366.1469066,
-    "ast_hash": "dac4316e67e6d5bebb742e241f3413b7",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0004-multi-head-attention-layer-stacking.html": {
+    "mtime": 1781167178.4629579,
+    "ast_hash": "38aefb86f8dd02886053131bf7e273c1",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0005-ffn-residual-connections-layer-norm.html": {
-    "mtime": 1781121625.2845385,
-    "ast_hash": "8954dc3a3c66a376270d1156bc796d8a",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0005-ffn-residual-connections-layer-norm-en.html": {
+    "mtime": 1781167180.294752,
+    "ast_hash": "459a62bcea66e437437b13549a5fcccc",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0006-decoder-only-vs-encoder-decoder-en.html": {
-    "mtime": 1781115374.2729385,
-    "ast_hash": "08c16e2511ae2165c58f63a7975dd45a",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0005-ffn-residual-connections-layer-norm.html": {
+    "mtime": 1781167180.1900423,
+    "ast_hash": "9949e99d785d8c108b1924568a41b2e7",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/lessons/0006-decoder-only-vs-encoder-decoder.html": {
-    "mtime": 1781115537.2319868,
-    "ast_hash": "d6c5697822c79e9594db0c6aa727d75f",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0006-decoder-only-vs-encoder-decoder-en.html": {
+    "mtime": 1781167195.87178,
+    "ast_hash": "27c3116bdaaba35cd6247fa217228783",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.json": {
-    "mtime": 1781058187.1809928,
-    "ast_hash": "87f0d903477984d0587a02f8fe185263",
+  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0006-decoder-only-vs-encoder-decoder.html": {
+    "mtime": 1781167195.7909045,
+    "ast_hash": "b9f11905bd78b56cbcba5bf7840388bc",
     "semantic_hash": ""
   }
 }

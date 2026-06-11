@@ -1,16 +1,16 @@
 # Graph Report - Transformers 2  (2026-06-11)
 
 ## Corpus Check
-- 13 files · ~73,904 words
+- 13 files · ~73,605 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 91 nodes · 116 edges · 17 communities (9 shown, 8 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 15 edges (avg confidence: 0.88)
+- 122 nodes · 143 edges · 21 communities (10 shown, 11 thin omitted)
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 15 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6b67a3f7`
+- Built from commit: `458a1650`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -32,6 +32,10 @@
 - [[_COMMUNITY_Community 14|Community 14]]
 - [[_COMMUNITY_Community 15|Community 15]]
 - [[_COMMUNITY_Community 16|Community 16]]
+- [[_COMMUNITY_Community 17|Community 17]]
+- [[_COMMUNITY_Community 18|Community 18]]
+- [[_COMMUNITY_Community 19|Community 19]]
+- [[_COMMUNITY_Community 20|Community 20]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Transformer Architecture Glossary` - 18 edges
@@ -39,11 +43,11 @@
 3. `AGENTS.md - Codebase Guide for AI Agents` - 9 edges
 4. `Self-Attention Mechanism` - 9 edges
 5. `Codebase Guide for AI Agents (AGENTS.md)` - 7 edges
-6. `Mission: Transformer Architecture Learning` - 7 edges
-7. `Decoder-Only Architecture (GPT, LLaMA)` - 7 edges
-8. `Multi-Head Attention` - 6 edges
-9. `Transformer Architecture Glossary` - 5 edges
-10. `Mission: Transformer Architecture used in Large Language Models (LLMs)` - 5 edges
+6. `Codebase Guide for AI Agents (AGENTS.md)` - 7 edges
+7. `Mission: Transformer Architecture Learning` - 7 edges
+8. `Decoder-Only Architecture (GPT, LLaMA)` - 7 edges
+9. `Multi-Head Attention` - 6 edges
+10. `Transformer Architecture Glossary` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `User Preferences` --semantically_similar_to--> `Mission: Transformer Architecture Learning`  [INFERRED] [semantically similar]
@@ -52,10 +56,10 @@
   learning-records/0001-prior-knowledge.md → NOTES.md
 - `Interactive Attention Simulator (SVG connection lines)` --conceptually_related_to--> `Self-Attention Mechanism`  [INFERRED]
   AGENTS.md → GLOSSARY.md
-- `Transformer Architecture` --conceptually_related_to--> `Decoder-Only Architecture (GPT, LLaMA)`  [INFERRED]
-  AGENTS.md → GLOSSARY.md
-- `Transformer Architecture` --conceptually_related_to--> `Feed-Forward Network (FFN)`  [INFERRED]
-  AGENTS.md → GLOSSARY.md
+- `Paper: Attention Is All You Need (Vaswani et al.)` --references--> `Transformer Architecture`  [EXTRACTED]
+  RESOURCES.md → AGENTS.md
+- `Article: The Illustrated Transformer (Jay Alammar)` --references--> `Transformer Architecture`  [EXTRACTED]
+  RESOURCES.md → AGENTS.md
 
 ## Import Cycles
 - None detected.
@@ -68,27 +72,27 @@
 - **LLM Pipeline Sequential Flow (Tokenization → Embedding → Transformer → Softmax)** — concept_tokenization, concept_token_embedding, concept_transformer_block, concept_softmax_next_token, concept_llm_pipeline [EXTRACTED 1.00]
 - **Three Transformer Architecture Variants (Encoder-Only, Decoder-Only, Encoder-Decoder)** — concept_encoder_only_architecture, concept_decoder_only_architecture, concept_encoder_decoder_architecture [EXTRACTED 1.00]
 
-## Communities (17 total, 8 thin omitted)
+## Communities (21 total, 11 thin omitted)
 
 ### Community 0 - "Project Architecture & UI"
 Cohesion: 0.29
 Nodes (8): AGENTS.md - Codebase Guide for AI Agents, Bilingual Parity Rule (Bangla/English twins), Dark-Mode First Theme System (localStorage), Lesson Loading via iframe, Interactive Attention Simulator (SVG connection lines), localStorage State Persistence (theme, progress, quiz), Single-Page Application Dashboard Architecture, Vanilla CSS Glassmorphic Dark Design System
 
 ### Community 1 - "Self-Attention Mechanism"
-Cohesion: 0.83
-Nodes (4): Attention Weights (Softmax), Query (Q), Key (K), Value (V) Vectors, Self-Attention Mechanism, Learning Record: Self-Attention Mechanism
+Cohesion: 0.15
+Nodes (12): 1. Overview & Purpose, 2. Directory Structure, 3. Core Application Architecture, 4. Key Systems & State Syncing, 5. Development Guidelines & Constraints, 6. How to Add a New Lesson, Codebase Guide for AI Agents (AGENTS.md), Dashboard: [index.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html) (+4 more)
 
 ### Community 2 - "Transformer Block Components"
 Cohesion: 0.15
 Nodes (12): 1. Overview & Purpose, 2. Directory Structure, 3. Core Application Architecture, 4. Key Systems & State Syncing, 5. Development Guidelines & Constraints, 6. How to Add a New Lesson, Codebase Guide for AI Agents (AGENTS.md), Dashboard: [index.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html) (+4 more)
 
 ### Community 3 - "Learning Foundation & Resources"
-Cohesion: 0.24
-Nodes (11): Dimension Splitting (Multi-Head Attention), Layer Stacking (Hierarchical Abstraction), Multi-Head Attention, Transformer Architecture, Learning Record: Multi-Head Attention and Layer Stacking, Paper: Attention Is All You Need (Vaswani et al.), Video: 3Blue1Brown Neural Networks & Transformers Series, Article: The Illustrated GPT-2 (Jay Alammar) (+3 more)
+Cohesion: 0.33
+Nodes (6): Paper: Attention Is All You Need (Vaswani et al.), Video: 3Blue1Brown Neural Networks & Transformers Series, Article: The Illustrated GPT-2 (Jay Alammar), Article: The Illustrated Transformer (Jay Alammar), Video: Andrej Karpathy - Let's build GPT from scratch, Transformer Architecture Resources
 
 ### Community 4 - "LLM Input Processing Pipeline"
-Cohesion: 0.23
-Nodes (15): Autoregressive Generation, Causal Masking (Upper-Triangular Mask), Decoder-Only Architecture (GPT, LLaMA), Token Embedding (Semantic Vector Space), Feed-Forward Network (FFN), Layer Normalization (LayerNorm), Positional Encoding, Pre-LN (Pre-Layer Normalization Design) (+7 more)
+Cohesion: 0.20
+Nodes (23): Attention Weights (Softmax), Autoregressive Generation, Causal Masking (Upper-Triangular Mask), Decoder-Only Architecture (GPT, LLaMA), Dimension Splitting (Multi-Head Attention), Token Embedding (Semantic Vector Space), Feed-Forward Network (FFN), Layer Normalization (LayerNorm) (+15 more)
 
 ### Community 5 - "Architecture Variants & Generation"
 Cohesion: 0.33
@@ -106,23 +110,27 @@ Nodes (3): Learning Record: Prior Knowledge, Notes, User Preferences
 Cohesion: 0.50
 Nodes (3): Knowledge, Transformer Architecture Resources, Wisdom (Communities)
 
+### Community 18 - "Community 18"
+Cohesion: 0.50
+Nodes (3): Knowledge, Transformer Architecture Resources, Wisdom (Communities)
+
 ## Knowledge Gaps
-- **32 isolated node(s):** `PreToolUse`, `⚠️ Bilingual parity rule (must follow)`, `graphify`, `frontend-design@claude-plugins-official`, `Key Design Goals:` (+27 more)
+- **40 isolated node(s):** `PreToolUse`, `frontend-design@claude-plugins-official`, `Key Design Goals:`, `2. Directory Structure`, `Dashboard: [index.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html)` (+35 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Transformer Architecture Glossary` connect `LLM Input Processing Pipeline` to `Project Architecture & UI`, `Self-Attention Mechanism`, `Learning Foundation & Resources`?**
-  _High betweenness centrality (0.084) - this node is a cross-community bridge._
-- **Why does `AGENTS.md - Codebase Guide for AI Agents` connect `Project Architecture & UI` to `Learning Foundation & Resources`, `LLM Input Processing Pipeline`?**
-  _High betweenness centrality (0.060) - this node is a cross-community bridge._
-- **Why does `Transformer Architecture` connect `Learning Foundation & Resources` to `Project Architecture & UI`, `Self-Attention Mechanism`, `LLM Input Processing Pipeline`?**
-  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+- **Why does `Transformer Architecture Glossary` connect `LLM Input Processing Pipeline` to `Project Architecture & UI`?**
+  _High betweenness centrality (0.049) - this node is a cross-community bridge._
+- **Why does `AGENTS.md - Codebase Guide for AI Agents` connect `Project Architecture & UI` to `LLM Input Processing Pipeline`?**
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
+- **Why does `Transformer Architecture` connect `LLM Input Processing Pipeline` to `Project Architecture & UI`, `Learning Foundation & Resources`?**
+  _High betweenness centrality (0.032) - this node is a cross-community bridge._
 - **Are the 8 inferred relationships involving `Transformer Architecture` (e.g. with `Decoder-Only Architecture (GPT, LLaMA)` and `Feed-Forward Network (FFN)`) actually correct?**
   _`Transformer Architecture` has 8 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `Self-Attention Mechanism` (e.g. with `Interactive Attention Simulator (SVG connection lines)` and `Transformer Architecture`) actually correct?**
   _`Self-Attention Mechanism` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `PreToolUse`, `⚠️ Bilingual parity rule (must follow)`, `graphify` to the rest of the system?**
-  _34 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `PreToolUse`, `frontend-design@claude-plugins-official`, `Key Design Goals:` to the rest of the system?**
+  _42 weakly-connected nodes found - possible documentation gaps or missing edges._

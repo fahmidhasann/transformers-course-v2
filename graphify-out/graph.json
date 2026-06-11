@@ -92,16 +92,16 @@
     {
       "label": "settings.json",
       "file_type": "code",
-      "source_file": ".claude/settings.json",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.json",
       "source_location": "L1",
-      "id": "claude_settings",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_claude_settings_json",
       "community": 12,
       "norm_label": "settings.json"
     },
     {
       "label": "hooks",
       "file_type": "code",
-      "source_file": ".claude/settings.json",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.json",
       "source_location": "L2",
       "id": "claude_settings_hooks",
       "community": 12,
@@ -110,47 +110,497 @@
     {
       "label": "PreToolUse",
       "file_type": "code",
-      "source_file": ".claude/settings.json",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.json",
       "source_location": "L3",
       "id": "claude_settings_hooks_pretooluse",
       "community": 12,
       "norm_label": "pretooluse"
     },
     {
+      "label": "settings.local.json",
+      "file_type": "code",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.local.json",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_claude_settings_local_json",
+      "community": 6,
+      "norm_label": "settings.local.json"
+    },
+    {
+      "label": "enabledPlugins",
+      "file_type": "code",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.local.json",
+      "source_location": "L2",
+      "id": "claude_settings_local_enabledplugins",
+      "community": 6,
+      "norm_label": "enabledplugins"
+    },
+    {
+      "label": "frontend-design@claude-plugins-official",
+      "file_type": "code",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.local.json",
+      "source_location": "L3",
+      "id": "claude_settings_local_enabledplugins_frontend_design_claude_plugins_official",
+      "community": 6,
+      "norm_label": "frontend-design@claude-plugins-official"
+    },
+    {
+      "label": "AGENTS.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_agents_md",
+      "community": 1,
+      "norm_label": "agents.md"
+    },
+    {
+      "label": "Codebase Guide for AI Agents (AGENTS.md)",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L1",
+      "id": "transformers_2_agents_codebase_guide_for_ai_agents_agents_md",
+      "community": 1,
+      "norm_label": "codebase guide for ai agents (agents.md)"
+    },
+    {
+      "label": "1. Overview & Purpose",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L7",
+      "id": "transformers_2_agents_1_overview_purpose",
+      "community": 1,
+      "norm_label": "1. overview & purpose"
+    },
+    {
+      "label": "Key Design Goals:",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L11",
+      "id": "transformers_2_agents_key_design_goals",
+      "community": 1,
+      "norm_label": "key design goals:"
+    },
+    {
+      "label": "2. Directory Structure",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L19",
+      "id": "transformers_2_agents_2_directory_structure",
+      "community": 1,
+      "norm_label": "2. directory structure"
+    },
+    {
+      "label": "3. Core Application Architecture",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L50",
+      "id": "transformers_2_agents_3_core_application_architecture",
+      "community": 1,
+      "norm_label": "3. core application architecture"
+    },
+    {
+      "label": "Dashboard: [index.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html)",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L54",
+      "id": "transformers_2_agents_dashboard_index_html_file_users_fahmidhasantaohid_documents_transformers_202_index_html",
+      "community": 1,
+      "norm_label": "dashboard: [index.html](file:///users/fahmidhasantaohid/documents/transformers%202/index.html)"
+    },
+    {
+      "label": "Lesson Pages: `lessons/*.html`",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L62",
+      "id": "transformers_2_agents_lesson_pages_lessons_html",
+      "community": 1,
+      "norm_label": "lesson pages: `lessons/*.html`"
+    },
+    {
+      "label": "4. Key Systems & State Syncing",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L73",
+      "id": "transformers_2_agents_4_key_systems_state_syncing",
+      "community": 1,
+      "norm_label": "4. key systems & state syncing"
+    },
+    {
+      "label": "Theme Toggle System",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L75",
+      "id": "transformers_2_agents_theme_toggle_system",
+      "community": 1,
+      "norm_label": "theme toggle system"
+    },
+    {
+      "label": "LocalStorage Keys",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L87",
+      "id": "transformers_2_agents_localstorage_keys",
+      "community": 1,
+      "norm_label": "localstorage keys"
+    },
+    {
+      "label": "5. Development Guidelines & Constraints",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L97",
+      "id": "transformers_2_agents_5_development_guidelines_constraints",
+      "community": 1,
+      "norm_label": "5. development guidelines & constraints"
+    },
+    {
+      "label": "6. How to Add a New Lesson",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L120",
+      "id": "transformers_2_agents_6_how_to_add_a_new_lesson",
+      "community": 1,
+      "norm_label": "6. how to add a new lesson"
+    },
+    {
       "label": "CLAUDE.md",
       "file_type": "document",
-      "source_file": "CLAUDE.md",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/CLAUDE.md",
       "source_location": "L1",
-      "id": "claude",
-      "community": 9,
+      "id": "users_fahmidhasantaohid_documents_transformers_2_claude_md",
+      "community": 17,
       "norm_label": "claude.md"
+    },
+    {
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/CLAUDE.md",
+      "source_location": "L1",
+      "id": "transformers_2_claude_claude_md",
+      "community": 17,
+      "norm_label": "claude.md"
+    },
+    {
+      "label": "\u26a0\ufe0f Bilingual parity rule (must follow)",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/CLAUDE.md",
+      "source_location": "L5",
+      "id": "transformers_2_claude_bilingual_parity_rule_must_follow",
+      "community": 17,
+      "norm_label": "\u26a0\ufe0f bilingual parity rule (must follow)"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/CLAUDE.md",
+      "source_location": "L8",
+      "id": "transformers_2_claude_graphify",
+      "community": 17,
+      "norm_label": "graphify"
+    },
+    {
+      "label": "GLOSSARY.md",
+      "file_type": "document",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L1",
+      "id": "glossary",
+      "community": 5,
+      "norm_label": "glossary.md"
+    },
+    {
+      "label": "Transformer Architecture Glossary",
+      "file_type": "document",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L1",
+      "id": "glossary_transformer_architecture_glossary",
+      "community": 5,
+      "norm_label": "transformer architecture glossary"
+    },
+    {
+      "label": "Input Representation (\u0987\u09a8\u09aa\u09c1\u099f \u09b0\u09bf\u09aa\u09cd\u09b0\u09c7\u099c\u09c7\u09a8\u09cd\u099f\u09c7\u09b6\u09a8)",
+      "file_type": "document",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L5",
+      "id": "glossary_input_representation_\u0987\u09a8\u09aa_\u099f_\u09b0_\u09aa_\u09b0_\u099c_\u09a8_\u099f_\u09b6\u09a8",
+      "community": 5,
+      "norm_label": "input representation (\u0987\u09a8\u09aa\u09c1\u099f \u09b0\u09bf\u09aa\u09b0\u09c7\u099c\u09c7\u09a8\u099f\u09c7\u09b6\u09a8)"
+    },
+    {
+      "label": "Attention Mechanism (\u0985\u09cd\u09af\u09be\u099f\u09c7\u09a8\u09b6\u09a8 \u09ae\u09c7\u0995\u09be\u09a8\u09bf\u099c\u09ae)",
+      "file_type": "document",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L15",
+      "id": "glossary_attention_mechanism_\u0985_\u09af_\u099f_\u09a8\u09b6\u09a8_\u09ae_\u0995_\u09a8_\u099c\u09ae",
+      "community": 5,
+      "norm_label": "attention mechanism (\u0985\u09af\u09be\u099f\u09c7\u09a8\u09b6\u09a8 \u09ae\u09c7\u0995\u09be\u09a8\u09bf\u099c\u09ae)"
+    },
+    {
+      "label": "Model Block & Optimization (\u09ae\u09a1\u09c7\u09b2 \u09ac\u09cd\u09b2\u0995 \u0993 \u0985\u09aa\u09cd\u099f\u09bf\u09ae\u09be\u0987\u099c\u09c7\u09b6\u09a8)",
+      "file_type": "document",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L28",
+      "id": "glossary_model_block_optimization_\u09ae\u09a1_\u09b2_\u09ac_\u09b2\u0995_\u0993_\u0985\u09aa_\u099f_\u09ae_\u0987\u099c_\u09b6\u09a8",
+      "community": 5,
+      "norm_label": "model block & optimization (\u09ae\u09a1\u09c7\u09b2 \u09ac\u09b2\u0995 \u0993 \u0985\u09aa\u099f\u09bf\u09ae\u09be\u0987\u099c\u09c7\u09b6\u09a8)"
+    },
+    {
+      "label": "Generation & LLM Architecture (\u099c\u09c7\u09a8\u09be\u09b0\u09c7\u09b6\u09a8 \u0993 \u098f\u09b2\u098f\u09b2\u098f\u09ae \u0986\u09b0\u09cd\u0995\u09bf\u099f\u09c7\u0995\u099a\u09be\u09b0)",
+      "file_type": "document",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L37",
+      "id": "glossary_generation_llm_architecture_\u099c_\u09a8_\u09b0_\u09b6\u09a8_\u0993_\u098f\u09b2\u098f\u09b2\u098f\u09ae_\u0986\u09b0_\u0995_\u099f_\u0995\u099a_\u09b0",
+      "community": 5,
+      "norm_label": "generation & llm architecture (\u099c\u09c7\u09a8\u09be\u09b0\u09c7\u09b6\u09a8 \u0993 \u098f\u09b2\u098f\u09b2\u098f\u09ae \u0986\u09b0\u0995\u09bf\u099f\u09c7\u0995\u099a\u09be\u09b0)"
+    },
+    {
+      "label": "MISSION.md",
+      "file_type": "document",
+      "source_file": "MISSION.md",
+      "source_location": "L1",
+      "id": "mission",
+      "community": 8,
+      "norm_label": "mission.md"
+    },
+    {
+      "label": "Mission: Transformer Architecture used in Large Language Models (LLMs)",
+      "file_type": "document",
+      "source_file": "MISSION.md",
+      "source_location": "L1",
+      "id": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
+      "community": 8,
+      "norm_label": "mission: transformer architecture used in large language models (llms)"
+    },
+    {
+      "label": "Why",
+      "file_type": "document",
+      "source_file": "MISSION.md",
+      "source_location": "L3",
+      "id": "mission_why",
+      "community": 8,
+      "norm_label": "why"
+    },
+    {
+      "label": "Success looks like",
+      "file_type": "document",
+      "source_file": "MISSION.md",
+      "source_location": "L6",
+      "id": "mission_success_looks_like",
+      "community": 8,
+      "norm_label": "success looks like"
+    },
+    {
+      "label": "Constraints",
+      "file_type": "document",
+      "source_file": "MISSION.md",
+      "source_location": "L11",
+      "id": "mission_constraints",
+      "community": 8,
+      "norm_label": "constraints"
+    },
+    {
+      "label": "Out of scope",
+      "file_type": "document",
+      "source_file": "MISSION.md",
+      "source_location": "L15",
+      "id": "mission_out_of_scope",
+      "community": 8,
+      "norm_label": "out of scope"
+    },
+    {
+      "label": "NOTES.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/NOTES.md",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_notes_md",
+      "community": 19,
+      "norm_label": "notes.md"
+    },
+    {
+      "label": "Notes",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/NOTES.md",
+      "source_location": "L1",
+      "id": "transformers_2_notes_notes",
+      "community": 19,
+      "norm_label": "notes"
+    },
+    {
+      "label": "User Preferences",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/NOTES.md",
+      "source_location": "L3",
+      "id": "transformers_2_notes_user_preferences",
+      "community": 19,
+      "norm_label": "user preferences"
+    },
+    {
+      "label": "RESOURCES.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/RESOURCES.md",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_resources_md",
+      "community": 18,
+      "norm_label": "resources.md"
+    },
+    {
+      "label": "Transformer Architecture Resources",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/RESOURCES.md",
+      "source_location": "L1",
+      "id": "transformers_2_resources_transformer_architecture_resources",
+      "community": 18,
+      "norm_label": "transformer architecture resources"
+    },
+    {
+      "label": "Knowledge",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/RESOURCES.md",
+      "source_location": "L3",
+      "id": "transformers_2_resources_knowledge",
+      "community": 18,
+      "norm_label": "knowledge"
+    },
+    {
+      "label": "Wisdom (Communities)",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/RESOURCES.md",
+      "source_location": "L16",
+      "id": "transformers_2_resources_wisdom_communities",
+      "community": 18,
+      "norm_label": "wisdom (communities)"
+    },
+    {
+      "label": "0001-prior-knowledge.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0001-prior-knowledge.md",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0001_prior_knowledge_md",
+      "community": 13,
+      "norm_label": "0001-prior-knowledge.md"
+    },
+    {
+      "label": "User Prior Knowledge Established",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0001-prior-knowledge.md",
+      "source_location": "L1",
+      "id": "learning_records_0001_prior_knowledge_user_prior_knowledge_established",
+      "community": 13,
+      "norm_label": "user prior knowledge established"
+    },
+    {
+      "label": "0003-self-attention-mechanism.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0003-self-attention-mechanism.md",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0003_self_attention_mechanism_md",
+      "community": 14,
+      "norm_label": "0003-self-attention-mechanism.md"
+    },
+    {
+      "label": "Self-Attention Mechanism",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0003-self-attention-mechanism.md",
+      "source_location": "L1",
+      "id": "learning_records_0003_self_attention_mechanism_self_attention_mechanism",
+      "community": 14,
+      "norm_label": "self-attention mechanism"
+    },
+    {
+      "label": "0004-multi-head-attention-layer-stacking.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0004-multi-head-attention-layer-stacking.md",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0004_multi_head_attention_layer_stacking_md",
+      "community": 15,
+      "norm_label": "0004-multi-head-attention-layer-stacking.md"
+    },
+    {
+      "label": "Multi-Head Attention and Layer Stacking",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0004-multi-head-attention-layer-stacking.md",
+      "source_location": "L1",
+      "id": "learning_records_0004_multi_head_attention_layer_stacking_multi_head_attention_and_layer_stacking",
+      "community": 15,
+      "norm_label": "multi-head attention and layer stacking"
+    },
+    {
+      "label": "0005-ffn-residual-connections-layer-norm.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0005-ffn-residual-connections-layer-norm.md",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0005_ffn_residual_connections_layer_norm_md",
+      "community": 16,
+      "norm_label": "0005-ffn-residual-connections-layer-norm.md"
+    },
+    {
+      "label": "Feed-Forward Networks, Residual Connections, \u098f\u09ac\u0982 Layer Normalization-\u098f\u09b0 \u09ad\u09c2\u09ae\u09bf\u0995\u09be",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0005-ffn-residual-connections-layer-norm.md",
+      "source_location": "L1",
+      "id": "learning_records_0005_ffn_residual_connections_layer_norm_feed_forward_networks_residual_connections_\u098f\u09ac_layer_normalization_\u098f\u09b0_\u09ad_\u09ae_\u0995",
+      "community": 16,
+      "norm_label": "feed-forward networks, residual connections, \u098f\u09ac\u0982 layer normalization-\u098f\u09b0 \u09ad\u09c2\u09ae\u09bf\u0995\u09be"
+    },
+    {
+      "label": "0006-decoder-only-vs-encoder-decoder.md",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0006-decoder-only-vs-encoder-decoder.md",
+      "source_location": "L1",
+      "id": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0006_decoder_only_vs_encoder_decoder_md",
+      "community": 20,
+      "norm_label": "0006-decoder-only-vs-encoder-decoder.md"
+    },
+    {
+      "label": "Decoder-Only Architecture \u0993 Causal Masking",
+      "file_type": "document",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0006-decoder-only-vs-encoder-decoder.md",
+      "source_location": "L1",
+      "id": "learning_records_0006_decoder_only_vs_encoder_decoder_decoder_only_architecture_\u0993_causal_masking",
+      "community": 20,
+      "norm_label": "decoder-only architecture \u0993 causal masking"
+    },
+    {
+      "label": "settings.json",
+      "file_type": "code",
+      "source_file": ".claude/settings.json",
+      "source_location": "L1",
+      "community": 12,
+      "norm_label": "settings.json",
+      "id": "claude_settings"
     },
     {
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
       "source_location": "L1",
-      "id": "claude_claude_md",
       "community": 9,
-      "norm_label": "claude.md"
+      "norm_label": "claude.md",
+      "id": "claude"
+    },
+    {
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "community": 9,
+      "norm_label": "claude.md",
+      "id": "claude_claude_md"
     },
     {
       "label": "\u26a0\ufe0f Bilingual parity rule (must follow)",
       "file_type": "document",
       "source_file": "CLAUDE.md",
       "source_location": "L5",
-      "id": "claude_bilingual_parity_rule_must_follow",
       "community": 9,
-      "norm_label": "\u26a0\ufe0f bilingual parity rule (must follow)"
+      "norm_label": "\u26a0\ufe0f bilingual parity rule (must follow)",
+      "id": "claude_bilingual_parity_rule_must_follow"
     },
     {
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
       "source_location": "L8",
-      "id": "claude_graphify",
       "community": 9,
-      "norm_label": "graphify"
+      "norm_label": "graphify",
+      "id": "claude_graphify"
     },
     {
       "label": "settings.local.json",
@@ -160,24 +610,6 @@
       "community": 6,
       "norm_label": "settings.local.json",
       "id": "claude_settings_local"
-    },
-    {
-      "label": "enabledPlugins",
-      "file_type": "code",
-      "source_file": ".claude/settings.local.json",
-      "source_location": "L2",
-      "community": 6,
-      "norm_label": "enabledplugins",
-      "id": "claude_settings_local_enabledplugins"
-    },
-    {
-      "label": "frontend-design@claude-plugins-official",
-      "file_type": "code",
-      "source_file": ".claude/settings.local.json",
-      "source_location": "L3",
-      "community": 6,
-      "norm_label": "frontend-design@claude-plugins-official",
-      "id": "claude_settings_local_enabledplugins_frontend_design_claude_plugins_official"
     },
     {
       "label": "AGENTS.md",
@@ -297,114 +729,6 @@
       "id": "agents_6_how_to_add_a_new_lesson"
     },
     {
-      "label": "GLOSSARY.md",
-      "file_type": "document",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L1",
-      "community": 5,
-      "norm_label": "glossary.md",
-      "id": "glossary"
-    },
-    {
-      "label": "Transformer Architecture Glossary",
-      "file_type": "document",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L1",
-      "community": 5,
-      "norm_label": "transformer architecture glossary",
-      "id": "glossary_transformer_architecture_glossary"
-    },
-    {
-      "label": "Input Representation (\u0987\u09a8\u09aa\u09c1\u099f \u09b0\u09bf\u09aa\u09cd\u09b0\u09c7\u099c\u09c7\u09a8\u09cd\u099f\u09c7\u09b6\u09a8)",
-      "file_type": "document",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L5",
-      "community": 5,
-      "norm_label": "input representation (\u0987\u09a8\u09aa\u09c1\u099f \u09b0\u09bf\u09aa\u09b0\u09c7\u099c\u09c7\u09a8\u099f\u09c7\u09b6\u09a8)",
-      "id": "glossary_input_representation_\u0987\u09a8\u09aa_\u099f_\u09b0_\u09aa_\u09b0_\u099c_\u09a8_\u099f_\u09b6\u09a8"
-    },
-    {
-      "label": "Attention Mechanism (\u0985\u09cd\u09af\u09be\u099f\u09c7\u09a8\u09b6\u09a8 \u09ae\u09c7\u0995\u09be\u09a8\u09bf\u099c\u09ae)",
-      "file_type": "document",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L13",
-      "community": 5,
-      "norm_label": "attention mechanism (\u0985\u09af\u09be\u099f\u09c7\u09a8\u09b6\u09a8 \u09ae\u09c7\u0995\u09be\u09a8\u09bf\u099c\u09ae)",
-      "id": "glossary_attention_mechanism_\u0985_\u09af_\u099f_\u09a8\u09b6\u09a8_\u09ae_\u0995_\u09a8_\u099c\u09ae"
-    },
-    {
-      "label": "Model Block & Optimization (\u09ae\u09a1\u09c7\u09b2 \u09ac\u09cd\u09b2\u0995 \u0993 \u0985\u09aa\u09cd\u099f\u09bf\u09ae\u09be\u0987\u099c\u09c7\u09b6\u09a8)",
-      "file_type": "document",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L27",
-      "community": 5,
-      "norm_label": "model block & optimization (\u09ae\u09a1\u09c7\u09b2 \u09ac\u09b2\u0995 \u0993 \u0985\u09aa\u099f\u09bf\u09ae\u09be\u0987\u099c\u09c7\u09b6\u09a8)",
-      "id": "glossary_model_block_optimization_\u09ae\u09a1_\u09b2_\u09ac_\u09b2\u0995_\u0993_\u0985\u09aa_\u099f_\u09ae_\u0987\u099c_\u09b6\u09a8"
-    },
-    {
-      "label": "Generation & LLM Architecture (\u099c\u09c7\u09a8\u09be\u09b0\u09c7\u09b6\u09a8 \u0993 \u098f\u09b2\u098f\u09b2\u098f\u09ae \u0986\u09b0\u09cd\u0995\u09bf\u099f\u09c7\u0995\u099a\u09be\u09b0)",
-      "file_type": "document",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L37",
-      "community": 5,
-      "norm_label": "generation & llm architecture (\u099c\u09c7\u09a8\u09be\u09b0\u09c7\u09b6\u09a8 \u0993 \u098f\u09b2\u098f\u09b2\u098f\u09ae \u0986\u09b0\u0995\u09bf\u099f\u09c7\u0995\u099a\u09be\u09b0)",
-      "id": "glossary_generation_llm_architecture_\u099c_\u09a8_\u09b0_\u09b6\u09a8_\u0993_\u098f\u09b2\u098f\u09b2\u098f\u09ae_\u0986\u09b0_\u0995_\u099f_\u0995\u099a_\u09b0"
-    },
-    {
-      "label": "MISSION.md",
-      "file_type": "document",
-      "source_file": "MISSION.md",
-      "source_location": "L1",
-      "community": 8,
-      "norm_label": "mission.md",
-      "id": "mission"
-    },
-    {
-      "label": "Mission: Transformer Architecture used in Large Language Models (LLMs)",
-      "file_type": "document",
-      "source_file": "MISSION.md",
-      "source_location": "L1",
-      "community": 8,
-      "norm_label": "mission: transformer architecture used in large language models (llms)",
-      "id": "mission_mission_transformer_architecture_used_in_large_language_models_llms"
-    },
-    {
-      "label": "Why",
-      "file_type": "document",
-      "source_file": "MISSION.md",
-      "source_location": "L3",
-      "community": 8,
-      "norm_label": "why",
-      "id": "mission_why"
-    },
-    {
-      "label": "Success looks like",
-      "file_type": "document",
-      "source_file": "MISSION.md",
-      "source_location": "L6",
-      "community": 8,
-      "norm_label": "success looks like",
-      "id": "mission_success_looks_like"
-    },
-    {
-      "label": "Constraints",
-      "file_type": "document",
-      "source_file": "MISSION.md",
-      "source_location": "L11",
-      "community": 8,
-      "norm_label": "constraints",
-      "id": "mission_constraints"
-    },
-    {
-      "label": "Out of scope",
-      "file_type": "document",
-      "source_file": "MISSION.md",
-      "source_location": "L15",
-      "community": 8,
-      "norm_label": "out of scope",
-      "id": "mission_out_of_scope"
-    },
-    {
       "label": "NOTES.md",
       "file_type": "document",
       "source_file": "NOTES.md",
@@ -477,15 +801,6 @@
       "id": "learning_records_0001_prior_knowledge"
     },
     {
-      "label": "User Prior Knowledge Established",
-      "file_type": "document",
-      "source_file": "learning-records/0001-prior-knowledge.md",
-      "source_location": "L1",
-      "community": 13,
-      "norm_label": "user prior knowledge established",
-      "id": "learning_records_0001_prior_knowledge_user_prior_knowledge_established"
-    },
-    {
       "label": "0003-self-attention-mechanism.md",
       "file_type": "document",
       "source_file": "learning-records/0003-self-attention-mechanism.md",
@@ -493,15 +808,6 @@
       "community": 14,
       "norm_label": "0003-self-attention-mechanism.md",
       "id": "learning_records_0003_self_attention_mechanism"
-    },
-    {
-      "label": "Self-Attention Mechanism",
-      "file_type": "document",
-      "source_file": "learning-records/0003-self-attention-mechanism.md",
-      "source_location": "L1",
-      "community": 14,
-      "norm_label": "self-attention mechanism",
-      "id": "learning_records_0003_self_attention_mechanism_self_attention_mechanism"
     },
     {
       "label": "0004-multi-head-attention-layer-stacking.md",
@@ -513,15 +819,6 @@
       "id": "learning_records_0004_multi_head_attention_layer_stacking"
     },
     {
-      "label": "Multi-Head Attention and Layer Stacking",
-      "file_type": "document",
-      "source_file": "learning-records/0004-multi-head-attention-layer-stacking.md",
-      "source_location": "L1",
-      "community": 15,
-      "norm_label": "multi-head attention and layer stacking",
-      "id": "learning_records_0004_multi_head_attention_layer_stacking_multi_head_attention_and_layer_stacking"
-    },
-    {
       "label": "0005-ffn-residual-connections-layer-norm.md",
       "file_type": "document",
       "source_file": "learning-records/0005-ffn-residual-connections-layer-norm.md",
@@ -531,15 +828,6 @@
       "id": "learning_records_0005_ffn_residual_connections_layer_norm"
     },
     {
-      "label": "Feed-Forward Networks, Residual Connections, \u098f\u09ac\u0982 Layer Normalization-\u098f\u09b0 \u09ad\u09c2\u09ae\u09bf\u0995\u09be",
-      "file_type": "document",
-      "source_file": "learning-records/0005-ffn-residual-connections-layer-norm.md",
-      "source_location": "L1",
-      "community": 16,
-      "norm_label": "feed-forward networks, residual connections, \u098f\u09ac\u0982 layer normalization-\u098f\u09b0 \u09ad\u09c2\u09ae\u09bf\u0995\u09be",
-      "id": "learning_records_0005_ffn_residual_connections_layer_norm_feed_forward_networks_residual_connections_\u098f\u09ac_layer_normalization_\u098f\u09b0_\u09ad_\u09ae_\u0995"
-    },
-    {
       "label": "0006-decoder-only-vs-encoder-decoder.md",
       "file_type": "document",
       "source_file": "learning-records/0006-decoder-only-vs-encoder-decoder.md",
@@ -547,15 +835,6 @@
       "community": 4,
       "norm_label": "0006-decoder-only-vs-encoder-decoder.md",
       "id": "learning_records_0006_decoder_only_vs_encoder_decoder"
-    },
-    {
-      "label": "Decoder-Only Architecture \u0993 Causal Masking",
-      "file_type": "document",
-      "source_file": "learning-records/0006-decoder-only-vs-encoder-decoder.md",
-      "source_location": "L1",
-      "community": 4,
-      "norm_label": "decoder-only architecture \u0993 causal masking",
-      "id": "learning_records_0006_decoder_only_vs_encoder_decoder_decoder_only_architecture_\u0993_causal_masking"
     },
     {
       "label": "Project Settings (Local)",
@@ -644,7 +923,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 4,
       "norm_label": "learning record: self-attention mechanism",
       "id": "learning_records_self_attention"
     },
@@ -657,7 +936,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 4,
       "norm_label": "learning record: multi-head attention and layer stacking",
       "id": "learning_records_multi_head_attention"
     },
@@ -696,7 +975,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 4,
       "norm_label": "transformer architecture",
       "id": "concept_transformer_architecture"
     },
@@ -709,7 +988,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 4,
       "norm_label": "self-attention mechanism",
       "id": "concept_self_attention"
     },
@@ -722,7 +1001,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 4,
       "norm_label": "query (q), key (k), value (v) vectors",
       "id": "concept_query_key_value"
     },
@@ -735,7 +1014,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 4,
       "norm_label": "multi-head attention",
       "id": "concept_multi_head_attention"
     },
@@ -787,7 +1066,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
+      "community": 4,
       "norm_label": "attention weights (softmax)",
       "id": "concept_attention_weights"
     },
@@ -800,7 +1079,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 4,
       "norm_label": "layer stacking (hierarchical abstraction)",
       "id": "concept_layer_stacking"
     },
@@ -995,7 +1274,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 4,
       "norm_label": "dimension splitting (multi-head attention)",
       "id": "concept_dimension_splitting"
     },
@@ -1069,6 +1348,16 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_claude_settings_json",
+      "target": "claude_settings_hooks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": ".claude/settings.json",
       "source_location": "L2",
       "weight": 1.0,
@@ -1085,6 +1374,436 @@
       "confidence_score": 1.0,
       "source": "claude_settings_hooks",
       "target": "claude_settings_hooks_pretooluse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/.claude/settings.local.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_claude_settings_local_json",
+      "target": "claude_settings_local_enabledplugins",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_settings_local",
+      "target": "claude_settings_local_enabledplugins"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_settings_local_enabledplugins",
+      "target": "claude_settings_local_enabledplugins_frontend_design_claude_plugins_official"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_agents_md",
+      "target": "transformers_2_agents_codebase_guide_for_ai_agents_agents_md",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "transformers_2_agents_codebase_guide_for_ai_agents_agents_md",
+      "target": "transformers_2_agents_1_overview_purpose",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "transformers_2_agents_codebase_guide_for_ai_agents_agents_md",
+      "target": "transformers_2_agents_2_directory_structure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "transformers_2_agents_codebase_guide_for_ai_agents_agents_md",
+      "target": "transformers_2_agents_3_core_application_architecture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "transformers_2_agents_codebase_guide_for_ai_agents_agents_md",
+      "target": "transformers_2_agents_4_key_systems_state_syncing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "transformers_2_agents_codebase_guide_for_ai_agents_agents_md",
+      "target": "transformers_2_agents_5_development_guidelines_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L120",
+      "weight": 1.0,
+      "source": "transformers_2_agents_codebase_guide_for_ai_agents_agents_md",
+      "target": "transformers_2_agents_6_how_to_add_a_new_lesson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "transformers_2_agents_1_overview_purpose",
+      "target": "transformers_2_agents_key_design_goals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "transformers_2_agents_3_core_application_architecture",
+      "target": "transformers_2_agents_dashboard_index_html_file_users_fahmidhasantaohid_documents_transformers_202_index_html",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "transformers_2_agents_3_core_application_architecture",
+      "target": "transformers_2_agents_lesson_pages_lessons_html",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "transformers_2_agents_4_key_systems_state_syncing",
+      "target": "transformers_2_agents_localstorage_keys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/AGENTS.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "transformers_2_agents_4_key_systems_state_syncing",
+      "target": "transformers_2_agents_theme_toggle_system",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/CLAUDE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_claude_md",
+      "target": "transformers_2_claude_claude_md",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/CLAUDE.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "transformers_2_claude_claude_md",
+      "target": "transformers_2_claude_bilingual_parity_rule_must_follow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/CLAUDE.md",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "transformers_2_claude_claude_md",
+      "target": "transformers_2_claude_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "glossary",
+      "target": "glossary_transformer_architecture_glossary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "glossary_transformer_architecture_glossary",
+      "target": "glossary_attention_mechanism_\u0985_\u09af_\u099f_\u09a8\u09b6\u09a8_\u09ae_\u0995_\u09a8_\u099c\u09ae"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "glossary_transformer_architecture_glossary",
+      "target": "glossary_generation_llm_architecture_\u099c_\u09a8_\u09b0_\u09b6\u09a8_\u0993_\u098f\u09b2\u098f\u09b2\u098f\u09ae_\u0986\u09b0_\u0995_\u099f_\u0995\u099a_\u09b0"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "glossary_transformer_architecture_glossary",
+      "target": "glossary_input_representation_\u0987\u09a8\u09aa_\u099f_\u09b0_\u09aa_\u09b0_\u099c_\u09a8_\u099f_\u09b6\u09a8"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GLOSSARY.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "glossary_transformer_architecture_glossary",
+      "target": "glossary_model_block_optimization_\u09ae\u09a1_\u09b2_\u09ac_\u09b2\u0995_\u0993_\u0985\u09aa_\u099f_\u09ae_\u0987\u099c_\u09b6\u09a8"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "MISSION.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "mission",
+      "target": "mission_mission_transformer_architecture_used_in_large_language_models_llms"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "MISSION.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
+      "target": "mission_constraints"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "MISSION.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
+      "target": "mission_out_of_scope"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "MISSION.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
+      "target": "mission_success_looks_like"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "MISSION.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
+      "target": "mission_why"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/NOTES.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_notes_md",
+      "target": "transformers_2_notes_notes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/NOTES.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "transformers_2_notes_notes",
+      "target": "transformers_2_notes_user_preferences",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/RESOURCES.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_resources_md",
+      "target": "transformers_2_resources_transformer_architecture_resources",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/RESOURCES.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "transformers_2_resources_transformer_architecture_resources",
+      "target": "transformers_2_resources_knowledge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/RESOURCES.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "transformers_2_resources_transformer_architecture_resources",
+      "target": "transformers_2_resources_wisdom_communities",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0001-prior-knowledge.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0001_prior_knowledge_md",
+      "target": "learning_records_0001_prior_knowledge_user_prior_knowledge_established",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "learning-records/0001-prior-knowledge.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "learning_records_0001_prior_knowledge",
+      "target": "learning_records_0001_prior_knowledge_user_prior_knowledge_established"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0003-self-attention-mechanism.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0003_self_attention_mechanism_md",
+      "target": "learning_records_0003_self_attention_mechanism_self_attention_mechanism",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "learning-records/0003-self-attention-mechanism.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "learning_records_0003_self_attention_mechanism",
+      "target": "learning_records_0003_self_attention_mechanism_self_attention_mechanism"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0004-multi-head-attention-layer-stacking.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0004_multi_head_attention_layer_stacking_md",
+      "target": "learning_records_0004_multi_head_attention_layer_stacking_multi_head_attention_and_layer_stacking",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "learning-records/0004-multi-head-attention-layer-stacking.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "learning_records_0004_multi_head_attention_layer_stacking",
+      "target": "learning_records_0004_multi_head_attention_layer_stacking_multi_head_attention_and_layer_stacking"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0005-ffn-residual-connections-layer-norm.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0005_ffn_residual_connections_layer_norm_md",
+      "target": "learning_records_0005_ffn_residual_connections_layer_norm_feed_forward_networks_residual_connections_\u098f\u09ac_layer_normalization_\u098f\u09b0_\u09ad_\u09ae_\u0995",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "learning-records/0005-ffn-residual-connections-layer-norm.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "learning_records_0005_ffn_residual_connections_layer_norm",
+      "target": "learning_records_0005_ffn_residual_connections_layer_norm_feed_forward_networks_residual_connections_\u098f\u09ac_layer_normalization_\u098f\u09b0_\u09ad_\u09ae_\u0995"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/fahmidhasantaohid/Documents/Transformers 2/learning-records/0006-decoder-only-vs-encoder-decoder.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "users_fahmidhasantaohid_documents_transformers_2_learning_records_0006_decoder_only_vs_encoder_decoder_md",
+      "target": "learning_records_0006_decoder_only_vs_encoder_decoder_decoder_only_architecture_\u0993_causal_masking",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "learning-records/0006-decoder-only-vs-encoder-decoder.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "learning_records_0006_decoder_only_vs_encoder_decoder",
+      "target": "learning_records_0006_decoder_only_vs_encoder_decoder_decoder_only_architecture_\u0993_causal_masking"
     },
     {
       "relation": "contains",
@@ -1115,26 +1834,6 @@
       "confidence_score": 1.0,
       "source": "claude_claude_md",
       "target": "claude_graphify"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".claude/settings.local.json",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_settings_local",
-      "target": "claude_settings_local_enabledplugins"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".claude/settings.local.json",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_settings_local_enabledplugins",
-      "target": "claude_settings_local_enabledplugins_frontend_design_claude_plugins_official"
     },
     {
       "relation": "contains",
@@ -1259,106 +1958,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "glossary",
-      "target": "glossary_transformer_architecture_glossary"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "glossary_transformer_architecture_glossary",
-      "target": "glossary_attention_mechanism_\u0985_\u09af_\u099f_\u09a8\u09b6\u09a8_\u09ae_\u0995_\u09a8_\u099c\u09ae"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L37",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "glossary_transformer_architecture_glossary",
-      "target": "glossary_generation_llm_architecture_\u099c_\u09a8_\u09b0_\u09b6\u09a8_\u0993_\u098f\u09b2\u098f\u09b2\u098f\u09ae_\u0986\u09b0_\u0995_\u099f_\u0995\u099a_\u09b0"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "glossary_transformer_architecture_glossary",
-      "target": "glossary_input_representation_\u0987\u09a8\u09aa_\u099f_\u09b0_\u09aa_\u09b0_\u099c_\u09a8_\u099f_\u09b6\u09a8"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "GLOSSARY.md",
-      "source_location": "L27",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "glossary_transformer_architecture_glossary",
-      "target": "glossary_model_block_optimization_\u09ae\u09a1_\u09b2_\u09ac_\u09b2\u0995_\u0993_\u0985\u09aa_\u099f_\u09ae_\u0987\u099c_\u09b6\u09a8"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "MISSION.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "mission",
-      "target": "mission_mission_transformer_architecture_used_in_large_language_models_llms"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "MISSION.md",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
-      "target": "mission_constraints"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "MISSION.md",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
-      "target": "mission_out_of_scope"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "MISSION.md",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
-      "target": "mission_success_looks_like"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "MISSION.md",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "mission_mission_transformer_architecture_used_in_large_language_models_llms",
-      "target": "mission_why"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "NOTES.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -1427,46 +2026,6 @@
       "target": "resources_wisdom_communities"
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "learning-records/0001-prior-knowledge.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "learning_records_0001_prior_knowledge",
-      "target": "learning_records_0001_prior_knowledge_user_prior_knowledge_established"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "learning-records/0003-self-attention-mechanism.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "learning_records_0003_self_attention_mechanism",
-      "target": "learning_records_0003_self_attention_mechanism_self_attention_mechanism"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "learning-records/0004-multi-head-attention-layer-stacking.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "learning_records_0004_multi_head_attention_layer_stacking",
-      "target": "learning_records_0004_multi_head_attention_layer_stacking_multi_head_attention_and_layer_stacking"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "learning-records/0005-ffn-residual-connections-layer-norm.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "learning_records_0005_ffn_residual_connections_layer_norm",
-      "target": "learning_records_0005_ffn_residual_connections_layer_norm_feed_forward_networks_residual_connections_\u098f\u09ac_layer_normalization_\u098f\u09b0_\u09ad_\u09ae_\u0995"
-    },
-    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -1485,16 +2044,6 @@
       "weight": 1.0,
       "source": "learning_records_0006_decoder_only_vs_encoder_decoder",
       "target": "concept_causal_masking"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "learning-records/0006-decoder-only-vs-encoder-decoder.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "learning_records_0006_decoder_only_vs_encoder_decoder",
-      "target": "learning_records_0006_decoder_only_vs_encoder_decoder_decoder_only_architecture_\u0993_causal_masking"
     },
     {
       "relation": "references",
@@ -2312,5 +2861,5 @@
       "source_file": "lessons/0006-decoder-only-vs-encoder-decoder-en.html"
     }
   ],
-  "built_at_commit": "6b67a3f72ac5a068bc0a988eaf8e980467a1800a"
+  "built_at_commit": "458a165053d4bbaabacd723318b01a1675448e6c"
 }

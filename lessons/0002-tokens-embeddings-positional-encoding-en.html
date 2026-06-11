@@ -872,7 +872,7 @@
             
             <ul>
                 <li><strong>Vocabulary:</strong> The model's dictionary. For example, GPT-4 has around 100,000 pieces in its dictionary.</li>
-                <li><strong>Token IDs:</strong> Once tokenized, the word <code>"cat"</code> might become piece number <code>3797</code>.</li>
+                <li><strong>Token IDs:</strong> Once tokenized, the word <code>"cat"</code> is mapped to a unique ID number, such as <code>3797</code>.</li>
             </ul>
 
             <details style="margin-top:1rem; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:6px; cursor:pointer;">
@@ -890,7 +890,7 @@
             <h2>2. Embeddings (Adding Meaning)</h2>
             <p>Now we have ID numbers like <code>3797</code> for <code>"cat"</code> and <code>4251</code> for <code>"dog"</code>. But these are just random barcodes. The computer doesn't know that cats and dogs are animals.</p>
             
-            <p>To fix this, we use <span class="tech-term">Embeddings</span>. We replace the simple barcode with a long list of numbers (a <span class="tech-term">Vector</span>). Think of this vector as a detailed "dating profile" for the word.</p>
+            <p>To fix this, we use <span class="tech-term">Embeddings</span>. We replace the simple barcode with a long list of numbers (a <span class="tech-term">Vector</span>). Think of this vector as a detailed "identity profile" (or characteristic card) for the word.</p>
             
             <p>In this profile, numbers score the word on different traits: Is it an animal? Is it royal? Is it masculine? Words with similar profiles are grouped close together in the <span class="tech-term">Embedding Space</span>.</p>
             
