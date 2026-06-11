@@ -1177,7 +1177,7 @@
 
         <!-- Intro Section -->
         <div class="card">
-            <h2>প্রবেশদ্বার (Introduction)</h2>
+            <h2>ভূমিকা (Introduction)</h2>
             <p>আগের লেসনে আমরা দেখেছি যে AI আসলে পরবর্তী শব্দ অনুমান করার একটি শক্তিশালী যন্ত্র। কিন্তু সমস্যা হলো: <strong>কম্পিউটার শব্দ বা টেক্সট পড়তে পারে না। সে কেবল সংখ্যা বোঝে!</strong></p>
             <p>একটি বাক্য Transformer-এর মস্তিষ্কে ঢোকার আগে ৩টি ধাপ পার হয়:</p>
             <ol>
@@ -1217,9 +1217,14 @@
             
             <p>এই প্রোফাইলে বিভিন্ন বৈশিষ্ট্যের ভিত্তিতে শব্দটিকে স্কোর দেওয়া হয়: এটি কি প্রাণী? এটি কি রাজকীয়? এটি কি পুরুষবাচক? একই রকম প্রোফাইলের শব্দগুলো <span class="tech-term">Embedding Space</span>-এ কাছাকাছি অবস্থান করে।</p>
             
-            <p>যেহেতু এগুলো শুধু সংখ্যার তালিকা, তাই আমরা শব্দের ওপর গাণিতিক হিসাব বা ভেক্টর ম্যাথ করতে পারি! উদাহরণস্বরূপ:</p>
-            <div class="formula-box">
-                Vector("King") - Vector("Man") + Vector("Woman") ≈ Vector("Queen")
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-top: 1.5rem; overflow-x: auto;">
+                <p style="margin-top: 0; margin-bottom: 0.8rem; font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">৩-মাত্রিক ভেক্টরের উদাহরণ (Gender, Royalty, Age):</p>
+                <div style="font-family: 'Outfit', monospace; font-size: 0.9rem; color: var(--text-primary); letter-spacing: 0.5px; white-space: nowrap;">
+                    <div style="margin-bottom: 0.4rem;">Vector("King") &nbsp;&nbsp;= [ <span style="color: #10b981;">+0.8</span>, <span style="color: #10b981;">+0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+                    <div style="margin-bottom: 0.4rem;">Vector("Man") &nbsp;&nbsp;&nbsp;= [ <span style="color: #10b981;">+0.8</span>, <span style="color: #ef4444;">-0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+                    <div style="margin-bottom: 0.4rem;">Vector("Woman") = [ <span style="color: #ef4444;">-0.8</span>, <span style="color: #ef4444;">-0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+                    <div>Vector("Queen") = [ <span style="color: #ef4444;">-0.8</span>, <span style="color: #10b981;">+0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+                </div>
             </div>
         </div>
 
@@ -1232,7 +1237,7 @@
             <div class="card-content">
                 <div class="card-content-inner">
                     <p style="margin-bottom: 1rem;">
-                        বাস্তব এম্বেডিং মডেলগুলোতে শব্দের অর্থ ১০০ থেকে ১০০০টি ভিন্ন বৈশিষ্ট্যের মাত্রা বা ডাইমেনশনে সংরক্ষিত থাকে। বোঝার সুবিধার্থে, এখানে আমরা এম্বেডিং স্পেসটিকে মাত্র ৩টি অর্থগত ডাইমেনশনে সীমিত করেছি: 
+                        বাস্তব এআই (AI) মডেলগুলো (যেমন: ChatGPT, Claude, Gemini) একটি শব্দের অর্থ বোঝার জন্য শত শত ভিন্ন ভিন্ন বৈশিষ্ট্য বা গুণাবলি ব্যবহার করে। তবে সহজে দেখার ও বোঝার জন্য, আমরা এখানে মাত্র ৩টি সাধারণ বৈশিষ্ট্য ব্যবহার করছি: 
                         <span class="tech-term">Gender</span> (পুরুষ বনাম নারী), <span class="tech-term">Royalty</span> (রাজকীয় বনাম সাধারণ), এবং <span class="tech-term">Age</span> (পরিপক্ক বনাম শিশু)।
                     </p>
 
@@ -1379,7 +1384,7 @@
         <div class="card">
             <h2>৩. Positional Encoding (ক্রম বা অর্ডার যোগ করা)</h2>
             <p>Transformer মডেল অত্যন্ত দ্রুত কাজ করতে পারে কারণ এটি বাক্যের সবগুলো শব্দকে বাঁ-থেকে-ডানে না পড়ে <strong>একই সাথে সমান্তরালভাবে পড়ে</strong>।</p>
-            <p>কিন্তু এর ফলে একটি বড় সমস্যা তৈরি হয়: যেহেতু সে একসাথে সব পড়ে, <strong>সে শব্দের সঠিক ক্রম বা অর্ডার হারিয়ে ফেলে!</strong> সাহায্য ছাড়া মডেল নিচের দুটি বাক্যের তফাত বুঝতে পারে না:</p>
+            <p>কিন্তু এর ফলে একটি বড় সমস্যা তৈরি হয়: যেহেতু সে একসাথে সব পড়ে, <strong>সে শব্দের সঠিক ক্রম বা অর্ডার হারিয়ে ফেলে!</strong> শব্দের অবস্থান বা পজিশন নির্দিষ্ট করে দেওয়ার কোনো মেকানিজম না থাকলে, মডেল নিচের দুটি বাক্যের তফাত বুঝতে পারে না:</p>
             <div style="background: rgba(255, 255, 255, 0.03); border-left: 4px solid #ef4444; padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem;">
                 ১. <strong>"The cat ate the mouse"</strong> (বিড়ালটি ইঁদুরটিকে খেয়েছে)<br>
                 ২. <strong>"The mouse ate the cat"</strong> (ইঁদুরটি বিড়ালটিকে খেয়েছে)
@@ -1400,7 +1405,7 @@
         <!-- Interactive Visualizer 2 -->
         <div class="card">
             <h2>ইন্টারঅ্যাক্টিভ পজিশনাল এনকোডিং সিমুলেটর</h2>
-            <p>চলুন অর্থ এবং অবস্থানকে মিশিয়ে ফেলি! নিচের শব্দগুলোতে ক্লিক করে দেখুন কীভাবে তাদের <strong>Position Vector</strong>-এর সাথে <strong>Word Vector</strong> যোগ হয়ে একটি চূড়ান্ত ফিঙ্গারপ্রিন্ট তৈরি করছে।</p>
+            <p>এখন আমরা দেখব কীভাবে একটি শব্দের অর্থ এবং তার অবস্থানের তথ্য একত্রিত হয়। নিচের শব্দগুলোতে ক্লিক করে দেখুন কীভাবে <span class="tech-term">Word Vector</span>-এর সাথে <span class="tech-term">Position Vector</span> যুক্ত হয়ে একটি চূড়ান্ত গাণিতিক রূপ তৈরি করে, যা মডেলকে শব্দটির অর্থ ও বাক্যে তার অবস্থান—উভয়ই বুঝতে সাহায্য করে।</p>
             
             <div class="pe-selector">
                 <button class="pe-word-btn active" onclick="selectPEWord(0)">The (Index 0)</button>
@@ -1833,7 +1838,7 @@
             let explanationText = `
                 <p>আপনি সিলেক্ট করেছেন: <strong class="highlight">"${data.word}" (Position Index: ${data.idx})</strong></p>
                 <p>• Word Vector <code>W</code> শব্দের অর্থ সেমান্টিকভাবে রিপ্রেজেন্ট করছে।</p>
-                <p>• Position Vector <code>P</code> তৈরি করা হয়েছে <code>pos = ${data.idx}</code> ধরে sine/cosine তরঙ্গের মাধ্যমে।</p>
+                <p>• Position Vector <code>P</code> তৈরি করা হয়েছে <code>pos = ${data.idx}</code> ধরে sine/cosine তরঙ্গের মাধ্যমে। সহজ কথায়, এই তরঙ্গগুলো প্রতিটি অবস্থানের জন্য একটি অনন্য গাণিতিক পরিচয় (unique mathematical signature) তৈরি করে, যার ফলে মডেল বুঝতে পারে শব্দটি বাক্যের ঠিক কোথায় আছে।</p>
                 <p>• চূড়ান্ত ভেক্টর <code>C = W + P</code> যা সরাসরি ট্রান্সফরমার ব্লকে পাঠানো হয়।</p>
                 <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45;">
                     💡 <strong>ঘড়ির কাটার রূপক:</strong> পজিশনাল এনকোডিং আসলে ঘড়ির কাটার মতো কাজ করে। প্রতিটি ডাইমেনশন ভিন্ন ভিন্ন স্পিডে বা ফ্রিকোয়েন্সিতে ঘোরে। দ্রুত পরিবর্তনশীল সাইন তরঙ্গগুলো (যেমন Dim 0/1, নীল/বেগুনি) ঘড়ির সেকেন্ডের কাটার মতো কাজ করে যা প্রতিটি পদক্ষেপে দ্রুত পরিবর্তিত হয়। আর ধীরগতির তরঙ্গগুলো (যেমন Dim 4/5, লাল/নীল) ঘণ্টার কাটার মতো কাজ করে যা বড় সিকোয়েন্সে অবস্থান ট্র্যাক করতে সাহায্য করে।
@@ -2278,8 +2283,18 @@
             langLabel.textContent = isEn ? 'বাংলা' : 'EN';
             langBtn.addEventListener('click', function () {
                 try { localStorage.setItem('lang', isEn ? 'bn' : 'en'); } catch (e) {}
-                location.href = baseId + (isEn ? '.html' : '-en.html');
+                location.href = baseId + (isEn ? '.html' : '-en.html') + '?scroll=' + Math.round(window.scrollY);
             });
+
+            // Restore scroll position
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('scroll')) {
+                var scrollPos = parseInt(urlParams.get('scroll'), 10);
+                if (!isNaN(scrollPos)) {
+                    setTimeout(function() { window.scrollTo(0, scrollPos); }, 50);
+                    try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e) {}
+                }
+            }
 
             // Hamburger (mobile).
             var toggle = document.getElementById('siteNavToggle');

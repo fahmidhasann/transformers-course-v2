@@ -1647,8 +1647,18 @@
             langLabel.textContent = isEn ? 'বাংলা' : 'EN';
             langBtn.addEventListener('click', function () {
                 try { localStorage.setItem('lang', isEn ? 'bn' : 'en'); } catch (e) {}
-                location.href = baseId + (isEn ? '.html' : '-en.html');
+                location.href = baseId + (isEn ? '.html' : '-en.html') + '?scroll=' + Math.round(window.scrollY);
             });
+
+            // Restore scroll position
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('scroll')) {
+                var scrollPos = parseInt(urlParams.get('scroll'), 10);
+                if (!isNaN(scrollPos)) {
+                    setTimeout(function() { window.scrollTo(0, scrollPos); }, 50);
+                    try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e) {}
+                }
+            }
 
             // Hamburger (mobile).
             var toggle = document.getElementById('siteNavToggle');

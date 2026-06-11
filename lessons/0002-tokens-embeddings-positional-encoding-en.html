@@ -1218,9 +1218,14 @@
             
             <p>In this profile, numbers score the word on different traits: Is it an animal? Is it royal? Is it masculine? Words with similar profiles are grouped close together in the <span class="tech-term">Embedding Space</span>.</p>
             
-            <p>Because they are just lists of numbers, we can actually do math with words! For example:</p>
-            <div class="formula-box">
-                Vector("King") - Vector("Man") + Vector("Woman") ≈ Vector("Queen")
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-top: 1.5rem; overflow-x: auto;">
+                <p style="margin-top: 0; margin-bottom: 0.8rem; font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">Example of 3-Dimensional Vectors (Gender, Royalty, Age):</p>
+                <div style="font-family: 'Outfit', monospace; font-size: 0.9rem; color: var(--text-primary); letter-spacing: 0.5px; white-space: nowrap;">
+                    <div style="margin-bottom: 0.4rem;">Vector("King") &nbsp;&nbsp;= [ <span style="color: #10b981;">+0.8</span>, <span style="color: #10b981;">+0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+                    <div style="margin-bottom: 0.4rem;">Vector("Man") &nbsp;&nbsp;&nbsp;= [ <span style="color: #10b981;">+0.8</span>, <span style="color: #ef4444;">-0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+                    <div style="margin-bottom: 0.4rem;">Vector("Woman") = [ <span style="color: #ef4444;">-0.8</span>, <span style="color: #ef4444;">-0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+                    <div>Vector("Queen") = [ <span style="color: #ef4444;">-0.8</span>, <span style="color: #10b981;">+0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+                </div>
             </div>
         </div>
 
@@ -1233,7 +1238,7 @@
             <div class="card-content">
                 <div class="card-content-inner">
                     <p style="margin-bottom: 1rem;">
-                        In real embedding models, word meanings are stored in 100 to 1000 different dimensions of feature representation. For simplicity, here we constrain the embedding space to just 3 semantic dimensions: 
+                        Real AI models (like ChatGPT, Claude, Gemini) look at hundreds of different features to figure out what a word means. To make it easy to see and understand, we are using just 3 simple features here: 
                         <span class="tech-term">Gender</span> (Male vs. Female), <span class="tech-term">Royalty</span> (Royal vs. Common), and <span class="tech-term">Age</span> (Adult vs. Child).
                     </p>
 
@@ -1380,7 +1385,7 @@
         <div class="card">
             <h2>3. Positional Encoding (Adding Order)</h2>
             <p>The Transformer model is incredibly fast because it reads all the words in a sentence <strong>at the exact same time</strong>, rather than reading left-to-right.</p>
-            <p>But this creates a huge problem: because it reads everything at once, <strong>it scrambles the order of the words!</strong> Without help, the model can't tell the difference between:</p>
+            <p>But this creates a huge problem: because it reads everything at once, <strong>it scrambles the order of the words!</strong> Without a mechanism to explicitly specify word positions, the model can't tell the difference between:</p>
             <div style="background: rgba(255, 255, 255, 0.03); border-left: 4px solid #ef4444; padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem;">
                 1. <strong>"The cat ate the mouse"</strong><br>
                 2. <strong>"The mouse ate the cat"</strong>
@@ -1401,7 +1406,7 @@
         <!-- Interactive Visualizer 2 -->
         <div class="card">
             <h2>Interactive Positional Encoding Simulator</h2>
-            <p>Let's mix meaning and position! Click on the words below to see how their <strong>Position Vector</strong> is added to the <strong>Word Vector</strong> to form a final unique fingerprint.</p>
+            <p>Now, let's explore how a word's meaning and its positional information are combined. Click on the words below to see how the <span class="tech-term">Position Vector</span> is added to the <span class="tech-term">Word Vector</span> to form a final mathematical representation, which helps the model understand both the word's meaning and its position in the sentence.</p>
             
             <div class="pe-selector">
                 <button class="pe-word-btn active" onclick="selectPEWord(0)">The (Index 0)</button>
@@ -1834,7 +1839,7 @@
             let explanationText = `
                 <p>You selected: <strong class="highlight">"${data.word}" (Position Index: ${data.idx})</strong></p>
                 <p>• Word Vector <code>W</code> represents the word's semantic meaning.</p>
-                <p>• Position Vector <code>P</code> is generated via sine/cosine functions for <code>pos = ${data.idx}</code>.</p>
+                <p>• Position Vector <code>P</code> is generated via sine/cosine functions for <code>pos = ${data.idx}</code>. Simply put, these waves create a unique mathematical signature for each position, helping the model understand exactly where the word is located in the sentence.</p>
                 <p>• The final vector <code>C = W + P</code> is sent directly to the Transformer blocks.</p>
                 <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45;">
                     💡 <strong>Clock Hands Metaphor:</strong> Positional encoding works like the hands of a clock. Each dimension rotates at a different frequency. High-frequency waves (like Dim 0/1, cyan/purple) are like the second hand, changing rapidly to capture short-range positions. Low-frequency waves (like Dim 4/5, red/blue) are like the hour hand, changing slowly to help track positions in long sequences.
@@ -2279,8 +2284,18 @@
             langLabel.textContent = isEn ? 'বাংলা' : 'EN';
             langBtn.addEventListener('click', function () {
                 try { localStorage.setItem('lang', isEn ? 'bn' : 'en'); } catch (e) {}
-                location.href = baseId + (isEn ? '.html' : '-en.html');
+                location.href = baseId + (isEn ? '.html' : '-en.html') + '?scroll=' + Math.round(window.scrollY);
             });
+
+            // Restore scroll position
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('scroll')) {
+                var scrollPos = parseInt(urlParams.get('scroll'), 10);
+                if (!isNaN(scrollPos)) {
+                    setTimeout(function() { window.scrollTo(0, scrollPos); }, 50);
+                    try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e) {}
+                }
+            }
 
             // Hamburger (mobile).
             var toggle = document.getElementById('siteNavToggle');
