@@ -1141,7 +1141,7 @@
                 <summary>Geek out: Pre-LN vs Post-LN</summary>
                 <div style="padding-top: 1rem;">
                     <p>The math formula forces the numbers to have a mean of 0 and a variance of 1.</p>
-                    <p>Older models normalized <em>after</em> the processing step (Post-LN: <code>LN(x + SubLayer(x))</code>). Modern models like LLaMA normalize the input <em>before</em> processing it (Pre-LN: <code>x + SubLayer(LN(x))</code>), which makes training significantly more stable from the very first step.</p>
+                    <p>Older models normalized <em>after</em> the processing step (Post-LN: <code>LN(x + SubLayer(x))</code>). Modern models like Gemini or Claude normalize the input <em>before</em> processing it (Pre-LN: <code>x + SubLayer(LN(x))</code>), which makes training significantly more stable from the very first step.</p>
                 </div>
             </details>
         </div>

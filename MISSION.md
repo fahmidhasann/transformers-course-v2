@@ -6,7 +6,7 @@ LLM-এর "behind the scene" বা ভেতরের কার্যপদ্
 ## Success looks like
 - Transformer-এর core components (যেমন: Self-Attention, Multi-Head Attention, Positional Encoding, Feed-Forward Networks) কীভাবে কাজ করে তা সহজ ভাষায় ব্যাখ্যা করা।
 - একটি sentence বা input text কীভাবে tokens-এ রূপান্তরিত হয়ে model-এর মধ্য দিয়ে প্রবাহিত হয় এবং output generates হয়, তার step-by-step visual বা conceptual flow বর্ণনা করা।
-- Modern decoder-only Transformers (যেমন: GPT series, LLaMA) এবং traditional encoder-decoder Transformers-এর মধ্যকার পার্থক্য ও কেন decoder-only models ব্যবহার করা হয় তা স্পষ্টভাবে বুঝতে পারা।
+- Modern decoder-only Transformers (যেমন: ChatGPT, Gemini, Claude) এবং traditional encoder-decoder Transformers-এর মধ্যকার পার্থক্য ও কেন decoder-only models ব্যবহার করা হয় তা স্পষ্টভাবে বুঝতে পারা।
 
 ## Constraints
 - শেখার মাধ্যম হবে বাংলা (technical terms-গুলো English-এ থাকবে)।
