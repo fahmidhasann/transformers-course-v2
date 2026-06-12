@@ -355,6 +355,9 @@
             border: 1px solid var(--border-color);
             padding: 1.2rem;
             border-radius: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            min-width: 0;
         }
 
         /* 2D Grid Styles */
@@ -369,6 +372,7 @@
             border: 1px solid var(--border-color);
             width: 100%;
             max-width: 550px;
+            min-width: 480px; /* Prevent grid columns from squishing and breaking text alignment */
             margin: 0 auto;
         }
 
@@ -692,7 +696,6 @@
         /* per-lesson overflow fix */
         /* Attention matrix scrolls horizontally; panels shrink on phones */
         @media (max-width: 767px) {
-            .grid-panel { overflow-x: auto; -webkit-overflow-scrolling: touch; min-width: 0; }
             .sim-controls { min-width: 0; }
         }
     
