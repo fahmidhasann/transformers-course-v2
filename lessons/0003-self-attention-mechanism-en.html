@@ -1009,7 +1009,7 @@
             </div>
             <p>As humans, we read the whole sentence and instantly know which "bank" it is. But to a computer, a word is just a string of numbers.</p>
             <p>Before Transformers, AI read words one by one. By the time it reached the end of a long sentence, it often forgot the beginning!</p>
-            <p>The Transformer fixes this with <span class="tech-term">Self-Attention</span>. It lets every word instantly look at every other word in the sentence to figure out the true context. Think of it like a group chat where everyone talks to everyone else at the same time to solve a mystery.</p>
+            <p>The Transformer solves this problem using the <span class="tech-term">Self-Attention</span> mechanism. It allows every word in a sequence to simultaneously compare itself to all other words to measure their mutual relationships and importance. As a result, each word can effectively determine its correct meaning and significance based on the surrounding <span class="tech-term">Context</span>.</p>
         </div>
 
         <!-- Analogy Card -->
@@ -1067,6 +1067,9 @@
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">Step 1: The Matchmaker (Dot Product)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The AI compares the Query of one word against the Keys of all other words to see how well they match. This creates a "compatibility score."</p>
+                    <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
+                        <strong>Example:</strong> For the word <strong>"it"</strong>, the AI asks, <em>"What am I referring to?"</em> (Query). It checks the other words (Keys) in the sentence "The cat drank the milk because it was hungry." Words like "cat" and "milk" will get a high match score.
+                    </div>
                     <details class="step-example">
                         <summary>Technical Details</summary>
                         <div class="example-body">
@@ -1078,6 +1081,9 @@
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-purple);">
                     <strong style="color: var(--accent-purple);">Step 2: Shrinking the Scores (Scaling)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Sometimes the match scores get too large and break the math later on. To fix this, the AI simply shrinks all the scores down.</p>
+                    <div style="background: rgba(168, 85, 247, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
+                        <strong>Example:</strong> Let's say "cat" got a match score of 50 and "milk" got 40. The AI divides these numbers to make them smaller and more manageable, maybe turning them into 5.0 and 4.0.
+                    </div>
                     <details class="step-example">
                         <summary>Technical Details</summary>
                         <div class="example-body">
@@ -1089,6 +1095,9 @@
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">Step 3: Turning Scores into Percentages (Softmax)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The AI turns the shrunken scores into percentages that add up to 100%. This tells the word exactly how much attention to pay to every other word.</p>
+                    <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
+                        <strong>Example:</strong> The AI converts those small scores into percentages. Now, "it" might pay 80% of its attention to "cat", 15% to "milk", and 5% spread across the rest of the words. The total is exactly 100%.
+                    </div>
                     <details class="step-example">
                         <summary>Technical Details</summary>
                         <div class="example-body">
@@ -1100,6 +1109,9 @@
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-green);">
                     <strong style="color: var(--accent-green);">Step 4: Mixing the Meanings (Weighted Sum)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Finally, the AI gathers the "Values" (meanings) of the other words, taking a lot from words with high percentages and very little from words with low percentages. It mixes them all together into a new, context-rich super-word!</p>
+                    <div style="background: rgba(16, 185, 129, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
+                        <strong>Example:</strong> To figure out the final meaning of <strong>"it"</strong>, the AI takes a big piece of the meaning of "cat" (80%) and a small piece of "milk" (15%). Because the sentence says "hungry", the AI connects "it" to the "cat". Now, the word "it" contains the context of a hungry cat!
+                    </div>
                 </div>
             </div>
         </div>
@@ -1107,7 +1119,7 @@
         <!-- Interactive Simulator Card -->
         <div class="card">
             <h2>Interactive Attention Simulator</h2>
-            <p>Select a sentence below (or enter a <strong>Custom Sentence</strong>). Click on any word in the <strong>Query (Q) Row</strong> to see how the connection lines and <strong>Attention Weights</strong> dynamically adjust based on context.</p>
+            <p>Select a sentence below. Click on any word in the <strong>Query (Q) Row</strong> to see how the connection lines and <strong>Attention Weights</strong> dynamically adjust based on context.</p>
 
             <div class="simulator">
                 <div class="sim-input-group">
@@ -1116,13 +1128,7 @@
                         <option value="animal-wide">The animal didn't cross the street because it was too wide.</option>
                         <option value="bank-money">I deposited my money at the bank.</option>
                         <option value="bank-river">We sat on the muddy bank of the river.</option>
-                        <option value="custom">-- Custom Sentence (Write your own English sentence) --</option>
                     </select>
-                </div>
-
-                <div id="custom-input-container" style="display: none; margin-bottom: 1.5rem; gap: 0.5rem; flex-wrap: wrap;">
-                    <input type="text" id="custom-sentence-input" placeholder="e.g., The dog barked at the cat because it was loud (Max 10 words)">
-                    <button id="custom-visualize-btn">Visualize Custom</button>
                 </div>
 
                 <!-- Visualization Area -->
@@ -1284,9 +1290,6 @@
 
         // Elements
         const sentenceSelect = document.getElementById('sentence-select');
-        const customInputContainer = document.getElementById('custom-input-container');
-        const customSentenceInput = document.getElementById('custom-sentence-input');
-        const customVisualizeBtn = document.getElementById('custom-visualize-btn');
         
         const queryWordRow = document.getElementById('query-word-row');
         const keyWordRow = document.getElementById('key-word-row');
@@ -1319,25 +1322,7 @@
         sentenceSelect.addEventListener('change', (e) => {
             const val = e.target.value;
             selectedSentenceKey = val;
-            if (val === 'custom') {
-                customInputContainer.style.display = 'flex';
-                clearVisualization();
-            } else {
-                customInputContainer.style.display = 'none';
-                loadSentence(val);
-            }
-        });
-
-        customVisualizeBtn.addEventListener('click', () => {
-            const rawText = customSentenceInput.value.trim();
-            if (!rawText) return;
-            loadCustomSentence(rawText);
-        });
-
-        customSentenceInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                customVisualizeBtn.click();
-            }
+            loadSentence(val);
         });
 
         function clearVisualization() {
@@ -1355,23 +1340,6 @@
             
             currentWords = dataset.sentence.split(' ').filter(w => w.trim() !== '');
             renderWords(currentWords);
-        }
-
-        function loadCustomSentence(text) {
-            clearVisualization();
-            // Split, clean punctuation, limit to 10 words
-            let cleanWords = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(/\s+/).filter(w => w.trim() !== '');
-            if (cleanWords.length > 10) {
-                cleanWords = cleanWords.slice(0, 10);
-            }
-            currentWords = cleanWords;
-            renderWords(currentWords);
-            
-            // Auto click first word
-            setTimeout(() => {
-                const first = queryWordRow.querySelector('.query-node');
-                if (first) first.click();
-            }, 100);
         }
 
         function renderWords(words) {

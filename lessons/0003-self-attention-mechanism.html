@@ -1008,7 +1008,7 @@
             </div>
             <p>মানুষ হিসেবে আমরা পুরো বাক্যটি পড়ে নিমেষেই বুঝে যাই কোন "bank" বোঝানো হয়েছে। কিন্তু কম্পিউটারের কাছে প্রতিটি শব্দ কেবল সংখ্যার একটি তালিকা বা স্ট্রিং।</p>
             <p>Transformer-এর পূর্বে AI শব্দগুলোকে একে একে (one by one) পড়ত। ফলে বাক্য অনেক লম্বা হলে, শেষে পৌঁছানোর আগেই সে শুরুর কথা ভুলে যেত!</p>
-            <p>এই সমস্যার জাদুকরী সমাধান হলো Transformer-এর <span class="tech-term">Self-Attention</span>। এটি প্রতিটি শব্দকে বাক্যের অন্য সব শব্দের সাথে একই সাথে কথা বলতে দেয়, যাতে সে সঠিক অর্থ বুঝতে পারে। এটি অনেকটা একটি গ্রুপ চ্যাটের মতো, যেখানে সবাই একসাথে সবার সাথে কথা বলে কোনো রহস্যের সমাধান করে।</p>
+            <p>এই সমস্যার সমাধান হলো Transformer-এর <span class="tech-term">Self-Attention</span> মেকানিজম। এটি বাক্যের প্রতিটি শব্দকে একই সাথে অন্য সব শব্দের সাথে তুলনা করে তাদের পারস্পরিক সম্পর্ক ও গুরুত্ব পরিমাপ করতে সাহায্য করে। এর ফলে প্রতিটি শব্দ তার চারপাশের <span class="tech-term">Context</span> বা প্রেক্ষাপট থেকে নিজের সঠিক অর্থ ও তাৎপর্য খুব সহজেই বুঝতে পারে。</p>
         </div>
 
         <!-- Analogy Card -->
@@ -1051,7 +1051,7 @@
                         <span style="font-size: 0.95rem;"><strong>Key:</strong> আমরা বাক্যের অন্যান্য শব্দের লেবেল চেক করি। "cat" শব্দটির এমন একটি লেবেল আছে যা ক্ষুধার্ত হতে পারে এমন প্রাণীর সাথে মিলে যায়।</span>
                     </div>
                     <div style="background: rgba(15, 23, 42, 0.4); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
-                        <span style="font-size: 0.95rem;"><strong>Value:</strong> যেহেতু একটি চমৎকার মিল পাওয়া গেছে, "it" শব্দটি "cat"-এর অর্থ (Value) শুষে নেয়। এআই এখন জানে <strong>it = cat</strong>!</span>
+                        <span style="font-size: 0.95rem;"><strong>Value:</strong> যেহেতু একটি চমৎকার মিল পাওয়া গেছে, "it" শব্দটি "cat"-এর অর্থ (Value) গ্রহণ করে। এআই এখন জানে <strong>it = cat</strong>!</span>
                     </div>
                 </div>
             </div>
@@ -1066,6 +1066,9 @@
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">ধাপ ১: ম্যাচমেকার বা মিল খুঁজে বের করা (Dot Product)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">এআই একটি শব্দের Query-কে অন্য সমস্ত শব্দের Key-এর সাথে তুলনা করে দেখে তারা কতটা মিলে যায়। এটি একটি "কম্প্যাটিবিলিটি স্কোর" তৈরি করে।</p>
+                    <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
+                        <strong>উদাহরণ:</strong> "The cat drank the milk because <strong>it</strong> was hungry" বাক্যে <strong>"it"</strong> শব্দটি প্রশ্ন করে (Query), <em>"আমি কাকে বোঝাচ্ছি?"</em> এরপর সে বাক্যের অন্য শব্দগুলোর (Keys) সাথে তার মিল খোঁজে। এখানে "cat" এবং "milk" শব্দ দুটি উচ্চ মিলের স্কোর পাবে।
+                    </div>
                     <details class="step-example">
                         <summary>গাণিতিক বিস্তারিত</summary>
                         <div class="example-body">
@@ -1077,6 +1080,9 @@
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-purple);">
                     <strong style="color: var(--accent-purple);">ধাপ ২: স্কোর ছোট করা (Scaling)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">কখনও কখনও মিলের স্কোরগুলো অনেক বড় হয়ে যায় যা পরের ধাপের হিসাবে সমস্যা করে। এটি ঠিক করতে, এআই কেবল স্কোরগুলোকে কিছুটা ছোট করে দেয়।</p>
+                    <div style="background: rgba(168, 85, 247, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
+                        <strong>উদাহরণ:</strong> ধরুন, "cat" এর স্কোর হলো ৫০ এবং "milk" এর স্কোর ৪০। এআই এই বড় সংখ্যাগুলোকে ভাগ করে ছোট ও হিসাবের উপযোগী করে তোলে, যেমন ৫.০ এবং ৪.০।
+                    </div>
                     <details class="step-example">
                         <summary>গাণিতিক বিস্তারিত</summary>
                         <div class="example-body">
@@ -1088,6 +1094,9 @@
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">ধাপ ৩: স্কোরকে শতকরায় রূপান্তর (Softmax)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">এআই ছোট করা স্কোরগুলোকে শতকরা বা পারসেন্টেজে রূপান্তর করে, যাদের যোগফল ১০০% হয়। এটি শব্দটিকে বলে দেয় যে অন্য কোন শব্দে তার কতটা মনোযোগ দেওয়া উচিত।</p>
+                    <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
+                        <strong>উদাহরণ:</strong> এবার এআই ওই ছোট স্কোরগুলোকে শতকরায় রূপান্তর করে। এখন "it" হয়তো "cat"-এর প্রতি ৮০% মনোযোগ দেবে, "milk"-এর প্রতি ১৫% এবং বাকি ৫% অন্যান্য শব্দের ওপর। সব মিলে ঠিক ১০০% হবে।
+                    </div>
                     <details class="step-example">
                         <summary>গাণিতিক বিস্তারিত</summary>
                         <div class="example-body">
@@ -1099,6 +1108,9 @@
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-green);">
                     <strong style="color: var(--accent-green);">ধাপ ৪: অর্থের সংমিশ্রণ (Weighted Sum)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">সবশেষে, এআই অন্য শব্দগুলোর "Values" (অর্থ) সংগ্রহ করে—যাদের পারসেন্টেজ বেশি তাদের থেকে বেশি অর্থ নেয়, আর যাদের কম তাদের থেকে কম। এরপর সব কিছু মিশিয়ে শব্দটির জন্য একটি নতুন, কনটেক্সট-সমৃদ্ধ সুপার-মিনিং তৈরি করে!</p>
+                    <div style="background: rgba(16, 185, 129, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
+                        <strong>উদাহরণ:</strong> <strong>"it"</strong>-এর চূড়ান্ত অর্থ তৈরি করতে, এআই "cat" এর অর্থের একটি বড় অংশ (৮০%) এবং "milk" এর একটি ছোট অংশ (১৫%) গ্রহণ করে। যেহেতু বাক্যে বলা হয়েছে "hungry", এআই সহজেই বুঝে যায় "it" বলতে বিড়ালটিকে বোঝানো হয়েছে, দুধকে নয়। ফলে "it" শব্দটি এখন একটি ক্ষুধার্ত বিড়ালের কনটেক্সট ধারণ করে!
+                    </div>
                 </div>
             </div>
         </div>
@@ -1106,7 +1118,7 @@
         <!-- Interactive Simulator Card -->
         <div class="card">
             <h2>Interactive Attention Simulator</h2>
-            <p>নিচের যেকোনো একটি বাক্য বেছে নিন (অথবা <strong>Custom Sentence</strong> লিখে এন্টার দিন)। এরপর <strong>Query (Q) Row</strong>-এর যেকোনো শব্দের ওপর ক্লিক করুন। দেখুন কীভাবে মনোযোগের লাল ও নীল সংযোগ রেখা ও তাদের ওজন বা <strong>Attention Weights</strong> পরিবর্তিত হচ্ছে।</p>
+            <p>নিচের যেকোনো একটি বাক্য বেছে নিন। এরপর <strong>Query (Q) Row</strong>-এর যেকোনো শব্দের ওপর ক্লিক করুন। দেখুন কীভাবে মনোযোগের লাল ও নীল সংযোগ রেখা ও তাদের ওজন বা <strong>Attention Weights</strong> পরিবর্তিত হচ্ছে।</p>
 
             <div class="simulator">
                 <div class="sim-input-group">
@@ -1115,13 +1127,7 @@
                         <option value="animal-wide">The animal didn't cross the street because it was too wide.</option>
                         <option value="bank-money">I deposited my money at the bank.</option>
                         <option value="bank-river">We sat on the muddy bank of the river.</option>
-                        <option value="custom">-- Custom Sentence (নিজে ইংরেজি বাক্য লিখুন) --</option>
                     </select>
-                </div>
-
-                <div id="custom-input-container" style="display: none; margin-bottom: 1.5rem; gap: 0.5rem; flex-wrap: wrap;">
-                    <input type="text" id="custom-sentence-input" placeholder="যেমন: The dog barked at the cat because it was loud (সর্বোচ্চ ১০ শব্দ)">
-                    <button id="custom-visualize-btn">Visualize Custom</button>
                 </div>
 
                 <!-- Visualization Area -->
@@ -1283,9 +1289,6 @@
 
         // Elements
         const sentenceSelect = document.getElementById('sentence-select');
-        const customInputContainer = document.getElementById('custom-input-container');
-        const customSentenceInput = document.getElementById('custom-sentence-input');
-        const customVisualizeBtn = document.getElementById('custom-visualize-btn');
         
         const queryWordRow = document.getElementById('query-word-row');
         const keyWordRow = document.getElementById('key-word-row');
@@ -1318,25 +1321,7 @@
         sentenceSelect.addEventListener('change', (e) => {
             const val = e.target.value;
             selectedSentenceKey = val;
-            if (val === 'custom') {
-                customInputContainer.style.display = 'flex';
-                clearVisualization();
-            } else {
-                customInputContainer.style.display = 'none';
-                loadSentence(val);
-            }
-        });
-
-        customVisualizeBtn.addEventListener('click', () => {
-            const rawText = customSentenceInput.value.trim();
-            if (!rawText) return;
-            loadCustomSentence(rawText);
-        });
-
-        customSentenceInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                customVisualizeBtn.click();
-            }
+            loadSentence(val);
         });
 
         function clearVisualization() {
@@ -1354,23 +1339,6 @@
             
             currentWords = dataset.sentence.split(' ').filter(w => w.trim() !== '');
             renderWords(currentWords);
-        }
-
-        function loadCustomSentence(text) {
-            clearVisualization();
-            // Split, clean punctuation, limit to 10 words
-            let cleanWords = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(/\s+/).filter(w => w.trim() !== '');
-            if (cleanWords.length > 10) {
-                cleanWords = cleanWords.slice(0, 10);
-            }
-            currentWords = cleanWords;
-            renderWords(currentWords);
-            
-            // Auto click first word
-            setTimeout(() => {
-                const first = queryWordRow.querySelector('.query-node');
-                if (first) first.click();
-            }, 100);
         }
 
         function renderWords(words) {
