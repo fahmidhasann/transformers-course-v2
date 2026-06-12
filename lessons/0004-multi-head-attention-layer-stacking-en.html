@@ -960,33 +960,179 @@
 
             <p>If the AI only had one way to pay attention (called <span class="tech-term">Single-Head Attention</span>), it would get confused trying to mix all these different relationships together. It's like trying to listen to 5 different conversations with one ear!</p>
             
-            <p>The solution is <span class="tech-term">Multi-Head Attention</span>. Instead of one ear, the AI gets multiple "Heads" that listen in parallel. Each Head becomes a specialist:</p>
-            <p>If the AI only had one way to pay attention, it would get confused trying to mix all these different relationships together.</p>
-            
-            <p>The solution is <span class="tech-term">Multi-Head Attention</span>. Instead of one, the AI gets multiple "Heads" that listen in parallel. Each Head becomes a specialist:</p>
+            <p>The solution is <span class="tech-term">Multi-Head Attention</span>. Instead of one ear, the AI gets multiple "Heads" that listen in parallel. The following is just an illustrative example; in reality, each Head is not explicitly assigned a specific task. Rather, during training, different Heads naturally learn to focus on different types of patterns or aspects of the input. For instance, they might learn to focus on:</p>
             
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: decimal;">
-                <li><span class="highlight">Head 1 (The Action Tracker):</span> Focuses on who is doing what (e.g., dog & chased).</li>
-                <li><span class="highlight">Head 2 (The Pronoun Detective):</span> Figures out who "it" or "they" refers to.</li>
-                <li><span class="highlight">Head 3 (The Describer):</span> Links describing words to things (e.g., cute & dog).</li>
-                <li><span class="highlight">Head 4 (The Order Keeper):</span> Looks at how words follow each other.</li>
+                <li><span class="highlight">Head 1 (The Action Tracker):</span> Focusing on who is doing what (e.g., dog & chased).</li>
+                <li><span class="highlight">Head 2 (The Pronoun Detective):</span> Figuring out who "it" or "they" refers to.</li>
+                <li><span class="highlight">Head 3 (The Describer):</span> Linking describing words to things (e.g., cute & dog).</li>
+                <li><span class="highlight">Head 4 (The Order Keeper):</span> Looking at how words follow each other.</li>
             </ul>
+
+            <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; overflow-x: auto;">
+                <svg viewBox="0 0 760 180" width="100%" height="auto" style="min-width: 600px;">
+                    <style>
+                        .diag-tok { fill: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 15px; text-anchor: middle; font-weight: 500; }
+                        .diag-arc { fill: none; stroke-width: 2; stroke-dasharray: 4; }
+                        .diag-arc-h1 { stroke: var(--accent-cyan); }
+                        .diag-arc-h2 { stroke: var(--accent-purple); }
+                        .diag-arc-h3 { stroke: var(--accent-green); }
+                        .diag-arc-h4 { stroke: var(--accent-orange); }
+                        .diag-label { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
+                        .diag-label-h1 { fill: var(--accent-cyan); }
+                        .diag-label-h2 { fill: var(--accent-purple); }
+                        .diag-label-h3 { fill: var(--accent-green); }
+                        .diag-label-h4 { fill: var(--accent-orange); }
+                    </style>
+                    <defs>
+                        <marker id="arr-h1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-cyan)"/></marker>
+                        <marker id="arr-h2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-purple)"/></marker>
+                        <marker id="arr-h3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-green)"/></marker>
+                        <marker id="arr-h4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-orange)"/></marker>
+                    </defs>
+
+                    <!-- Tokens (y=95) -->
+                    <text x="40" y="95" class="diag-tok">The</text>
+                    <text x="95" y="95" class="diag-tok">cute</text>
+                    <text x="155" y="95" class="diag-tok">dog</text>
+                    <text x="235" y="95" class="diag-tok">chased</text>
+                    <text x="300" y="95" class="diag-tok">the</text>
+                    <text x="350" y="95" class="diag-tok">cat</text>
+                    <text x="430" y="95" class="diag-tok">because</text>
+                    <text x="495" y="95" class="diag-tok">it</text>
+                    <text x="545" y="95" class="diag-tok">was</text>
+                    <text x="615" y="95" class="diag-tok">running</text>
+                    <text x="690" y="95" class="diag-tok">fast.</text>
+                    
+                    <!-- Arcs -->
+                    <!-- Head 3: cute -> dog. Above arc -->
+                    <path d="M 95 75 Q 125 35 150 72" class="diag-arc diag-arc-h3" marker-end="url(#arr-h3)"/>
+                    <text x="125" y="25" class="diag-label diag-label-h3">Head 3 (Describer)</text>
+
+                    <!-- Head 1: dog -> chased. Below arc -->
+                    <path d="M 155 105 Q 195 145 230 108" class="diag-arc diag-arc-h1" marker-end="url(#arr-h1)"/>
+                    <text x="195" y="160" class="diag-label diag-label-h1">Head 1 (Action Tracker)</text>
+
+                    <!-- Head 2: it -> cat. Above arc -->
+                    <path d="M 495 75 Q 420 10 355 72" class="diag-arc diag-arc-h2" marker-end="url(#arr-h2)"/>
+                    <text x="425" y="15" class="diag-label diag-label-h2">Head 2 (Pronoun Detective)</text>
+
+                    <!-- Head 4: running -> fast. Below arc -->
+                    <path d="M 615 105 Q 650 145 685 108" class="diag-arc diag-arc-h4" marker-end="url(#arr-h4)"/>
+                    <text x="650" y="160" class="diag-label diag-label-h4">Head 4 (Order Keeper)</text>
+                </svg>
+            </div>
         </div>
 
         <!-- Dimension Splitting Card -->
         <div class="card">
             <h2>Dimension Splitting: A Clever Trick</h2>
-            <p>You might think running 8 "Heads" at the same time would make the computer 8 times slower. But the Transformer uses a clever trick to avoid this!</p>
+            <p>You might think running 4 "Heads" at the same time would make the computer 4 times slower. But the Transformer uses a clever trick to avoid this!</p>
             
-            <p>Imagine a word's meaning is stored as a list of <span class="highlight">512 numbers</span>. If we have <span class="highlight">8</span> Attention Heads, the AI doesn't give all 512 numbers to every Head.</p>
+            <p>Imagine a word's meaning is stored as a list of <span class="highlight">512 numbers</span>. If we have <span class="highlight">4</span> Attention Heads, the AI doesn't give all 512 numbers to every Head.</p>
             
-            <p>Instead, it splits the numbers equally:</p>
-            <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">
-                512 total numbers ÷ 8 Heads = 64 numbers per Head
+            <p>Instead, it chops the numbers up equally:</p>
+            <div class="math-box">
+                512 total numbers ÷ 4 Heads = 128 numbers per Head
             </div>
             
-            <p>Each Head only looks at a small slice (64 numbers) to do its specialized job. When they are all done, they glue their answers back together into a single 512-number list.</p>
-            <p>This allows the AI to think about the word from 8 different angles at the exact same speed as thinking from just 1 angle!</p>
+            <div style="margin: 2rem 0; text-align: center; overflow-x: auto;">
+                <svg width="100%" max-width="600" viewBox="0 0 600 250" style="display: block; margin: 0 auto; min-width: 450px; font-family: 'Outfit', sans-serif;">
+                    <defs>
+                        <linearGradient id="grad-512" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#1e293b" />
+                            <stop offset="50%" stop-color="#3b82f6" />
+                            <stop offset="100%" stop-color="#1e293b" />
+                        </linearGradient>
+                        <marker id="arrow-down" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+                        </marker>
+                    </defs>
+
+                    <!-- Original 512 Vector -->
+                    <g transform="translate(50, 20)">
+                        <rect x="0" y="0" width="500" height="40" rx="6" fill="url(#grad-512)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" />
+                        
+                        <!-- Grid lines to simulate dimensions -->
+                        <line x1="25" y1="0" x2="25" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <line x1="50" y1="0" x2="50" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <line x1="75" y1="0" x2="75" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        
+                        <line x1="425" y1="0" x2="425" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <line x1="450" y1="0" x2="450" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <line x1="475" y1="0" x2="475" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        
+                        <text x="250" y="25" fill="white" font-weight="600" text-anchor="middle" font-size="15">Full Vector: 512 Dimensions</text>
+                        <!-- Dots to indicate continuity -->
+                        <text x="110" y="25" fill="white" opacity="0.6" font-size="18" text-anchor="middle">...</text>
+                        <text x="390" y="25" fill="white" opacity="0.6" font-size="18" text-anchor="middle">...</text>
+                    </g>
+
+                    <!-- Brackets showing the split -->
+                    <g stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none">
+                        <!-- Top horizontal lines -->
+                        <path d="M 50 70 L 175 70" />
+                        <path d="M 175 70 L 300 70" />
+                        <path d="M 300 70 L 425 70" />
+                        <path d="M 425 70 L 550 70" />
+                        
+                        <!-- Little vertical separators for brackets -->
+                        <path d="M 50 65 L 50 70" />
+                        <path d="M 175 65 L 175 70" />
+                        <path d="M 300 65 L 300 70" />
+                        <path d="M 425 65 L 425 70" />
+                        <path d="M 550 65 L 550 70" />
+                    </g>
+
+                    <!-- Connection Lines with Arrows -->
+                    <g stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-down)" fill="none">
+                        <path d="M 112.5 70 C 112.5 100 85 100 85 130" />
+                        <path d="M 237.5 70 C 237.5 100 225 100 225 130" />
+                        <path d="M 362.5 70 C 362.5 100 375 100 375 130" />
+                        <path d="M 487.5 70 C 487.5 100 515 100 515 130" />
+                    </g>
+
+                    <!-- Split Vectors (Heads) -->
+                    <!-- Head 1 -->
+                    <g transform="translate(35, 140)">
+                        <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(6, 182, 212, 0.15)" stroke="#06b6d4" stroke-width="2" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="rgba(6, 182, 212, 0.3)" />
+                        <line x1="80" y1="0" x2="80" y2="40" stroke="rgba(6, 182, 212, 0.3)" />
+                        <text x="50" y="25" fill="#e2e8f0" font-size="14" text-anchor="middle" font-weight="600">128 Dims</text>
+                        <text x="50" y="65" fill="#06b6d4" font-size="14" text-anchor="middle" font-weight="600">Head 1</text>
+                    </g>
+                    
+                    <!-- Head 2 -->
+                    <g transform="translate(175, 140)">
+                        <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(168, 85, 247, 0.15)" stroke="#a855f7" stroke-width="2" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="rgba(168, 85, 247, 0.3)" />
+                        <line x1="80" y1="0" x2="80" y2="40" stroke="rgba(168, 85, 247, 0.3)" />
+                        <text x="50" y="25" fill="#e2e8f0" font-size="14" text-anchor="middle" font-weight="600">128 Dims</text>
+                        <text x="50" y="65" fill="#a855f7" font-size="14" text-anchor="middle" font-weight="600">Head 2</text>
+                    </g>
+                    
+                    <!-- Head 3 -->
+                    <g transform="translate(325, 140)">
+                        <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="2" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="rgba(16, 185, 129, 0.3)" />
+                        <line x1="80" y1="0" x2="80" y2="40" stroke="rgba(16, 185, 129, 0.3)" />
+                        <text x="50" y="25" fill="#e2e8f0" font-size="14" text-anchor="middle" font-weight="600">128 Dims</text>
+                        <text x="50" y="65" fill="#10b981" font-size="14" text-anchor="middle" font-weight="600">Head 3</text>
+                    </g>
+                    
+                    <!-- Head 4 -->
+                    <g transform="translate(465, 140)">
+                        <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="2" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="rgba(245, 158, 11, 0.3)" />
+                        <line x1="80" y1="0" x2="80" y2="40" stroke="rgba(245, 158, 11, 0.3)" />
+                        <text x="50" y="25" fill="#e2e8f0" font-size="14" text-anchor="middle" font-weight="600">128 Dims</text>
+                        <text x="50" y="65" fill="#f59e0b" font-size="14" text-anchor="middle" font-weight="600">Head 4</text>
+                    </g>
+                </svg>
+            </div>
+            
+            <p>Each Head only looks at a small slice (128 numbers) to do its specialized job. When they are all done, they glue their answers back together into a single 512-number list.</p>
+            <p>This allows the AI to think about the word from 4 different angles at the exact same speed as thinking from just 1 angle!</p>
         </div>
 
         <!-- Interactive Visualizer Card -->
@@ -1026,7 +1172,7 @@
         <!-- Layer Stacking Card -->
         <div class="card">
             <h2>Layer Stacking: Building Deep Understanding</h2>
-            <p>An AI model isn't just one single block of Multi-Head Attention. It's actually a massive tower of blocks stacked on top of each other. This is called <span class="tech-term">Layer Stacking</span>.</p>
+            <p>An AI model isn't just one single block of Multi-Head Attention (here a block refers to a <span class="tech-term">Transformer block</span>). It's actually a massive tower of blocks stacked on top of each other. This is called <span class="tech-term">Layer Stacking</span>.</p>
             <p>For example, models like ChatGPT or Claude use dozens of layers, and GPT-4 has over 100! Why so many? Because understanding language takes steps. The bottom layers handle simple things, and the top layers handle deep thinking:</p>
             
             <div class="layer-stack">

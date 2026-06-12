@@ -142,21 +142,90 @@
         }
 
         .analogy-card {
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(30, 41, 59, 0.5);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.2rem;
+            padding: 1.5rem;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .analogy-card:hover {
+        .analogy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            opacity: 0.9;
+        }
+
+        .analogy-card:nth-child(1) {
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        .analogy-card:nth-child(1)::before {
+            background: var(--accent-cyan);
+            box-shadow: 0 0 12px var(--accent-cyan);
+        }
+        .analogy-card:nth-child(1):hover {
+            border-color: var(--accent-cyan);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%);
+            transform: translateY(-4px);
+        }
+        .analogy-card:nth-child(1) .analogy-icon {
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.15);
+        }
+
+        .analogy-card:nth-child(2) {
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        .analogy-card:nth-child(2)::before {
+            background: var(--accent-purple);
+            box-shadow: 0 0 12px var(--accent-purple);
+        }
+        .analogy-card:nth-child(2):hover {
             border-color: var(--accent-purple);
-            background: rgba(30, 41, 59, 0.6);
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%);
+            transform: translateY(-4px);
+        }
+        .analogy-card:nth-child(2) .analogy-icon {
+            color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        .analogy-card:nth-child(3) {
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .analogy-card:nth-child(3)::before {
+            background: var(--accent-green);
+            box-shadow: 0 0 12px var(--accent-green);
+        }
+        .analogy-card:nth-child(3):hover {
+            border-color: var(--accent-green);
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%);
+            transform: translateY(-4px);
+        }
+        .analogy-card:nth-child(3) .analogy-icon {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.15);
         }
 
         .analogy-icon {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
         }
 
         .analogy-title {
@@ -1070,6 +1139,24 @@
                     <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
                         <strong>Example:</strong> For the word <strong>"it"</strong>, the AI asks, <em>"What am I referring to?"</em> (Query). It checks the other words (Keys) in the sentence "The cat drank the milk because it was hungry." Words like "cat" and "milk" will get a high match score.
                     </div>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
+                        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <div style="display: flex; align-items: center; gap: 0.8rem; background: rgba(30, 41, 59, 0.6); padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                                <div style="background: rgba(6, 182, 212, 0.15); border: 1px solid var(--accent-cyan); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary);">Q: "it"</div>
+                                <div style="color: var(--text-secondary);">&times;</div>
+                                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600;">K: "cat"</div>
+                                <div style="color: var(--text-secondary);">&#8594;</div>
+                                <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-cyan);">Score: 50</div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.8rem; background: rgba(30, 41, 59, 0.6); padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                                <div style="background: rgba(6, 182, 212, 0.15); border: 1px solid var(--accent-cyan); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary);">Q: "it"</div>
+                                <div style="color: var(--text-secondary);">&times;</div>
+                                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600;">K: "milk"</div>
+                                <div style="color: var(--text-secondary);">&#8594;</div>
+                                <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-purple);">Score: 40</div>
+                            </div>
+                        </div>
+                    </div>
                     <details class="step-example">
                         <summary>Technical Details</summary>
                         <div class="example-body">
@@ -1082,7 +1169,23 @@
                     <strong style="color: var(--accent-purple);">Step 2: Shrinking the Scores (Scaling)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Sometimes the match scores get too large and break the math later on. To fix this, the AI simply shrinks all the scores down.</p>
                     <div style="background: rgba(168, 85, 247, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
-                        <strong>Example:</strong> Let's say "cat" got a match score of 50 and "milk" got 40. The AI divides these numbers to make them smaller and more manageable, maybe turning them into 5.0 and 4.0.
+                        <strong>Example:</strong> Suppose "cat" gets a score of 50, and "milk" gets 40. These numbers are too large and might break the next math step. The AI scales them down (e.g., to 5.0 and 4.0) to keep things stable.
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
+                        <div style="display: flex; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <div style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">50</div>
+                                <div style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">40</div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: center; color: var(--text-secondary);">
+                                <div style="font-size: 1.2rem;">&#8594;</div>
+                                <div style="font-size: 0.8rem;">&divide; &radic;d<sub>k</sub></div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: #fff; text-align: center;">5.0</div>
+                                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: #fff; text-align: center;">4.0</div>
+                            </div>
+                        </div>
                     </div>
                     <details class="step-example">
                         <summary>Technical Details</summary>
@@ -1096,7 +1199,45 @@
                     <strong style="color: var(--accent-cyan);">Step 3: Turning Scores into Percentages (Softmax)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The AI turns the shrunken scores into percentages that add up to 100%. This tells the word exactly how much attention to pay to every other word.</p>
                     <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
-                        <strong>Example:</strong> The AI converts those small scores into percentages. Now, "it" might pay 80% of its attention to "cat", 15% to "milk", and 5% spread across the rest of the words. The total is exactly 100%.
+                        <strong>Example:</strong> Now the AI turns the scaled scores into percentages. The word "it" might pay 80% attention to "cat", 15% to "milk", and 5% to other words. The total is always exactly 100%.
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
+                            <div style="display: flex; align-items: center; gap: 1.5rem; background: rgba(30, 41, 59, 0.6); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); width: 100%; max-width: 500px;">
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">5.0</div>
+                                    <div style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">4.0</div>
+                                </div>
+                                
+                                <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem 1rem; border-radius: 8px; font-weight: 700; color: var(--accent-cyan); text-align: center;">
+                                    Softmax
+                                </div>
+                                
+                                <div style="display: flex; flex-direction: column; gap: 0.8rem; flex-grow: 1;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="font-weight: 700; width: 45px; text-align: right; color: var(--accent-cyan);">80%</div>
+                                        <div style="flex-grow: 1; height: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden;">
+                                            <div style="width: 80%; height: 100%; background: var(--accent-cyan);"></div>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary); width: 35px;">cat</div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="font-weight: 700; width: 45px; text-align: right; color: var(--accent-purple);">15%</div>
+                                        <div style="flex-grow: 1; height: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden;">
+                                            <div style="width: 15%; height: 100%; background: var(--accent-purple);"></div>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary); width: 35px;">milk</div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="font-weight: 700; width: 45px; text-align: right; color: #64748b;">5%</div>
+                                        <div style="flex-grow: 1; height: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden;">
+                                            <div style="width: 5%; height: 100%; background: #64748b;"></div>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary); width: 35px;">...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <details class="step-example">
                         <summary>Technical Details</summary>
@@ -1110,7 +1251,27 @@
                     <strong style="color: var(--accent-green);">Step 4: Mixing the Meanings (Weighted Sum)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Finally, the AI gathers the "Values" (meanings) of the other words, taking a lot from words with high percentages and very little from words with low percentages. It mixes them all together into a new, context-rich super-word!</p>
                     <div style="background: rgba(16, 185, 129, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
-                        <strong>Example:</strong> To figure out the final meaning of <strong>"it"</strong>, the AI takes a big piece of the meaning of "cat" (80%) and a small piece of "milk" (15%). Because the sentence says "hungry", the AI connects "it" to the "cat". Now, the word "it" contains the context of a hungry cat!
+                        <strong>Example:</strong> To build the final meaning for <strong>"it"</strong>, the AI takes a large piece (80%) of the "cat" Value, and a small piece (15%) of the "milk" Value. Because the sentence mentioned "hungry", the AI easily figured out that "it" means the cat! The word "it" now contains the context of a hungry cat.
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); padding: 0.6rem 1rem; border-radius: 8px;">
+                                <div style="font-weight: 700; color: var(--accent-green);">80%</div>
+                                <div style="color: var(--text-secondary);">&times;</div>
+                                <div style="font-weight: 600;">V: "cat"</div>
+                            </div>
+                            <div style="font-size: 1.5rem; color: var(--text-secondary); font-weight: 300;">+</div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); padding: 0.6rem 1rem; border-radius: 8px;">
+                                <div style="font-weight: 700; color: var(--accent-green);">15%</div>
+                                <div style="color: var(--text-secondary);">&times;</div>
+                                <div style="font-weight: 600;">V: "milk"</div>
+                            </div>
+                            <div style="font-size: 1.5rem; color: var(--text-secondary); font-weight: 300;">+ ...</div>
+                        </div>
+                        <div style="color: var(--text-secondary); font-size: 1.2rem;">&#8595;</div>
+                        <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 185, 129, 0.2)); border: 1px solid var(--accent-cyan); padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);">
+                            New Context: "it" (Hungry Cat)
+                        </div>
                     </div>
                 </div>
             </div>

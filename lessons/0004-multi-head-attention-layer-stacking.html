@@ -948,7 +948,7 @@
         <!-- Intro Card -->
         <div class="card">
             <h2>কেন আমাদের একাধিক Attention Head প্রয়োজন?</h2>
-            <p>আমরা জানি যে, Self-Attention কোনো একটি শব্দকে অন্যান্য শব্দের সাথে যুক্ত করে তার অর্থ বুঝতে সাহায্য করে। কিন্তু মানুষের ভাষা বেশ জটিল! একটি শব্দ একই সাথে অনেকগুলো ভিন্ন ভিন্ন সম্পর্কে জড়িয়ে থাকতে পারে।</p>
+            <p>আমরা জানি যে, Self-Attention কোনো একটি শব্দকে অন্যান্য শব্দের সাথে সম্পর্কিত করে তার অর্থ বুঝতে সাহায্য করে। কিন্তু মানুষের ভাষা বেশ জটিল! একটি শব্দ একই সাথে অনেকগুলো ভিন্ন ভিন্ন সম্পর্কে জড়িয়ে থাকতে পারে।</p>
             
             <p>এই বাক্যটি দেখুন: <span class="highlight">"The cute dog chased the cat because it was running fast."</span></p>
             <p>এখানে <span class="tech-term">dog</span> (কুকুর) শব্দটির কথা চিন্তা করুন। এটি একই সাথে কয়েকটি কাজ করছে:</p>
@@ -960,30 +960,179 @@
 
             <p>যদি এআই-এর মনোযোগ দেওয়ার ক্ষমতা মাত্র একটিই থাকত (যাকে <span class="tech-term">Single-Head Attention</span> বলা হয়), তবে সে এই ভিন্ন ভিন্ন সম্পর্কগুলোকে একসাথে মেলাতে গিয়ে বিভ্রান্ত হয়ে যেত। এটা অনেকটা এক কান দিয়ে ৫ জনের কথা একসাথে শোনার চেষ্টার মতো!</p>
             
-            <p>এর সমাধান হলো <span class="tech-term">Multi-Head Attention</span>। এক কানের বদলে, এআই-কে একাধিক "Head" দেওয়া হয় যারা সমান্তরালে কাজ করে। প্রতিটি Head একটি নির্দিষ্ট কাজে পারদর্শী বা বিশেষজ্ঞ হয়ে ওঠে:</p>
+            <p>এর সমাধান হলো <span class="tech-term">Multi-Head Attention</span>। এক কানের বদলে, এআই-কে একাধিক "Head" দেওয়া হয় যারা সমান্তরালে কাজ করে। নিচের উদাহরণটি কেবল বোঝানোর সুবিধার্থে দেওয়া হলো; বাস্তবে প্রতিটি Head-কে আলাদা কোনো নির্দিষ্ট কাজ দেওয়া থাকে না। বরং, শেখার প্রক্রিয়ায় ভিন্ন ভিন্ন Head নিজে থেকেই বাক্যের ভিন্ন ভিন্ন প্যাটার্ন বা বৈশিষ্ট্যের দিকে মনোযোগ দিতে শেখে। উদাহরণস্বরূপ, তারা হয়তো এভাবে কাজ ভাগ করে নিতে পারে:</p>
             
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: decimal;">
-                <li><span class="highlight">Head 1 (কাজের খোঁজ):</span> কে কী করছে তার দিকে নজর রাখে (যেমন- dog এবং chased)।</li>
-                <li><span class="highlight">Head 2 (সর্বনাম গোয়েন্দা):</span> "it" বা "they" কাকে নির্দেশ করছে তা খুঁজে বের করে।</li>
-                <li><span class="highlight">Head 3 (বর্ণনাকারী):</span> বর্ণনাকারী শব্দের সাথে মূল বস্তুকে মেলায় (যেমন- cute এবং dog)।</li>
-                <li><span class="highlight">Head 4 (ক্রম রক্ষাকারী):</span> আশেপাশের শব্দগুলো কীভাবে সাজানো আছে তা দেখে।</li>
+                <li><span class="highlight">Head 1 (The Action Tracker):</span> কে কী করছে তার দিকে নজর রাখা (যেমন- dog এবং chased)।</li>
+                <li><span class="highlight">Head 2 (The Pronoun Detective):</span> "it" বা "they" কাকে নির্দেশ করছে তা খুঁজে বের করা।</li>
+                <li><span class="highlight">Head 3 (The Describer):</span> বর্ণনাকারী শব্দের সাথে মূল বস্তুকে মেলানো (যেমন- cute এবং dog)।</li>
+                <li><span class="highlight">Head 4 (The Order Keeper):</span> আশেপাশের শব্দগুলো কীভাবে সাজানো আছে তা দেখা।</li>
             </ul>
+
+            <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; overflow-x: auto;">
+                <svg viewBox="0 0 760 180" width="100%" height="auto" style="min-width: 600px;">
+                    <style>
+                        .diag-tok { fill: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 15px; text-anchor: middle; font-weight: 500; }
+                        .diag-arc { fill: none; stroke-width: 2; stroke-dasharray: 4; }
+                        .diag-arc-h1 { stroke: var(--accent-cyan); }
+                        .diag-arc-h2 { stroke: var(--accent-purple); }
+                        .diag-arc-h3 { stroke: var(--accent-green); }
+                        .diag-arc-h4 { stroke: var(--accent-orange); }
+                        .diag-label { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
+                        .diag-label-h1 { fill: var(--accent-cyan); }
+                        .diag-label-h2 { fill: var(--accent-purple); }
+                        .diag-label-h3 { fill: var(--accent-green); }
+                        .diag-label-h4 { fill: var(--accent-orange); }
+                    </style>
+                    <defs>
+                        <marker id="arr-h1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-cyan)"/></marker>
+                        <marker id="arr-h2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-purple)"/></marker>
+                        <marker id="arr-h3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-green)"/></marker>
+                        <marker id="arr-h4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-orange)"/></marker>
+                    </defs>
+
+                    <!-- Tokens (y=95) -->
+                    <text x="40" y="95" class="diag-tok">The</text>
+                    <text x="95" y="95" class="diag-tok">cute</text>
+                    <text x="155" y="95" class="diag-tok">dog</text>
+                    <text x="235" y="95" class="diag-tok">chased</text>
+                    <text x="300" y="95" class="diag-tok">the</text>
+                    <text x="350" y="95" class="diag-tok">cat</text>
+                    <text x="430" y="95" class="diag-tok">because</text>
+                    <text x="495" y="95" class="diag-tok">it</text>
+                    <text x="545" y="95" class="diag-tok">was</text>
+                    <text x="615" y="95" class="diag-tok">running</text>
+                    <text x="690" y="95" class="diag-tok">fast.</text>
+                    
+                    <!-- Arcs -->
+                    <!-- Head 3: cute -> dog. Above arc -->
+                    <path d="M 95 75 Q 125 35 150 72" class="diag-arc diag-arc-h3" marker-end="url(#arr-h3)"/>
+                    <text x="125" y="25" class="diag-label diag-label-h3">Head 3 (Describer)</text>
+
+                    <!-- Head 1: dog -> chased. Below arc -->
+                    <path d="M 155 105 Q 195 145 230 108" class="diag-arc diag-arc-h1" marker-end="url(#arr-h1)"/>
+                    <text x="195" y="160" class="diag-label diag-label-h1">Head 1 (Action Tracker)</text>
+
+                    <!-- Head 2: it -> cat. Above arc -->
+                    <path d="M 495 75 Q 420 10 355 72" class="diag-arc diag-arc-h2" marker-end="url(#arr-h2)"/>
+                    <text x="425" y="15" class="diag-label diag-label-h2">Head 2 (Pronoun Detective)</text>
+
+                    <!-- Head 4: running -> fast. Below arc -->
+                    <path d="M 615 105 Q 650 145 685 108" class="diag-arc diag-arc-h4" marker-end="url(#arr-h4)"/>
+                    <text x="650" y="160" class="diag-label diag-label-h4">Head 4 (Order Keeper)</text>
+                </svg>
+            </div>
         </div>
 
         <!-- Dimension Splitting Card -->
         <div class="card">
             <h2>Dimension Splitting: একটি দারুণ কৌশল</h2>
-            <p>আপনার মনে হতে পারে, একসাথে ৮টি "Head" চালালে কম্পিউটার ৮ গুণ ধীরগতির হয়ে যাবে। কিন্তু Transformer এই সমস্যা এড়াতে একটি দারুণ কৌশল ব্যবহার করে!</p>
+            <p>আপনার মনে হতে পারে, একসাথে ৪টি "Head" চালালে কম্পিউটার ৪ গুণ ধীরগতির হয়ে যাবে। কিন্তু Transformer এই সমস্যা এড়াতে একটি দারুণ কৌশল ব্যবহার করে!</p>
             
-            <p>কল্পনা করুন, একটি শব্দের অর্থ <span class="highlight">৫১২টি সংখ্যার</span> একটি তালিকা হিসেবে জমা থাকে। আমাদের যদি <span class="highlight">৮টি</span> Attention Head থাকে, এআই প্রতিটি Head-কে এই ৫১২টি সংখ্যাই দিয়ে দেয় না।</p>
+            <p>কল্পনা করুন, একটি শব্দের অর্থ <span class="highlight">৫১২টি সংখ্যার</span> একটি তালিকা হিসেবে জমা থাকে। আমাদের যদি <span class="highlight">৪টি</span> Attention Head থাকে, এআই প্রতিটি Head-কে এই ৫১২টি সংখ্যাই দিয়ে দেয় না।</p>
             
             <p>বরং, এটি সংখ্যাগুলোকে সমানভাবে ভাগ করে দেয়:</p>
             <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">
-                মোট ৫১২টি সংখ্যা ÷ ৮টি Head = প্রতিটি Head-এর জন্য ৬৪টি সংখ্যা
+                মোট ৫১২টি সংখ্যা ÷ ৪টি Head = প্রতিটি Head-এর জন্য ১২৮টি সংখ্যা
             </div>
             
-            <p>প্রতিটি Head তার নিজের বিশেষ কাজটি করার জন্য মাত্র একটি ছোট অংশ (৬৪টি সংখ্যা) নিয়ে কাজ করে। যখন সবার কাজ শেষ হয়, তারা তাদের ফলাফলগুলোকে আবার জুড়ে দিয়ে মূল ৫১২টি সংখ্যার একটি তালিকা তৈরি করে।</p>
-            <p>এই কৌশলের কারণে এআই কোনো অতিরিক্ত সময় ব্যয় না করেই একটি শব্দকে একই সাথে ৮টি ভিন্ন দিক থেকে চিন্তা করতে পারে!</p>
+            <div style="margin: 2rem 0; text-align: center; overflow-x: auto;">
+                <svg width="100%" max-width="600" viewBox="0 0 600 250" style="display: block; margin: 0 auto; min-width: 450px; font-family: 'Outfit', sans-serif;">
+                    <defs>
+                        <linearGradient id="grad-512" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#1e293b" />
+                            <stop offset="50%" stop-color="#3b82f6" />
+                            <stop offset="100%" stop-color="#1e293b" />
+                        </linearGradient>
+                        <marker id="arrow-down" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+                        </marker>
+                    </defs>
+
+                    <!-- Original 512 Vector -->
+                    <g transform="translate(50, 20)">
+                        <rect x="0" y="0" width="500" height="40" rx="6" fill="url(#grad-512)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" />
+                        
+                        <!-- Grid lines to simulate dimensions -->
+                        <line x1="25" y1="0" x2="25" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <line x1="50" y1="0" x2="50" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <line x1="75" y1="0" x2="75" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        
+                        <line x1="425" y1="0" x2="425" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <line x1="450" y1="0" x2="450" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <line x1="475" y1="0" x2="475" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        
+                        <text x="250" y="25" fill="white" font-weight="600" text-anchor="middle" font-size="15">Full Vector: 512 Dimensions</text>
+                        <!-- Dots to indicate continuity -->
+                        <text x="110" y="25" fill="white" opacity="0.6" font-size="18" text-anchor="middle">...</text>
+                        <text x="390" y="25" fill="white" opacity="0.6" font-size="18" text-anchor="middle">...</text>
+                    </g>
+
+                    <!-- Brackets showing the split -->
+                    <g stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none">
+                        <!-- Top horizontal lines -->
+                        <path d="M 50 70 L 175 70" />
+                        <path d="M 175 70 L 300 70" />
+                        <path d="M 300 70 L 425 70" />
+                        <path d="M 425 70 L 550 70" />
+                        
+                        <!-- Little vertical separators for brackets -->
+                        <path d="M 50 65 L 50 70" />
+                        <path d="M 175 65 L 175 70" />
+                        <path d="M 300 65 L 300 70" />
+                        <path d="M 425 65 L 425 70" />
+                        <path d="M 550 65 L 550 70" />
+                    </g>
+
+                    <!-- Connection Lines with Arrows -->
+                    <g stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-down)" fill="none">
+                        <path d="M 112.5 70 C 112.5 100 85 100 85 130" />
+                        <path d="M 237.5 70 C 237.5 100 225 100 225 130" />
+                        <path d="M 362.5 70 C 362.5 100 375 100 375 130" />
+                        <path d="M 487.5 70 C 487.5 100 515 100 515 130" />
+                    </g>
+
+                    <!-- Split Vectors (Heads) -->
+                    <!-- Head 1 -->
+                    <g transform="translate(35, 140)">
+                        <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(6, 182, 212, 0.15)" stroke="#06b6d4" stroke-width="2" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="rgba(6, 182, 212, 0.3)" />
+                        <line x1="80" y1="0" x2="80" y2="40" stroke="rgba(6, 182, 212, 0.3)" />
+                        <text x="50" y="25" fill="#e2e8f0" font-size="14" text-anchor="middle" font-weight="600">128 Dims</text>
+                        <text x="50" y="65" fill="#06b6d4" font-size="14" text-anchor="middle" font-weight="600">Head 1</text>
+                    </g>
+                    
+                    <!-- Head 2 -->
+                    <g transform="translate(175, 140)">
+                        <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(168, 85, 247, 0.15)" stroke="#a855f7" stroke-width="2" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="rgba(168, 85, 247, 0.3)" />
+                        <line x1="80" y1="0" x2="80" y2="40" stroke="rgba(168, 85, 247, 0.3)" />
+                        <text x="50" y="25" fill="#e2e8f0" font-size="14" text-anchor="middle" font-weight="600">128 Dims</text>
+                        <text x="50" y="65" fill="#a855f7" font-size="14" text-anchor="middle" font-weight="600">Head 2</text>
+                    </g>
+                    
+                    <!-- Head 3 -->
+                    <g transform="translate(325, 140)">
+                        <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="2" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="rgba(16, 185, 129, 0.3)" />
+                        <line x1="80" y1="0" x2="80" y2="40" stroke="rgba(16, 185, 129, 0.3)" />
+                        <text x="50" y="25" fill="#e2e8f0" font-size="14" text-anchor="middle" font-weight="600">128 Dims</text>
+                        <text x="50" y="65" fill="#10b981" font-size="14" text-anchor="middle" font-weight="600">Head 3</text>
+                    </g>
+                    
+                    <!-- Head 4 -->
+                    <g transform="translate(465, 140)">
+                        <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="2" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="rgba(245, 158, 11, 0.3)" />
+                        <line x1="80" y1="0" x2="80" y2="40" stroke="rgba(245, 158, 11, 0.3)" />
+                        <text x="50" y="25" fill="#e2e8f0" font-size="14" text-anchor="middle" font-weight="600">128 Dims</text>
+                        <text x="50" y="65" fill="#f59e0b" font-size="14" text-anchor="middle" font-weight="600">Head 4</text>
+                    </g>
+                </svg>
+            </div>
+            
+            <p>প্রতিটি Head তার নিজের বিশেষ কাজটি করার জন্য মাত্র একটি ছোট অংশ (১২৮টি সংখ্যা) নিয়ে কাজ করে। যখন সবার কাজ শেষ হয়, তারা তাদের ফলাফলগুলোকে আবার জুড়ে দিয়ে মূল ৫১২টি সংখ্যার একটি তালিকা তৈরি করে।</p>
+            <p>এই কৌশলের কারণে এআই কোনো অতিরিক্ত সময় ব্যয় না করেই একটি শব্দকে একই সাথে ৪টি ভিন্ন দিক থেকে চিন্তা করতে পারে!</p>
         </div>
 
         <!-- Interactive Visualizer Card -->
@@ -1023,7 +1172,7 @@
         <!-- Layer Stacking Card -->
         <div class="card">
             <h2>Layer Stacking: গভীরভাবে বুঝতে শেখা</h2>
-            <p>একটি এআই মডেলের ভেতরে Multi-Head Attention-এর শুধু একটি ব্লক থাকে না। বরং অনেকগুলো ব্লক একটির ওপর আরেকটি স্তূপাকারে সাজানো থাকে, যাকে <span class="tech-term">Layer Stacking</span> বলে।</p>
+            <p>একটি এআই মডেলের ভেতরে Multi-Head Attention-এর শুধু একটি ব্লক (এখানে ব্লক বলতে মূলত একটি <span class="tech-term">Transformer block</span>-কে বোঝানো হচ্ছে) থাকে না। বরং অনেকগুলো ব্লক একটির ওপর আরেকটি স্তূপাকারে সাজানো থাকে, যাকে <span class="tech-term">Layer Stacking</span> বলে।</p>
             <p>যেমন: ChatGPT বা Claude-এর মতো মডেলগুলোতে কয়েক ডজন লেয়ার বা স্তর থাকে, আর GPT-4-এ আছে ১০০-এরও বেশি! এতগুলো লেয়ার কেন? কারণ ভাষা বুঝতে অনেকগুলো ধাপ পার হতে হয়। নিচের লেয়ারগুলো সহজ বিষয়গুলো সামলায়, আর ওপরের লেয়ারগুলো গভীর চিন্তাভাবনা করে:</p>
             
             <div class="layer-stack">
