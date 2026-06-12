@@ -1118,15 +1118,56 @@
 
         <!-- Section 2: Causal Masking -->
         <div class="card">
-            <h2>Causal Masking: ভবিষ্যতের শব্দ আড়াল করার কৌশল</h2>
+            <h2>Causal Masking: পরবর্তী শব্দ আড়াল করার কৌশল</h2>
             <p>ধরি, আমরা একটি এআই মডেলকে এই বাক্যটি শেখাতে চাই: <span class="highlight">"LLMs are changing our world"</span>।</p>
             <p>ট্রেনিংয়ের সময় কাজ দ্রুত করার জন্য আমরা সাধারণত পুরো বাক্যটি একবারে মডেলকে দিয়ে দিই। কিন্তু মডেলকে তো ধাপে ধাপে শিখতে হবে—প্রথমে সে কেবল <code>"LLMs"</code> দেখে পরের শব্দ <code>"are"</code> অনুমান করবে, এরপর <code>"LLMs are"</code> দেখে <code>"changing"</code> অনুমান করবে।</p>
-            <p>এখন, পুরো বাক্যটি যদি মডেল আগে থেকেই দেখতে পায়, তাহলে সে খুব সহজেই সামনের শব্দগুলো (যেমন <code>"changing"</code>) দেখে "চিটিং" করতে পারবে। মডেল যাতে এভাবে সামনের শব্দ দেখে ফাঁকিবাজি করতে না পারে, সেজন্যই আমরা <span class="tech-term">Causal Masking</span> কৌশলটি ব্যবহার করি। এটি ভবিষ্যতের শব্দগুলোকে ঢেকে রাখে, ফলে মডেল শুধু পেছনের শব্দগুলো দেখেই সামনের শব্দ অনুমান করার আসল কাজটি শিখতে পারে।</p>
+            <p>এখন, পুরো বাক্যটি যদি মডেল আগে থেকেই দেখতে পায়, তাহলে সে খুব সহজেই সামনের শব্দগুলো (যেমন <code>"changing"</code>) দেখে চিটিং করতে পারবে। মডেল যাতে এভাবে সামনের শব্দ দেখে ফাঁকিবাজি করতে না পারে, সেজন্যই আমরা <span class="tech-term">Causal Masking</span> কৌশলটি ব্যবহার করি। এটি পরবর্তী শব্দগুলোকে ঢেকে রাখে, ফলে মডেল শুধু পেছনের শব্দগুলো দেখেই সামনের শব্দ অনুমান করার আসল কাজটি শিখতে পারে।</p>
+            <p style="background: rgba(168, 85, 247, 0.1); border-left: 4px solid var(--accent-purple); padding: 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem;"><strong>সহজ কথায়:</strong> যেমন ধরুন, একটি বই পড়ার সময় আপনি যদি সামনের লাইনগুলো একটি কাগজ দিয়ে ঢেকে রাখেন, এবং শুধু যতটুকু পড়েছেন তার ওপর ভিত্তি করে পরের শব্দটি অনুমান করার চেষ্টা করেন—<span class="highlight">Causal Masking</span> ঠিক একই কাজ করে!</p>
+            
+            <div class="masking-diagram" style="margin: 2rem 0; font-family: 'Outfit', monospace; font-size: 0.95rem; background: rgba(15, 23, 42, 0.4); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto;">
+                <div style="display: flex; flex-direction: column; gap: 12px; min-width: 500px;">
+                    <div style="display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; font-family: 'Hind Siliguri', sans-serif; font-weight: 600; color: var(--text-secondary);">
+                        <div style="flex: 1.5;">মডেল ইনপুট হিসেবে পায় (Input)</div>
+                        <div style="flex: 1.5;">লুকানো শব্দ (Masked)</div>
+                        <div style="width: 140px; text-align: center; color: var(--accent-blue);">টার্গেট (Target)</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">are changing our world</div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">are</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">changing our world</div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">changing</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">our world</div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">our</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing our</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">world</div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">world</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing our world</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2);"></div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">&lt;EOS&gt;</div>
+                    </div>
+                </div>
+            </div>
             
             <details class="step-example" style="margin-top: 1.5rem; margin-bottom: 1rem;">
                 <summary>একটু গভীরে: Causal Masking-এর গণিত</summary>
                 <div style="padding-top: 1rem;">
-                    <p>আমরা একটি "Mask Matrix" তৈরি করি, যেখানে অনুমোদিত অতীতের শব্দগুলোর জন্য ০ (Zero) এবং লুকানো ভবিষ্যতের শব্দগুলোর জন্য Negative Infinity (-&infin;) থাকে।</p>
+                    <p>আমরা একটি "Mask Matrix" তৈরি করি, যেখানে অনুমোদিত অতীতের শব্দগুলোর জন্য ০ (Zero) এবং লুকানো পরবর্তী শব্দগুলোর জন্য Negative Infinity (-&infin;) থাকে।</p>
                     <div style="display: flex; justify-content: center; margin: 1.5rem 0;">
                         <div style="font-family: 'Outfit', monospace; background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); display: inline-block; width: 100%; max-width: 320px;">
                             <div style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.8rem; text-align: center; font-weight: bold;">Causal Mask Matrix (M)</div>
@@ -1147,7 +1188,7 @@
                         Attention(Q, K, V) = Softmax( <span class="highlight">Q K<sup>T</sup> / &radic;d<sub>k</sub></span> + <span style="color: var(--accent-purple); font-weight: bold;">M</span> ) V
                     </div>
                     
-                    <p>এখানে ভবিষ্যতের পজিশনগুলোর জন্য M-এর মান হয় <span class="highlight">&minus;&infin; (Negative Infinity)</span>। যখন আমরা এটার ওপর <span class="tech-term">Softmax</span> হিসাব করি, তখন e<sup>&minus;&infin;</sup> হয়ে যায় <span class="highlight">0 (Zero)</span>। ফলে ভবিষ্যতের শব্দগুলোর ওপর মনোযোগ দেওয়ার সম্ভাবনা গাণিতিকভাবে সম্পূর্ণ শূন্য হয়ে যায়!</p>
+                    <p>এখানে পরবর্তী পজিশনগুলোর জন্য M-এর মান হয় <span class="highlight">&minus;&infin; (Negative Infinity)</span>। যখন আমরা এটার ওপর <span class="tech-term">Softmax</span> হিসাব করি, তখন e<sup>&minus;&infin;</sup> হয়ে যায় <span class="highlight">0 (Zero)</span>। ফলে পরবর্তী শব্দগুলোর ওপর মনোযোগ দেওয়ার সম্ভাবনা গাণিতিকভাবে সম্পূর্ণ শূন্য হয়ে যায়!</p>
                 </div>
             </details>
         </div>
@@ -1209,7 +1250,12 @@
         <!-- Interactive simulator card -->
         <div class="card">
             <h2>Interactive Causal Masking & Autoregressive Grid</h2>
-            <p>নিচের সিমুলেটরটির <strong>"Next Step"</strong> বাটনে ক্লিক করে দেখুন কীভাবে মডেল প্রতিটি ধাপে নতুন শব্দ জেনারেট করছে এবং কীভাবে <strong>2D Attention Matrix</strong>-এ ভবিষ্যতের শব্দগুলো "locked" চিহ্নের মাধ্যমে লক হয়ে যাচ্ছে। আপনি মাউস দিয়ে সেলের ওপর হোভার করে বিস্তারিত বিবরণ দেখতে পারেন।</p>
+            <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); padding: 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem;">
+                <strong>💡 Training vs Inference (গুরুত্বপূর্ণ কনসেপ্ট):</strong><br>
+                এই ডায়াগ্রামটি মূলত দুটি বিষয়কে একসাথে দেখাচ্ছে। <strong>লক করা বা মাস্ক করা ম্যাট্রিক্সটি</strong> মূলত মডেল <strong>ট্রেনিং</strong> এর সময় ব্যবহার করা হয়। মডেলকে যখন একসাথে পুরো বাক্যটি দিয়ে শেখানো হয়, তখন এই ম্যাট্রিক্সটি নিশ্চিত করে যেন মডেল ভবিষ্যতের শব্দ দেখতে না পারে।<br><br>
+                অন্যদিকে, আপনি যখন <strong>"Next Step"</strong> বাটনে ক্লিক করে ধাপে ধাপে শব্দ জেনারেট করছেন, এটি হলো <strong>Inference</strong> (যেমনটি আপনি ChatGPT এর সাথে চ্যাট করার সময় হয়)। ইনফারেন্সের সময় ভবিষ্যৎ শব্দগুলো আসলেও থাকে না, মডেল একটি করে শব্দ তৈরি করে এবং সামনের দিকে এগোয়!
+            </div>
+            <p>নিচের সিমুলেটরটির <strong>"Next Step"</strong> বাটনে ক্লিক করে দেখুন কীভাবে মডেল প্রতিটি ধাপে নতুন শব্দ জেনারেট করছে এবং কীভাবে <strong>2D Attention Matrix</strong>-এ পরবর্তী শব্দগুলো "locked" চিহ্নের মাধ্যমে লক হয়ে যাচ্ছে। আপনি মাউস দিয়ে সেলের ওপর হোভার করে বিস্তারিত বিবরণ দেখতে পারেন।</p>
 
             <div class="simulator-layout">
                 <!-- Control panel -->
@@ -1261,7 +1307,7 @@
                         </div>
                         <div style="display: flex; align-items: center; gap: 6px;">
                             <span style="display: inline-block; width: 12px; height: 12px; background: repeating-linear-gradient(45deg, rgba(30,41,59,0.7), rgba(30,41,59,0.7) 3px, rgba(15,23,42,0.8) 3px, rgba(15,23,42,0.8) 6px); border: 1px solid rgba(255,255,255,0.1); border-radius: 2px;"></span>
-                            <span>Causal Masked (ভবিষ্যতের শব্দ, ব্লক করা)</span>
+                            <span>Causal Masked (পরবর্তী শব্দ, ব্লক করা)</span>
                         </div>
                     </div>
                 </div>
@@ -1281,8 +1327,8 @@
                     <div class="quiz-option" onclick="checkAnswer(1, this, false, 'দুঃখিত! জিপিইউ-তে সমান্তরাল প্রসেসিং তো ট্রান্সফরমারের নিজস্ব বৈশিষ্ট্য, এর জন্য কজাল মাস্কিংয়ের প্রয়োজন পড়ে না।')">
                         ক) মডেলের প্রসেসিং স্পিড বাড়াতে, যাতে GPU-তে সমান্তরালভাবে গণনা করা যায়।
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(1, this, true, 'চমৎকার! Causal Masking ভবিষ্যতের শব্দগুলোকে আড়াল করে রাখে যাতে ট্রেনিংয়ের সময় মডেল আগের টোকেন দিয়ে পরের টোকেন অনুমানের সঠিক কৌশলটি শিখতে পারে।')">
-                        খ) মডেল যাতে ট্রেনিংয়ের সময় ভবিষ্যতের টোকেন দেখতে না পায় (চিটিং রোধ করতে) এবং পরবর্তী টোকেন প্রেডিক্ট করা শেখে।
+                    <div class="quiz-option" onclick="checkAnswer(1, this, true, 'চমৎকার! Causal Masking পরবর্তী শব্দগুলোকে আড়াল করে রাখে যাতে ট্রেনিংয়ের সময় মডেল আগের টোকেন দিয়ে পরের টোকেন অনুমানের সঠিক কৌশলটি শিখতে পারে।')">
+                        খ) মডেল যাতে ট্রেনিংয়ের সময় পরবর্তী টোকেন দেখতে না পায় (চিটিং রোধ করতে) এবং পরবর্তী টোকেন প্রেডিক্ট করা শেখে।
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(1, this, false, 'ভুল উত্তর! এটি Tokenization ধাপের কাজ, কজাল মাস্কিংয়ের সাথে এর সম্পর্ক নেই।')">
                         গ) ইনপুট টেক্সটকে ছোট ছোট টোকেনে বিভক্ত করার জন্য।
@@ -1292,7 +1338,7 @@
 
                 <!-- Question 2 -->
                 <div class="quiz-question">
-                    <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">প্রশ্ন ২: Causal Masking-এ ভবিষ্যতের টোকেনগুলোর পজিশনে মনোযোগ শূন্য করার জন্য গাণিতিকভাবে কী করা হয়?</p>
+                    <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">প্রশ্ন ২: Causal Masking-এ পরবর্তী টোকেনগুলোর পজিশনে মনোযোগ শূন্য করার জন্য গাণিতিকভাবে কী করা হয়?</p>
                     <div class="quiz-option" onclick="checkAnswer(2, this, false, 'ভুল! অ্যাটেনশন স্কোরের সাথে ০ যোগ করলে স্কোরের কোনো পরিবর্তন হয় না (e^0 = 1), ফলে মনোযোগ শূন্য হবে না।')">
                         ক) অ্যাটেনশন স্কোরের সাথে ০ (Zero) যোগ করা হয়।
                     </div>
@@ -1430,14 +1476,14 @@
                         cell.innerHTML = `
                             <span class="percentage">-</span>
                             <span class="label">pending</span>
-                            <div class="cell-tooltip">এই ধাপটি এখনও প্রসেস করা হয়নি।</div>
+                            <div class="cell-tooltip">এই ধাপটি এখনো শুরু হয়নি।</div>
                         `;
                     } else if (isMasked) {
                         cell.className = 'grid-cell masked';
                         cell.innerHTML = `
-                            <span class="percentage">×</span>
-                            <span class="label">-&infin; (0%)</span>
-                            <div class="cell-tooltip">Query: '${tokens[i].trim()}', Key: '${tokens[j].trim()}'. এটি ভবিষ্যতের টোকেন, তাই Causal Masking-এর মাধ্যমে এর মনোযোগ ব্লক করা হয়েছে (-inf)।</div>
+                            <span class="percentage">🔒</span>
+                            <span class="label">ব্লক করা</span>
+                            <div class="cell-tooltip">ভবিষ্যতের শব্দ। মডেল এখনো এটি দেখতে পাচ্ছে না, তাই এটি ব্লক করা আছে।</div>
                         `;
                     } else {
                         const attnVal = attnMatrix[i][j];
@@ -1450,7 +1496,7 @@
                         cell.innerHTML = `
                             <span class="percentage">${attnVal}%</span>
                             <span class="label">attn</span>
-                            <div class="cell-tooltip">Query: '${tokens[i].trim()}', Key: '${tokens[j].trim()}'. এই সেলটি উন্মুক্ত। '${tokens[i].trim()}' টোকেনটি জেনারেট হওয়ার সময় '${tokens[j].trim()}' টোকেনের ওপর ${attnVal}% মনোযোগ দিয়েছিল।</div>
+                            <div class="cell-tooltip">'${tokens[i].trim()}' শব্দটি জেনারেট করার সময় মডেল '${tokens[j].trim()}' শব্দটির দিকে ${attnVal}% মনোযোগ দিচ্ছে।</div>
                         `;
                     }
                     gridDiv.appendChild(cell);

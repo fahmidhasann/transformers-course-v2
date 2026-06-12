@@ -1121,6 +1121,47 @@
             <p>Suppose we want to teach an AI model using this sentence: <span class="highlight">"LLMs are changing our world"</span>.</p>
             <p>To speed up the training process, we usually feed the entire sentence to the model all at once. However, the model needs to learn step-by-step—first, it should only see <code>"LLMs"</code> to predict the next word <code>"are"</code>, and then see <code>"LLMs are"</code> to predict <code>"changing"</code>.</p>
             <p>Now, if the model can see the entire sentence in advance, it could easily "cheat" by looking at the upcoming words (like <code>"changing"</code>). To prevent the model from cheating by peeking at future words, we use a technique called <span class="tech-term">Causal Masking</span>. This hides the future words, ensuring the model learns the actual task of predicting the next word by only looking at the past words.</p>
+            <p style="background: rgba(168, 85, 247, 0.1); border-left: 4px solid var(--accent-purple); padding: 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem;"><strong>Simply put:</strong> Imagine reading a book through a small cutout hole that only shows the words you've read so far. You cannot see the next words. <span class="highlight">Causal Masking</span> works exactly like this hole!</p>
+            
+            <div class="masking-diagram" style="margin: 2rem 0; font-family: 'Outfit', monospace; font-size: 0.95rem; background: rgba(15, 23, 42, 0.4); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto;">
+                <div style="display: flex; flex-direction: column; gap: 12px; min-width: 500px;">
+                    <div style="display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; font-weight: 600; color: var(--text-secondary);">
+                        <div style="flex: 1.5;">Model Input</div>
+                        <div style="flex: 1.5;">Masked Words</div>
+                        <div style="width: 140px; text-align: center; color: var(--accent-blue);">Target Prediction</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">are changing our world</div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">are</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">changing our world</div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">changing</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">our world</div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">our</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing our</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">world</div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">world</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 4px 0;">
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing our world</span></div>
+                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2);"></div>
+                        <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">&lt;EOS&gt;</div>
+                    </div>
+                </div>
+            </div>
             
             <details class="step-example" style="margin-top: 1.5rem; margin-bottom: 1rem;">
                 <summary>A bit deeper: The Math of Causal Masking</summary>
@@ -1207,6 +1248,11 @@
         <!-- Interactive simulator card -->
         <div class="card">
             <h2>Interactive Causal Masking & Autoregressive Grid</h2>
+            <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); padding: 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem;">
+                <strong>💡 Training vs Inference (Crucial Concept):</strong><br>
+                This diagram is actually showing two things at once. The <strong>locked or masked matrix</strong> is primarily used during model <strong>Training</strong>. When the model is fed the entire sentence at once to learn, this matrix ensures it cannot peek at future words.<br><br>
+                On the other hand, when you click the <strong>"Next Step"</strong> button to generate words step-by-step, this is called <strong>Inference</strong> (just like when you chat with ChatGPT). During inference, the future words literally don't exist yet, so the model builds the sentence one word at a time and moves forward!
+            </div>
             <p>Click the <strong>"Next Step"</strong> button in the simulator below to see how the model generates a new word at each step, and how future words are locked by the "locked" symbol in the <strong>2D Attention Matrix</strong>. You can hover your mouse over the cells to see detailed descriptions.</p>
 
             <div class="simulator-layout">
@@ -1428,14 +1474,14 @@
                         cell.innerHTML = `
                             <span class="percentage">-</span>
                             <span class="label">pending</span>
-                            <div class="cell-tooltip">This step has not been processed yet.</div>
+                            <div class="cell-tooltip">This step hasn't started yet.</div>
                         `;
                     } else if (isMasked) {
                         cell.className = 'grid-cell masked';
                         cell.innerHTML = `
-                            <span class="percentage">×</span>
-                            <span class="label">-&infin; (0%)</span>
-                            <div class="cell-tooltip">Query: '${tokens[i].trim()}', Key: '${tokens[j].trim()}'. This is a future token, so its attention is blocked by Causal Masking (-inf).</div>
+                            <span class="percentage">🔒</span>
+                            <span class="label">Blocked</span>
+                            <div class="cell-tooltip">This is a future word. The model cannot see it yet, so it is blocked.</div>
                         `;
                     } else {
                         const attnVal = attnMatrix[i][j];
@@ -1448,7 +1494,7 @@
                         cell.innerHTML = `
                             <span class="percentage">${attnVal}%</span>
                             <span class="label">attn</span>
-                            <div class="cell-tooltip">Query: '${tokens[i].trim()}', Key: '${tokens[j].trim()}'. This cell is open. When generating the token '${tokens[i].trim()}', the model placed ${attnVal}% attention on '${tokens[j].trim()}'.</div>
+                            <div class="cell-tooltip">When generating the word '${tokens[i].trim()}', the model pays ${attnVal}% attention to the word '${tokens[j].trim()}'.</div>
                         `;
                     }
                     gridDiv.appendChild(cell);
