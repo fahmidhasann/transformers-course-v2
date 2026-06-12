@@ -2320,5 +2320,30 @@
             });
         })();
     </script>
+
+    <script>
+        function checkQAnswer(element, qId, status, feedback) {
+            const questionContainer = document.getElementById('q' + qId);
+            if (!questionContainer) return;
+            
+            questionContainer.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+
+            const feedbackBox = document.getElementById('q' + qId + '-feedback');
+            if (feedbackBox) {
+                feedbackBox.className = 'quiz-feedback';
+                
+                if (status === 'correct') {
+                    element.classList.add('correct');
+                    feedbackBox.classList.add('success');
+                } else {
+                    element.classList.add('incorrect');
+                    feedbackBox.classList.add('error');
+                }
+                feedbackBox.innerText = feedback;
+            }
+        }
+    </script>
 </body>
 </html>
