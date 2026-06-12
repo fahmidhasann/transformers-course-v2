@@ -1077,6 +1077,49 @@
             <h2>1. দ্য থিংকার বা চিন্তাবিদ (Feed-Forward Network)</h2>
             <p>Attention ধাপে শব্দগুলো যখন একে অপরের সাথে কথা বলে ফেলে, তখন প্রতিটি শব্দের ডেটাকে আলাদাভাবে প্রসেস করার প্রয়োজন হয়। এই কাজটি করে <span class="tech-term">Feed-Forward Network</span> (FFN)।</p>
             
+            <div style="text-align: center; margin: 2rem 0;">
+                <svg viewBox="0 0 500 250" style="max-width: 100%; height: auto; border-radius: 12px; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <!-- Connections Input -> Hidden -->
+                    <line x1="100" y1="80" x2="250" y2="50" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="80" x2="250" y2="100" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="80" x2="250" y2="150" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="80" x2="250" y2="200" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    
+                    <line x1="100" y1="170" x2="250" y2="50" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="170" x2="250" y2="100" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="170" x2="250" y2="150" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="170" x2="250" y2="200" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    
+                    <!-- Connections Hidden -> Output -->
+                    <line x1="250" y1="50" x2="400" y2="80" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="100" x2="400" y2="80" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="150" x2="400" y2="80" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="200" x2="400" y2="80" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    
+                    <line x1="250" y1="50" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="100" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="150" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="200" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+
+                    <!-- Input Nodes -->
+                    <circle cx="100" cy="80" r="16" fill="#3b82f6" />
+                    <circle cx="100" cy="170" r="16" fill="#3b82f6" />
+                    <text x="100" y="235" fill="#e2e8f0" font-size="14" font-weight="500" text-anchor="middle" font-family="'Hind Siliguri', 'Outfit', sans-serif">ইনপুট (Input)</text>
+
+                    <!-- Hidden Nodes -->
+                    <circle cx="250" cy="50" r="16" fill="#10b981" />
+                    <circle cx="250" cy="100" r="16" fill="#10b981" />
+                    <circle cx="250" cy="150" r="16" fill="#10b981" />
+                    <circle cx="250" cy="200" r="16" fill="#10b981" />
+                    <text x="250" y="235" fill="#e2e8f0" font-size="14" font-weight="500" text-anchor="middle" font-family="'Hind Siliguri', 'Outfit', sans-serif">হিডেন লেয়ার (Hidden)</text>
+
+                    <!-- Output Nodes -->
+                    <circle cx="400" cy="80" r="16" fill="#8b5cf6" />
+                    <circle cx="400" cy="170" r="16" fill="#8b5cf6" />
+                    <text x="400" y="235" fill="#e2e8f0" font-size="14" font-weight="500" text-anchor="middle" font-family="'Hind Siliguri', 'Outfit', sans-serif">আউটপুট (Output)</text>
+                </svg>
+            </div>
+            
             <p><strong>কীভাবে এটি কাজ করে?</strong></p>
             <p>FFN-কে তথ্যের একটি বিশাল <span class="highlight">মেমোরি ব্যাংক বা মেমোরি স্টোরেজ</span> হিসেবে চিন্তা করতে পারেন। Attention যখন বলে, "এই দেখো, 'barking' (ঘেউ ঘেউ) শব্দটি 'dog' (কুকুর)-এর সাথে যুক্ত," তখন FFN সেই তথ্যটি নেয় এবং বলে, "আহা, 'dog' এবং 'barking' তারমানে আমরা কোনো প্রাণী নিয়ে কথা বলছি, আমার পোষা প্রাণীর তথ্যগুলো ঘেঁটে দেখা উচিত।"</p>
 
