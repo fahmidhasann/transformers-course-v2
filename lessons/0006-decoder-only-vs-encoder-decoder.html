@@ -981,10 +981,10 @@
         </div>
     </nav>
     <div class="container">
-<header>
+        <header>
             <span class="badge">Lesson 6</span>
             <h1>Decoder-Only Architecture ও Causal Masking</h1>
-            <p class="subtitle">কীভাবে আধুনিক LLM-গুলো ভবিষ্যৎ না দেখে পরবর্তী শব্দ জেনারেট করে?</p>
+            <p class="subtitle">কীভাবে আধুনিক LLM-গুলো সামনের শব্দগুলো না দেখেই পরবর্তী শব্দ জেনারেট করে?</p>
         </header>
 
         <!-- Transformer Block Map -->
@@ -1113,15 +1113,15 @@
             </div>
             
             <p style="margin-top: 1.5rem;"><strong>কেন আধুনিক LLM-গুলো মূলত Decoder-Only?</strong><br>
-            Decoder-Only আর্কিটেকচার অত্যন্ত স্কেলেবল (Scalable) এবং বিশাল টেক্সট ডেটাসেটের ওপর সরাসরি <span class="highlight">Unsupervised Pre-training</span>-এর জন্য আদর্শ। এটি সম্পূর্ণ বাক্যকে একবারে প্রসেস করে পরবর্তী টোকেন প্রেডিক্ট করতে পারে, যা জিপিইউ (GPU)-এর প্যারালাল প্রসেসিং পাওয়ারকে চমৎকারভাবে কাজে লাগায়।</p>
+            Decoder-Only আর্কিটেকচারকে খুব সহজেই অনেক বড় মডেলে রূপান্তর করা যায়। এটি মানুষের কোনো নির্দেশনা ছাড়াই ইন্টারনেটের বিশাল পরিমাণ লেখা নিজে নিজে পড়ে শিখতে পারে—যাকে বলা হয় <span class="highlight">Unsupervised Pre-training</span>। এছাড়া, এটি একটি বাক্যের আগের সব শব্দকে একসাথে দেখে পরের শব্দটি কী হবে তা অনুমান করতে পারে। একসাথে অনেকগুলো কাজ করতে পারার এই সুবিধার কারণে, জিপিইউ (GPU) তার পুরো ক্ষমতা ব্যবহার করে একে অত্যন্ত দ্রুতগতিতে চালাতে পারে।</p>
         </div>
 
         <!-- Section 2: Causal Masking -->
         <div class="card">
             <h2>Causal Masking: ভবিষ্যতের শব্দ আড়াল করার কৌশল</h2>
-            <p>ধরি, আমরা মডেলকে ট্রেনিং দিচ্ছি এই বাক্যটি দিয়ে: <span class="highlight">"LLMs are changing our world"</span>।</p>
-            <p>প্যারালাল ট্রেনিংয়ের সুবিধার্থে আমরা পুরো বাক্যটি একবারে মডেলে পাঠিয়ে দিই। কিন্তু মডেলের কাজ হলো <code>"LLMs"</code> দেখে <code>"are"</code> প্রেডিক্ট করা, আর <code>"LLMs are"</code> দেখে <code>"changing"</code> প্রেডিক্ট করা।</p>
-            <p>যদি মডেল একবারে সব টোকেন দেখতে পায়, তবে সে সহজেই ভবিষ্যতের শব্দগুলো (যেমন <code>"changing"</code>) দেখে চিটিং করবে। মডেলের এই "ভবিষ্যত দেখা" বন্ধ করার জন্য আমরা <span class="tech-term">Causal Masking</span> ব্যবহার করি।</p>
+            <p>ধরি, আমরা একটি এআই মডেলকে এই বাক্যটি শেখাতে চাই: <span class="highlight">"LLMs are changing our world"</span>।</p>
+            <p>ট্রেনিংয়ের সময় কাজ দ্রুত করার জন্য আমরা সাধারণত পুরো বাক্যটি একবারে মডেলকে দিয়ে দিই। কিন্তু মডেলকে তো ধাপে ধাপে শিখতে হবে—প্রথমে সে কেবল <code>"LLMs"</code> দেখে পরের শব্দ <code>"are"</code> অনুমান করবে, এরপর <code>"LLMs are"</code> দেখে <code>"changing"</code> অনুমান করবে।</p>
+            <p>এখন, পুরো বাক্যটি যদি মডেল আগে থেকেই দেখতে পায়, তাহলে সে খুব সহজেই সামনের শব্দগুলো (যেমন <code>"changing"</code>) দেখে "চিটিং" করতে পারবে। মডেল যাতে এভাবে সামনের শব্দ দেখে ফাঁকিবাজি করতে না পারে, সেজন্যই আমরা <span class="tech-term">Causal Masking</span> কৌশলটি ব্যবহার করি। এটি ভবিষ্যতের শব্দগুলোকে ঢেকে রাখে, ফলে মডেল শুধু পেছনের শব্দগুলো দেখেই সামনের শব্দ অনুমান করার আসল কাজটি শিখতে পারে।</p>
             
             <details class="step-example" style="margin-top: 1.5rem; margin-bottom: 1rem;">
                 <summary>একটু গভীরে: Causal Masking-এর গণিত</summary>
@@ -1157,11 +1157,53 @@
             <h2>Autoregressive Generation (স্বয়ংক্রিয় পুনরাবৃত্তি)</h2>
             <p>যখন আমরা চ্যাটজিপিটি বা জেমিনি ব্যবহার করি, তখন শব্দগুলো এক এক করে স্ক্রিনে ফুটে ওঠে। একে বলা হয় <span class="tech-term">Autoregressive Generation</span>। এর ধাপগুলো নিম্নরূপ:</p>
             <p>
-                ১. <strong>ইনপুট প্রদান:</strong> মডেল শুরুতে ইউজারের প্রম্পটটি গ্রহণ করে (যেমন: <code>"LLMs are"</code>)।<br>
-                ২. <strong>নেক্সট টোকেন প্রেডিকশন:</strong> Causal Mask-এর মাধ্যমে প্রসেস হয়ে মডেল পরবর্তী সম্ভাব্য টোকেনের সম্ভাব্যতা হিসাব করে এবং সর্বোচ্চ মানের টোকেনটি বেছে নেয় (যেমন: <code>"changing"</code>)।<br>
-                ৩. <strong>কনটেক্সট আপডেট:</strong> নতুন টোকেনটিকে আগের ইনপুটের সাথে জোড়া লাগানো হয় (ইনপুট হয়: <code>"LLMs are changing"</code>)।<br>
-                ৪. <strong>লুপ ও স্টপ সিগন্যাল:</strong> এই লুপটি বারংবার চলতে থাকে যতক্ষণ না মডেলটি একটি বিশেষ টোকেন তৈরি করে, যাকে বলা হয় <span class="tech-term">&lt;EOS&gt; (End of Sequence)</span>।
+                ১. <strong><span class="tech-term">Input Prompt</span>:</strong> মডেল শুরুতে ইউজারের প্রম্পটটি গ্রহণ করে (যেমন: <code>"LLMs are"</code>)।<br>
+                ২. <strong><span class="tech-term">Next Token Prediction</span>:</strong> Causal Mask-এর মাধ্যমে প্রসেস হয়ে মডেল পরবর্তী সম্ভাব্য টোকেনের সম্ভাব্যতা হিসাব করে এবং সর্বোচ্চ মানের টোকেনটি বেছে নেয় (যেমন: <code>"changing"</code>)।<br>
+                ৩. <strong><span class="tech-term">Context Update</span>:</strong> নতুন টোকেনটিকে আগের ইনপুটের সাথে জোড়া লাগানো হয় (ইনপুট হয়: <code>"LLMs are changing"</code>)।<br>
+                ৪. <strong><span class="tech-term">Loop & Stop Signal</span>:</strong> এই লুপটি বারংবার চলতে থাকে যতক্ষণ না মডেলটি একটি বিশেষ টোকেন তৈরি করে, যাকে বলা হয় <span class="tech-term">&lt;EOS&gt; (End of Sequence)</span>।
             </p>
+
+            <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+                <svg width="600" height="250" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow-ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-color, #10b981)" />
+                        </marker>
+                        <marker id="arrow-ar-loop" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-secondary, #94a3b8)" />
+                        </marker>
+                    </defs>
+
+                    <!-- Input Box -->
+                    <rect x="20" y="80" width="130" height="60" rx="8" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" stroke-width="2" />
+                    <text x="85" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Input Prompt</text>
+                    <text x="85" y="125" fill="var(--text-secondary, #94a3b8)" font-family="monospace" font-size="12" text-anchor="middle">"LLMs are"</text>
+
+                    <!-- Arrow 1 -->
+                    <path d="M 150 110 L 220 110" stroke="var(--primary-color, #10b981)" stroke-width="2" fill="none" marker-end="url(#arrow-ar)" />
+
+                    <!-- Model Box -->
+                    <rect x="230" y="50" width="140" height="120" rx="12" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="2" />
+                    <text x="300" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="18" font-weight="700" text-anchor="middle">LLM</text>
+                    <text x="300" y="125" fill="var(--text-secondary, #94a3b8)" font-family="Outfit, sans-serif" font-size="12" text-anchor="middle">(Decoder)</text>
+
+                    <!-- Arrow 2 -->
+                    <path d="M 370 110 L 440 110" stroke="var(--primary-color, #10b981)" stroke-width="2" fill="none" marker-end="url(#arrow-ar)" />
+
+                    <!-- Output Token Box -->
+                    <rect x="450" y="80" width="130" height="60" rx="8" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2" />
+                    <text x="515" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Next Token</text>
+                    <text x="515" y="125" fill="var(--text-secondary, #94a3b8)" font-family="monospace" font-size="12" text-anchor="middle">"changing"</text>
+
+                    <!-- Loop Path -->
+                    <path d="M 515 140 L 515 200 L 85 200 L 85 140" stroke="var(--text-secondary, #94a3b8)" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-ar-loop)" />
+                    
+                    <!-- Loop Text Background -->
+                    <rect x="220" y="190" width="160" height="20" fill="var(--bg-color)" />
+                    <!-- Loop Text -->
+                    <text x="300" y="204" fill="var(--text-secondary, #94a3b8)" font-family="Outfit, sans-serif" font-size="12" font-weight="500" text-anchor="middle">Context Update (Loop)</text>
+                </svg>
+            </div>
         </div>
 
         <!-- Interactive simulator card -->

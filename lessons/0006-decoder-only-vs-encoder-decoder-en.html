@@ -1112,15 +1112,15 @@
                 </div>
             </div>
             
-            <p style="margin-top: 1.5rem;"><strong>Why are modern LLMs mostly Decoder-Only?</strong><br>The Decoder-Only architecture is highly scalable and ideal for direct <span class="highlight">Unsupervised Pre-training</span> on massive text datasets. It can process the entire sentence at once to predict the next tokens, making excellent use of GPU parallel processing power.</p>
+            <p style="margin-top: 1.5rem;"><strong>Why are modern LLMs mostly Decoder-Only?</strong><br>The Decoder-Only architecture can be easily expanded to a massive scale. It can learn on its own from huge amounts of text data without needing manual guidance—a process known as <span class="highlight">Unsupervised Pre-training</span>. Furthermore, it can look at an entire sentence at once to predict the next word. Because it handles all this information simultaneously, it takes full advantage of the GPU's parallel processing power to run incredibly fast.</p>
         </div>
 
         <!-- Section 2: Causal Masking -->
         <div class="card">
             <h2>Causal Masking: The Technique of Hiding Future Words</h2>
-            <p>Suppose we are training the model with this sentence: <span class="highlight">"LLMs are changing our world"</span>.</p>
-            <p>To take advantage of parallel training, we feed the entire sentence into the model at once. However, the model's task is to predict <code>"are"</code> given <code>"LLMs"</code>, and predict <code>"changing"</code> given <code>"LLMs are"</code>.</p>
-            <p>If the model can see all tokens at once, it will simply cheat by looking ahead at the future words (e.g., <code>"changing"</code>). To stop the model from "seeing the future," we use <span class="tech-term">Causal Masking</span>.</p>
+            <p>Suppose we want to teach an AI model using this sentence: <span class="highlight">"LLMs are changing our world"</span>.</p>
+            <p>To speed up the training process, we usually feed the entire sentence to the model all at once. However, the model needs to learn step-by-step—first, it should only see <code>"LLMs"</code> to predict the next word <code>"are"</code>, and then see <code>"LLMs are"</code> to predict <code>"changing"</code>.</p>
+            <p>Now, if the model can see the entire sentence in advance, it could easily "cheat" by looking at the upcoming words (like <code>"changing"</code>). To prevent the model from cheating by peeking at future words, we use a technique called <span class="tech-term">Causal Masking</span>. This hides the future words, ensuring the model learns the actual task of predicting the next word by only looking at the past words.</p>
             
             <details class="step-example" style="margin-top: 1.5rem; margin-bottom: 1rem;">
                 <summary>A bit deeper: The Math of Causal Masking</summary>
@@ -1155,11 +1155,53 @@
             <h2>Autoregressive Generation</h2>
             <p>When we use ChatGPT or Gemini, words appear on the screen one by one. This is called <span class="tech-term">Autoregressive Generation</span>. The steps are as follows:</p>
             <p>
-                1. <strong>Input Prompt:</strong> The model first takes the user's prompt (e.g., <code>"LLMs are"</code>).<br>
-                2. <strong>Next Token Prediction:</strong> Processing through the Causal Mask, the model calculates probabilities for the next token and selects the one with the highest probability (e.g., <code>"changing"</code>).<br>
-                3. <strong>Context Update:</strong> The new token is appended to the previous input (making the new input: <code>"LLMs are changing"</code>).<br>
-                4. <strong>Loop and Stop Signal:</strong> This loop continues iteratively until the model generates a special token called <span class="tech-term">&lt;EOS&gt; (End of Sequence)</span>.
+                1. <strong><span class="tech-term">Input Prompt</span>:</strong> The model first takes the user's prompt (e.g., <code>"LLMs are"</code>).<br>
+                2. <strong><span class="tech-term">Next Token Prediction</span>:</strong> Processing through the Causal Mask, the model calculates probabilities for the next token and selects the one with the highest probability (e.g., <code>"changing"</code>).<br>
+                3. <strong><span class="tech-term">Context Update</span>:</strong> The new token is appended to the previous input (making the new input: <code>"LLMs are changing"</code>).<br>
+                4. <strong><span class="tech-term">Loop & Stop Signal</span>:</strong> This loop continues iteratively until the model generates a special token called <span class="tech-term">&lt;EOS&gt; (End of Sequence)</span>.
             </p>
+
+            <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+                <svg width="600" height="250" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow-ar-en" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-color, #10b981)" />
+                        </marker>
+                        <marker id="arrow-ar-loop-en" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-secondary, #94a3b8)" />
+                        </marker>
+                    </defs>
+
+                    <!-- Input Box -->
+                    <rect x="20" y="80" width="130" height="60" rx="8" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" stroke-width="2" />
+                    <text x="85" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Input Prompt</text>
+                    <text x="85" y="125" fill="var(--text-secondary, #94a3b8)" font-family="monospace" font-size="12" text-anchor="middle">"LLMs are"</text>
+
+                    <!-- Arrow 1 -->
+                    <path d="M 150 110 L 220 110" stroke="var(--primary-color, #10b981)" stroke-width="2" fill="none" marker-end="url(#arrow-ar-en)" />
+
+                    <!-- Model Box -->
+                    <rect x="230" y="50" width="140" height="120" rx="12" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="2" />
+                    <text x="300" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="18" font-weight="700" text-anchor="middle">LLM</text>
+                    <text x="300" y="125" fill="var(--text-secondary, #94a3b8)" font-family="Outfit, sans-serif" font-size="12" text-anchor="middle">(Decoder)</text>
+
+                    <!-- Arrow 2 -->
+                    <path d="M 370 110 L 440 110" stroke="var(--primary-color, #10b981)" stroke-width="2" fill="none" marker-end="url(#arrow-ar-en)" />
+
+                    <!-- Output Token Box -->
+                    <rect x="450" y="80" width="130" height="60" rx="8" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2" />
+                    <text x="515" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Next Token</text>
+                    <text x="515" y="125" fill="var(--text-secondary, #94a3b8)" font-family="monospace" font-size="12" text-anchor="middle">"changing"</text>
+
+                    <!-- Loop Path -->
+                    <path d="M 515 140 L 515 200 L 85 200 L 85 140" stroke="var(--text-secondary, #94a3b8)" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-ar-loop-en)" />
+                    
+                    <!-- Loop Text Background -->
+                    <rect x="220" y="190" width="160" height="20" fill="var(--bg-color)" />
+                    <!-- Loop Text -->
+                    <text x="300" y="204" fill="var(--text-secondary, #94a3b8)" font-family="Outfit, sans-serif" font-size="12" font-weight="500" text-anchor="middle">Context Update (Loop)</text>
+                </svg>
+            </div>
         </div>
 
         <!-- Interactive simulator card -->
