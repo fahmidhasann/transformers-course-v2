@@ -1034,99 +1034,6 @@
             font-style: italic;
         }
 
-        /* Quick View IFrame Reader Drawer Overlay */
-        .preview-drawer {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 70%;
-            height: 100%;
-            background-color: #0b0f19;
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7);
-            border-left: 1px solid var(--border-color);
-            z-index: 1000;
-            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .preview-drawer.open {
-            right: 0;
-        }
-
-        .preview-drawer-header {
-            background-color: var(--sidebar-bg);
-            padding: 1.25rem 2rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .preview-drawer-title h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .preview-drawer-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .preview-iframe-container {
-            flex-grow: 1;
-            width: 100%;
-            background: white;
-            position: relative;
-        }
-
-        .preview-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .preview-drawer-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .preview-drawer-backdrop.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .close-btn {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-        }
-
-        .close-btn:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-        }
-
         /* Mobile responsive adjustments */
         .mobile-hamburger {
             display: none;
@@ -1165,13 +1072,11 @@
             }
             .nav-menu.open { display: flex; }
             .nav-item button { width: 100%; min-height: 44px; }
-            .preview-drawer { width: 90%; }
         }
 
         @media (max-width: 768px) {
             .sidebar { padding: 0.9rem 1.25rem; }
             .main-panel { padding: 1.5rem; }
-            .preview-drawer { width: 100%; }
 
             .roadmap-card {
                 flex-direction: column;
@@ -1279,7 +1184,7 @@
         
 
         /* Apply transitions globally to key elements */
-        body, aside, main, .card, button, input, select, .sidebar, .nav-item button, .glossary-card, .resource-card, .roadmap-card, .goal-item, .pe-word-btn, .step-node, .vector-visualizer, .vector-table, .close-btn {
+        body, aside, main, .card, button, input, select, .sidebar, .nav-item button, .glossary-card, .resource-card, .roadmap-card, .goal-item, .pe-word-btn, .step-node, .vector-visualizer, .vector-table {
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
         }
 
@@ -1306,7 +1211,7 @@
 
         /* backdrop-filter blur is GPU-expensive on phones — drop it on small screens */
         @media (max-width: 768px) {
-            .card, .roadmap-card, .preview-drawer-backdrop {
+            .card, .roadmap-card {
                 backdrop-filter: none;
                 -webkit-backdrop-filter: none;
             }
@@ -1582,29 +1487,6 @@
         </section>
     </main>
 
-    <!-- Fullscreen IFrame Reader Overlay -->
-    <div class="preview-drawer-backdrop" id="preview-backdrop" onclick="closeLessonPreview()"></div>
-    <div class="preview-drawer" id="preview-drawer">
-        <div class="preview-drawer-header">
-            <div class="preview-drawer-title">
-                <h3 id="preview-lesson-title">Lesson Preview</h3>
-            </div>
-            <div class="preview-drawer-controls">
-                <select class="status-dropdown" id="preview-status-dropdown" onchange="onPreviewStatusChange(this.value)">
-                    <option value="not-started" id="preview-opt-not-started">Not Started</option>
-                    <option value="in-progress" id="preview-opt-in-progress">In Progress</option>
-                    <option value="completed" id="preview-opt-completed">Completed</option>
-                </select>
-                <a class="btn btn-secondary" id="preview-open-tab-btn" target="_blank" href="#">
-                    <span id="preview-open-tab-text">New Tab</span> ↗
-                </a>
-                <button class="close-btn" onclick="closeLessonPreview()">✕</button>
-            </div>
-        </div>
-        <div class="preview-iframe-container">
-            <iframe class="preview-iframe" id="preview-iframe" src="" loading="lazy" title="Lesson preview"></iframe>
-        </div>
-    </div>
 <script>
         // --- 1. Static Databases (Bengali) ---
         const lessonsData = [
@@ -2248,8 +2130,7 @@
 
         // --- 2. Logical State Management ---
         let currentTab = "dashboard";
-        let activeLessonPreviewId = null;
-        
+
         // Active pointer arrays based on language
         let activeLessonsData = lessonsData;
         let activeGlossaryData = glossaryData;
@@ -2300,10 +2181,6 @@
                 "quiz-intro-title": "Transformer Architecture Assessment",
                 "quiz-intro-desc": "৬টি লেসন শেষ করার পর আপনার অর্জিত জ্ঞান যাচাইয়ের জন্য প্রস্তুত? ৫টি বহুনির্বাচনী প্রশ্নের সঠিক উত্তর দিয়ে সফলতার সাথে উত্তীর্ণ হয়ে অর্জন করুন আপনার <strong>\"Transformer Hub Completion Certificate\"</strong>!",
                 "quiz-start-btn": "কুইজ শুরু করুন",
-                "preview-opt-not-started": "Not Started",
-                "preview-opt-in-progress": "In Progress",
-                "preview-opt-completed": "Completed",
-                "preview-open-tab-text": "New Tab",
                 "quiz-restart-btn": "পুনরায় কুইজ দিন",
                 "quiz-back-btn": "ড্যাশবোর্ডে ফিরে যান"
             },
@@ -2337,10 +2214,6 @@
                 "quiz-intro-title": "Transformer Architecture Assessment",
                 "quiz-intro-desc": "Ready to test your knowledge after completing the 6 modules? Answer 5 multiple-choice questions correctly to earn your <strong>\"Transformer Hub Completion Certificate\"</strong>!",
                 "quiz-start-btn": "Start Quiz",
-                "preview-opt-not-started": "Not Started",
-                "preview-opt-in-progress": "In Progress",
-                "preview-opt-completed": "Completed",
-                "preview-open-tab-text": "New Tab",
                 "quiz-restart-btn": "Retake Quiz",
                 "quiz-back-btn": "Back to Dashboard"
             }
@@ -2462,7 +2335,7 @@
                 else if (status === 'in-progress') nodeClass = 'in-progress';
 
                 const isEn = (currentLang === 'en');
-                const quickReadText = isEn ? "Quick Read" : "Quick Read";
+                const startReadingText = isEn ? "Start Reading" : "পড়া শুরু করুন";
                 const optNotStarted = isEn ? "Not Started" : "শুরু করা হয়নি";
                 const optInProgress = isEn ? "In Progress" : "চলমান";
                 const optCompleted = isEn ? "Completed" : "সম্পন্ন";
@@ -2482,8 +2355,8 @@
                                     <option value="in-progress" ${status === 'in-progress' ? 'selected' : ''}>${optInProgress}</option>
                                     <option value="completed" ${status === 'completed' ? 'selected' : ''}>${optCompleted}</option>
                                 </select>
-                                <button class="btn btn-primary" onclick="openLessonPreview('${lesson.id}')">
-                                    ${quickReadText}
+                                <button class="btn btn-primary" onclick="openLesson('${lesson.id}')">
+                                    ${startReadingText}
                                 </button>
                             </div>
                         </div>
@@ -2657,55 +2530,16 @@
             }
         }
 
-        // --- 7. Lesson Preview Drawer System (iframe inline) ---
-        function openLessonPreview(lessonId) {
+        // --- 7. Lesson Navigation ---
+        // Navigate directly to the lesson in the same tab (no intermediate view / extra tab).
+        function openLesson(lessonId) {
             const lesson = activeLessonsData.find(l => l.id === lessonId);
             if (!lesson) return;
-            
-            activeLessonPreviewId = lessonId;
-            
-            // Set header parameters
-            const titleEl = document.getElementById('preview-lesson-title');
-            const openTabBtn = document.getElementById('preview-open-tab-btn');
-            if (titleEl) titleEl.innerText = lesson.title;
-            if (openTabBtn) openTabBtn.href = lesson.file;
-            
-            // Sync status select
-            const status = lessonProgress[lessonId] || 'not-started';
-            const statusDropdown = document.getElementById('preview-status-dropdown');
-            if (statusDropdown) statusDropdown.value = status;
-            
-            // Load iframe src — force reload by clearing src first (fixes lesson-switching bug)
-            const iframe = document.getElementById('preview-iframe');
-            if (iframe) {
-                iframe.src = "";
-                // Use setTimeout to ensure the src reset is processed before setting the new URL
-                setTimeout(() => { iframe.src = lesson.file; }, 50);
+            // Mark as in-progress if it hasn't been started yet, then go to the lesson.
+            if ((lessonProgress[lessonId] || 'not-started') === 'not-started') {
+                updateLessonStatus(lessonId, 'in-progress');
             }
-            
-            // Open drawer
-            const drawer = document.getElementById('preview-drawer');
-            const backdrop = document.getElementById('preview-backdrop');
-            if (drawer) drawer.classList.add('open');
-            if (backdrop) backdrop.classList.add('active');
-        }
-
-        function closeLessonPreview() {
-            const drawer = document.getElementById('preview-drawer');
-            const backdrop = document.getElementById('preview-backdrop');
-            if (drawer) drawer.classList.remove('open');
-            if (backdrop) backdrop.classList.remove('active');
-            
-            // Unload iframe source to stop video/animations in background
-            const iframe = document.getElementById('preview-iframe');
-            if (iframe) iframe.src = "";
-            activeLessonPreviewId = null;
-        }
-
-        function onPreviewStatusChange(newStatus) {
-            if (activeLessonPreviewId) {
-                updateLessonStatus(activeLessonPreviewId, newStatus);
-            }
+            window.location.href = lesson.file;
         }
 
         // --- 8. Glossary Filter Engine ---
@@ -2920,20 +2754,6 @@
             // 5. Update certificate if completed
             if (quizScore !== null) {
                 renderCertificateLang();
-            }
-
-            // 6. Reload active preview lesson with the correct language version if drawer open
-            if (activeLessonPreviewId) {
-                const lesson = activeLessonsData.find(l => l.id === activeLessonPreviewId);
-                if (lesson) {
-                    const titleEl = document.getElementById('preview-lesson-title');
-                    const openTabBtn = document.getElementById('preview-open-tab-btn');
-                    const iframe = document.getElementById('preview-iframe');
-                    
-                    if (titleEl) titleEl.innerText = lesson.title;
-                    if (openTabBtn) openTabBtn.href = lesson.file;
-                    if (iframe) iframe.src = lesson.file;
-                }
             }
         }
 
