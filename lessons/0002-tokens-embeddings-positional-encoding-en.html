@@ -824,6 +824,15 @@
 .tb-legend-active { background: rgba(6, 182, 212, 0.5); box-shadow: 0 0 6px rgba(6, 182, 212, 0.7); border: 1px solid var(--accent-cyan); }
 .tb-legend-rest { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--accent-purple); opacity: 0.45; }
 
+.tb-main-flow {
+    stroke-dasharray: 8 6;
+    animation: flow-up 1s linear infinite;
+    filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
+}
+@keyframes flow-up {
+    to { stroke-dashoffset: -14; }
+}
+
 /* 3D Embedding Space Styles */
 .collapsible-card {
     transition: all 0.3s ease;
@@ -919,9 +928,10 @@
 }
 .three-d-viewport-wrapper {
     flex: 1.2;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--border-color);
+    background: radial-gradient(circle at center, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
+    box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.3);
     position: relative;
     cursor: grab;
     user-select: none;
@@ -969,8 +979,9 @@
 
 /* Grid & Dots styling */
 .three-d-axis {
-    stroke-width: 1.5;
+    stroke-width: 1;
     stroke-linecap: round;
+    stroke: rgba(255, 255, 255, 0.15);
 }
 .three-d-axis-dash {
     stroke-width: 1;
@@ -978,48 +989,49 @@
 }
 .three-d-axis-label {
     font-family: 'Outfit', 'Hind Siliguri', sans-serif;
-    font-size: 11px;
-    fill: var(--text-secondary);
-    font-weight: 600;
+    font-size: 10.5px;
+    fill: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 .three-d-axis-limit-label {
     font-family: 'Outfit', 'Hind Siliguri', sans-serif;
     font-size: 9.5px;
-    fill: var(--text-secondary);
+    fill: rgba(255, 255, 255, 0.4);
     opacity: 0.7;
 }
 .three-d-word-node {
     cursor: pointer;
 }
 .three-d-word-node circle {
-    stroke-width: 1.5;
-    transition: r 0.2s ease, stroke-width 0.2s ease;
+    stroke-width: 0;
+    transition: r 0.2s ease, filter 0.2s ease;
 }
 .three-d-word-node:hover circle {
     r: 7.5;
-    stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px var(--node-color));
 }
 .three-d-word-node text {
     font-family: 'Outfit', 'Hind Siliguri', sans-serif;
-    font-size: 11.5px;
-    fill: var(--text-primary);
-    font-weight: 600;
+    font-size: 11px;
+    fill: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
     paint-order: stroke;
     stroke: var(--bg-color);
-    stroke-width: 3px;
+    stroke-width: 4px;
     stroke-linejoin: round;
     pointer-events: none;
+    letter-spacing: 0.3px;
 }
 .three-d-word-node.highlighted circle {
     r: 9;
-    stroke-width: 3;
-    filter: drop-shadow(0 0 6px var(--node-color));
+    filter: drop-shadow(0 0 10px var(--node-color));
 }
 .three-d-relation-line {
     fill: none;
-    stroke-width: 1.5;
-    stroke-dasharray: 4 3;
-    opacity: 0.85;
+    stroke-width: 1.2;
+    stroke-dasharray: 3 4;
+    opacity: 0.6;
 }
 
 /* Heatmap Grid View styling */
@@ -1107,7 +1119,17 @@
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0 1.5 L8 5 L0 8.5 z" fill="#64748b"/>
     </marker>
+    <linearGradient id="flow-gradient" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="var(--accent-purple)" />
+      <stop offset="100%" stop-color="var(--accent-cyan)" />
+    </linearGradient>
+    <marker id="tb-arrow-main" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 1.5 L8 5 L0 8.5 z" fill="var(--accent-cyan)"/>
+    </marker>
   </defs>
+
+  <!-- Main flow arrow -->
+  <line class="tb-main-flow" x1="350" y1="460" x2="350" y2="50" stroke="url(#flow-gradient)" stroke-width="3" marker-end="url(#tb-arrow-main)"/>
 
   <!-- flow arrows (bottom -> top) -->
   <line class="tb-flow" x1="190" y1="444" x2="190" y2="430" marker-end="url(#tb-arrow)"/>
@@ -1194,6 +1216,37 @@
             <h2>1. Tokenization (Chopping Text)</h2>
             <p><span class="tech-term">Tokenization</span> is like slicing a pizza. It cuts the input text into small pieces called <span class="tech-term">Tokens</span>. Then, it checks its massive dictionary and assigns an ID number to each piece.</p>
             
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; text-align: center;">
+                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Example</div>
+                
+                <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                    <!-- Step 1: Input Text -->
+                    <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem 1.5rem; border-radius: 8px; font-size: 1.1rem; color: #fff; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);">
+                        "The cat slept"
+                    </div>
+                    
+                    <!-- Arrow -->
+                    <div style="color: var(--accent-cyan); font-weight: bold;">↓ <span class="tech-term" style="font-size: 0.8rem; border:none; background:none; padding:0; vertical-align: middle;">Tokenization</span></div>
+                    
+                    <!-- Step 2: Tokens -->
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+                        <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);">"The"</div>
+                        <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);">" cat"</div>
+                        <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);">" slept"</div>
+                    </div>
+                    
+                    <!-- Arrow -->
+                    <div style="color: var(--accent-purple); font-weight: bold;">↓ <span class="tech-term" style="font-size: 0.8rem; border:none; background:none; padding:0; vertical-align: middle;">Dictionary Lookup</span></div>
+                    
+                    <!-- Step 3: IDs -->
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+                        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: #10b981; font-weight: bold; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">464</div>
+                        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: #10b981; font-weight: bold; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">3797</div>
+                        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: #10b981; font-weight: bold; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">18534</div>
+                    </div>
+                </div>
+            </div>
+            
             <ul>
                 <li><strong>Vocabulary:</strong> The model's dictionary. For example, GPT-4 has around 100,000 <span class="tech-term">Tokens</span> in its dictionary.</li>
                 <li><strong>Token IDs:</strong> Once tokenized, the word <code>"cat"</code> is mapped to a unique ID number, such as <code>3797</code>.</li>
@@ -1218,13 +1271,104 @@
             
             <p>In this profile, numbers score the word on different traits: Is it an animal? Is it royal? Is it masculine? Words with similar profiles are grouped close together in the <span class="tech-term">Embedding Space</span>.</p>
             
-            <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid var(--accent-cyan); padding: 1.2rem; border-radius: 8px; margin-top: 1.5rem; overflow-x: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                <p style="margin-top: 0; margin-bottom: 0.8rem; font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">Example of 3-Dimensional Vectors (Gender, Royalty, Age):</p>
-                <div style="font-family: 'Outfit', monospace; font-size: 0.9rem; color: var(--text-primary); letter-spacing: 0.5px; white-space: nowrap;">
-                    <div style="margin-bottom: 0.4rem;">Vector("King") &nbsp;&nbsp;= [ <span style="color: #10b981;">+0.8</span>, <span style="color: #10b981;">+0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
-                    <div style="margin-bottom: 0.4rem;">Vector("Man") &nbsp;&nbsp;&nbsp;= [ <span style="color: #10b981;">+0.8</span>, <span style="color: #ef4444;">-0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
-                    <div style="margin-bottom: 0.4rem;">Vector("Woman") = [ <span style="color: #ef4444;">-0.8</span>, <span style="color: #ef4444;">-0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
-                    <div>Vector("Queen") = [ <span style="color: #ef4444;">-0.8</span>, <span style="color: #10b981;">+0.9</span>, <span style="color: #10b981;">+0.7</span> ]</div>
+            <div style="position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(20, 25, 35, 0.9) 0%, rgba(10, 15, 25, 0.95) 100%); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2rem; border-radius: 16px; margin-top: 2rem; box-shadow: 0 12px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1rem;">
+                    <h3 style="margin: 0; font-weight: 600; color: #fff; font-size: 1.1rem; letter-spacing: 0.5px;">Token to Embedding Vector Mapping <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 400;">(from previous example)</span></h3>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.03); padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                        <span style="font-family: 'Outfit', monospace; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Dimensions <span style="color: var(--accent-cyan); font-weight: 600;">4</span></span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 0.8rem; font-family: 'Outfit', monospace; font-size: 1rem; overflow-x: auto;">
+                    
+                    <!-- Row 1 -->
+                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.015)'; this.style.borderColor='rgba(255,255,255,0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; width: 35%;">
+                            <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); color: #fff; padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(168, 85, 247, 0.1);">
+                                "The"
+                            </div>
+                            <div style="display: flex; flex-direction: column;">
+                                <span style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Token ID</span>
+                                <span style="color: var(--text-primary); font-weight: 500;">464</span>
+                            </div>
+                        </div>
+
+                        <div style="width: 10%; display: flex; justify-content: center; position: relative;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5; transition: all 0.3s;" onmouseover="this.style.opacity='1'; this.style.stroke='var(--accent-purple)';"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+
+                        <div style="width: 55%; display: flex; align-items: center; justify-content: flex-end; gap: 0.8rem;">
+                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">[</span>
+                            <div style="display: flex; gap: 1rem; color: var(--text-primary); letter-spacing: 1px;">
+                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.15</span>
+                                <span style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);">-0.22</span>
+                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.84</span>
+                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.50</span>
+                            </div>
+                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">]</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.015)'; this.style.borderColor='rgba(255,255,255,0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; width: 35%;">
+                            <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(56, 189, 248, 0.1);">
+                                " cat"
+                            </div>
+                            <div style="display: flex; flex-direction: column;">
+                                <span style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Token ID</span>
+                                <span style="color: var(--text-primary); font-weight: 500;">3797</span>
+                            </div>
+                        </div>
+
+                        <div style="width: 10%; display: flex; justify-content: center; position: relative;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5; transition: all 0.3s;" onmouseover="this.style.opacity='1'; this.style.stroke='var(--accent-cyan)';"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+
+                        <div style="width: 55%; display: flex; align-items: center; justify-content: flex-end; gap: 0.8rem;">
+                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">[</span>
+                            <div style="display: flex; gap: 1rem; color: var(--text-primary); letter-spacing: 1px;">
+                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.92</span>
+                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.81</span>
+                                <span style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);">-0.10</span>
+                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.33</span>
+                            </div>
+                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">]</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.015)'; this.style.borderColor='rgba(255,255,255,0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; width: 35%;">
+                            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #fff; padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.1);">
+                                " slept"
+                            </div>
+                            <div style="display: flex; flex-direction: column;">
+                                <span style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Token ID</span>
+                                <span style="color: var(--text-primary); font-weight: 500;">18534</span>
+                            </div>
+                        </div>
+
+                        <div style="width: 10%; display: flex; justify-content: center; position: relative;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5; transition: all 0.3s;" onmouseover="this.style.opacity='1'; this.style.stroke='var(--accent-green)';"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+
+                        <div style="width: 55%; display: flex; align-items: center; justify-content: flex-end; gap: 0.8rem;">
+                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">[</span>
+                            <div style="display: flex; gap: 1rem; color: var(--text-primary); letter-spacing: 1px;">
+                                <span style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);">-0.45</span>
+                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.27</span>
+                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.89</span>
+                                <span style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);">-0.62</span>
+                            </div>
+                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">]</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -1254,8 +1398,8 @@
                                 <div class="three-d-tooltip" id="three-d-tooltip">Drag to rotate 3D Space</div>
                                 <svg class="three-d-svg" id="three-d-svg" viewBox="0 0 500 400">
                                     <defs>
-                                        <marker id="arrow-axis" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                                            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#94a3b8" />
+                                        <marker id="arrow-axis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(255, 255, 255, 0.2)" />
                                         </marker>
                                     </defs>
                                     <!-- Axes and geometry will be injected dynamically -->
@@ -1291,7 +1435,7 @@
                     <!-- Heatmap Grid View -->
                     <div id="heatmap-view" class="visualizer-view">
                         <p style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-secondary);">
-                            Word embeddings are essentially lists of numbers. Inspect the values across the 3 different feature axes in the table below. Notice how masculine words have positive values (+0.8) on the first dimension, while feminine words have negative values (-0.8).
+                            Word embeddings are essentially lists of numbers. Inspect the values across the 3 different feature axes in the table below. Notice how masculine words have positive values (+1.0) on the first dimension, while feminine words have negative values (-1.0).
                         </p>
                         <div class="heatmap-table-container">
                             <table class="heatmap-table">
@@ -1316,7 +1460,7 @@
         <!-- Interactive Visualizer 1 -->
         <div class="card">
             <h2>Interactive Semantic Vector Space</h2>
-            <p>Let's try doing math with words! Select a relationship below and click <strong>"Run Vector Math"</strong> to witness the magic.</p>
+            <p>Let's try doing math with words! Select a relationship below and click <strong>"Run All"</strong> or <strong>"Step-by-Step"</strong> to witness the magic.</p>
             
             <div class="vector-container">
                 <div class="vector-controls">
@@ -1369,10 +1513,26 @@
                         <text x="40" y="365" class="axis-label">0</text>
 
                         <!-- Math Vector Lines -->
-                        <line id="vector-A" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-cyan)" stroke-width="2.5" marker-end="url(#arrow-cyan)" style="opacity:0" />
-                        <line id="vector-B" x1="0" y1="0" x2="0" y2="0" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrow-red)" style="opacity:0" />
-                        <line id="vector-C" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-purple)" stroke-width="2.5" marker-end="url(#arrow-purple)" style="opacity:0" />
-                        <line id="vector-R" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-green)" stroke-width="4" marker-end="url(#arrow-green)" style="opacity:0; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.5));" />
+                        <g id="vector-A-group" style="opacity:0">
+                            <line id="vector-A" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-cyan)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-cyan)" style="filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.6));" />
+                            <text id="label-A" x="0" y="0" fill="var(--accent-cyan)" font-size="12" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
+                        </g>
+                        <g id="vector-B-group" style="opacity:0">
+                            <line id="vector-B" x1="0" y1="0" x2="0" y2="0" stroke="#ef4444" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-red)" style="filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.6));" />
+                            <text id="label-B" x="0" y="0" fill="#ef4444" font-size="12" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
+                        </g>
+                        <g id="vector-C-group" style="opacity:0">
+                            <line id="vector-C" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-purple)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-purple)" style="filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.6));" />
+                            <text id="label-C" x="0" y="0" fill="var(--accent-purple)" font-size="12" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
+                        </g>
+                        <g id="vector-R-group" style="opacity:0">
+                            <line id="vector-R" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-green)" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-green)" style="filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8));" />
+                            <text id="label-R" x="0" y="0" fill="var(--accent-green)" font-size="14" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
+                        </g>
+                        
+                        <!-- Dashed Projection Lines -->
+                        <line id="proj-x" x1="0" y1="0" x2="0" y2="0" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="5,5" style="opacity:0" />
+                        <line id="proj-y" x1="0" y1="0" x2="0" y2="0" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="5,5" style="opacity:0" />
 
                         <!-- Plotted word dots -->
                         <g id="word-points"></g>
@@ -1641,10 +1801,14 @@
             const rel = relations[relationKey];
 
             // Reset vectors opacity
-            document.getElementById('vector-A').style.opacity = 0;
-            document.getElementById('vector-B').style.opacity = 0;
-            document.getElementById('vector-C').style.opacity = 0;
-            document.getElementById('vector-R').style.opacity = 0;
+            ['vector-A-group','vector-B-group','vector-C-group','vector-R-group'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.style.opacity = 0;
+            });
+            const pX = document.getElementById('proj-x');
+            const pY = document.getElementById('proj-y');
+            if(pX) pX.style.opacity = 0;
+            if(pY) pY.style.opacity = 0;
 
             // Redraw word points
             const pointsG = document.getElementById('word-points');
@@ -1662,10 +1826,68 @@
                 `;
             });
 
-            document.getElementById('vector-narration').innerHTML = `Relationship: <span class="highlight">${rel.formula}</span><br>Click <strong>Run Vector Math</strong> to watch the animation.`;
+            document.getElementById('vector-narration').innerHTML = `Relationship: <span class="highlight">${rel.formula}</span><br>Click <strong>Run All</strong> or <strong>Step-by-Step</strong> to watch the animation.`;
         }
 
-        function animateLine(lineId, x1, y1, x2, y2, duration, callback) {
+        function animateLine(groupId, lineId, labelId, x1, y1, x2, y2, duration, labelText, callback) {
+            const group = document.getElementById(groupId);
+            const line = document.getElementById(lineId);
+            const label = document.getElementById(labelId);
+            
+            if(label && labelText) label.textContent = labelText;
+            
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x1);
+            line.setAttribute('y2', y1);
+            
+            if(label) {
+                label.setAttribute('x', x1);
+                label.setAttribute('y', y1);
+            }
+            
+            group.style.opacity = 1;
+            
+            const startTime = performance.now();
+            
+            function update(time) {
+                const elapsed = time - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Classic smooth easing (easeOutCubic)
+                const ease = 1 - Math.pow(1 - progress, 3);
+                
+                const currentX = x1 + (x2 - x1) * ease;
+                const currentY = y1 + (y2 - y1) * ease;
+                
+                line.setAttribute('x2', currentX);
+                line.setAttribute('y2', currentY);
+                
+                if (label) {
+                    const midX = x1 + (currentX - x1) * 0.5;
+                    const midY = y1 + (currentY - y1) * 0.5;
+                    
+                    const dx = currentX - x1;
+                    const dy = currentY - y1;
+                    const len = Math.sqrt(dx*dx + dy*dy) || 1;
+                    let nx = -dy / len;
+                    let ny = dx / len;
+                    if (ny > 0) { nx = -nx; ny = -ny; }
+                    
+                    label.setAttribute('x', midX + nx * 22);
+                    label.setAttribute('y', midY + ny * 22);
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        function animateProjection(lineId, x1, y1, x2, y2, duration) {
             const line = document.getElementById(lineId);
             line.setAttribute('x1', x1);
             line.setAttribute('y1', y1);
@@ -1674,22 +1896,15 @@
             line.style.opacity = 1;
             
             const startTime = performance.now();
-            
             function update(time) {
                 const elapsed = time - startTime;
                 const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3);
                 
-                const currentX = x1 + (x2 - x1) * progress;
-                const currentY = y1 + (y2 - y1) * progress;
+                line.setAttribute('x2', x1 + (x2 - x1) * ease);
+                line.setAttribute('y2', y1 + (y2 - y1) * ease);
                 
-                line.setAttribute('x2', currentX);
-                line.setAttribute('y2', currentY);
-                
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                } else if (callback) {
-                    callback();
-                }
+                if (progress < 1) requestAnimationFrame(update);
             }
             requestAnimationFrame(update);
         }
@@ -1709,9 +1924,14 @@
             const relationKey = document.getElementById('relation-select').value;
             const rel = relations[relationKey];
 
-            ['vector-A','vector-B','vector-C','vector-R'].forEach(id => {
-                document.getElementById(id).style.opacity = 0;
+            ['vector-A-group','vector-B-group','vector-C-group','vector-R-group'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.style.opacity = 0;
             });
+            const pX = document.getElementById('proj-x');
+            const pY = document.getElementById('proj-y');
+            if(pX) pX.style.opacity = 0;
+            if(pY) pY.style.opacity = 0;
 
             const org   = toSVG(0, 0);
             const svgA  = toSVG(rel.A.x, rel.A.y);
@@ -1728,28 +1948,34 @@
 
             // Step 1: Vector A
             narration.innerHTML = `<p style="animation: popIn 0.3s">${rel.explain.step1}</p>`;
-            await new Promise(r => animateLine('vector-A', org.x, org.y, svgA.x, svgA.y, 1000, r));
+            await new Promise(r => animateLine('vector-A-group', 'vector-A', 'label-A', org.x, org.y, svgA.x, svgA.y, 1000, rel.A.name, r));
             await pause(400);
 
             // Step 2: Vector -B
             narration.innerHTML = `<p style="animation: popIn 0.3s">${rel.explain.step2}</p>`;
-            await new Promise(r => animateLine('vector-B', svgA.x, svgA.y, svgAB.x, svgAB.y, 1000, r));
+            await new Promise(r => animateLine('vector-B-group', 'vector-B', 'label-B', svgA.x, svgA.y, svgAB.x, svgAB.y, 1000, `- ${rel.B.name}`, r));
             await pause(400);
 
             // Step 3: Vector +C
             narration.innerHTML = `<p style="animation: popIn 0.3s">${rel.explain.step3}</p>`;
-            await new Promise(r => animateLine('vector-C', svgAB.x, svgAB.y, svgD.x, svgD.y, 1000, r));
+            await new Promise(r => animateLine('vector-C-group', 'vector-C', 'label-C', svgAB.x, svgAB.y, svgD.x, svgD.y, 1000, `+ ${rel.C.name}`, r));
             await pause(400);
 
             // Step 4: Result Vector
             narration.innerHTML = `<p style="color:var(--accent-green); font-weight:bold; animation: popIn 0.3s">${rel.explain.step4}</p>`;
-            await new Promise(r => animateLine('vector-R', org.x, org.y, svgD.x, svgD.y, 1200, r));
+            await new Promise(r => animateLine('vector-R-group', 'vector-R', 'label-R', org.x, org.y, svgD.x, svgD.y, 1200, `= ${rel.D.name}`, r));
+
+            animateProjection('proj-x', svgD.x, svgD.y, svgD.x, org.y, 600);
+            animateProjection('proj-y', svgD.x, svgD.y, org.x, svgD.y, 600);
 
             const ptD = document.getElementById(`pt-${rel.D.name.replace(/\s+/g, '')}`);
             if (ptD) {
-                ptD.querySelector('circle').style.fill = 'var(--accent-green)';
-                ptD.querySelector('circle').setAttribute('r', '9');
-                setTimeout(() => ptD.querySelector('circle').setAttribute('r', '6'), 1000);
+                const c = ptD.querySelector('circle');
+                if (c) {
+                    c.style.fill = 'var(--accent-green)';
+                    c.setAttribute('r', '10');
+                    setTimeout(() => c.setAttribute('r', '6'), 1000);
+                }
             }
 
             isAnimating = false;
@@ -1903,14 +2129,14 @@
         
         // Curated set of words with Gender, Royalty, Age dimensions
         const words3D = [
-            { name: "King",     coords: [ 0.8,  0.9,  0.7], color: "var(--accent-cyan)" },
-            { name: "Queen",    coords: [-0.8,  0.9,  0.7], color: "var(--accent-purple)" },
-            { name: "Man",      coords: [ 0.8, -0.9,  0.7], color: "var(--accent-cyan)" },
-            { name: "Woman",    coords: [-0.8, -0.9,  0.7], color: "var(--accent-purple)" },
-            { name: "Boy",      coords: [ 0.8, -0.9, -0.7], color: "var(--accent-cyan)" },
-            { name: "Girl",     coords: [-0.8, -0.9, -0.7], color: "var(--accent-purple)" },
-            { name: "Prince",   coords: [ 0.8,  0.9, -0.7], color: "var(--accent-cyan)" },
-            { name: "Princess", coords: [-0.8,  0.9, -0.7], color: "var(--accent-purple)" }
+            { name: "King",     coords: [ 1.0,  1.0,  1.0], color: "var(--accent-cyan)" },
+            { name: "Queen",    coords: [-1.0,  1.0,  1.0], color: "var(--accent-purple)" },
+            { name: "Man",      coords: [ 1.0, -1.0,  1.0], color: "var(--accent-cyan)" },
+            { name: "Woman",    coords: [-1.0, -1.0,  1.0], color: "var(--accent-purple)" },
+            { name: "Boy",      coords: [ 1.0, -1.0, -1.0], color: "var(--accent-cyan)" },
+            { name: "Girl",     coords: [-1.0, -1.0, -1.0], color: "var(--accent-purple)" },
+            { name: "Prince",   coords: [ 1.0,  1.0, -1.0], color: "var(--accent-cyan)" },
+            { name: "Princess", coords: [-1.0,  1.0, -1.0], color: "var(--accent-purple)" }
         ];
 
         // 3D Engine State
@@ -2064,27 +2290,27 @@
             // X-axis: Gender [-1.4 to 1.4]
             const xAxisStart = project3D(-1.3, 0, 0);
             const xAxisEnd = project3D(1.3, 0, 0);
-            axesGroup.innerHTML += `<line x1="${xAxisStart.x}" y1="${xAxisStart.y}" x2="${xAxisEnd.x}" y2="${xAxisEnd.y}" class="three-d-axis" stroke="#94a3b8" marker-end="url(#arrow-axis)" />`;
+            axesGroup.innerHTML += `<line x1="${xAxisStart.x}" y1="${xAxisStart.y}" x2="${xAxisEnd.x}" y2="${xAxisEnd.y}" class="three-d-axis" marker-end="url(#arrow-axis)" />`;
 
             // Y-axis: Royalty [-1.4 to 1.4]
             const yAxisStart = project3D(0, -1.3, 0);
             const yAxisEnd = project3D(0, 1.3, 0);
-            axesGroup.innerHTML += `<line x1="${yAxisStart.x}" y1="${yAxisStart.y}" x2="${yAxisEnd.x}" y2="${yAxisEnd.y}" class="three-d-axis" stroke="#94a3b8" marker-end="url(#arrow-axis)" />`;
+            axesGroup.innerHTML += `<line x1="${yAxisStart.x}" y1="${yAxisStart.y}" x2="${yAxisEnd.x}" y2="${yAxisEnd.y}" class="three-d-axis" marker-end="url(#arrow-axis)" />`;
 
             // Z-axis: Age [-1.4 to 1.4]
             const zAxisStart = project3D(0, 0, -1.3);
             const zAxisEnd = project3D(0, 0, 1.3);
-            axesGroup.innerHTML += `<line x1="${zAxisStart.x}" y1="${zAxisStart.y}" x2="${zAxisEnd.x}" y2="${zAxisEnd.y}" class="three-d-axis" stroke="#94a3b8" marker-end="url(#arrow-axis)" />`;
+            axesGroup.innerHTML += `<line x1="${zAxisStart.x}" y1="${zAxisStart.y}" x2="${zAxisEnd.x}" y2="${zAxisEnd.y}" class="three-d-axis" marker-end="url(#arrow-axis)" />`;
 
             // Draw axis divisions / ticks
             const ticks = [-1.0, 1.0];
             ticks.forEach(t => {
                 const ptX = project3D(t, 0, 0);
-                axesGroup.innerHTML += `<line x1="${ptX.x}" y1="${ptX.y - 4}" x2="${ptX.x}" y2="${ptX.y + 4}" stroke="#94a3b8" stroke-width="1.2" />`;
+                axesGroup.innerHTML += `<line x1="${ptX.x}" y1="${ptX.y - 4}" x2="${ptX.x}" y2="${ptX.y + 4}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />`;
                 const ptY = project3D(0, t, 0);
-                axesGroup.innerHTML += `<line x1="${ptY.x - 4}" y1="${ptY.y}" x2="${ptY.x + 4}" y2="${ptY.y}" stroke="#94a3b8" stroke-width="1.2" />`;
+                axesGroup.innerHTML += `<line x1="${ptY.x - 4}" y1="${ptY.y}" x2="${ptY.x + 4}" y2="${ptY.y}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />`;
                 const ptZ = project3D(0, 0, t);
-                axesGroup.innerHTML += `<line x1="${ptZ.x - 3}" y1="${ptZ.y - 3}" x2="${ptZ.x + 3}" y2="${ptZ.y + 3}" stroke="#94a3b8" stroke-width="1.2" />`;
+                axesGroup.innerHTML += `<line x1="${ptZ.x - 3}" y1="${ptZ.y - 3}" x2="${ptZ.x + 3}" y2="${ptZ.y + 3}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />`;
             });
 
             // Axis labels (positive and negative ends)
@@ -2129,8 +2355,7 @@
                         linesGroup.innerHTML += `
                             <line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" 
                                   class="three-d-relation-line" 
-                                  stroke="var(--accent-purple)" 
-                                  stroke-width="1.8" />
+                                  stroke="var(--accent-purple)" />
                         `;
                     }
                 });
@@ -2159,7 +2384,7 @@
                        style="--node-color: ${node.color};"
                        onmouseenter="highlight3DNode('${node.name}', true)"
                        onmouseleave="highlight3DNode('${node.name}', false)">
-                        <circle cx="${node.x}" cy="${node.y}" r="6" fill="${node.color}" stroke="var(--bg-color)" stroke-width="1.5" />
+                        <circle cx="${node.x}" cy="${node.y}" r="5.5" fill="${node.color}" style="filter: drop-shadow(0 0 6px ${node.color});" />
                         <text x="${node.x}" y="${node.y - 12}" text-anchor="middle">${node.name}</text>
                     </g>
                 `;
