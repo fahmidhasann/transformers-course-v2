@@ -239,55 +239,92 @@
 
         .vector-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
             margin-top: 1rem;
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
+            background: transparent;
+            border: none;
         }
 
         .vector-table th, .vector-table td {
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             text-align: left;
+            border: none;
+            background: rgba(15, 23, 42, 0.4);
+        }
+
+        .vector-table tbody tr td:first-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-left: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .vector-table tbody tr td:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            border-right: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
         }
 
         .vector-table th {
             color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding-bottom: 0.5rem;
+            background: transparent;
         }
 
         .vector-display-row {
             display: flex;
-            gap: 0.45rem;
+            gap: 0.6rem;
             align-items: center;
-            overflow: visible; /* Prevent row clipping or scrollbars when scaling blocks */
-            padding: 6px 0;    /* Vertical buffer space for transform scale */
-            margin: -6px 0;    /* Compensate parent padding */
+            position: relative;
+            padding: 8px 12px;    
+        }
+        
+        .vector-display-row::before, .vector-display-row::after {
+            content: '';
+            width: 8px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            border-top: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            opacity: 0.7;
+        }
+        .vector-display-row::before {
+            left: 0;
+            border-left: 2px solid var(--text-secondary);
+        }
+        .vector-display-row::after {
+            right: 0;
+            border-right: 2px solid var(--text-secondary);
         }
 
         .vector-block {
-            width: 48px;
-            height: 36px;
+            width: 52px;
+            height: 32px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 6px;
+            font-family: 'Outfit', 'Georgia', serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 16px;
             color: white;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
             transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
                         background-color 0.2s ease,
                         border-color 0.2s ease,
                         box-shadow 0.2s ease;
             flex-shrink: 0;
             position: relative;
-            cursor: pointer;
-            border: 1px solid transparent;
+            cursor: default;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .vector-math-symbol {
@@ -1534,29 +1571,68 @@
         <!-- Section 3: Positional Encoding -->
         <div class="card">
             <h2>৩. Positional Encoding (ক্রম বা অর্ডার যোগ করা)</h2>
+            
             <p>Transformer মডেল অত্যন্ত দ্রুত কাজ করতে পারে কারণ এটি বাক্যের সবগুলো শব্দকে বাঁ-থেকে-ডানে না পড়ে <strong>একই সাথে সমান্তরালভাবে পড়ে</strong>।</p>
             <p>কিন্তু এর ফলে একটি বড় সমস্যা তৈরি হয়: যেহেতু সে একসাথে সব পড়ে, <strong>সে শব্দের সঠিক ক্রম বা অর্ডার হারিয়ে ফেলে!</strong> শব্দের অবস্থান বা পজিশন নির্দিষ্ট করে দেওয়ার কোনো মেকানিজম না থাকলে, মডেল নিচের দুটি বাক্যের তফাত বুঝতে পারে না:</p>
-            <div style="background: rgba(255, 255, 255, 0.03); border-left: 4px solid #ef4444; padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem;">
-                ১. <strong>"The cat ate the mouse"</strong> (বিড়ালটি ইঁদুরটিকে খেয়েছে)<br>
-                ২. <strong>"The mouse ate the cat"</strong> (ইঁদুরটি বিড়ালটিকে খেয়েছে)
+            
+            <div style="display: flex; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1.25rem; border-radius: 8px; text-align: center; position: relative;">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #1e1e1e; border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">বাক্য ১</div>
+                    <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem;">"The cat ate the mouse"</div>
+                    <div style="color: var(--text-secondary); font-size: 0.95rem;">(বিড়ালটি ইঁদুরটিকে খেয়েছে)</div>
+                </div>
+                <div style="flex: 1; min-width: 250px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1.25rem; border-radius: 8px; text-align: center; position: relative;">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #1e1e1e; border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">বাক্য ২</div>
+                    <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem;">"The mouse ate the cat"</div>
+                    <div style="color: var(--text-secondary); font-size: 0.95rem;">(ইঁদুরটি বিড়ালটিকে খেয়েছে)</div>
+                </div>
             </div>
-            <p>যেহেতু দুটি বাক্যেই হুবহু একই শব্দ রয়েছে, তাই সেগুলো তার কাছে একই মনে হবে।</p>
+            
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-secondary); font-size: 0.95rem; font-style: italic;">যেহেতু দুটি বাক্যেই হুবহু একই শব্দ রয়েছে, তাই পজিশন ছাড়া সেগুলো মডেলের কাছে একই মনে হবে।</p>
 
-            <details style="margin-top:1rem; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:6px; cursor:pointer; margin-bottom:1rem;">
-                <summary style="font-weight:600; color:var(--accent-purple);">সমাধান: পজিশনাল ভেক্টর (Positional Vectors)</summary>
-                <div style="margin-top:0.5rem; font-size:0.9rem;">
-                    <p>এই সমস্যা সমাধানে মডেল ১ নম্বর শব্দ, ২ নম্বর শব্দ ইত্যাদির জন্য সাইন এবং কোসাইন তরঙ্গ ব্যবহার করে একটি বিশেষ "পজিশন ট্যাগ" (বা <span class="tech-term">Positional Encoding Vector</span>) তৈরি করে। এরপর শব্দের অর্থের ট্যাগের সাথে এই পজিশন ট্যাগটি মিশিয়ে দেওয়া হয়।</p>
-                    <div class="formula-box">
-                        চুড়ান্ত শব্দের প্রোফাইল = শব্দের অর্থ (Embedding) + পজিশন ট্যাগ
+            <div style="background: linear-gradient(145deg, rgba(168, 85, 247, 0.05) 0%, rgba(168, 85, 247, 0.1) 100%); border: 1px solid rgba(168, 85, 247, 0.2); padding: 1.5rem; border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                <h3 style="color: var(--accent-purple); margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    সমাধান: পজিশনাল ভেক্টর (Positional Vectors)
+                </h3>
+                <p style="margin-bottom: 1.5rem; line-height: 1.6;">এই সমস্যা সমাধানে মডেল প্রতিটি শব্দের জন্য একটি বিশেষ "পজিশন ট্যাগ" বা "সিট নাম্বার" তৈরি করে, যাকে <span class="tech-term">Positional Encoding</span> বলা হয়। এরপর শব্দের মূল অর্থের সাথে এই পজিশন ট্যাগটি গাণিতিকভাবে যোগ করে দেওয়া হয়।</p>
+                
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; background: rgba(0,0,0,0.25); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="text-align: center;">
+                        <div style="width: 70px; height: 70px; background: rgba(6, 182, 212, 0.15); border: 2px solid var(--accent-cyan); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; color: var(--accent-cyan); box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);">
+                            <span style="font-size: 1.4rem; font-weight: 700; font-family: 'Outfit', sans-serif;">"cat"</span>
+                        </div>
+                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Word Vector</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">শব্দের অর্থ</div>
+                    </div>
+                    
+                    <div style="font-size: 2.5rem; font-weight: 300; color: var(--text-secondary);">+</div>
+                    
+                    <div style="text-align: center;">
+                        <div style="width: 70px; height: 70px; background: rgba(168, 85, 247, 0.15); border: 2px solid var(--accent-purple); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; color: var(--accent-purple); box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);">
+                            <span style="font-size: 1.2rem; font-weight: 700; font-family: 'Outfit', sans-serif;">Pos 2</span>
+                        </div>
+                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Position Vector</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">পজিশন ট্যাগ</div>
+                    </div>
+                    
+                    <div style="font-size: 2.5rem; font-weight: 300; color: var(--text-secondary);">=</div>
+                    
+                    <div style="text-align: center;">
+                        <div style="width: 70px; height: 70px; background: rgba(16, 185, 129, 0.15); border: 2px solid var(--accent-green); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; color: var(--accent-green); box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);">
+                            <span style="font-size: 1rem; font-weight: 700; font-family: 'Outfit', sans-serif; text-align: center; line-height: 1.2;">"cat"<br>Pos 2</span>
+                        </div>
+                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Final Token</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">চুড়ান্ত প্রোফাইল</div>
                     </div>
                 </div>
-            </details>
+            </div>
         </div>
 
         <!-- Interactive Visualizer 2 -->
         <div class="card">
             <h2>ইন্টারঅ্যাক্টিভ পজিশনাল এনকোডিং সিমুলেটর</h2>
-            <p>এখন আমরা দেখব কীভাবে একটি শব্দের অর্থ এবং তার অবস্থানের তথ্য একত্রিত হয়। নিচের শব্দগুলোতে ক্লিক করে দেখুন কীভাবে <span class="tech-term">Word Vector</span>-এর সাথে <span class="tech-term">Position Vector</span> যুক্ত হয়ে একটি চূড়ান্ত গাণিতিক রূপ তৈরি করে, যা মডেলকে শব্দটির অর্থ ও বাক্যে তার অবস্থান—উভয়ই বুঝতে সাহায্য করে।</p>
+            <p>মডেল শুধু শব্দের অর্থ জানলেই হয় না, শব্দটি বাক্যের কোথায় বসেছে সেটাও জানা জরুরি। নিচের শব্দগুলোতে ক্লিক করে দেখুন কীভাবে শব্দের অর্থের (<span class="tech-term">Word Vector</span>) সাথে তার অবস্থানের তথ্য (<span class="tech-term">Position Vector</span>) যোগ হয়ে একটি চূড়ান্ত গাণিতিক রূপ তৈরি করে।</p>
             
             <div class="pe-selector">
                 <button class="pe-word-btn active" onclick="selectPEWord(0)">The (Index 0)</button>
@@ -2054,21 +2130,21 @@
             const expDiv = document.getElementById('pe-explanation');
             let explanationText = `
                 <p>আপনি সিলেক্ট করেছেন: <strong class="highlight">"${data.word}" (Position Index: ${data.idx})</strong></p>
-                <p>• Word Vector <code>W</code> শব্দের অর্থ সেমান্টিকভাবে রিপ্রেজেন্ট করছে।</p>
-                <p>• Position Vector <code>P</code> তৈরি করা হয়েছে <code>pos = ${data.idx}</code> ধরে sine/cosine তরঙ্গের মাধ্যমে। সহজ কথায়, এই তরঙ্গগুলো প্রতিটি অবস্থানের জন্য একটি অনন্য গাণিতিক পরিচয় (unique mathematical signature) তৈরি করে, যার ফলে মডেল বুঝতে পারে শব্দটি বাক্যের ঠিক কোথায় আছে।</p>
-                <p>• চূড়ান্ত ভেক্টর <code>C = W + P</code> যা সরাসরি ট্রান্সফরমার ব্লকে পাঠানো হয়।</p>
-                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45;">
-                    💡 <strong>ঘড়ির কাটার রূপক:</strong> পজিশনাল এনকোডিং আসলে ঘড়ির কাটার মতো কাজ করে। প্রতিটি ডাইমেনশন ভিন্ন ভিন্ন স্পিডে বা ফ্রিকোয়েন্সিতে ঘোরে। দ্রুত পরিবর্তনশীল সাইন তরঙ্গগুলো (যেমন Dim 0/1, নীল/বেগুনি) ঘড়ির সেকেন্ডের কাটার মতো কাজ করে যা প্রতিটি পদক্ষেপে দ্রুত পরিবর্তিত হয়। আর ধীরগতির তরঙ্গগুলো (যেমন Dim 4/5, লাল/নীল) ঘণ্টার কাটার মতো কাজ করে যা বড় সিকোয়েন্সে অবস্থান ট্র্যাক করতে সাহায্য করে।
+                <p>• <strong>Word Vector (W):</strong> এটি শব্দটির নিজস্ব অর্থ প্রকাশ করে।</p>
+                <p>• <strong>Position Vector (P):</strong> এটি বাক্যে শব্দটির সিরিয়াল বা অবস্থান প্রকাশ করে। এটি তৈরি হয় sine ও cosine তরঙ্গের মাধ্যমে, যেন প্রতিটি অবস্থানের একটি ইউনিক কোড থাকে।</p>
+                <p>• <strong>Combined Vector (C = W + P):</strong> শব্দের অর্থ ও অবস্থানের এই যোগফলটিই ট্রান্সফরমার মডেল গ্রহণ করে।</p>
+                <p style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; padding-left: 1rem; border-left: 3px solid var(--accent-purple);">
+                    💡 <strong>সহজ কথায়:</strong> পজিশনাল এনকোডিং অনেকটা ঘড়ির কাঁটার মতো। সেকেন্ড, মিনিট ও ঘণ্টার কাঁটা মিলে যেমন একটি নির্দিষ্ট সময় বোঝায়, তেমনি বিভিন্ন তরঙ্গের মিশ্রণ প্রতিটি শব্দের জন্য একটি অদ্বিতীয় অবস্থানের ঠিকানা তৈরি করে।
                 </p>
             `;
 
             if (data.idx === 0 || data.idx === 3) {
                 explanationText += `
-                    <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--accent-cyan); border-radius: 6px; padding: 0.75rem; margin-top: 0.75rem;">
-                        <strong>বিশেষ পর্যবেক্ষণ:</strong> <br>
-                        ইনপুট বাক্যে দুটি <strong>"The" / "the"</strong> রয়েছে (ইনডেক্স 0 ও 3)। 
-                        দুটিরই <strong>Word Vector (W) হুবহু একই</strong> [0.15, -0.62, 0.48, -0.09, 0.35, -0.21]। কিন্তু ভিন্ন ভিন্ন পজিশন ইনডেক্স হওয়ার কারণে তাদের <strong>Position Vector (P) ভিন্ন ভিন্ন</strong> এসেছে। 
-                        ফলাফলস্বরূপ, তাদের চূড়ান্ত <strong>Combined Vector (C) সম্পূর্ণ আলাদা</strong> হয়ে গেছে! এর ফলে সমান্তরালভাবে প্রসেস করার পরও মডেলটি জানে কোন শব্দটি আগে আর কোনটি পরে বসেছে।
+                    <div style="background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                        <strong>🔍 একটি মজার জিনিস খেয়াল করুন:</strong> <br>
+                        বাক্যে দুটি <strong>"${data.word}"</strong> রয়েছে (পজিশন 0 এবং 3)। 
+                        দুটি শব্দের অর্থ একই হওয়ায় তাদের <strong>Word Vector (W) হুবহু একই</strong>। কিন্তু তাদের অবস্থান ভিন্ন হওয়ায় <strong>Position Vector (P) ভিন্ন</strong>। 
+                        এর ফলে যোগফল বা <strong>Combined Vector (C) সম্পূর্ণ আলাদা</strong> হয়ে গেছে! এভাবেই মডেল একই শব্দের ভিন্ন ভিন্ন অবস্থান নিখুঁতভাবে বুঝতে পারে।
                     </div>
                 `;
             }

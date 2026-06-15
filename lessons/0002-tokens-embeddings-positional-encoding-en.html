@@ -239,55 +239,92 @@
 
         .vector-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
             margin-top: 1rem;
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
+            background: transparent;
+            border: none;
         }
 
         .vector-table th, .vector-table td {
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             text-align: left;
+            border: none;
+            background: rgba(15, 23, 42, 0.4);
+        }
+
+        .vector-table tbody tr td:first-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-left: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .vector-table tbody tr td:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            border-right: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
         }
 
         .vector-table th {
             color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding-bottom: 0.5rem;
+            background: transparent;
         }
 
         .vector-display-row {
             display: flex;
-            gap: 0.45rem;
+            gap: 0.6rem;
             align-items: center;
-            overflow: visible; /* Prevent row clipping or scrollbars when scaling blocks */
-            padding: 6px 0;    /* Vertical buffer space for transform scale */
-            margin: -6px 0;    /* Compensate parent padding */
+            position: relative;
+            padding: 8px 12px;    
+        }
+        
+        .vector-display-row::before, .vector-display-row::after {
+            content: '';
+            width: 8px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            border-top: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            opacity: 0.7;
+        }
+        .vector-display-row::before {
+            left: 0;
+            border-left: 2px solid var(--text-secondary);
+        }
+        .vector-display-row::after {
+            right: 0;
+            border-right: 2px solid var(--text-secondary);
         }
 
         .vector-block {
-            width: 48px;
-            height: 36px;
+            width: 52px;
+            height: 32px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 6px;
+            font-family: 'Outfit', 'Georgia', serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 16px;
             color: white;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
             transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
                         background-color 0.2s ease,
                         border-color 0.2s ease,
                         box-shadow 0.2s ease;
             flex-shrink: 0;
             position: relative;
-            cursor: pointer;
-            border: 1px solid transparent;
+            cursor: default;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .vector-math-symbol {
@@ -1535,29 +1572,66 @@
         <!-- Section 3: Positional Encoding -->
         <div class="card">
             <h2>3. Positional Encoding (Adding Order)</h2>
+            
             <p>The Transformer model is incredibly fast because it reads all the words in a sentence <strong>at the exact same time</strong>, rather than reading left-to-right.</p>
             <p>But this creates a huge problem: because it reads everything at once, <strong>it scrambles the order of the words!</strong> Without a mechanism to explicitly specify word positions, the model can't tell the difference between:</p>
-            <div style="background: rgba(255, 255, 255, 0.03); border-left: 4px solid #ef4444; padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem;">
-                1. <strong>"The cat ate the mouse"</strong><br>
-                2. <strong>"The mouse ate the cat"</strong>
+            
+            <div style="display: flex; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1.25rem; border-radius: 8px; text-align: center; position: relative;">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #1e1e1e; border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Sentence 1</div>
+                    <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem;">"The cat ate the mouse"</div>
+                </div>
+                <div style="flex: 1; min-width: 250px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1.25rem; border-radius: 8px; text-align: center; position: relative;">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #1e1e1e; border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Sentence 2</div>
+                    <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem;">"The mouse ate the cat"</div>
+                </div>
             </div>
-            <p>They contain the exact same words, so they look identical.</p>
+            
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-secondary); font-size: 0.95rem; font-style: italic;">They contain the exact same words, so without positions, they look identical to the model.</p>
 
-            <details style="margin-top:1rem; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:6px; cursor:pointer; margin-bottom:1rem;">
-                <summary style="font-weight:600; color:var(--accent-purple);">The Solution: Positional Vectors</summary>
-                <div style="margin-top:0.5rem; font-size:0.9rem;">
-                    <p>To fix this, the model creates a special "position tag" (a <span class="tech-term">Positional Encoding Vector</span>) for word #1, word #2, and so on using math waves (sine and cosine). It mixes this position tag with the word's meaning tag.</p>
-                    <div class="formula-box">
-                        Final Word Profile = Word Meaning (Embedding) + Position Tag
+            <div style="background: linear-gradient(145deg, rgba(168, 85, 247, 0.05) 0%, rgba(168, 85, 247, 0.1) 100%); border: 1px solid rgba(168, 85, 247, 0.2); padding: 1.5rem; border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                <h3 style="color: var(--accent-purple); margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    The Solution: Positional Vectors
+                </h3>
+                <p style="margin-bottom: 1.5rem; line-height: 1.6;">To fix this, the model creates a special "position tag" (or seat number) for each word, known as a <span class="tech-term">Positional Encoding Vector</span>. It then mathematically mixes this position tag with the word's meaning tag.</p>
+                
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; background: rgba(0,0,0,0.25); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="text-align: center;">
+                        <div style="width: 70px; height: 70px; background: rgba(6, 182, 212, 0.15); border: 2px solid var(--accent-cyan); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; color: var(--accent-cyan); box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);">
+                            <span style="font-size: 1.4rem; font-weight: 700; font-family: 'Outfit', sans-serif;">"cat"</span>
+                        </div>
+                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Word Vector</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Word Meaning</div>
+                    </div>
+                    
+                    <div style="font-size: 2.5rem; font-weight: 300; color: var(--text-secondary);">+</div>
+                    
+                    <div style="text-align: center;">
+                        <div style="width: 70px; height: 70px; background: rgba(168, 85, 247, 0.15); border: 2px solid var(--accent-purple); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; color: var(--accent-purple); box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);">
+                            <span style="font-size: 1.2rem; font-weight: 700; font-family: 'Outfit', sans-serif;">Pos 2</span>
+                        </div>
+                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Position Vector</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Position Tag</div>
+                    </div>
+                    
+                    <div style="font-size: 2.5rem; font-weight: 300; color: var(--text-secondary);">=</div>
+                    
+                    <div style="text-align: center;">
+                        <div style="width: 70px; height: 70px; background: rgba(16, 185, 129, 0.15); border: 2px solid var(--accent-green); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; color: var(--accent-green); box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);">
+                            <span style="font-size: 1rem; font-weight: 700; font-family: 'Outfit', sans-serif; text-align: center; line-height: 1.2;">"cat"<br>Pos 2</span>
+                        </div>
+                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Final Token</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Meaning + Order</div>
                     </div>
                 </div>
-            </details>
+            </div>
         </div>
 
         <!-- Interactive Visualizer 2 -->
         <div class="card">
             <h2>Interactive Positional Encoding Simulator</h2>
-            <p>Now, let's explore how a word's meaning and its positional information are combined. Click on the words below to see how the <span class="tech-term">Position Vector</span> is added to the <span class="tech-term">Word Vector</span> to form a final mathematical representation, which helps the model understand both the word's meaning and its position in the sentence.</p>
+            <p>A language model needs to know not only the meaning of a word, but also exactly where it appears in a sentence. Click on the words below to see how the meaning (<span class="tech-term">Word Vector</span>) is mathematically combined with its exact location (<span class="tech-term">Position Vector</span>) to form the final representation.</p>
             
             <div class="pe-selector">
                 <button class="pe-word-btn active" onclick="selectPEWord(0)">The (Index 0)</button>
@@ -2055,21 +2129,21 @@
             const expDiv = document.getElementById('pe-explanation');
             let explanationText = `
                 <p>You selected: <strong class="highlight">"${data.word}" (Position Index: ${data.idx})</strong></p>
-                <p>• Word Vector <code>W</code> represents the word's semantic meaning.</p>
-                <p>• Position Vector <code>P</code> is generated via sine/cosine functions for <code>pos = ${data.idx}</code>. Simply put, these waves create a unique mathematical signature for each position, helping the model understand exactly where the word is located in the sentence.</p>
-                <p>• The final vector <code>C = W + P</code> is sent directly to the Transformer blocks.</p>
-                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45;">
-                    💡 <strong>Clock Hands Metaphor:</strong> Positional encoding works like the hands of a clock. Each dimension rotates at a different frequency. High-frequency waves (like Dim 0/1, cyan/purple) are like the second hand, changing rapidly to capture short-range positions. Low-frequency waves (like Dim 4/5, red/blue) are like the hour hand, changing slowly to help track positions in long sequences.
+                <p>• <strong>Word Vector (W):</strong> Represents the word's core semantic meaning.</p>
+                <p>• <strong>Position Vector (P):</strong> Represents the word's exact position in the sentence. It is generated using sine and cosine waves to assign a unique signature to every position.</p>
+                <p>• <strong>Combined Vector (C = W + P):</strong> The final representation containing both meaning and location that is sent into the Transformer.</p>
+                <p style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; padding-left: 1rem; border-left: 3px solid var(--accent-purple);">
+                    💡 <strong>Simply put:</strong> Positional encoding is like the hands of a clock. Just as the hour, minute, and second hands work together to show a unique time, the mixture of different waves creates a unique and exact address for each word's position.
                 </p>
             `;
 
             if (data.idx === 0 || data.idx === 3) {
                 explanationText += `
-                    <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--accent-cyan); border-radius: 6px; padding: 0.75rem; margin-top: 0.75rem;">
-                        <strong>Special Observation:</strong> <br>
-                        Note that the input sentence contains two occurrences of <strong>"The" / "the"</strong> (index 0 and index 3).
-                        Both have the <strong>exact same Word Vector (W)</strong> [0.15, -0.62, 0.48, -0.09, 0.35, -0.21]. However, because they are at different positions, their <strong>Position Vectors (P) are different</strong>.
-                        Consequently, their final <strong>Combined Vectors (C) are completely distinct</strong>! This allows the model to know which word came first and which came later, despite processing them in parallel.
+                    <div style="background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                        <strong>🔍 Interesting Observation:</strong> <br>
+                        The input sentence contains the word <strong>"${data.word}"</strong> twice (at positions 0 and 3). 
+                        Because they have the same meaning, their <strong>Word Vectors (W) are identical</strong>. However, because they are in different locations, their <strong>Position Vectors (P) are different</strong>. 
+                        As a result, their <strong>Combined Vectors (C) are completely distinct</strong>! This is how the model distinguishes between identical words located at different parts of a sentence.
                     </div>
                 `;
             }
