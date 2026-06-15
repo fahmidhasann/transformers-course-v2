@@ -1247,7 +1247,7 @@
             </div>
             
             <ul>
-                <li><strong>Vocabulary (ভোকাবুলারি):</strong> মডেলের ডিকশনারি। উদাহরণস্বরূপ, GPT-4 এর ডিকশনারিতে প্রায় ১,০০,০০০ টুকরো আছে।</li>
+                <li><strong>Vocabulary (ভোকাবুলারি):</strong> মডেলের ডিকশনারি। উদাহরণস্বরূপ, GPT-4 এর ডিকশনারিতে প্রায় ১,০০,০০০ টোকেন বা শব্দ আছে।</li>
                 <li><strong>Token IDs:</strong> টোকেনাইজ করার পর, <code>"cat"</code> শব্দটি ডিকশনারির একটি ইউনিক আইডি নম্বরে রূপান্তরিত (ম্যাপ) হয়, যেমন <code>3797</code>।</li>
             </ul>
 
@@ -1372,15 +1372,10 @@
             </div>
         </div>
 
-        <!-- Collapsible Interactive 3D Embedding space -->
-        <div class="card collapsible-card" id="embedding-3d-card">
-            <div class="card-header" onclick="toggle3DCollapse()">
-                <h2>৩ডি এম্বেডিং স্পেস ভিজ্যুয়ালাইজার (3D Embedding Space)</h2>
-                <button class="collapse-toggle" aria-label="Toggle card expansion">▾</button>
-            </div>
-            <div class="card-content">
-                <div class="card-content-inner">
-                    <p style="margin-bottom: 1rem;">
+        <!-- Interactive 3D Embedding space -->
+        <div class="card" id="embedding-3d-card">
+            <h2>৩ডি এম্বেডিং স্পেস ভিজ্যুয়ালাইজার (3D Embedding Space)</h2>
+            <p style="margin-bottom: 1rem;">
                         বাস্তব এআই (AI) মডেলগুলো (যেমন: ChatGPT, Claude, Gemini) একটি শব্দের অর্থ বোঝার জন্য শত শত ভিন্ন ভিন্ন বৈশিষ্ট্য বা গুণাবলি ব্যবহার করে। তবে সহজে দেখার ও বোঝার জন্য, আমরা এখানে মাত্র ৩টি সাধারণ বৈশিষ্ট্য ব্যবহার করছি: 
                         <span class="tech-term">Gender</span> (পুরুষ বনাম নারী), <span class="tech-term">Royalty</span> (রাজকীয় বনাম সাধারণ), এবং <span class="tech-term">Age</span> (পরিপক্ক বনাম শিশু)।
                     </p>
@@ -1452,8 +1447,6 @@
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
 
         <!-- Interactive Visualizer 1 -->
@@ -2123,7 +2116,6 @@
         }
 
         // ------------------ 3D Embedding Space Engine ------------------
-        let is3DCollapsed = false;
         let active3DTab = 'three-d-view';
         
         // Curated set of words with Gender, Royalty, Age dimensions
@@ -2209,18 +2201,6 @@
             
             // Initial Render
             render3D();
-        }
-
-        function toggle3DCollapse() {
-            const card = document.getElementById('embedding-3d-card');
-            is3DCollapsed = !is3DCollapsed;
-            if (is3DCollapsed) {
-                card.classList.add('collapsed');
-            } else {
-                card.classList.remove('collapsed');
-                // Re-render when expanding to handle sizing correctly
-                setTimeout(render3D, 100);
-            }
         }
 
         function switch3DTab(tabId) {
