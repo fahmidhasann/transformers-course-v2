@@ -1269,8 +1269,6 @@
             
             <p>To fix this, we use <span class="tech-term">Embeddings</span>. We replace the simple barcode with a long list of numbers (a <span class="tech-term">Vector</span>). Think of this vector as a detailed "identity profile" (or characteristic card) for the word.</p>
             
-            <p>In this profile, numbers score the word on different traits: Is it an animal? Is it royal? Is it masculine? Words with similar profiles are grouped close together in the <span class="tech-term">Embedding Space</span>.</p>
-            
             <div style="position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(20, 25, 35, 0.9) 0%, rgba(10, 15, 25, 0.95) 100%); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2rem; border-radius: 16px; margin-top: 2rem; box-shadow: 0 12px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1rem;">
                     <h3 style="margin: 0; font-weight: 600; color: #fff; font-size: 1.1rem; letter-spacing: 0.5px;">Token to Embedding Vector Mapping <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 400;">(from previous example)</span></h3>
@@ -1373,15 +1371,10 @@
             </div>
         </div>
 
-        <!-- Collapsible Interactive 3D Embedding space -->
-        <div class="card collapsible-card" id="embedding-3d-card">
-            <div class="card-header" onclick="toggle3DCollapse()">
-                <h2>3D Embedding Space Visualizer</h2>
-                <button class="collapse-toggle" aria-label="Toggle card expansion">▾</button>
-            </div>
-            <div class="card-content">
-                <div class="card-content-inner">
-                    <p style="margin-bottom: 1rem;">
+        <!-- Interactive 3D Embedding space -->
+        <div class="card" id="embedding-3d-card">
+            <h2>3D Embedding Space Visualizer</h2>
+            <p style="margin-bottom: 1rem;">
                         Real AI models (like ChatGPT, Claude, Gemini) look at hundreds of different features to figure out what a word means. To make it easy to see and understand, we are using just 3 simple features here: 
                         <span class="tech-term">Gender</span> (Male vs. Female), <span class="tech-term">Royalty</span> (Royal vs. Common), and <span class="tech-term">Age</span> (Adult vs. Child).
                     </p>
@@ -1453,8 +1446,6 @@
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
 
         <!-- Interactive Visualizer 1 -->
@@ -2124,7 +2115,6 @@
         }
 
         // ------------------ 3D Embedding Space Engine ------------------
-        let is3DCollapsed = false;
         let active3DTab = 'three-d-view';
         
         // Curated set of words with Gender, Royalty, Age dimensions
@@ -2210,18 +2200,6 @@
             
             // Initial Render
             render3D();
-        }
-
-        function toggle3DCollapse() {
-            const card = document.getElementById('embedding-3d-card');
-            is3DCollapsed = !is3DCollapsed;
-            if (is3DCollapsed) {
-                card.classList.add('collapsed');
-            } else {
-                card.classList.remove('collapsed');
-                // Re-render when expanding to handle sizing correctly
-                setTimeout(render3D, 100);
-            }
         }
 
         function switch3DTab(tabId) {

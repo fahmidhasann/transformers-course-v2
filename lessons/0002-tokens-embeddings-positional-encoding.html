@@ -1268,8 +1268,6 @@
             
             <p>এই সমস্যা সমাধানে আসে <span class="tech-term">Embeddings</span>। সাধারণ বারকোডের জায়গায় আমরা একটি বড় সংখ্যার তালিকা (বা <span class="tech-term">Vector</span>) ব্যবহার করি। এই ভেক্টরটিকে শব্দের একটি বিস্তারিত "পরিচয়পত্র" (বা বৈশিষ্ট্য-প্রোফাইল) হিসেবে ভাবতে পারেন।</p>
             
-            <p>এই প্রোফাইলে বিভিন্ন বৈশিষ্ট্যের ভিত্তিতে শব্দটিকে স্কোর দেওয়া হয়: এটি কি প্রাণী? এটি কি রাজকীয়? এটি কি পুরুষবাচক? একই রকম প্রোফাইলের শব্দগুলো <span class="tech-term">Embedding Space</span>-এ কাছাকাছি অবস্থান করে।</p>
-            
             <div style="position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(20, 25, 35, 0.9) 0%, rgba(10, 15, 25, 0.95) 100%); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2rem; border-radius: 16px; margin-top: 2rem; box-shadow: 0 12px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1rem;">
                     <h3 style="margin: 0; font-weight: 600; color: #fff; font-size: 1.1rem; letter-spacing: 0.5px;">টোকেন থেকে এম্বেডিং ভেক্টরে রূপান্তর <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 400;">(পূর্বের উদাহরণ)</span></h3>
@@ -1374,14 +1372,14 @@
 
         <!-- Interactive 3D Embedding space -->
         <div class="card" id="embedding-3d-card">
-            <h2>৩ডি এম্বেডিং স্পেস ভিজ্যুয়ালাইজার (3D Embedding Space)</h2>
+            <h2>3D এম্বেডিং স্পেস ভিজ্যুয়ালাইজার (3D Embedding Space)</h2>
             <p style="margin-bottom: 1rem;">
                         বাস্তব এআই (AI) মডেলগুলো (যেমন: ChatGPT, Claude, Gemini) একটি শব্দের অর্থ বোঝার জন্য শত শত ভিন্ন ভিন্ন বৈশিষ্ট্য বা গুণাবলি ব্যবহার করে। তবে সহজে দেখার ও বোঝার জন্য, আমরা এখানে মাত্র ৩টি সাধারণ বৈশিষ্ট্য ব্যবহার করছি: 
                         <span class="tech-term">Gender</span> (পুরুষ বনাম নারী), <span class="tech-term">Royalty</span> (রাজকীয় বনাম সাধারণ), এবং <span class="tech-term">Age</span> (পরিপক্ক বনাম শিশু)।
                     </p>
 
                     <div class="visualizer-tabs">
-                        <button class="visualizer-tab-btn active" onclick="switch3DTab('three-d-view')">৩ডি ভেক্টর স্পেস (3D Space)</button>
+                        <button class="visualizer-tab-btn active" onclick="switch3DTab('three-d-view')">3D ভেক্টর স্পেস (3D Space)</button>
                         <button class="visualizer-tab-btn" onclick="switch3DTab('heatmap-view')">বৈশিষ্ট্য প্রোফাইল (Feature Profile)</button>
                     </div>
 
@@ -1406,7 +1404,7 @@
                                 <div class="three-d-guide-text">
                                     <strong>কিভাবে ব্যবহার করবেন:</strong><br>
                                     • ভেক্টর স্পেসটি যেকোনো কোণে ঘোরাতে মাউস বা স্ক্রিনে <strong>ড্র্যাগ বা সোয়াইপ করুন</strong>।<br>
-                                    • যেকোনো শব্দের ওপর মাউস হোভার করলে সেটির ৩ডি কোঅর্ডিনেট মান দেখতে পাবেন।<br>
+                                    • যেকোনো শব্দের ওপর মাউস হোভার করলে সেটির 3D কোঅর্ডিনেট মান দেখতে পাবেন।<br>
                                     • জেন্ডার সম্পর্ক রেখা দিয়ে দেখুন কিভাবে পুরুষ-নারী জোড়াগুলোর আপেক্ষিক অবস্থান একই জেন্ডার ভেক্টরে বিভক্ত।
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-top: 0.5rem;">
