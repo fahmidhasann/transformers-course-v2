@@ -21,19 +21,21 @@ This codebase is a **premium, interactive, and visually stunning web platform** 
 The repository is structured as a lightweight, static client-side web application:
 
 ```
-├── AGENTS.md               # This developer/agent guide (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/AGENTS.md)
-├── GLOSSARY.md             # Key Transformer terms dictionary (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/GLOSSARY.md)
-├── MISSION.md              # Main mission and goals (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/MISSION.md)
-├── NOTES.md                # User preferences and established context (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/NOTES.md)
-├── RESOURCES.md            # Curated learning resources (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/RESOURCES.md)
+├── docs/                   # Developer guides and knowledge base
+│   ├── AGENTS.md           # This developer/agent guide (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/AGENTS.md)
+│   ├── CLAUDE.md           # Instructions for Claude
+│   ├── GLOSSARY.md         # Key Transformer terms dictionary (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/GLOSSARY.md)
+│   ├── MISSION.md          # Main mission and goals (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/MISSION.md)
+│   ├── NOTES.md            # User preferences and established context (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/NOTES.md)
+│   ├── RESOURCES.md        # Curated learning resources (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/RESOURCES.md)
+│   └── learning-records/   # MD files logging the user's progress for each lesson
+│       ├── 0001-prior-knowledge.md
+│       ├── 0002-tokens-embeddings-positional-encoding.md
+│       ├── 0003-self-attention-mechanism.md
+│       ├── 0004-multi-head-attention-layer-stacking.md
+│       ├── 0005-ffn-residual-connections-layer-norm.md
+│       └── 0006-decoder-only-vs-encoder-decoder.md
 ├── index.html              # Core application dashboard (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html)
-├── learning-records/       # MD files logging the user's progress for each lesson
-│   ├── 0001-prior-knowledge.md
-│   ├── 0002-tokens-embeddings-positional-encoding.md
-│   ├── 0003-self-attention-mechanism.md
-│   ├── 0004-multi-head-attention-layer-stacking.md
-│   ├── 0005-ffn-residual-connections-layer-norm.md
-│   └── 0006-decoder-only-vs-encoder-decoder.md
 └── lessons/                # Self-contained lesson HTML pages loaded via iframe in the dashboard
     ├── 0001-high-level-llm-pipeline.html
     ├── 0002-tokens-embeddings-positional-encoding.html
@@ -53,7 +55,7 @@ The platform operates as a single-page application (SPA) with a tabbed dashboard
 
 ### Dashboard: [index.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html)
 - **Sidebar Navigation:** Let's users switch between different views:
-  - `#view-dashboard`: Main hub showing global progress, an interactive **Mission Checklist** loaded from `MISSION.md`, and an interactive **Roadmap Timeline**.
+  - `#view-dashboard`: Main hub showing global progress, an interactive **Mission Checklist** loaded from `docs/MISSION.md`, and an interactive **Roadmap Timeline**.
   - `#view-lessons`: Listing lessons, displaying duration, progress trackers, and allowing users to launch lesson files inside an iframe.
   - `#view-glossary`: Interactive search and category filters for terminology (synchronized with `glossaryData`).
   - `#view-resources`: Curated card list of links to articles, papers, videos, and machine learning communities.
@@ -113,7 +115,7 @@ If you are asked to modify or expand this codebase, follow these rules:
    - For visual connections (like in the Attention simulator), use standard `<svg>` paths. Calculate bounding boxes via `getBoundingClientRect()` dynamically to support responsive sizing on window resize events.
 4. **Writing Codebase Files:**
    - Avoid writing files outside of the defined project directory.
-   - Do not pollute root directory with unnecessary files; keep lessons in `/lessons` and progress records in `/learning-records`.
+   - Do not pollute root directory with unnecessary files; keep lessons in `/lessons` and progress records in `/docs/learning-records`.
 
 ---
 
@@ -139,6 +141,6 @@ To add a new lesson (e.g., Lesson 7: "KV Cache and Inference Optimization"):
      }
      ```
 3. **Create Learning Record:**
-   - Add `0007-kv-cache-inference-optimization.md` inside [learning-records/](file:///Users/fahmidhasantaohid/Documents/Transformers%202/learning-records) tracking the concepts covered in this step.
+   - Add `0007-kv-cache-inference-optimization.md` inside [docs/learning-records/](file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/learning-records) tracking the concepts covered in this step.
 4. **Update Mission Checklist / Glossary:**
-   - If new glossary terms are introduced, add them to `glossaryData` in `index.html` and append them to [GLOSSARY.md](file:///Users/fahmidhasantaohid/Documents/Transformers%202/GLOSSARY.md).
+   - If new glossary terms are introduced, add them to `glossaryData` in `index.html` and append them to [docs/GLOSSARY.md](file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/GLOSSARY.md).
