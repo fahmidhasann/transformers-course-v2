@@ -1669,16 +1669,34 @@
         </div>
 
         <!-- Interactive Visualizer 2 -->
-        <div class="card">
-            <h2>Interactive Positional Encoding Simulator</h2>
+        <details class="card" style="cursor: pointer;">
+            <summary style="outline: none; font-weight: bold; font-family: 'Outfit', sans-serif;">
+                <h2 style="display: inline; margin: 0;">Interactive Positional Encoding Simulator <span style="font-size: 1rem; color: var(--text-secondary); font-weight: normal;">(Optional)</span></h2>
+            </summary>
+            <div style="margin-top: 1.5rem; cursor: default; font-weight: normal;">
             <p>A language model needs to know not only the meaning of a word, but also exactly where it appears in a sentence. Click on the words below to see how the meaning (<span class="tech-term">Word Vector</span>) is mathematically combined with its exact location (<span class="tech-term">Position Vector</span>) to form the final representation.</p>
             
             <div class="pe-selector">
-                <button class="pe-word-btn active" onclick="selectPEWord(0)">The (Index 0)</button>
-                <button class="pe-word-btn" onclick="selectPEWord(1)">cat (Index 1)</button>
-                <button class="pe-word-btn" onclick="selectPEWord(2)">ate (Index 2)</button>
-                <button class="pe-word-btn" onclick="selectPEWord(3)">the (Index 3)</button>
-                <button class="pe-word-btn" onclick="selectPEWord(4)">mouse (Index 4)</button>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+                    <button class="pe-word-btn active" onclick="selectPEWord(0)">The (Index 0)</button>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Position 1</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+                    <button class="pe-word-btn" onclick="selectPEWord(1)">cat (Index 1)</button>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Position 2</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+                    <button class="pe-word-btn" onclick="selectPEWord(2)">ate (Index 2)</button>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Position 3</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+                    <button class="pe-word-btn" onclick="selectPEWord(3)">the (Index 3)</button>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Position 4</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+                    <button class="pe-word-btn" onclick="selectPEWord(4)">mouse (Index 4)</button>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Position 5</span>
+                </div>
             </div>
 
             <div class="pe-simulator-layout">
@@ -1741,7 +1759,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+        </details>
 
         <!-- Quiz Card -->
         <div class="card">
