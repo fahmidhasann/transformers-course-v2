@@ -1047,8 +1047,9 @@
         <div class="card">
             <h2>Dimension Splitting: একটি দারুণ কৌশল</h2>
             <p>আপনার মনে হতে পারে, একসাথে ৪টি "Head" চালালে কম্পিউটার ৪ গুণ ধীরগতির হয়ে যাবে। কিন্তু Transformer এই সমস্যা এড়াতে একটি দারুণ কৌশল ব্যবহার করে!</p>
+            <p>কল্পনা করুন, প্রতিটি শব্দকে (যেমন: "বিড়াল") কম্পিউটারের কাছে পরিচিত করার জন্য একটি <strong>এমবেডিং ভেক্টর (<span class="tech-term">Embedding Vector</span>)</strong> বা সংখ্যার তালিকা ব্যবহার করা হয়। ধরুন, একটি শব্দের ভেক্টরে <span class="highlight">৫১২টি সংখ্যা</span> আছে (উদাহরণস্বরূপ: <code>[0.12, -0.45, 0.89, ..., 0.03]</code> মোট ৫১২টি সংখ্যার একটি তালিকা)।</p>
             
-            <p>কল্পনা করুন, একটি শব্দের অর্থ <span class="highlight">৫১২টি সংখ্যার</span> একটি তালিকা হিসেবে জমা থাকে। আমাদের যদি <span class="highlight">৪টি</span> Attention Head থাকে, এআই প্রতিটি Head-কে এই ৫১২টি সংখ্যাই দিয়ে দেয় না।</p>
+            <p>আমাদের যদি <span class="highlight">৪টি</span> Attention Head থাকে, এআই প্রতিটি Head-কে এই ৫১২টি সংখ্যাই দিয়ে দেয় না।</p>
             
             <p>বরং, এটি সংখ্যাগুলোকে সমানভাবে ভাগ করে দেয়:</p>
             <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">
