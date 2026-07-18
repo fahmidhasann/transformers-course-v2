@@ -1087,16 +1087,61 @@
         <!-- Context Problem Card -->
         <div class="card">
             <h2>The Context Problem (প্রসঙ্গের সংকট)</h2>
-            <p>একটি সাধারণ ইংরেজি শব্দ যেমন <span class="tech-term">bank</span> বিবেচনা করুন। এর নিচে দেওয়া দুটি একদম ভিন্ন অর্থ হতে পারে:</p>
-            <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--accent-cyan);">
-                <p style="margin-bottom: 0.5rem;"><strong>বাক্য ১:</strong> "I deposited my money at the <span class="highlight">bank</span>." <br>
-                → এখানে <span class="highlight">bank</span> মানে অর্থনৈতিক ব্যাংক।</p>
-                <p style="margin: 0;"><strong>বাক্য ২:</strong> "We sat on the muddy <span class="highlight">bank</span> of the river." <br>
-                → এখানে <span class="highlight">bank</span> মানে নদীর তীর বা পাড়।</p>
+            <p>একটি সাধারণ ইংরেজি শব্দ যেমন <span class="tech-term">bank</span> বিবেচনা করুন। নিচের ডায়াগ্রামে দেখুন কীভাবে আশেপাশের শব্দ (Context) দ্বারা একই শব্দের ভিন্ন অর্থ নির্ধারিত হয়:</p>
+            
+            <!-- Dual Card Visual Comparison Diagram -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin: 1.5rem 0;">
+                
+                <!-- Sentence 1 Card -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.6rem;">
+                        <span style="font-weight: 700; color: var(--accent-cyan); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">বাক্য ১</span>
+                        <span style="background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;">অর্থনৈতিক প্রেক্ষাপট</span>
+                    </div>
+                    
+                    <div style="font-size: 1.05rem; background: rgba(30, 41, 59, 0.5); padding: 0.8rem 1rem; border-radius: 8px; line-height: 1.6;">
+                        "I deposited my <span style="background: rgba(6, 182, 212, 0.25); color: #38bdf8; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(6, 182, 212, 0.4); font-weight: 600;">money 💰</span> at the <span style="background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.4); font-weight: 700;">bank</span>."
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.85rem; background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 6px;">
+                        <span>কন্টেক্সট কী-ওয়ার্ড: <strong>money</strong></span>
+                        <span style="color: var(--accent-cyan);">➔</span>
+                        <span>নির্ধারণ করে <strong>bank</strong></span>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid var(--accent-cyan); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">চূড়ান্ত অর্থ (Resolved Meaning)</span>
+                        <strong style="color: #f8fafc; font-size: 1rem; margin-top: 0.2rem; display: block;">🏦 অর্থনৈতিক ব্যাংক (Financial Institution)</strong>
+                    </div>
+                </div>
+
+                <!-- Sentence 2 Card -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.6rem;">
+                        <span style="font-weight: 700; color: var(--accent-green); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">বাক্য ২</span>
+                        <span style="background: rgba(16, 185, 129, 0.15); color: var(--accent-green); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;">প্রাকৃতিক প্রেক্ষাপট</span>
+                    </div>
+                    
+                    <div style="font-size: 1.05rem; background: rgba(30, 41, 59, 0.5); padding: 0.8rem 1rem; border-radius: 8px; line-height: 1.6;">
+                        "We sat on the muddy <span style="background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.4); font-weight: 700;">bank</span> of the <span style="background: rgba(16, 185, 129, 0.25); color: #34d399; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 600;">river 🌊</span>."
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.85rem; background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 6px;">
+                        <span>কন্টেক্সট কী-ওয়ার্ড: <strong>river</strong></span>
+                        <span style="color: var(--accent-green);">➔</span>
+                        <span>নির্ধারণ করে <strong>bank</strong></span>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid var(--accent-green); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">চূড়ান্ত অর্থ (Resolved Meaning)</span>
+                        <strong style="color: #f8fafc; font-size: 1rem; margin-top: 0.2rem; display: block;">🌊 নদীর তীর বা পাড় (Riverbank)</strong>
+                    </div>
+                </div>
+
             </div>
-            <p>মানুষ হিসেবে আমরা পুরো বাক্যটি পড়ে নিমেষেই বুঝে যাই কোন "bank" বোঝানো হয়েছে। কিন্তু কম্পিউটারের কাছে প্রতিটি শব্দ কেবল সংখ্যার একটি তালিকা বা স্ট্রিং।</p>
-            <p>Transformer-এর পূর্বে AI শব্দগুলোকে একে একে (one by one) পড়ত। ফলে বাক্য অনেক লম্বা হলে, শেষে পৌঁছানোর আগেই সে শুরুর কথা ভুলে যেত!</p>
-            <p>এই সমস্যার সমাধান হলো Transformer-এর <span class="tech-term">Self-Attention</span> মেকানিজম। এটি বাক্যের প্রতিটি শব্দকে একই সাথে অন্য সব শব্দের সাথে তুলনা করে তাদের পারস্পরিক সম্পর্ক ও গুরুত্ব পরিমাপ করতে সাহায্য করে। এর ফলে প্রতিটি শব্দ তার চারপাশের <span class="tech-term">Context</span> বা প্রেক্ষাপট থেকে নিজের সঠিক অর্থ ও তাৎপর্য খুব সহজেই বুঝতে পারে。</p>
+
+            <!-- Single Summary Paragraph -->
+            <p style="margin-top: 1rem; line-height: 1.7;">মানুষ বাক্যের প্রেক্ষাপট মুহূর্তেই বুঝে ফেলে, কিন্তু কম্পিউটারের কাছে প্রতিটি শব্দ কেবল ডেটা বা সংখ্যা। আগে প্রচলিত মডেলগুলো এক-একটি শব্দ আলাদাভাবে পড়ায় দীর্ঘ বাক্যের ক্ষেত্রে শুরুর কনটেক্সট হারিয়ে যেত। Transformer-এর <span class="tech-term">Self-Attention</span> মেকানিজম সবকটি শব্দকে একসাথে তুলনা করে প্রতিটি শব্দকে তার আশেপাশের <span class="tech-term">Context</span> থেকে সঠিক অর্থ বুঝতে সাহায্য করে。</p>
         </div>
 
         <!-- Analogy Card -->
@@ -1139,7 +1184,7 @@
                         <span style="font-size: 0.95rem;"><strong>Key:</strong> আমরা বাক্যের অন্যান্য শব্দের লেবেল চেক করি। "cat" শব্দটির এমন একটি লেবেল আছে যা ক্ষুধার্ত হতে পারে এমন প্রাণীর সাথে মিলে যায়।</span>
                     </div>
                     <div style="background: rgba(15, 23, 42, 0.4); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
-                        <span style="font-size: 0.95rem;"><strong>Value:</strong> যেহেতু একটি চমৎকার মিল পাওয়া গেছে, "it" শব্দটি "cat"-এর অর্থ (Value) গ্রহণ করে। এআই এখন জানে <strong>it = cat</strong>!</span>
+                        <span style="font-size: 0.95rem;"><strong>Value:</strong> যেহেতু একটি চমৎকার মিল পাওয়া গেছে, "it" শব্দটি "cat"-এর অর্থ (Value) গ্রহণ করে। মডেলের কাছে তখন <strong>it = cat</strong> এর গাণিতিক সম্পর্ক তৈরি হয়!</span>
                     </div>
                 </div>
             </div>
@@ -1148,12 +1193,12 @@
         <!-- Step-by-Step Mechanism -->
         <div class="card">
             <h2>Self-Attention কীভাবে কাজ করে?</h2>
-            <p>ব্যাকগ্রাউন্ডে, এআই শব্দগুলোকে একে অপরের সাথে মেশানোর জন্য ৪-ধাপের একটি গাণিতিক কৌশল ব্যবহার করে:</p>
+            <p>ব্যাকগ্রাউন্ডে, সেলফ-এটেনশন মেকানিজম শব্দগুলোকে একে অপরের সাথে মেশানোর জন্য ৪-ধাপের একটি গাণিতিক কৌশল ব্যবহার করে:</p>
             
             <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">ধাপ ১: ম্যাচমেকার বা মিল খুঁজে বের করা (Dot Product)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">এআই একটি শব্দের Query-কে অন্য সমস্ত শব্দের Key-এর সাথে তুলনা করে দেখে তারা কতটা মিলে যায়। এটি একটি "কম্প্যাটিবিলিটি স্কোর" তৈরি করে।</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">মেকানিজমটি একটি শব্দের Query-কে অন্য সমস্ত শব্দের Key-এর সাথে তুলনা করে দেখে তারা কতটা মিলে যায়। এটি একটি "কম্প্যাটিবিলিটি স্কোর" তৈরি করে।</p>
                     <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
                         <strong>উদাহরণ:</strong> "The cat drank the milk because <strong>it</strong> was hungry" বাক্যে <strong>"it"</strong> শব্দটি প্রশ্ন করে (Query), <em>"আমি কাকে বোঝাচ্ছি?"</em> এরপর সে বাক্যের অন্য শব্দগুলোর (Keys) সাথে তার মিল খোঁজে। এখানে "cat" এবং "milk" শব্দ দুটি উচ্চ মিলের স্কোর পাবে।
                     </div>
@@ -1175,19 +1220,17 @@
                             </div>
                         </div>
                     </div>
-                    <details class="step-example">
-                        <summary>গাণিতিক বিস্তারিত</summary>
-                        <div class="example-body">
-                            <p>এই তুলনাটি <span class="tech-term">Dot Product</span>-এর মাধ্যমে করা হয়। যে শব্দের অর্থ আমরা বুঝতে চাই, তার Query ভেক্টরকে অন্যান্য শব্দের Key ভেক্টর দিয়ে গুণ করা হয়। বড় ডট প্রোডাক্ট মানে বেশি মিল।</p>
-                        </div>
-                    </details>
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                        <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.3rem;">📐 গাণিতিক ব্যাখ্যা (Dot Product):</strong>
+                        <p style="margin: 0; color: var(--text-secondary);">এই তুলনাটি <strong>Dot Product (ডট প্রোডাক্ট)</strong>-এর মাধ্যমে করা হয়। যে শব্দের অর্থ আমরা বুঝতে চাই, তার Query (Q) ভেক্টরকে অন্যান্য শব্দের Key (K) ভেক্টর দিয়ে ডট গুণ করা হয়। প্রাপ্ত ফলটি যত বড় হবে, দুটি শব্দের মধ্যকার মিল বা সম্পর্ক তত বেশি!</p>
+                    </div>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-purple);">
                     <strong style="color: var(--accent-purple);">ধাপ ২: স্কোর ছোট করা (Scaling)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">কখনও কখনও মিলের স্কোরগুলো অনেক বড় হয়ে যায় যা পরের ধাপের হিসাবে সমস্যা করে। এটি ঠিক করতে, এআই কেবল স্কোরগুলোকে কিছুটা ছোট করে দেয়।</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">কখনও কখনও মিলের স্কোরগুলো অনেক বড় হয়ে যায় যা পরের ধাপের হিসাবে সমস্যা করে। এটি ঠিক করতে, মেকানিজমটি স্কোরগুলোকে কিছুটা ছোট করে দেয়।</p>
                     <div style="background: rgba(168, 85, 247, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
-                        <strong>উদাহরণ:</strong> ধরুন, "cat" এর স্কোর হলো ৫০ এবং "milk" এর স্কোর ৪০। এআই এই বড় সংখ্যাগুলোকে ভাগ করে ছোট ও হিসাবের উপযোগী করে তোলে, যেমন ৫.০ এবং ৪.০।
+                        <strong>উদাহরণ:</strong> ধরুন, "cat" এর স্কোর হলো ৫০ এবং "milk" এর স্কোর ৪০। মডেলটি এই বড় সংখ্যাগুলোকে ভাগ করে ছোট ও হিসাবের উপযোগী করে তোলে, যেমন ৫.০ এবং ৪.০।
                     </div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
                         <div style="display: flex; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
@@ -1205,19 +1248,17 @@
                             </div>
                         </div>
                     </div>
-                    <details class="step-example">
-                        <summary>গাণিতিক বিস্তারিত</summary>
-                        <div class="example-body">
-                            <p>মানগুলোকে স্থিতিশীল রাখতে, ডট প্রোডাক্টের মানগুলোকে &radic;d<sub>k</sub> (Key ভেক্টরের ডাইমেনশনের বর্গমূল) দিয়ে ভাগ করা হয়।</p>
-                        </div>
-                    </details>
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                        <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.3rem;">📐 গাণিতিক ব্যাখ্যা (Scaling Trick):</strong>
+                        <p style="margin: 0; color: var(--text-secondary);">মানগুলোকে স্থিতিশীল রাখতে, ডট প্রোডাক্টের বিশাল স্কোরগুলোকে <strong>&radic;d<sub>k</sub></strong> (Key ভেক্টরের ডাইমেনশনের বর্গমূল) দিয়ে ভাগ করা হয়। এটি না করলে বড় স্কোরের কারণে Softmax স্তরে ভ্যানিশিং গ্রেডিয়েন্ট (Vanishing Gradient) সমস্যা তৈরি হতে পারে।</p>
+                    </div>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">ধাপ ৩: স্কোরকে শতকরায় রূপান্তর (Softmax)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">এআই ছোট করা স্কোরগুলোকে শতকরা বা পারসেন্টেজে রূপান্তর করে, যাদের যোগফল ১০০% হয়। এটি শব্দটিকে বলে দেয় যে অন্য কোন শব্দে তার কতটা মনোযোগ দেওয়া উচিত।</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">মেকানিজমটি ছোট করা স্কোরগুলোকে শতকরা বা পারসেন্টেজে রূপান্তর করে, যাদের যোগফল ১০০% হয়। এটি শব্দটিকে বলে দেয় যে অন্য কোন শব্দে তার কতটা মনোযোগ দেওয়া উচিত।</p>
                     <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
-                        <strong>উদাহরণ:</strong> এবার এআই ওই ছোট স্কোরগুলোকে শতকরায় রূপান্তর করে। এখন "it" হয়তো "cat"-এর প্রতি ৮০% মনোযোগ দেবে, "milk"-এর প্রতি ১৫% এবং বাকি ৫% অন্যান্য শব্দের ওপর। সব মিলে ঠিক ১০০% হবে।
+                        <strong>উদাহরণ:</strong> এবার মেকানিজমটি ওই ছোট স্কোরগুলোকে শতকরায় রূপান্তর করে। এখন "it" হয়তো "cat"-এর প্রতি ৮০% মনোযোগ দেবে, "milk"-এর প্রতি ১৫% এবং বাকি ৫% অন্যান্য শব্দের ওপর। সব মিলে ঠিক ১০০% হবে।
                     </div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; background: rgba(30, 41, 59, 0.6); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); width: 100%; max-width: 500px;">
@@ -1255,19 +1296,17 @@
                             </div>
                         </div>
                     </div>
-                    <details class="step-example">
-                        <summary>গাণিতিক বিস্তারিত</summary>
-                        <div class="example-body">
-                            <p>স্কেলড স্কোরগুলোকে <span class="tech-term">Softmax</span> ফাংশনের মধ্য দিয়ে নেওয়া হয়। Softmax সমস্ত মানকে ০ থেকে ১ এর মধ্যে একটি ভগ্নাংশে রূপান্তর করে। এগুলোই হলো চূড়ান্ত <strong>Attention Weights</strong>।</p>
-                        </div>
-                    </details>
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                        <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.3rem;">📐 গাণিতিক ব্যাখ্যা (Softmax Output):</strong>
+                        <p style="margin: 0; color: var(--text-secondary);">স্কেলড স্কোরগুলোকে <strong>Softmax</strong> ফাংশনের মধ্য দিয়ে নেওয়া হয়। Softmax সবকটি স্কোরের সমষ্টিকে ১ বা ১০০% এর সমান করে প্রতিটি শব্দের জন্য সুনির্দিষ্ট <strong>Attention Weights (মনোযোগের পারসেন্টেজ)</strong> তৈরি করে।</p>
+                    </div>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-green);">
                     <strong style="color: var(--accent-green);">ধাপ ৪: অর্থের সংমিশ্রণ (Weighted Sum)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">সবশেষে, এআই অন্য শব্দগুলোর "Values" (অর্থ) সংগ্রহ করে—যাদের পারসেন্টেজ বেশি তাদের থেকে বেশি অর্থ নেয়, আর যাদের কম তাদের থেকে কম। এরপর সব কিছু মিশিয়ে শব্দটির জন্য একটি নতুন, কনটেক্সট-সমৃদ্ধ সুপার-মিনিং তৈরি করে!</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">সবশেষে, সেলফ-এটেনশন মেকানিজম অন্য শব্দগুলোর "Values" (অর্থ) সংগ্রহ করে—যাদের পারসেন্টেজ বেশি তাদের থেকে বেশি অর্থ নেয়, আর যাদের কম তাদের থেকে কম। এরপর সব কিছু মিশিয়ে শব্দটির জন্য একটি নতুন, কনটেক্সট-সমৃদ্ধ সুপার-মিনিং তৈরি করে!</p>
                     <div style="background: rgba(16, 185, 129, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
-                        <strong>উদাহরণ:</strong> <strong>"it"</strong>-এর চূড়ান্ত অর্থ তৈরি করতে, এআই "cat" এর অর্থের একটি বড় অংশ (৮০%) এবং "milk" এর একটি ছোট অংশ (১৫%) গ্রহণ করে। যেহেতু বাক্যে বলা হয়েছে "hungry", এআই সহজেই বুঝে যায় "it" বলতে বিড়ালটিকে বোঝানো হয়েছে, দুধকে নয়। ফলে "it" শব্দটি এখন একটি ক্ষুধার্ত বিড়ালের কনটেক্সট ধারণ করে!
+                        <strong>উদাহরণ:</strong> <strong>"it"</strong>-এর চূড়ান্ত অর্থ তৈরি করতে, মেকানিজমটি "cat" এর অর্থের একটি বড় অংশ (৮০%) এবং "milk" এর একটি ছোট অংশ (১৫%) গ্রহণ করে। যেহেতু বাক্যে বলা হয়েছে "hungry", গাণিতিক হিসেব অনুযায়ী সহজেই নির্ধারিত হয় যে "it" বলতে বিড়ালটিকে বোঝানো হয়েছে, দুধকে নয়। ফলে "it" শব্দটি এখন একটি ক্ষুধার্ত বিড়ালের কনটেক্সট ধারণ করে!
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">

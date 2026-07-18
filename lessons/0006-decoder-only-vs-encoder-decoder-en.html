@@ -1137,7 +1137,7 @@
         <!-- Section 2: Causal Masking -->
         <div class="card">
             <h2>Causal Masking: The Technique of Hiding Future Words</h2>
-            <p>Suppose we want to teach an AI model using this sentence: <span class="highlight">"LLMs are changing our world"</span>.</p>
+            <p>Suppose we want to train a Transformer model using this sentence: <span class="highlight">"LLMs are changing our world"</span>.</p>
             <p>To speed up the training process, we usually feed the entire sentence to the model all at once. However, the model needs to learn step-by-step—first, it should only see <code>"LLMs"</code> to predict the next word <code>"are"</code>, and then see <code>"LLMs are"</code> to predict <code>"changing"</code>.</p>
             <p>Now, if the model can see the entire sentence in advance, it could easily "cheat" by looking at the upcoming words (like <code>"changing"</code>). To prevent the model from cheating by peeking at future words, we use a technique called <span class="tech-term">Causal Masking</span>. This hides the future words, ensuring the model learns the actual task of predicting the next word by only looking at the past words.</p>
             <p style="background: rgba(168, 85, 247, 0.1); border-left: 4px solid var(--accent-purple); padding: 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem;"><strong>Simply put:</strong> Imagine reading a book through a small cutout hole that only shows the words you've read so far. You cannot see the next words. <span class="highlight">Causal Masking</span> works exactly like this hole!</p>
@@ -1182,32 +1182,39 @@
                 </div>
             </div>
             
-            <details class="step-example" style="margin-top: 1.5rem; margin-bottom: 1rem;">
-                <summary>A bit deeper: The Math of Causal Masking</summary>
-                <div style="padding-top: 1rem;">
-                    <p>We create a "Mask Matrix" that has zeros (0) for allowed past words and Negative Infinity (-&infin;) for future words that should be hidden.</p>
-                    <div style="display: flex; justify-content: center; margin: 1.5rem 0;">
-                        <div style="font-family: 'Outfit', monospace; background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); display: inline-block; width: 100%; max-width: 320px;">
-                            <div style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.8rem; text-align: center; font-weight: bold;">Causal Mask Matrix (M)</div>
-                            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.95rem; align-items: center;">
-                                <div>[ &nbsp; 0, -&infin;, -&infin;, -&infin;, -&infin; ]</div>
-                                <div>[ &nbsp; 0, &nbsp; 0, -&infin;, -&infin;, -&infin; ]</div>
-                                <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, -&infin;, -&infin; ]</div>
-                                <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0, -&infin; ]</div>
-                                <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0 ]</div>
-                            </div>
+            <div class="note-card" style="margin-top: 1.5rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1.2rem; border-radius: 10px;">
+                <h4 style="color: var(--accent-purple); margin-top: 0; margin-bottom: 0.8rem; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+                    📐 Mathematical Explanation: How Causal Masking Works
+                </h4>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    We construct a <strong>Mask Matrix (M)</strong> containing zeros (0) for allowed past/current tokens and <strong>Negative Infinity (-&infin;)</strong> for masked future tokens.
+                </p>
+                <div style="display: flex; justify-content: center; margin: 1rem 0;">
+                    <div style="font-family: 'Outfit', monospace; background: rgba(15, 23, 42, 0.7); padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); display: inline-block; width: 100%; max-width: 320px;">
+                        <div style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.6rem; text-align: center; font-weight: bold;">Causal Mask Matrix (M)</div>
+                        <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.93rem; align-items: center;">
+                            <div>[ &nbsp; 0, -&infin;, -&infin;, -&infin;, -&infin; ]</div>
+                            <div>[ &nbsp; 0, &nbsp; 0, -&infin;, -&infin;, -&infin; ]</div>
+                            <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, -&infin;, -&infin; ]</div>
+                            <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0, -&infin; ]</div>
+                            <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0 ]</div>
                         </div>
                     </div>
-
-                    <p><strong>Mathematical Formulation:</strong><br>In the Attention mechanism, after calculating the dot product of Query and Key, we get raw attention scores or logits. We add the <span class="tech-term">Causal Mask Matrix (M)</span> to these logits before applying Softmax.</p>
-                    
-                    <div style="background: rgba(15, 23, 42, 0.6); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Outfit', monospace; text-align: center; font-size: 1.05rem; margin: 1rem 0;">
-                        Attention(Q, K, V) = Softmax( <span class="highlight">Q K<sup>T</sup> / &radic;d<sub>k</sub></span> + <span style="color: var(--accent-purple); font-weight: bold;">M</span> ) V
-                    </div>
-                    
-                    <p>Here, the value of M is <span class="highlight">&minus;&infin; (Negative Infinity)</span> for future positions. When we calculate <span class="tech-term">Softmax</span> over these scores, e<sup>&minus;&infin;</sup> becomes <span class="highlight">0 (Zero)</span>. As a result, the probability of attending to future words becomes mathematically zero!</p>
                 </div>
-            </details>
+
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 1rem;">
+                    <strong>Mathematical Equation:</strong><br>
+                    The <span class="tech-term">Causal Mask Matrix (M)</span> is added directly to the raw attention scores (logits) before computing probabilities:
+                </p>
+                
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Outfit', monospace; text-align: center; font-size: 1rem; margin: 0.8rem 0;">
+                    Attention(Q, K, V) = Softmax( <span class="highlight">Q K<sup>T</sup> / &radic;d<sub>k</sub></span> + <span style="color: var(--accent-purple); font-weight: bold;">M</span> ) V
+                </div>
+                
+                <p style="font-size: 0.93rem; color: var(--text-secondary); margin: 0;">
+                    Because future positions are added with <span class="highlight">&minus;&infin;</span>, evaluating the exponential in <span class="tech-term">Softmax</span> gives e<sup>&minus;&infin;</sup> = <span class="highlight">0 (Zero)</span>. This guarantees that attention weight assigned to future tokens is strictly zero!
+                </p>
+            </div>
         </div>
 
         <!-- Section 3: Autoregressive Generation -->

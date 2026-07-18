@@ -1088,16 +1088,61 @@
         <!-- Context Problem Card -->
         <div class="card">
             <h2>The Context Problem</h2>
-            <p>Consider a common English word like <span class="tech-term">bank</span>. It can have two completely different meanings:</p>
-            <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--accent-cyan);">
-                <p style="margin-bottom: 0.5rem;"><strong>Sentence 1:</strong> "I deposited my money at the <span class="highlight">bank</span>." <br>
-                → Here, <span class="highlight">bank</span> refers to a financial institution.</p>
-                <p style="margin: 0;"><strong>Sentence 2:</strong> "We sat on the muddy <span class="highlight">bank</span> of the river." <br>
-                → Here, <span class="highlight">bank</span> refers to the side of a river.</p>
+            <p>Consider a common English word like <span class="tech-term">bank</span>. See how surrounding words (Context) determine its meaning in the diagram below:</p>
+            
+            <!-- Dual Card Visual Comparison Diagram -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin: 1.5rem 0;">
+                
+                <!-- Sentence 1 Card -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.6rem;">
+                        <span style="font-weight: 700; color: var(--accent-cyan); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Sentence 1</span>
+                        <span style="background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;">Financial Context</span>
+                    </div>
+                    
+                    <div style="font-size: 1.05rem; background: rgba(30, 41, 59, 0.5); padding: 0.8rem 1rem; border-radius: 8px; line-height: 1.6;">
+                        "I deposited my <span style="background: rgba(6, 182, 212, 0.25); color: #38bdf8; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(6, 182, 212, 0.4); font-weight: 600;">money 💰</span> at the <span style="background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.4); font-weight: 700;">bank</span>."
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.85rem; background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 6px;">
+                        <span>Context Keyword: <strong>money</strong></span>
+                        <span style="color: var(--accent-cyan);">➔</span>
+                        <span>Resolves <strong>bank</strong></span>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid var(--accent-cyan); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">Resolved Meaning</span>
+                        <strong style="color: #f8fafc; font-size: 1rem; margin-top: 0.2rem; display: block;">🏦 Financial Institution</strong>
+                    </div>
+                </div>
+
+                <!-- Sentence 2 Card -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.6rem;">
+                        <span style="font-weight: 700; color: var(--accent-green); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Sentence 2</span>
+                        <span style="background: rgba(16, 185, 129, 0.15); color: var(--accent-green); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;">Natural Context</span>
+                    </div>
+                    
+                    <div style="font-size: 1.05rem; background: rgba(30, 41, 59, 0.5); padding: 0.8rem 1rem; border-radius: 8px; line-height: 1.6;">
+                        "We sat on the muddy <span style="background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.4); font-weight: 700;">bank</span> of the <span style="background: rgba(16, 185, 129, 0.25); color: #34d399; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 600;">river 🌊</span>."
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.85rem; background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 6px;">
+                        <span>Context Keyword: <strong>river</strong></span>
+                        <span style="color: var(--accent-green);">➔</span>
+                        <span>Resolves <strong>bank</strong></span>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid var(--accent-green); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">Resolved Meaning</span>
+                        <strong style="color: #f8fafc; font-size: 1rem; margin-top: 0.2rem; display: block;">🌊 Riverbank</strong>
+                    </div>
+                </div>
+
             </div>
-            <p>As humans, we read the whole sentence and instantly know which "bank" it is. But to a computer, a word is just a string of numbers.</p>
-            <p>Before Transformers, AI read words one by one. By the time it reached the end of a long sentence, it often forgot the beginning!</p>
-            <p>The Transformer solves this problem using the <span class="tech-term">Self-Attention</span> mechanism. It allows every word in a sequence to simultaneously compare itself to all other words to measure their mutual relationships and importance. As a result, each word can effectively determine its correct meaning and significance based on the surrounding <span class="tech-term">Context</span>.</p>
+
+            <!-- Single Summary Paragraph -->
+            <p style="margin-top: 1rem; line-height: 1.7;">Humans instantly infer word meanings from context, but computers see words only as raw tokens or numbers. Previous models processed words sequentially, causing them to lose context in long sentences. The Transformer's <span class="tech-term">Self-Attention</span> mechanism resolves this by comparing all words simultaneously, allowing each word to derive its true meaning from surrounding <span class="tech-term">Context</span>.</p>
         </div>
 
         <!-- Analogy Card -->
@@ -1140,7 +1185,7 @@
                         <span style="font-size: 0.95rem;"><strong>Key:</strong> We check the labels of all other words. The word "cat" has a label that matches living things that get hungry.</span>
                     </div>
                     <div style="background: rgba(15, 23, 42, 0.4); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
-                        <span style="font-size: 0.95rem;"><strong>Value:</strong> Because there's a strong match, "it" absorbs the meaning (Value) of "cat". The AI now knows <strong>it = cat</strong>!</span>
+                        <span style="font-size: 0.95rem;"><strong>Value:</strong> Because there's a strong match, "it" absorbs the meaning (Value) of "cat". The mathematical relationship <strong>it = cat</strong> is now established in the model!</span>
                     </div>
                 </div>
             </div>
@@ -1149,14 +1194,14 @@
         <!-- Step-by-Step Mechanism -->
         <div class="card">
             <h2>How Self-Attention Works</h2>
-            <p>Behind the scenes, the AI uses a 4-step math trick to mix words together:</p>
+            <p>Behind the scenes, the Self-Attention mechanism uses a 4-step math process to mix words together:</p>
             
             <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">Step 1: The Matchmaker (Dot Product)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The AI compares the Query of one word against the Keys of all other words to see how well they match. This creates a "compatibility score."</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The mechanism compares the Query of one word against the Keys of all other words to see how well they match. This creates a "compatibility score."</p>
                     <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
-                        <strong>Example:</strong> For the word <strong>"it"</strong>, the AI asks, <em>"What am I referring to?"</em> (Query). It checks the other words (Keys) in the sentence "The cat drank the milk because it was hungry." Words like "cat" and "milk" will get a high match score.
+                        <strong>Example:</strong> For the word <strong>"it"</strong>, the Query asks, <em>"What am I referring to?"</em>. It checks the other words (Keys) in the sentence "The cat drank the milk because it was hungry." Words like "cat" and "milk" will get a high match score.
                     </div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
@@ -1176,19 +1221,17 @@
                             </div>
                         </div>
                     </div>
-                    <details class="step-example">
-                        <summary>Technical Details</summary>
-                        <div class="example-body">
-                            <p>This comparison is done using a <span class="tech-term">Dot Product</span>. The Query vector of the word we want to analyze is multiplied by the Key vectors of all other words. A higher dot product means a stronger match.</p>
-                        </div>
-                    </details>
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                        <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.3rem;">📐 Mathematical Explanation (Dot Product):</strong>
+                        <p style="margin: 0; color: var(--text-secondary);">This comparison is calculated via a <strong>Dot Product</strong>. The Query (Q) vector of the target word is multiplied with the Key (K) vector of every other word. A higher dot product result signifies greater semantic alignment!</p>
+                    </div>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-purple);">
                     <strong style="color: var(--accent-purple);">Step 2: Shrinking the Scores (Scaling)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Sometimes the match scores get too large and break the math later on. To fix this, the AI simply shrinks all the scores down.</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Sometimes the match scores get too large and break the math later on. To fix this, the mechanism scales all the scores down.</p>
                     <div style="background: rgba(168, 85, 247, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
-                        <strong>Example:</strong> Suppose "cat" gets a score of 50, and "milk" gets 40. These numbers are too large and might break the next math step. The AI scales them down (e.g., to 5.0 and 4.0) to keep things stable.
+                        <strong>Example:</strong> Suppose "cat" gets a score of 50, and "milk" gets 40. These numbers are too large and might break the next math step. The model scales them down (e.g., to 5.0 and 4.0) to keep things stable.
                     </div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
                         <div style="display: flex; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
@@ -1206,19 +1249,17 @@
                             </div>
                         </div>
                     </div>
-                    <details class="step-example">
-                        <summary>Technical Details</summary>
-                        <div class="example-body">
-                            <p>To keep values stable, the dot product scores are divided by &radic;d<sub>k</sub> (the square root of the key vector's dimension size).</p>
-                        </div>
-                    </details>
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                        <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.3rem;">📐 Mathematical Explanation (Scaling Trick):</strong>
+                        <p style="margin: 0; color: var(--text-secondary);">To maintain mathematical stability, large dot product values are scaled down by dividing by <strong>&radic;d<sub>k</sub></strong> (the square root of the Key vector dimension). This prevents vanishing gradients during Softmax computation.</p>
+                    </div>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">Step 3: Turning Scores into Percentages (Softmax)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The AI turns the shrunken scores into percentages that add up to 100%. This tells the word exactly how much attention to pay to every other word.</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The mechanism converts the scaled scores into percentages that add up to 100%. This tells the word exactly how much attention to pay to every other word.</p>
                     <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
-                        <strong>Example:</strong> Now the AI turns the scaled scores into percentages. The word "it" might pay 80% attention to "cat", 15% to "milk", and 5% to other words. The total is always exactly 100%.
+                        <strong>Example:</strong> Now the mechanism turns the scaled scores into percentages. The word "it" might pay 80% attention to "cat", 15% to "milk", and 5% to other words. The total is always exactly 100%.
                     </div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
@@ -1258,19 +1299,17 @@
                             </div>
                         </div>
                     </div>
-                    <details class="step-example">
-                        <summary>Technical Details</summary>
-                        <div class="example-body">
-                            <p>The scaled scores are passed through a <span class="tech-term">Softmax</span> function. Softmax normalizes all scores into fractions between 0 and 1 that sum up to exactly 1. These are the final <strong>Attention Weights</strong>.</p>
-                        </div>
-                    </details>
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                        <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.3rem;">📐 Mathematical Explanation (Softmax Output):</strong>
+                        <p style="margin: 0; color: var(--text-secondary);">The scaled scores are passed through a <strong>Softmax</strong> function. Softmax converts raw scores into probability values between 0 and 1 that sum to 100%, producing the final <strong>Attention Weights</strong>.</p>
+                    </div>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-green);">
-                    <strong style="color: var(--accent-green);">Step 4: Mixing the Meanings (Weighted Sum)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Finally, the AI gathers the "Values" (meanings) of the other words, taking a lot from words with high percentages and very little from words with low percentages. It mixes them all together into a new, context-rich super-word!</p>
+                    <strong style="color: var(--accent-green);">Step 4: Combining Meanings (Weighted Sum)</strong>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Finally, the Self-Attention mechanism gathers the "Values" (meanings) of the other words, taking a lot from words with high percentages and very little from words with low percentages. It mixes them all together into a new, context-rich super-word!</p>
                     <div style="background: rgba(16, 185, 129, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
-                        <strong>Example:</strong> To build the final meaning for <strong>"it"</strong>, the AI takes a large piece (80%) of the "cat" Value, and a small piece (15%) of the "milk" Value. Because the sentence mentioned "hungry", the AI easily figured out that "it" means the cat! The word "it" now contains the context of a hungry cat.
+                        <strong>Example:</strong> To build the final meaning for <strong>"it"</strong>, the mechanism takes a large piece (80%) of the "cat" Value, and a small piece (15%) of the "milk" Value. Because the sentence mentioned "hungry", the mathematical calculation resolves "it" to the cat! The word "it" now contains the context of a hungry cat.
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">

@@ -1337,10 +1337,12 @@
                                 </svg>
                             </div>
                         </div>
-                        <details style="margin-top:0.5rem; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:6px; cursor:pointer;">
-                            <summary style="font-weight:600; color:var(--accent-purple);">টেকনিক্যাল বিষয়গুলো জানতে চান?</summary>
-                            <p style="margin-top:0.5rem; font-size:0.9rem; margin-bottom:0;">এটি প্রতিটি টোকেনকে তার আশেপাশের অন্যান্য টোকেনগুলোর দিকে তাকাতে সাহায্য করে এবং Query, Key, এবং Value ম্যাট্রিক্স ব্যবহার করে বুঝতে পারে কোন শব্দের সাথে কোন শব্দ সম্পর্কিত (Context Extraction)। (এই কোর্সের পরবর্তী অংশে এ নিয়ে আলোচনা করা হবে।)</p>
-                        </details>
+                        <div class="note-card" style="margin-top: 1rem; background: rgba(168, 85, 247, 0.08); border-left: 4px solid var(--accent-purple); padding: 1rem 1.2rem; border-radius: 8px;">
+                            <h4 style="color: var(--accent-purple); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem;">
+                                💡 গভীরভাবে বুঝুন (Technical Note): Self-Attention কীভাবে কাজ করে?
+                            </h4>
+                            <p style="font-size: 0.93rem; line-height: 1.6; margin: 0; color: var(--text-secondary);">Self-Attention প্রতিটি টোকেনকে তার চারপাশের অন্যান্য শব্দগুলোর দিকে তাকাতে সাহায্য করে। গাণিতিকভাবে এটি <strong>Query (অনুসন্ধান)</strong>, <strong>Key (ইনডেক্স/লেবেল)</strong>, এবং <strong>Value (মূল বিষয়বস্তু)</strong> ম্যাট্রিক্স ব্যবহার করে হিসাব করে কোন শব্দের সাথে কোন শব্দ কতখানি সম্পর্কিত (Context Extraction)। <em>(এই কোর্সের লেসন ৩-এ এটি নিয়ে বিস্তারিত গাণিতিক ব্যাখ্যা দেওয়া হয়েছে)</em></p>
+                        </div>
                     </div>
                 </div>
 
@@ -1432,21 +1434,53 @@
         <!-- Quiz Card -->
         <div class="card">
             <h2>Quick Assessment (কুইজ)</h2>
-            <p>আপনার ধারণাকে ঝালাই করতে নিচের প্রশ্নটির উত্তর দিন:</p>
-            <div style="margin-top: 1.5rem;">
-                <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">প্রশ্ন: Transformer block-এর ভেতরে থাকা Self-Attention Mechanism-এর মূল কাজ কী?</p>
-                
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'দুঃখিত! Tokenizer-এর কাজ হলো টেক্সট ভাঙা, Self-Attention-এর নয়।')">
-                    ক) টেক্সটকে টুকরো টুকরো করে টোকেনে ভাগ করা।
-                </div>
-                <div class="quiz-option" onclick="checkAnswer(this, true, 'চমৎকার! Self-Attention-এর কাজ হলো বাক্যের প্রতিটি টোকেন বা শব্দের মধ্যকার পারস্পরিক সম্পর্ক ও কনটেক্সট খুঁজে বের করা।')">
-                    খ) একটি বাক্যের বিভিন্ন টোকেনের মধ্যকার পারস্পরিক সম্পর্ক এবং কনটেক্সট তৈরি করা।
-                </div>
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'ভুল উত্তর! এটি শেষ স্তরের Softmax ফাংশনের কাজ।')">
-                    গ) পরবর্তী টোকেনের সম্ভাবনা বা Probability স্কোর গণনা করা।
+            <p>আপনার ধারণাকে ঝালাই করতে নিচের ৩টি প্রশ্নের সঠিক উত্তর দিন:</p>
+            
+            <div class="quiz-container" style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem;">
+                <!-- Question 1 -->
+                <div class="quiz-question-card">
+                    <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">১. High-Level LLM Pipeline-এ Tokenizer-এর প্রাথমিক দায়িত্ব কী?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'ভুল উত্তর! এটি Softmax স্তরের কাজ।')">
+                        ক) পরবর্তী টোকেনের সম্ভাবনা বা Probability স্কোর গণনা করা।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 1, true, 'চমৎকার! Tokenizer বড় ইনপুট টেক্সটকে ক্ষুদ্র ক্ষুদ্র টুকরো বা টোকেনে বিভক্ত করে এবং প্রতিটির জন্য নির্দিষ্ট Token ID বরাদ্দ করে।')">
+                        খ) ইনপুট টেক্সটকে ক্ষুদ্র ক্ষুদ্র টোকেনে বিভক্ত করে Vocabulary থেকে আইডি বরাদ্দ করা।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'ভুল উত্তর! শব্দগুলোর মধ্যে কনটেক্সট তৈরি করা Self-Attention-এর কাজ।')">
+                        গ) বিভিন্ন টোকেনের মধ্যে সম্পর্ক এবং ব্যাকরণগত কনটেক্সট তৈরি করা।
+                    </div>
+                    <div id="quiz-feedback-1" class="quiz-feedback"></div>
                 </div>
 
-                <div id="quiz-feedback-box" class="quiz-feedback"></div>
+                <!-- Question 2 -->
+                <div class="quiz-question-card">
+                    <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">২. Transformer block-এর ভেতরে থাকা Self-Attention Mechanism-এর মূল কাজ কী?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, 2, false, 'দুঃখিত! Tokenizer-এর কাজ হলো টেক্সট ভাঙা, Self-Attention-এর নয়।')">
+                        ক) টেক্সটকে টুকরো টুকরো করে টোকেনে ভাগ করা।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 2, true, 'চমৎকার! Self-Attention-এর কাজ হলো বাক্যের প্রতিটি টোকেন বা শব্দের মধ্যকার পারস্পরিক সম্পর্ক ও কনটেক্সট খুঁজে বের করা।')">
+                        খ) একটি বাক্যের বিভিন্ন টোকেনের মধ্যকার পারস্পরিক সম্পর্ক এবং কনটেক্সট তৈরি করা।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 2, false, 'ভুল উত্তর! এটি শেষ স্তরের Softmax ফাংশনের কাজ।')">
+                        গ) পরবর্তী টোকেনের সম্ভাবনা বা Probability স্কোর গণনা করা।
+                    </div>
+                    <div id="quiz-feedback-2" class="quiz-feedback"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="quiz-question-card">
+                    <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">৩. Pipeline-এর একদম শেষ ধাপে (Output & Softmax) মডেল কীভাবে পরবর্তী উপযুক্ত শব্দ বাছাই করে?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'ভুল উত্তর! শব্দ আইডিগুলো সরাসরি যোগ করা হয় না, বরং স্কোর হিসাব করা হয়।')">
+                        ক) বাক্যের সব টোকেন আইডি একসাথে যোগ করে নির্দিষ্ট সংখ্যা নির্ধারণ করে।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, true, 'অসাধারণ! Softmax ফাংশন ভোকাবুলারির প্রতিটি শব্দের জন্য বের করা স্কোরকে শতকরা হারে (Probability) রূপান্তর করে এবং সর্বোচ্চ হারের শব্দটিকে আউটপুট হিসেবে বেছে নেয়।')">
+                        খ) Softmax ফাংশন সম্পূর্ণ ডিকশনারির প্রতিটি শব্দের জন্য সম্ভাবনা (Probability) শতকরা হারে রূপান্তর করে সর্বোচ্চ হারের শব্দ বেছে নেয়।
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'ভুল উত্তর! এম্বেডিং ভেক্টর থেকে সরাসরি টেক্সট তৈরি হয় না, এটি Softmax-এর পরেই ঘটে।')">
+                        গ) সরাসরি এম্বেডিং ভেক্টরকে টেক্সটে কনভার্ট করে ফেলে।
+                    </div>
+                    <div id="quiz-feedback-3" class="quiz-feedback"></div>
+                </div>
             </div>
         </div>
 
@@ -1901,13 +1935,13 @@
             if (node) node.classList.add('active');
         }
 
-        function checkAnswer(element, isCorrect, feedback) {
-            // Clear previous states
-            document.querySelectorAll('.quiz-option').forEach(opt => {
+        function checkAnswer(element, qNum, isCorrect, feedback) {
+            const questionCard = element.closest('.quiz-question-card') || element.parentElement;
+            questionCard.querySelectorAll('.quiz-option').forEach(opt => {
                 opt.classList.remove('correct', 'incorrect');
             });
 
-            const feedbackBox = document.getElementById('quiz-feedback-box');
+            const feedbackBox = document.getElementById('quiz-feedback-' + qNum) || document.getElementById('quiz-feedback-box');
             feedbackBox.className = 'quiz-feedback';
 
             if (isCorrect) {

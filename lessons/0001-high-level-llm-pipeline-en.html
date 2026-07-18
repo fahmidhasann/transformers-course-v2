@@ -1337,10 +1337,12 @@
                                 </svg>
                             </div>
                         </div>
-                        <details style="margin-top:0.5rem; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:6px; cursor:pointer;">
-                            <summary style="font-weight:600; color:var(--accent-purple);">Want the technical details?</summary>
-                            <p style="margin-top:0.5rem; font-size:0.9rem; margin-bottom:0;">It allows each token to look at other tokens around it and determine how they relate to one another (Context Extraction) using Query, Key, and Value matrices. (In the later part of this course, this will be discussed.)</p>
-                        </details>
+                        <div class="note-card" style="margin-top: 1rem; background: rgba(168, 85, 247, 0.08); border-left: 4px solid var(--accent-purple); padding: 1rem 1.2rem; border-radius: 8px;">
+                            <h4 style="color: var(--accent-purple); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem;">
+                                💡 Deep Dive (Technical Note): How Self-Attention Works
+                            </h4>
+                            <p style="font-size: 0.93rem; line-height: 1.6; margin: 0; color: var(--text-secondary);">Self-Attention allows each token to look at surrounding tokens in the sentence. Mathematically, it calculates context using <strong>Query (search)</strong>, <strong>Key (index/label)</strong>, and <strong>Value (content)</strong> matrices to extract true contextual meaning. <em>(This will be covered mathematically in Lesson 3)</em></p>
+                        </div>
                     </div>
                 </div>
 
@@ -1432,21 +1434,53 @@
         <!-- Quiz Card -->
         <div class="card">
             <h2>Quick Assessment (Quiz)</h2>
-            <p>Answer the question below to test your understanding:</p>
-            <div style="margin-top: 1.5rem;">
-                <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">Question: What is the primary function of the Self-Attention Mechanism inside a Transformer block?</p>
-                
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'Incorrect! Breaking text down is the job of the Tokenizer, not Self-Attention.')">
-                    A) Breaking the text down into small tokens.
-                </div>
-                <div class="quiz-option" onclick="checkAnswer(this, true, 'Excellent! Self-Attention calculates semantic relationships and context between every token or word in the sentence.')">
-                    B) Establishing contextual relationships between different tokens in a sentence.
-                </div>
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'Incorrect! This is the job of the Softmax function in the final layer.')">
-                    C) Calculating probability scores for the next token.
+            <p>Answer the 3 questions below to test your understanding:</p>
+            
+            <div class="quiz-container" style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem;">
+                <!-- Question 1 -->
+                <div class="quiz-question-card">
+                    <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">1. What is the primary responsibility of the Tokenizer in the LLM pipeline?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'Incorrect! This is done in the final Softmax prediction step.')">
+                        A) Calculating next-token probability distribution.
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 1, true, 'Excellent! The Tokenizer breaks raw text into small token chunks and assigns unique Vocabulary IDs to each.')">
+                        B) Splitting input text into small tokens and mapping them to Vocabulary IDs.
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'Incorrect! Establishing contextual relationships is the role of Self-Attention.')">
+                        C) Learning context and grammatical relations between tokens.
+                    </div>
+                    <div id="quiz-feedback-1" class="quiz-feedback"></div>
                 </div>
 
-                <div id="quiz-feedback-box" class="quiz-feedback"></div>
+                <!-- Question 2 -->
+                <div class="quiz-question-card">
+                    <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">2. What is the primary function of the Self-Attention Mechanism inside a Transformer block?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, 2, false, 'Incorrect! Breaking text down is the job of the Tokenizer, not Self-Attention.')">
+                        A) Breaking the text down into small tokens.
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 2, true, 'Excellent! Self-Attention calculates semantic relationships and context between every token or word in the sentence.')">
+                        B) Establishing contextual relationships between different tokens in a sentence.
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 2, false, 'Incorrect! This is the job of the Softmax function in the final layer.')">
+                        C) Calculating probability scores for the next token.
+                    </div>
+                    <div id="quiz-feedback-2" class="quiz-feedback"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="quiz-question-card">
+                    <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">3. In the final output step (Softmax), how does the model select the output word?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'Incorrect! Token IDs are not added together numerically.')">
+                        A) By summing up all token IDs in the sequence.
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, true, 'Awesome! Softmax turns vocabulary scores into probability percentages and chooses the token with the highest score.')">
+                        B) Softmax converts scores into percentage probabilities across the entire dictionary and picks the highest.
+                    </div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'Incorrect! Embedding vectors are abstract representations; Softmax is required to project scores back to tokens.')">
+                        C) Directly converting embedding vectors into raw words without probability scoring.
+                    </div>
+                    <div id="quiz-feedback-3" class="quiz-feedback"></div>
+                </div>
             </div>
         </div>
 
@@ -1901,13 +1935,13 @@
             if (node) node.classList.add('active');
         }
 
-        function checkAnswer(element, isCorrect, feedback) {
-            // Clear previous states
-            document.querySelectorAll('.quiz-option').forEach(opt => {
+        function checkAnswer(element, qNum, isCorrect, feedback) {
+            const questionCard = element.closest('.quiz-question-card') || element.parentElement;
+            questionCard.querySelectorAll('.quiz-option').forEach(opt => {
                 opt.classList.remove('correct', 'incorrect');
             });
 
-            const feedbackBox = document.getElementById('quiz-feedback-box');
+            const feedbackBox = document.getElementById('quiz-feedback-' + qNum) || document.getElementById('quiz-feedback-box');
             feedbackBox.className = 'quiz-feedback';
 
             if (isCorrect) {

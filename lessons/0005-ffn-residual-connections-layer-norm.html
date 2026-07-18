@@ -1089,8 +1089,8 @@
         <!-- Intro Card -->
         <div class="card">
             <h2>The Unsung Heroes (অবমূল্যায়িত হিরোরা)</h2>
-            <p>আমরা এতক্ষণ <span class="tech-term">Attention</span> নিয়ে অনেক কথা বলেছি, যা এআই-এর "চোখ ও কান" হিসেবে কাজ করে এবং বাক্যের শব্দগুলোর মধ্যকার সম্পর্ক দেখে। কিন্তু শুধু Attention দিয়ে একটি বুদ্ধিমান এআই তৈরি করা সম্ভব নয়।</p>
-            <p>এআই যখন চারপাশ দেখে তথ্য সংগ্রহ করে, তখন সেই তথ্য প্রসেস করার জন্য তার একটি "মস্তিষ্ক" এবং শেখার সময় ক্র্যাশ না করার জন্য একটি "সেফটি সিস্টেম" বা সুরক্ষাব্যবস্থার প্রয়োজন হয়। এখানেই আসে তিন অবমূল্যায়িত হিরো: <span class="highlight">Feed-Forward Networks (FFN)</span>, <span class="highlight">Skip Connections</span>, এবং <span class="highlight">Layer Normalization</span>।</p>
+            <p>আমরা এতক্ষণ <span class="tech-term">Attention</span> নিয়ে অনেক কথা বলেছি, যা ট্রান্সফর্মার মডেলের "চোখ ও কান" হিসেবে কাজ করে এবং বাক্যের শব্দগুলোর মধ্যকার সম্পর্ক দেখে। কিন্তু শুধু Attention দিয়ে একটি পূর্ণাঙ্গ মডেল তৈরি করা সম্ভব নয়।</p>
+            <p>মডেলটির সেলফ-এটেনশন লেয়ার যখন চারপাশ দেখে তথ্য সংগ্রহ করে, তখন সেই তথ্য প্রসেস করার জন্য তার একটি "মস্তিষ্ক" এবং শেখার সময় ক্র্যাশ না করার জন্য একটি "সেফটি সিস্টেম" বা সুরক্ষাব্যবস্থার প্রয়োজন হয়। এখানেই আসে তিন অবমূল্যায়িত হিরো: <span class="highlight">Feed-Forward Networks (FFN)</span>, <span class="highlight">Skip Connections</span>, এবং <span class="highlight">Layer Normalization</span>।</p>
         </div>
 
         <!-- FFN Card -->
@@ -1122,6 +1122,153 @@
                     <line x1="250" y1="150" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
                     <line x1="250" y1="200" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
 
+                    <!-- Flowing Pulses (Input to Hidden) -->
+                    <g>
+                        <!-- Input 1 (100, 80) -> Hidden 1 (250, 50) -->
+                        <circle r="3" fill="#60a5fa" opacity="0">
+                            <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="cy" values="80;50;50" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
+                        </circle>
+                        <!-- Input 1 (100, 80) -> Hidden 2 (250, 100) -->
+                        <circle r="3" fill="#60a5fa" opacity="0">
+                            <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="cy" values="80;100;100" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
+                        </circle>
+                        <!-- Input 1 (100, 80) -> Hidden 3 (250, 150) -->
+                        <circle r="3" fill="#60a5fa" opacity="0">
+                            <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="cy" values="80;150;150" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
+                        </circle>
+                        <!-- Input 1 (100, 80) -> Hidden 4 (250, 200) -->
+                        <circle r="3" fill="#60a5fa" opacity="0">
+                            <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="cy" values="80;200;200" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
+                        </circle>
+
+                        <!-- Input 2 (100, 170) -> Hidden 1 (250, 50) -->
+                        <circle r="3" fill="#60a5fa" opacity="0">
+                            <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="cy" values="170;50;50" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
+                        </circle>
+                        <!-- Input 2 (100, 170) -> Hidden 2 (250, 100) -->
+                        <circle r="3" fill="#60a5fa" opacity="0">
+                            <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="cy" values="170;100;100" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
+                        </circle>
+                        <!-- Input 2 (100, 170) -> Hidden 3 (250, 150) -->
+                        <circle r="3" fill="#60a5fa" opacity="0">
+                            <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="cy" values="170;150;150" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
+                        </circle>
+                        <!-- Input 2 (100, 170) -> Hidden 4 (250, 200) -->
+                        <circle r="3" fill="#60a5fa" opacity="0">
+                            <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="cy" values="170;200;200" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
+                            <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
+                        </circle>
+                    </g>
+
+                    <!-- Flowing Pulses (Hidden to Output) -->
+                    <g>
+                        <!-- Hidden 1 (250, 50) -> Output 1 (400, 80) -->
+                        <circle r="3" fill="#a78bfa" opacity="0">
+                            <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="cy" values="50;50;80;80" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
+                        </circle>
+                        <!-- Hidden 2 (250, 100) -> Output 1 (400, 80) -->
+                        <circle r="3" fill="#a78bfa" opacity="0">
+                            <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="cy" values="100;100;80;80" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
+                        </circle>
+                        <!-- Hidden 3 (250, 150) -> Output 1 (400, 80) -->
+                        <circle r="3" fill="#a78bfa" opacity="0">
+                            <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="cy" values="150;150;80;80" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
+                        </circle>
+                        <!-- Hidden 4 (250, 200) -> Output 1 (400, 80) -->
+                        <circle r="3" fill="#a78bfa" opacity="0">
+                            <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="cy" values="200;200;80;80" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
+                        </circle>
+
+                        <!-- Hidden 1 (250, 50) -> Output 2 (400, 170) -->
+                        <circle r="3" fill="#a78bfa" opacity="0">
+                            <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="cy" values="50;50;170;170" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
+                        </circle>
+                        <!-- Hidden 2 (250, 100) -> Output 2 (400, 170) -->
+                        <circle r="3" fill="#a78bfa" opacity="0">
+                            <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="cy" values="100;100;170;170" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
+                        </circle>
+                        <!-- Hidden 3 (250, 150) -> Output 2 (400, 170) -->
+                        <circle r="3" fill="#a78bfa" opacity="0">
+                            <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="cy" values="150;150;170;170" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
+                        </circle>
+                        <!-- Hidden 4 (250, 200) -> Output 2 (400, 170) -->
+                        <circle r="3" fill="#a78bfa" opacity="0">
+                            <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="cy" values="200;200;170;170" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
+                            <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
+                        </circle>
+                    </g>
+
+                    <!-- Node Ripples (Activation Effects) -->
+                    <g>
+                        <!-- Input Ripples -->
+                        <circle cx="100" cy="80" r="16" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0">
+                            <animate attributeName="r" values="16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.2;1" />
+                            <animate attributeName="opacity" values="0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.2;1" />
+                        </circle>
+                        <circle cx="100" cy="170" r="16" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0">
+                            <animate attributeName="r" values="16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.2;1" />
+                            <animate attributeName="opacity" values="0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.2;1" />
+                        </circle>
+
+                        <!-- Hidden Ripples -->
+                        <circle cx="250" cy="50" r="16" fill="none" stroke="#10b981" stroke-width="2" opacity="0">
+                            <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.6;1" />
+                            <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.41;0.6;1" />
+                        </circle>
+                        <circle cx="250" cy="100" r="16" fill="none" stroke="#10b981" stroke-width="2" opacity="0">
+                            <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.6;1" />
+                            <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.41;0.6;1" />
+                        </circle>
+                        <circle cx="250" cy="150" r="16" fill="none" stroke="#10b981" stroke-width="2" opacity="0">
+                            <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.6;1" />
+                            <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.41;0.6;1" />
+                        </circle>
+                        <circle cx="250" cy="200" r="16" fill="none" stroke="#10b981" stroke-width="2" opacity="0">
+                            <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.6;1" />
+                            <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.41;0.6;1" />
+                        </circle>
+
+                        <!-- Output Ripples -->
+                        <circle cx="400" cy="80" r="16" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0">
+                            <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.8;0.95;1" />
+                            <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.8;0.81;0.95;1" />
+                        </circle>
+                        <circle cx="400" cy="170" r="16" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0">
+                            <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.8;0.95;1" />
+                            <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.8;0.81;0.95;1" />
+                        </circle>
+                    </g>
+
                     <!-- Input Nodes -->
                     <circle cx="100" cy="80" r="16" fill="#3b82f6" />
                     <circle cx="100" cy="170" r="16" fill="#3b82f6" />
@@ -1149,30 +1296,28 @@
                 <li><strong>FFN:</strong> "এই সংযোগগুলোর ওপর ভিত্তি করে, আমার কোন তথ্যগুলো জানা আছে?" (একক কাজ)</li>
             </ul>
 
-            <details class="step-example" style="margin-bottom: 1rem;">
-                <summary>একটু গভীরে: FFN-এর গণিত</summary>
-                <div style="padding-top: 1rem;">
-                    <p>এটি একটি দ্বি-স্তর বিশিষ্ট নিউরাল নেটওয়ার্ক, যার মাঝখানে একটি অ্যাক্টিভেশন ফাংশন থাকে:</p>
-                    <div class="math-block">
-                        FFN(x) = Activation(x W₁ + b₁) W₂ + b₂
-                    </div>
-                    <p>প্রথম লেয়ারটি ডেটাকে অনেক বড় আকারে (সাধারণত ৪ গুণ) প্রসারিত করে, অ্যাক্টিভেশন ফাংশনটি সেটি ফিল্টার করে, এবং দ্বিতীয় লেয়ারটি আবার তাকে ছোট করে আগের আকারে নিয়ে আসে। এটি অনেকটা চাবি দিয়ে তালা খুলে তথ্য বের করে আনার মতো কাজ করে।</p>
+            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
+                <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.4rem;">📐 গাণিতিক বিস্তারিত: FFN-এর ভেতর কী ঘটে?</strong>
+                <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">এটি একটি দ্বি-স্তর বিশিষ্ট (Two-layer) নিউরাল নেটওয়ার্ক, যার মাঝখানে একটি নন-লিনিয়ার অ্যাক্টিভেশন ফাংশন (যেমন GELU বা SwiGLU) থাকে:</p>
+                <div class="math-block" style="background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; text-align: center; margin: 0.5rem 0; font-family: monospace;">
+                    FFN(x) = Activation(x W₁ + b₁) W₂ + b₂
                 </div>
-            </details>
+                <p style="margin: 0; color: var(--text-secondary);">প্রথম লেয়ারটি ইনপুটকে অনেক বড় আকারে (সাধারণত ৪ গুণ) প্রসারিত করে যাতে গভীর ফিচার সংরক্ষিত হয়, অ্যাক্টিভেশন ফাংশনটি ফিল্টার করে, এবং দ্বিতীয় লেয়ারটি আবার তাকে ছোট করে আগের আকারে নিয়ে আসে।</p>
+            </div>
         </div>
 
         <!-- Residual Connections Card -->
         <div class="card">
             <h2>2. সেফটি হাইওয়ে বা নিরাপদ মহাসড়ক (Skip Connections)</h2>
-            <p>GPT-4 এর মতো আধুনিক এআই মডেলগুলো অনেক "গভীর" হয়, অর্থাৎ এগুলোর ভেতরে ডজন ডজন বা শত শত প্রসেসিং লেয়ার একটির ওপর আরেকটি সাজানো থাকে। কিন্তু এখানে একটি সমস্যা আছে: এতগুলো লেয়ার পার হওয়ার সময় তথ্য হারিয়ে যেতে পারে বা এলোমেলো হয়ে যেতে পারে, যার ফলে এআই হয়তো মূল শব্দগুলোই ভুলে যেতে পারে।</p>
+            <p>GPT-4 এর মতো আধুনিক মডেলগুলো অনেক "গভীর" হয়, অর্থাৎ এগুলোর ভেতরে ডজন ডজন বা শত শত প্রসেসিং লেয়ার একটির ওপর আরেকটি সাজানো থাকে। কিন্তু এখানে একটি সমস্যা আছে: এতগুলো লেয়ার পার হওয়ার সময় তথ্য হারিয়ে যেতে পারে বা এলোমেলো হয়ে যেতে পারে, যার ফলে মডেলটি হয়তো মূল শব্দগুলোই ভুলে যেতে পারে।</p>
             
             <p><strong>সমাধান: সরাসরি বাইপাস রাস্তা</strong></p>
             <p>এই সমস্যার সমাধানে ইঞ্জিনিয়াররা তৈরি করেছেন <span class="tech-term">Skip Connections</span> (বা Residual Connections)। এটি লোকাল রাস্তার পাশে দিয়ে যাওয়া একটি এক্সপ্রেস হাইওয়ের মতো কাজ করে।</p>
             
-            <p>কোনো শব্দ একটি জটিল প্রসেসিং লেয়ারে প্রবেশ করার আগে, এআই তার একটি কপি বা নকল তৈরি করে। মূল শব্দটি এই "এক্সপ্রেস হাইওয়ে" ধরে সরাসরি লেয়ারের শেষে চলে যায়, যেখানে এটি নতুন প্রসেস করা ডেটার সাথে আবার যোগ হয়ে যায়।</p>
+            <p>কোনো শব্দ একটি জটিল প্রসেসিং লেয়ারে প্রবেশ করার আগে, মডেলটি তার ইনপুটের একটি কপি বা নকল তৈরি করে। মূল শব্দটি এই "এক্সপ্রেস হাইওয়ে" ধরে সরাসরি লেয়ারের শেষে চলে যায়, যেখানে এটি নতুন প্রসেস করা ডেটার সাথে আবার যোগ হয়ে যায়।</p>
             
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
-                <li>এটি নিশ্চিত করে যে এআই কখনোই তার আসল ইনপুট ভুলে যাবে না।</li>
+                <li>এটি নিশ্চিত করে যে মডেলটি কখনোই তার আসল ইনপুট ভুলে যাবে না।</li>
                 <li>যদি কোনো লেয়ার ভুল করে বা বিভ্রান্ত হয়, তবে মূল কপিটি সেখানে ঠিকই থাকে পরিস্থিতি সামাল দেওয়ার জন্য!</li>
             </ul>
 
@@ -1221,16 +1366,14 @@
                 </svg>
             </div>
 
-            <details class="step-example" style="margin-bottom: 1rem;">
-                <summary>একটু গভীরে: Backpropagation বা শেখার যাদু</summary>
-                <div style="padding-top: 1rem;">
-                    <p>গাণিতিকভাবে এটি দেখতে এমন:</p>
-                    <div class="math-block">
-                        Output = x + SubLayer(x)
-                    </div>
-                    <p>ট্রেনিং বা শেখার সময়, গাণিতিক ক্যালকুলাসের কারণে আমরা পাই: <code>1 + derivative(SubLayer)</code>। এই <code>+1</code> নিশ্চিত করে যে শেখার সিগন্যাল কখনোই শূন্য হয়ে হারিয়ে যাবে না (যাকে ভ্যানিশিং গ্র্যাডিয়েন্ট সমস্যা বলে)।</p>
+            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
+                <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.4rem;">📐 গাণিতিক বিস্তারিত: Backpropagation ও Skip Connection</strong>
+                <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">গাণিতিকভাবে Skip Connection-এর সমীকরণ হলো:</p>
+                <div class="math-block" style="background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; text-align: center; margin: 0.5rem 0; font-family: monospace;">
+                    Output = x + SubLayer(x)
                 </div>
-            </details>
+                <p style="margin: 0; color: var(--text-secondary);">ট্রেনিংয়ের সময় ব্যাকপ্রপাগেশনের গাণিতিক ডেরিভেটিভের নিয়ম অনুযায়ী পাওয়া যায় <code>1 + derivative(SubLayer)</code>। এই <code>+1</code> ব্যাকপ্রপাগেশনে গ্র্যাডিয়েন্টকে কোনো বাধা ছাড়াই সরাসরি পূর্ববর্তী লেয়ারে পৌঁছে দেয়, ফলে ভ্যানিশিং গ্র্যাডিয়েন্ট দূর হয়!</p>
+            </div>
         </div>
 
         <!-- Layer Normalization Card -->
@@ -1239,7 +1382,7 @@
             <p>শত শত লেয়ার পার হওয়ার সময় মডেলের ভেতরের <span class="tech-term">Token Vectors</span> বা সিগন্যালগুলো (যাকে আমরা এতক্ষণ সংখ্যা হিসেবে কল্পনা করেছি) বারবার গুণ হতে থাকে। এই ক্রমাগত গাণিতিক হিসাবের কারণে ভেক্টরগুলোর মান (values) বিশাল বড় হয়ে যেতে পারে, বা সংকুচিত হয়ে একেবারে শূন্য হয়ে যেতে পারে। এর ফলাফল দুই পর্যায়ে দেখা যায়:</p>
             
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
-                <li><strong>Training-এর সময়:</strong> যদি সিগন্যালগুলো অনেক বেশি এলোমেলো হয়ে যায়, তবে ব্যাকপ্রোপাগেশন কাজ করা বন্ধ করে দেয় এবং এআই আর নতুন কিছু শিখতে পারে না (মডেল ক্র্যাশ করে)।</li>
+                <li><strong>Training-এর সময়:</strong> যদি সিগন্যালগুলো অনেক বেশি এলোমেলো হয়ে যায়, তবে ব্যাকপ্রোপাগেশন কাজ করা বন্ধ করে দেয় এবং মডেলটি আর নতুন কিছু শিখতে পারে না (মডেল ক্র্যাশ করে)।</li>
                 <li><strong>Inference-এর সময়:</strong> (নতুন টোকেন জেনারেট করার সময়) যদি লেয়ারগুলো সঠিক মাত্রার (scale) সিগন্যাল না পায়, তবে মডেলটি সম্পূর্ণ অর্থহীন বা আবোলতাবোল (gibberish) আউটপুট তৈরি করে।</li>
             </ul>
 
@@ -1299,13 +1442,11 @@
                 </svg>
             </div>
 
-            <details class="step-example" style="margin-bottom: 1rem;">
-                <summary>একটু গভীরে: Pre-LN বনাম Post-LN</summary>
-                <div style="padding-top: 1rem;">
-                    <p>গাণিতিক সূত্রটি নিশ্চিত করে যে সংখ্যাগুলোর গড় ০ এবং ভ্যারিয়েন্স ১ হবে।</p>
-                    <p>পুরনো মডেলগুলোতে লেয়ারের প্রসেসিংয়ের <em>পরে</em> এই ব্যালেন্স করার কাজ হতো (Post-LN: <code>LN(x + SubLayer(x))</code>)। কিন্তু Gemini বা Claude-এর মতো আধুনিক মডেলগুলো প্রসেসিংয়ের <em>আগেই</em> ইনপুটকে ব্যালেন্স করে নেয় (Pre-LN: <code>x + SubLayer(LN(x))</code>), যা প্রথম ধাপ থেকেই ট্রেনিংকে অনেক বেশি স্থিতিশীল করে তোলে।</p>
-                </div>
-            </details>
+            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
+                <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.4rem;">📐 গাণিতিক বিস্তারিত: Pre-LN বনাম Post-LN</strong>
+                <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">গাণিতিক সূত্রটি নিশ্চিত করে যে ভেক্টরের ফিচারগুলোর গড় ০ এবং ভ্যারিয়েন্স ১ বজায় থাকবে।</p>
+                <p style="margin: 0; color: var(--text-secondary);">পুরনো Transformer মডেলগুলোতে প্রসেসিংয়ের <em>পরে</em> নরমালাইজেশন হতো (Post-LN: <code>LN(x + SubLayer(x))</code>)। কিন্তু Gemini, Llama বা Claude-এর মতো আধুনিক আর্কিটেকচারগুলোতে প্রসেসিংয়ের <em>আগেই</em> ইনপুটকে ব্যালেন্স করে নেওয়া হয় (Pre-LN: <code>x + SubLayer(LN(x))</code>), যা গভীর মডেলগুলোর ট্রেনিংকে অত্যন্ত স্থিতিশীল রাখে।</p>
+            </div>
         </div>
 
         <!-- Interactive Simulator Card -->

@@ -977,9 +977,9 @@
                 <li>It's involved in a "why" scenario (because of the running cat).</li>
             </ul>
 
-            <p>If the AI only had one way to pay attention (called <span class="tech-term">Single-Head Attention</span>), it would get confused trying to mix all these different relationships together. It's like trying to listen to 5 different conversations with one ear!</p>
+            <p>If the model only had one way to pay attention (called <span class="tech-term">Single-Head Attention</span>), it would get confused trying to mix all these different relationships together. It's like trying to listen to 5 different conversations with one ear!</p>
             
-            <p>The solution is <span class="tech-term">Multi-Head Attention</span>. Instead of one ear, the AI gets multiple "Heads" that listen in parallel. The following is just an illustrative example; in reality, each Head is not explicitly assigned a specific task. Rather, during training, different Heads naturally learn to focus on different types of patterns or aspects of the input. For instance, they might learn to focus on:</p>
+            <p>The solution is <span class="tech-term">Multi-Head Attention</span>. Instead of one ear, the model uses multiple "Heads" that listen in parallel. The following is just an illustrative example; in reality, each Head is not explicitly assigned a specific task. Rather, during training, different Heads naturally learn to focus on different types of patterns or aspects of the input. For instance, they might learn to focus on:</p>
             
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: decimal;">
                 <li><span class="highlight">Head 1 (The Action Tracker):</span> Focusing on who is doing what (e.g., dog & chased).</li>
@@ -1048,7 +1048,7 @@
             <h2>Dimension Splitting: A Clever Trick</h2>
             <p>You might think running 4 "Heads" at the same time would make the computer 4 times slower. But the Transformer uses a clever trick to avoid this!</p>
             
-            <p>Imagine a word's meaning is stored as a list of <span class="highlight">512 numbers</span>. If we have <span class="highlight">4</span> Attention Heads, the AI doesn't give all 512 numbers to every Head.</p>
+            <p>Imagine a word's meaning is stored as a list of <span class="highlight">512 numbers</span>. If we have <span class="highlight">4</span> Attention Heads, the mechanism doesn't give all 512 numbers to every Head.</p>
             
             <p>Instead, it chops the numbers up equally:</p>
             <div class="math-box">
@@ -1151,7 +1151,7 @@
             </div>
             
             <p>Each Head only looks at a small slice (128 numbers) to do its specialized job. When they are all done, they glue their answers back together into a single 512-number list.</p>
-            <p>This allows the AI to think about the word from 4 different angles at the exact same speed as thinking from just 1 angle!</p>
+            <p>This allows the model to process the word from 4 different angles at the exact same speed as thinking from just 1 angle!</p>
         </div>
 
         <!-- Interactive Visualizer Card -->
@@ -1191,8 +1191,8 @@
         <!-- Layer Stacking Card -->
         <div class="card">
             <h2>Layer Stacking: Building Deep Understanding</h2>
-            <p>An AI model isn't just one single block of Multi-Head Attention (here a block refers to a <span class="tech-term">Transformer block</span>). It's actually a massive tower of blocks stacked on top of each other. This is called <span class="tech-term">Layer Stacking</span>.</p>
-            <p>For example, models like ChatGPT or Claude use dozens of layers, and GPT-4 has over 100! Why so many? Because understanding language takes steps. The bottom layers handle simple things, and the top layers handle deep thinking:</p>
+            <p>A Transformer model isn't just one single block of Multi-Head Attention (here a block refers to a <span class="tech-term">Transformer block</span>). It's actually a massive tower of blocks stacked on top of each other. This is called <span class="tech-term">Layer Stacking</span>.</p>
+            <p>For example, models like BERT or GPT-4 use dozens of layers, and some have over 100! Why so many? Because understanding language takes steps. The bottom layers handle simple things, and the top layers handle deep thinking:</p>
             
             <div class="layer-stack">
                 <!-- Top Layers -->
@@ -1223,7 +1223,7 @@
                     <p><strong>Job:</strong> Figuring out how words connect to form a proper sentence.</p>
                     <p><strong>Example:</strong></p>
                     <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-purple); font-size:0.9rem; font-style:italic;">
-                        At this stage, the AI figures out that the 'dog' is the one who 'chased'. It also solves the mystery of the word 'it', realizing 'it' means the 'cat'.
+                        At this stage, the middle layers resolve that the 'dog' is the one who 'chased'. It also solves the mystery of the word 'it', realizing 'it' means the 'cat'.
                     </p>
                 </div>
             </div>
@@ -1414,7 +1414,7 @@
                     <p><strong>Job:</strong> Spotting basic word types (noun, verb) and looking at words that are right next to each other.</p>
                     <p><strong>Example ("The cute dog chased the cat..."):</strong></p>
                     <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-green); font-size:0.9rem; font-style:italic;">
-                        At this stage, the AI just realizes that 'cute' is describing a thing, and 'dog' is a thing. It's just scanning the surface.
+                        At this stage, the bottom layers process that 'cute' is describing a thing, and 'dog' is a thing. It's scanning surface syntactic features.
                     </p>
                 `
             },
@@ -1426,7 +1426,7 @@
                     <p><strong>Job:</strong> Figuring out how words connect to form a proper sentence.</p>
                     <p><strong>Example ("The cute dog chased the cat..."):</strong></p>
                     <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-purple); font-size:0.9rem; font-style:italic;">
-                        At this stage, the AI figures out that the 'dog' is the one who 'chased'. It also solves the mystery of the word 'it', realizing 'it' means the 'cat'.
+                        At this stage, the middle layers resolve that the 'dog' is the one who 'chased'. It also solves the mystery of the word 'it', establishing 'it = cat'.
                     </p>
                 `
             },
@@ -1438,7 +1438,7 @@
                     <p><strong>Job:</strong> Understanding the true meaning, logic, and deciding what the next word should be.</p>
                     <p><strong>Example ("The cute dog chased the cat because..."):</strong></p>
                     <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-cyan); font-size:0.9rem; font-style:italic;">
-                        The AI finally understands the "why". It connects the 'chasing' with the 'running fast' to understand the whole story. Now it is ready to predict what happens next!
+                        The top layers synthesize the overall context, connecting 'chasing' with 'running fast' to comprehend the narrative before calculating next-token probabilities!
                     </p>
                 `
             }

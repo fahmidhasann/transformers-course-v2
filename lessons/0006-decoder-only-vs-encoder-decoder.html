@@ -1138,7 +1138,7 @@
         <!-- Section 2: Causal Masking -->
         <div class="card">
             <h2>Causal Masking: পরবর্তী শব্দ আড়াল করার কৌশল</h2>
-            <p>ধরি, আমরা একটি এআই মডেলকে এই বাক্যটি শেখাতে চাই: <span class="highlight">"LLMs are changing our world"</span>।</p>
+            <p>ধরি, আমরা একটি ট্রান্সফর্মার মডেলকে এই বাক্যটি শেখাতে চাই: <span class="highlight">"LLMs are changing our world"</span>।</p>
             <p>ট্রেনিংয়ের সময় কাজ দ্রুত করার জন্য আমরা সাধারণত পুরো বাক্যটি একবারে মডেলকে দিয়ে দিই। কিন্তু মডেলকে তো ধাপে ধাপে শিখতে হবে—প্রথমে সে কেবল <code>"LLMs"</code> দেখে পরের শব্দ <code>"are"</code> অনুমান করবে, এরপর <code>"LLMs are"</code> দেখে <code>"changing"</code> অনুমান করবে।</p>
             <p>এখন, পুরো বাক্যটি যদি মডেল আগে থেকেই দেখতে পায়, তাহলে সে খুব সহজেই সামনের শব্দগুলো (যেমন <code>"changing"</code>) দেখে চিটিং করতে পারবে। মডেল যাতে এভাবে সামনের শব্দ দেখে ফাঁকিবাজি করতে না পারে, সেজন্যই আমরা <span class="tech-term">Causal Masking</span> কৌশলটি ব্যবহার করি। এটি পরবর্তী শব্দগুলোকে ঢেকে রাখে, ফলে মডেল শুধু পেছনের শব্দগুলো দেখেই সামনের শব্দ অনুমান করার আসল কাজটি শিখতে পারে।</p>
             <p style="background: rgba(168, 85, 247, 0.1); border-left: 4px solid var(--accent-purple); padding: 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem;"><strong>সহজ কথায়:</strong> যেমন ধরুন, একটি বই পড়ার সময় আপনি যদি সামনের লাইনগুলো একটি কাগজ দিয়ে ঢেকে রাখেন, এবং শুধু যতটুকু পড়েছেন তার ওপর ভিত্তি করে পরের শব্দটি অনুমান করার চেষ্টা করেন—<span class="highlight">Causal Masking</span> ঠিক একই কাজ করে!</p>
@@ -1183,33 +1183,39 @@
                 </div>
             </div>
             
-            <details class="step-example" style="margin-top: 1.5rem; margin-bottom: 1rem;">
-                <summary>একটু গভীরে: Causal Masking-এর গণিত</summary>
-                <div style="padding-top: 1rem;">
-                    <p>আমরা একটি "Mask Matrix" তৈরি করি, যেখানে অনুমোদিত অতীতের শব্দগুলোর জন্য ০ (Zero) এবং লুকানো পরবর্তী শব্দগুলোর জন্য Negative Infinity (-&infin;) থাকে।</p>
-                    <div style="display: flex; justify-content: center; margin: 1.5rem 0;">
-                        <div style="font-family: 'Outfit', monospace; background: rgba(15, 23, 42, 0.7); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); display: inline-block; width: 100%; max-width: 320px;">
-                            <div style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.8rem; text-align: center; font-weight: bold;">Causal Mask Matrix (M)</div>
-                            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.95rem; align-items: center;">
-                                <div>[ &nbsp; 0, -&infin;, -&infin;, -&infin;, -&infin; ]</div>
-                                <div>[ &nbsp; 0, &nbsp; 0, -&infin;, -&infin;, -&infin; ]</div>
-                                <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, -&infin;, -&infin; ]</div>
-                                <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0, -&infin; ]</div>
-                                <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0 ]</div>
-                            </div>
+            <div class="note-card" style="margin-top: 1.5rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1.2rem; border-radius: 10px;">
+                <h4 style="color: var(--accent-purple); margin-top: 0; margin-bottom: 0.8rem; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+                    📐 গাণিতিক ব্যাখ্যা: Causal Masking কীভাবে কাজ করে?
+                </h4>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    আমরা একটি <strong>Mask Matrix (M)</strong> তৈরি করি, যেখানে অনুমোদিত অতীতের শব্দগুলোর জন্য ০ (Zero) এবং লুকানো ভবিষ্যতের শব্দগুলোর জন্য <strong>Negative Infinity (-&infin;)</strong> থাকে।
+                </p>
+                <div style="display: flex; justify-content: center; margin: 1rem 0;">
+                    <div style="font-family: 'Outfit', monospace; background: rgba(15, 23, 42, 0.7); padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); display: inline-block; width: 100%; max-width: 320px;">
+                        <div style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.6rem; text-align: center; font-weight: bold;">Causal Mask Matrix (M)</div>
+                        <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.93rem; align-items: center;">
+                            <div>[ &nbsp; 0, -&infin;, -&infin;, -&infin;, -&infin; ]</div>
+                            <div>[ &nbsp; 0, &nbsp; 0, -&infin;, -&infin;, -&infin; ]</div>
+                            <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, -&infin;, -&infin; ]</div>
+                            <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0, -&infin; ]</div>
+                            <div>[ &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0, &nbsp; 0 ]</div>
                         </div>
                     </div>
-
-                    <p><strong>গাণিতিক রূপ:</strong><br>
-                    Attention মেকানিজমে Query ও Key-এর ডট প্রোডাক্ট করার পর আমরা পাই কাঁচা স্কোর বা logits। এই logits-এর সাথে আমরা <span class="tech-term">Causal Mask Matrix (M)</span> যোগ করি।</p>
-                    
-                    <div style="background: rgba(15, 23, 42, 0.6); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Outfit', monospace; text-align: center; font-size: 1.05rem; margin: 1rem 0;">
-                        Attention(Q, K, V) = Softmax( <span class="highlight">Q K<sup>T</sup> / &radic;d<sub>k</sub></span> + <span style="color: var(--accent-purple); font-weight: bold;">M</span> ) V
-                    </div>
-                    
-                    <p>এখানে পরবর্তী পজিশনগুলোর জন্য M-এর মান হয় <span class="highlight">&minus;&infin; (Negative Infinity)</span>। যখন আমরা এটার ওপর <span class="tech-term">Softmax</span> হিসাব করি, তখন e<sup>&minus;&infin;</sup> হয়ে যায় <span class="highlight">0 (Zero)</span>। ফলে পরবর্তী শব্দগুলোর ওপর মনোযোগ দেওয়ার সম্ভাবনা গাণিতিকভাবে সম্পূর্ণ শূন্য হয়ে যায়!</p>
                 </div>
-            </details>
+
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 1rem;">
+                    <strong>গাণিতিক সূত্র:</strong><br>
+                    Self-Attention-এ Query ও Key-এর ডট প্রোডাক্টের কাঁচা স্কোরের সাথে <span class="tech-term">Causal Mask Matrix (M)</span> যোগ করা হয়:
+                </p>
+                
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Outfit', monospace; text-align: center; font-size: 1rem; margin: 0.8rem 0;">
+                    Attention(Q, K, V) = Softmax( <span class="highlight">Q K<sup>T</sup> / &radic;d<sub>k</sub></span> + <span style="color: var(--accent-purple); font-weight: bold;">M</span> ) V
+                </div>
+                
+                <p style="font-size: 0.93rem; color: var(--text-secondary); margin: 0;">
+                    ভবিষ্যতের পজিশনগুলোর সাথে <span class="highlight">&minus;&infin;</span> যোগ করায়, <span class="tech-term">Softmax</span> হিসাব করার সময় e<sup>&minus;&infin;</sup> এর মান হয়ে যায় <span class="highlight">0 (Zero)</span>। ফলে ভবিষ্যতের শব্দগুলোর মনোযোগের স্কোর শতভাগ নিশ্চিতভাবে শূন্য হয়ে যায়!
+                </p>
+            </div>
         </div>
 
         <!-- Section 3: Autoregressive Generation -->
