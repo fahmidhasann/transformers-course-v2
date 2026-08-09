@@ -1301,7 +1301,7 @@
                     <div class="step-number">3</div>
                     <div class="step-content">
                         <h3>Transformer Blocks (মডেলের মস্তিষ্ক)</h3>
-                        <p>এখানেই আসল ম্যাজিক ঘটে। <span class="tech-term">Self-Attention Mechanism</span> ব্যবহার করে মডেলটি বাক্যের কনটেক্সট বা প্রসঙ্গ বোঝার জন্য একই সাথে সব শব্দের দিকে তাকায়। এটি পুরো বাক্য ("আমি ভাত খাই") পড়ে বোঝে যে, "খাই" কাজটির সাথে "আমি" ও "ভাত" উভয়েরই সম্পর্ক রয়েছে, তবে "আমি" (যে খাচ্ছে) এর সাথে সম্পর্কটি সবচেয়ে শক্তিশালী।</p>
+                        <p>এখানেই মূল প্রসেসিং ঘটে। <span class="tech-term">Self-Attention Mechanism</span> ব্যবহার করে মডেলটি বাক্যের কনটেক্সট বা প্রসঙ্গ বোঝার জন্য একই সাথে সব শব্দের মধ্যকার পারস্পরিক সম্পর্ক বিশ্লেষণ করে। এটি পুরো বাক্য ("আমি ভাত খাই") পড়ে বোঝে যে, "খাই" কাজটির সাথে "আমি" ও "ভাত" উভয়েরই সম্পর্ক রয়েছে, তবে "আমি" (যে কাজটি করছে বা কর্তা) এর সাথে সম্পর্কটি সবচেয়ে শক্তিশালী।</p>
                         <div class="step-diagram">
                             <div class="dia-attention-row" style="background: transparent; padding: 0.5rem 0; justify-content: center; width: 100%; border: none;">
                                 <svg class="dia-attention-svg" viewBox="0 0 320 120" style="width: 100%; max-width: 320px; height: auto; display: block; overflow: visible;">
@@ -1350,7 +1350,7 @@
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3>Output & Softmax (অনুমান করা)</h3>
-                        <p>অবশেষে, মডেল তার সম্পূর্ণ ডিকশনারি বা ভোকাবুলারির প্রতিটি শব্দের জন্য একটি স্কোর বের করে। যেমন "আমি ভাত" এর পর পরবর্তী শব্দ কী হবে তার জন্য <span class="tech-term">Softmax</span> ফাংশন এই স্কোরগুলোকে শতকরা হার (percentage)-এ রূপান্তর করে এবং সর্বোচ্চ শতকরা হারের শব্দটি ("খাই") বিজয়ী হয়!</p>
+                        <p>অবশেষে, মডেল তার সম্পূর্ণ ভোকাবুলারির প্রতিটি শব্দের জন্য একটি সম্ভাবনার স্কোর বের করে। যেমন "আমি ভাত" এর পর পরবর্তী শব্দ কী হবে তার জন্য <span class="tech-term">Softmax</span> ফাংশন এই স্কোরগুলোকে সম্ভাবনার শতাংশ বা Probability Distribution-এ রূপান্তর করে এবং সর্বোচ্চ সম্ভাবনাময় শব্দটি ("খাই") আউটপুট হিসেবে বেছে নেয়।</p>
                         <div class="step-diagram">
                             <div class="dia-softmax">
                                 <div class="dia-bar-bg">

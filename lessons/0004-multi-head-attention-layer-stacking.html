@@ -1198,33 +1198,33 @@
             <div class="layer-stack">
                 <!-- Top Layers -->
                 <div class="layer-group top-group" id="layer-top" onclick="selectLayer('top')">
-                    <div class="layer-title">Top Layers: মূলভাব ও যুক্তি</div>
-                    <div class="layer-desc">বিমূর্ত ধারণা, যুক্তি, আবেগ এবং চূড়ান্ত উত্তরের সিদ্ধান্ত নেয়।</div>
+                    <div class="layer-title">Top Layers: ভাবার্থ, যুক্তি ও প্রসঙ্গ</div>
+                    <div class="layer-desc">বাক্যের বিমূর্ত অর্থ, প্রসঙ্গগত যুক্তি ও ভাবার্থ বিশ্লেষণ করে পরবর্তী শব্দ অনুমান (Next Token Prediction) করে।</div>
                 </div>
                 <div class="layer-arrow">↓</div>
                 <!-- Middle Layers -->
                 <div class="layer-group mid-group active" id="layer-mid" onclick="selectLayer('mid')">
-                    <div class="layer-title">Middle Layers: ব্যাকরণ ও সম্পর্ক</div>
-                    <div class="layer-desc">খুঁজে বের করে কে কী করছে, এবং "এটি" বা "তারা" বলতে কাকে বোঝানো হচ্ছে।</div>
+                    <div class="layer-title">Middle Layers: বাক্যগঠন ও পদান্বয়</div>
+                    <div class="layer-desc">বাক্যের কর্তা-ক্রিয়ার সম্পর্ক এবং সর্বনাম (Pronoun) কাকে নির্দেশ করছে তা শনাক্ত করে।</div>
                 </div>
                 <div class="layer-arrow">↓</div>
                 <!-- Bottom Layers -->
                 <div class="layer-group bottom-group" id="layer-bottom" onclick="selectLayer('bottom')">
-                    <div class="layer-title">Bottom Layers: প্রাথমিক বিষয় ও বানান</div>
-                    <div class="layer-desc">সাধারণ ব্যাকরণের নিয়ম, বানান এবং শব্দের ক্রম দেখে।</div>
+                    <div class="layer-title">Bottom Layers: মৌলিক গঠন ও শব্দশ্রেণি</div>
+                    <div class="layer-desc">মৌলিক ব্যাকরণগত রূপ, পদের ধরন (Parts of Speech) এবং নিকটবর্তী শব্দের ক্রম বিশ্লেষণ করে।</div>
                 </div>
             </div>
 
             <!-- Layer Details Explorer Panel -->
             <div class="layer-detail-box" id="layer-detail-panel">
                 <div class="layer-detail-title" id="layer-panel-title" style="color:var(--accent-purple);">
-                    Middle Layers: ব্যাকরণ ও সম্পর্ক
+                    Middle Layers: বাক্যগঠন ও পদান্বয়
                 </div>
                 <div id="layer-panel-content">
-                    <p><strong>কাজ:</strong> শব্দগুলো কীভাবে যুক্ত হয়ে একটি সঠিক বাক্য তৈরি করছে তা বোঝা।</p>
+                    <p><strong>কাজ:</strong> শব্দগুলোর পারস্পরিক সম্পর্ক বিশ্লেষণ করে বাক্যের পদান্বয় ও সর্বনামের সঠিক রেফারেন্স (Coreference) শনাক্ত করা।</p>
                     <p><strong>উদাহরণ ("The cute dog chased the cat..."):</strong></p>
                     <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-purple); font-size:0.9rem; font-style:italic;">
-                        এই ধাপে এসে, এআই বুঝতে পারে যে 'dog' হলো সেই জন যে 'chased' (তাড়া করেছিল)। এটি 'it' শব্দটির রহস্যও সমাধান করে, এবং বুঝতে পারে যে 'it' বলতে আসলে 'cat'-কে বোঝানো হচ্ছে।
+                        এই ধাপে এসে লেয়ারটি শনাক্ত করে যে 'dog' (কুকুর) হলো সেই কর্তা যে 'chased' (তাড়া করার) ক্রিয়াটি সম্পন্ন করেছে। একইসাথে এটি 'it' সর্বনামটি কাকে নির্দেশ করছে (এখানে 'cat' বা বিড়াল) তা সঠিকভাবে নির্ধারণ করে (Pronoun Resolution)।
                     </p>
                 </div>
             </div>
@@ -1268,11 +1268,11 @@
 
                 <!-- Question 3 -->
                 <div class="quiz-question-card">
-                    <div class="quiz-question">প্রশ্ন ৩: একটি Transformer মডেলের Embedding Dimension (d_model) হলো ৭৬৮ (768) এবং এতে ১২টি (12) Attention Head রয়েছে। প্রতিটি Head-এর নিজস্ব ডাইমেনশন (d_head) কত হবে?</div>
+                    <div class="quiz-question">প্রশ্ন ৩: একটি Transformer মডেলের Embedding Dimension (d_model) হলো ৭ ৬৮ (768) এবং এতে ১২টি (12) Attention Head রয়েছে। প্রতিটি Head-এর নিজস্ব ডাইমেনশন (d_head) কত হবে?</div>
                     <div class="quiz-option" onclick="checkAnswer(3, this, false, 'ভুল উত্তর! এটি হেড সংখ্যা নির্দেশ করছে, ডাইমেনশন নয়।')">
                         ক) 12
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'চমৎকার! ৭৬৮ ডাইমেনশনকে ১২টি হেডে ভাগ করা হয়। তাই প্রতিটি হেডের ডাইমেনশন হলো ৭৬৮ / ১২ = ৬৪।')">
+                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'চমৎকার! ৭ ৬৮ ডাইমেনশনকে ১২টি হেডে ভাগ করা হয়। তাই প্রতিটি হেডের ডাইমেনশন হলো ৭৬৮ / ১২ = ৬৪।')">
                         খ) 64 (কারণ 768 / 12 = 64)
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(3, this, false, 'ভুল উত্তর! সম্পূর্ণ ডাইমেনশন কোনো একক হেডের কাছে থাকে না, এটি বিভক্ত হয়।')">
@@ -1321,7 +1321,7 @@
                     [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.05, 0.02, 0.70, 0.16]  // fast
                 ],
                 explanations: {
-                    "chased": "'chased' (তাড়া করেছিল) ক্রিয়াপদটি সনাক্ত করছে যে এই কাজটি কে সম্পন্ন করছে ('dog') এবং কার ওপর করা হচ্ছে ('cat')।",
+                    "chased": "'chased' (তাড়া করেছিল) ক্রিয়াপদটি শনাক্ত করছে যে এই কাজটি কে সম্পন্ন করছে ('dog') এবং কার ওপর করা হচ্ছে ('cat')।",
                     "dog": "'dog' (কর্তা) তার প্রধান কাজ 'chased' (ক্রিয়া)-এর সাথে সম্পর্ক তৈরি করছে।",
                     "cat": "'cat' (কর্ম) তার উপর ঘটা কাজ 'chased' (ক্রিয়া)-এর সাথে যুক্ত হচ্ছে।",
                     "running": "'running' (দৌড়াচ্ছিল) ক্রিয়াপদটি তার সম্ভাব্য কর্তা 'it' (যা বিড়ালকে নির্দেশ করছে) এর দিকে মনোযোগ দিচ্ছে।",
@@ -1330,7 +1330,7 @@
                 defaultExplanation: "এই Head-টি বাক্যের কর্তা (Subject) এবং ক্রিয়ার (Verb) মধ্যে ব্যাকরণগত সম্পর্ক খুঁজছে।"
             },
             head2: { // Pronoun Resolution
-                name: "Head 2: Pronoun Resolution (সর্বনাম সমাধান)",
+                name: "Head 2: Pronoun Resolution (সর্বনাম নির্ধারণ)",
                 accentColor: "var(--accent-purple)",
                 className: "head2-active",
                 colorClass: "color-head2",
@@ -1349,14 +1349,14 @@
                     [0.01, 0.01, 0.02, 0.02, 0.01, 0.10, 0.02, 0.15, 0.02, 0.05, 0.60]
                 ],
                 explanations: {
-                    "it": "'it' (সর্বনাম) সরাসরি সনাক্ত করছে যে এটি বাক্যের পূর্ববর্তী বিশেষ্য 'cat' (বিড়াল)-কে নির্দেশ করছে (Pronoun Resolution)। এটি কুকুরের দিকে কম নজর দিচ্ছে কারণ বিড়ালটি দৌড়াচ্ছিল।",
+                    "it": "'it' (সর্বনাম) সরাসরি শনাক্ত করছে যে এটি বাক্যের পূর্ববর্তী বিশেষ্য 'cat' (বিড়াল)-কে নির্দেশ করছে (Pronoun Resolution)। এটি কুকুরের দিকে কম নজর দিচ্ছে কারণ বিড়ালটি দৌড়াচ্ছিল।",
                     "cat": "বিড়ালটি এবং তার সাথে সম্পর্কিত সর্বনাম 'it'-এর মধ্যে সংযোগ দেখাচ্ছে।",
                     "was": "সর্বনাম 'it' এবং তার নির্দেশিত 'cat'-এর দিকে কিছুটা মনোযোগ দিচ্ছে।"
                 },
                 defaultExplanation: "এই Head-টি মূলত সর্বনাম (Pronoun) এবং তার নির্দেশিত বিশেষ্য (Noun)-এর মধ্যকার সম্পর্ক নির্ণয় করে।"
             },
             head3: { // Modifier & Adjective
-                name: "Head 3: Modifier & Adjective (বিশেষণ ও বিশেষণ সম্পর্ক)",
+                name: "Head 3: Modifier & Adjective (বিশেষণ ও পদান্বয়)",
                 accentColor: "var(--accent-green)",
                 className: "head3-active",
                 colorClass: "color-head3",
@@ -1408,38 +1408,38 @@
 
         const layerDetails = {
             bottom: {
-                title: "Bottom Layers: প্রাথমিক বিষয় ও বানান",
+                title: "Bottom Layers: মৌলিক গঠন ও শব্দশ্রেণি",
                 color: "var(--accent-green)",
                 border: "var(--accent-green)",
                 content: `
-                    <p><strong>কাজ:</strong> সাধারণ শব্দের ধরন (বিশেষ্য, ক্রিয়া) এবং পাশাপাশি বসা শব্দগুলো দেখা।</p>
+                    <p><strong>কাজ:</strong> শব্দের সাধারণ শ্রেণি (যেমন: বিশেষ্য, বিশেষণ, ক্রিয়া) এবং পাশাপাশি অবস্থিত শব্দের স্থানীয় সম্পর্ক নির্ধারণ করা।</p>
                     <p><strong>উদাহরণ ("The cute dog chased the cat..."):</strong></p>
                     <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-green); font-size:0.9rem; font-style:italic;">
-                        এই ধাপে, লেয়ারগুলো শুধু প্রসেস করে যে 'cute' একটি বর্ণনাকারী শব্দ, আর 'dog' একটি প্রাণী বা বস্তু। এটি কেবল সাধারণ ওপর ওপর জিনিসগুলো সংকেতবদ্ধ করে।
+                        এই ধাপে লেয়ারগুলো মূলত শব্দের প্রাথমিক ভূমিকা এনকোড করে—যেমন 'cute' একটি বিশেষণ (adjective) এবং 'dog' একটি বিশেষ্য (noun)। অর্থাৎ বাক্যের প্রাতিষ্ঠানিক বা উপরিভাগের বৈশিষ্ট্যগুলো (surface-level features) এখানে সংরক্ষিত হয়।
                     </p>
                 `
             },
             mid: {
-                title: "Middle Layers: ব্যাকরণ ও সম্পর্ক",
+                title: "Middle Layers: বাক্যগঠন ও পদান্বয়",
                 color: "var(--accent-purple)",
                 border: "var(--accent-purple)",
                 content: `
-                    <p><strong>কাজ:</strong> শব্দগুলো কীভাবে যুক্ত হয়ে একটি সঠিক বাক্য তৈরি করছে তা বোঝা।</p>
+                    <p><strong>কাজ:</strong> শব্দগুলোর পারস্পরিক সম্পর্ক বিশ্লেষণ করে বাক্যের পদান্বয় ও সর্বনামের সঠিক রেফারেন্স (Coreference) শনাক্ত করা।</p>
                     <p><strong>উদাহরণ ("The cute dog chased the cat..."):</strong></p>
                     <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-purple); font-size:0.9rem; font-style:italic;">
-                        এই ধাপে এসে, লেয়ারটি শনাক্ত করে যে 'dog' হলো সেই জন যে 'chased' (তাড়া করেছিল)। এটি 'it' শব্দটির রহস্যও সমাধান করে, এবং বুঝতে পারে যে 'it' বলতে আসলে 'cat'-কে বোঝানো হচ্ছে।
+                        এই ধাপে এসে লেয়ারটি শনাক্ত করে যে 'dog' (কুকুর) হলো সেই কর্তা যে 'chased' (তাড়া করার) ক্রিয়াটি সম্পন্ন করেছে। একইসাথে এটি 'it' সর্বনামটি কাকে নির্দেশ করছে (এখানে 'cat' বা বিড়াল) তা সঠিকভাবে নির্ধারণ করে (Pronoun Resolution)।
                     </p>
                 `
             },
             top: {
-                title: "Top Layers: মূলভাব ও যুক্তি",
+                title: "Top Layers: ভাবার্থ, যুক্তি ও প্রসঙ্গ",
                 color: "var(--accent-cyan)",
                 border: "var(--accent-cyan)",
                 content: `
-                    <p><strong>কাজ:</strong> বাক্যের আসল অর্থ, যুক্তি বোঝা এবং পরের শব্দটি কী হবে তা ঠিক করা।</p>
+                    <p><strong>কাজ:</strong> পুরো বাক্যের সমন্বিত অর্থ ও যুক্তিনির্ভর প্রসঙ্গ অনুধাবন করে পরবর্তী শব্দের সম্ভাবনা নির্ধারণ করা।</p>
                     <p><strong>উদাহরণ ("The cute dog chased the cat because..."):</strong></p>
                     <p style="background: rgba(0,0,0,0.2); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-cyan); font-size:0.9rem; font-style:italic;">
-                        লেয়ারগুলো এখন বুঝতে পারে "কেন" কুকুরটি তাড়া করেছিল। তারা 'তাড়া করা' এবং 'দ্রুত দৌড়ানো'-কে যুক্ত করে পুরো ব্যাকরণগত গল্পটি একত্রিত করে। এরপর মডেলটি খুব সহজেই পরের শব্দটি প্রেডিক্ট করতে পারে!
+                        এই লেয়ারগুলো বাক্যের সামগ্রিক প্রেক্ষাপট বিশ্লেষণ করে বোঝে "কেন" তাড়া করার ঘটনাটি ঘটেছে ('chased' এবং 'running fast'-এর মধ্যকার কার্যকারণ সম্পর্ক)। ফলে মডেলটি অত্যন্ত নির্ভুলভাবে বাক্যের পরবর্তী অংশ অনুমান করতে পারে।
                     </p>
                 `
             }

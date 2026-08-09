@@ -1298,15 +1298,15 @@
                     </div>
                     <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
                         <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.3rem;">📐 গাণিতিক ব্যাখ্যা (Softmax Output):</strong>
-                        <p style="margin: 0; color: var(--text-secondary);">স্কেলড স্কোরগুলোকে <strong>Softmax</strong> ফাংশনের মধ্য দিয়ে নেওয়া হয়। Softmax সবকটি স্কোরের সমষ্টিকে ১ বা ১০০% এর সমান করে প্রতিটি শব্দের জন্য সুনির্দিষ্ট <strong>Attention Weights (মনোযোগের পারসেন্টেজ)</strong> তৈরি করে।</p>
+                        <p style="margin: 0; color: var(--text-secondary);">স্কেলড স্কোরগুলোকে <strong>Softmax</strong> ফাংশনের মধ্য দিয়ে নেওয়া হয়। Softmax সবকটি স্কোরের সমষ্টিকে ১ (বা ১০০%) এর সমান করে প্রতিটি শব্দের জন্য সুনির্দিষ্ট <strong>Attention Weights (মনোযোগের হার)</strong> তৈরি করে।</p>
                     </div>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-green);">
                     <strong style="color: var(--accent-green);">ধাপ ৪: অর্থের সংমিশ্রণ (Weighted Sum)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">সবশেষে, সেলফ-এটেনশন মেকানিজম অন্য শব্দগুলোর "Values" (অর্থ) সংগ্রহ করে—যাদের পারসেন্টেজ বেশি তাদের থেকে বেশি অর্থ নেয়, আর যাদের কম তাদের থেকে কম। এরপর সব কিছু মিশিয়ে শব্দটির জন্য একটি নতুন, কনটেক্সট-সমৃদ্ধ সুপার-মিনিং তৈরি করে!</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">সবশেষে, সেলফ-এটেনশন মেকানিজম অন্য শব্দগুলোর "Values" (ভেক্টর বার্তা) সংগ্রহ করে—যে শব্দগুলোতে মনোযোগের হার বেশি, তাদের থেকে বেশি তথ্য নিয়ে একটি সমন্বিত ও প্রসঙ্গ-সমৃদ্ধ রিপ্রেজেন্টেশন (Contextual Embedding) তৈরি করে।</p>
                     <div style="background: rgba(16, 185, 129, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
-                        <strong>উদাহরণ:</strong> <strong>"it"</strong>-এর চূড়ান্ত অর্থ তৈরি করতে, মেকানিজমটি "cat" এর অর্থের একটি বড় অংশ (৮০%) এবং "milk" এর একটি ছোট অংশ (১৫%) গ্রহণ করে। যেহেতু বাক্যে বলা হয়েছে "hungry", গাণিতিক হিসেব অনুযায়ী সহজেই নির্ধারিত হয় যে "it" বলতে বিড়ালটিকে বোঝানো হয়েছে, দুধকে নয়। ফলে "it" শব্দটি এখন একটি ক্ষুধার্ত বিড়ালের কনটেক্সট ধারণ করে!
+                        <strong>উদাহরণ:</strong> <strong>"it"</strong>-এর চূড়ান্ত অর্থ তৈরি করতে, মেকানিজমটি "cat"-এর থেকে বড় অংশ (৮০%) এবং "milk"-এর থেকে ছোট অংশ (১৫%) গ্রহণ করে। যেহেতু বাক্যে "hungry" শব্দটি রয়েছে, তাই গাণিতিকভাবে নিশ্চিত হওয়া যায় যে "it" বলতে বিড়ালটিকে বোঝানো হয়েছে, দুধকে নয়। ফলে "it" শব্দটির নতুন ভেক্টর রিপ্রেজেন্টেশনে ক্ষুধার্ত বিড়ালের প্রসঙ্গ স্পষ্টভাবে প্রতিফলিত হয়।
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
