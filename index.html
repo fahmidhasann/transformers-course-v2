@@ -9,20 +9,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --sidebar-bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.45);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-cyan: #06b6d4;
-            --accent-purple: #a855f7;
-            --accent-green: #10b981;
-            --accent-pink: #ec4899;
-            --accent-orange: #f59e0b;
-            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
-            --glow: 0 0 15px rgba(6, 182, 212, 0.2);
-            --font-main: 'Outfit', 'Hind Siliguri', sans-serif;
+            /* Surfaces */
+            --bg-color:       #FAF6F0;
+            --bg-sunk:        #F2ECE2;
+            --card-bg:        #FFFCF7;
+            --card-bg-alt:    #F5EFE6;
+            --panel-bg:       #FBF6EE;
+            --sidebar-bg:     #FFFCF7;
+
+            /* Lines */
+            --border-color:   #E6DBCB;
+            --border-strong:  #D6C6AF;
+            --border-subtle:  #EFE7DA;
+
+            /* Ink */
+            --text-primary:   #2B2622;
+            --text-body:      #3A342E;
+            --text-secondary: #6E635A;
+            --text-muted:     #756C63;
+            --text-ghost:     #918880;
+            --text-on-accent: #FFFDF9;
+            --ink-rgb:        43, 38, 34;
+
+            /* Accents (retuned for a light ground) */
+            --accent-cyan:    #0E7490;
+            --accent-purple:  #6D45A8;
+            --accent-green:   #3C7549;
+            --accent-orange:  #AA4E07;
+            --accent-pink:    #B03A62;
+            --accent-blue:    #1D5FA8;
+            --accent-red:     #B3261E;
+
+            /* Accent tints */
+            --tint-cyan:      #E4F0F3;
+            --tint-purple:    #EFE9F7;
+            --tint-green:     #E8F1E9;
+            --tint-orange:    #FBEEDC;
+            --tint-pink:      #FAE8EE;
+            --tint-neutral:   #F1E9DD;
+
+            /* Depth */
+            --shadow:         0 1px 2px rgba(90,70,45,.05), 0 6px 20px rgba(90,70,45,.07);
+            --shadow-soft:    0 1px 3px rgba(90,70,45,.06);
+            --ring:           0 0 0 3px rgba(14,116,144,.14);
+            --glow:           var(--ring);
+
+            /* Type */
+            --font-heading:   'Outfit', 'Hind Siliguri', sans-serif;
+            --font-body:      'Hind Siliguri', system-ui, sans-serif;
+            --font-main:      var(--font-body);
         }
 
         * {
@@ -32,17 +67,23 @@
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.75;
+            font-size: 1.0625rem;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background-image:
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(196,146,86,.10) 0px, transparent 55%),
+                radial-gradient(at 100% 100%, rgba(122,148,132,.10) 0px, transparent 55%);
             overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .badge, .site-nav-brand-name, .sidebar-brand-name {
+            font-family: var(--font-heading);
+            letter-spacing: -0.01em;
         }
 
         /* Top Navigation Bar (shared design with the lesson pages) */
@@ -59,9 +100,7 @@
             top: 0;
             left: 0;
             z-index: 500;
-            -webkit-backdrop-filter: blur(14px);
-            backdrop-filter: blur(14px);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 4px 24px rgba(90, 70, 45, .07);
             transition: padding 0.3s ease;
         }
 
@@ -83,17 +122,15 @@
             justify-content: center;
             font-size: 1.25rem;
             font-weight: bold;
-            color: white;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            color: var(--text-on-accent);
+            box-shadow: 0 0 15px rgba(109, 69, 168, 0.4);
         }
 
         .sidebar-brand-name {
             font-size: 1.25rem;
             font-weight: 700;
             letter-spacing: 0.5px;
-            background: linear-gradient(135deg, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
         }
 
         .nav-menu {
@@ -126,13 +163,13 @@
 
         .nav-item button:hover {
             color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
         }
 
         .nav-item.active button {
             color: var(--text-primary);
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
-            border-color: rgba(6, 182, 212, 0.25);
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(109, 69, 168, 0.15));
+            border-color: rgba(14, 116, 144, 0.25);
             box-shadow: var(--glow);
         }
 
@@ -155,8 +192,8 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.25rem 1rem;
-            background: rgba(30, 41, 59, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: var(--card-bg-alt);
+            box-shadow: 0 4px 15px rgba(90, 70, 45, .07);
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
@@ -173,10 +210,10 @@
         }
 
         .sidebar-footer:hover {
-            border-color: rgba(6, 182, 212, 0.35);
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
+            border-color: rgba(14, 116, 144, 0.35);
+            box-shadow: 0 8px 25px rgba(14, 116, 144, 0.15);
             transform: translateY(-2px);
-            background: rgba(30, 41, 59, 0.35);
+            background: var(--card-bg-alt);
         }
 
         .sidebar-footer a {
@@ -188,7 +225,7 @@
 
         .sidebar-footer a:hover {
             color: var(--accent-purple);
-            text-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+            text-shadow: 0 0 8px rgba(109, 69, 168, 0.4);
         }
 
 
@@ -216,9 +253,7 @@
             font-size: clamp(1.5rem, 4vw, 2.25rem);
             font-weight: 700;
             margin-bottom: 0.35rem;
-            background: linear-gradient(135deg, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
         }
 
         .header-title p {
@@ -249,13 +284,11 @@
             padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             transition: border-color 0.3s, transform 0.3s;
         }
 
         .card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--text-ghost);
         }
 
         .card h2 {
@@ -315,7 +348,7 @@
 
         .progress-circle-bg {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.05);
+            stroke: rgba(var(--ink-rgb), 0.05);
             stroke-width: 8;
         }
 
@@ -336,7 +369,7 @@
             transform: translate(-50%, -50%);
             font-size: 1.15rem;
             font-weight: 700;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
             color: var(--text-primary);
         }
 
@@ -359,7 +392,7 @@
             display: flex;
             align-items: flex-start;
             gap: 1rem;
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             padding: 1rem;
             border-radius: 12px;
@@ -368,8 +401,8 @@
         }
 
         .goal-item:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(30, 41, 59, 0.5);
+            border-color: var(--text-ghost);
+            background: var(--card-bg-alt);
         }
 
         .goal-checkbox {
@@ -393,7 +426,7 @@
 
         .goal-checkbox::after {
             content: "✓";
-            color: white;
+            color: var(--text-on-accent);
             font-size: 0.8rem;
             font-weight: bold;
             display: none;
@@ -413,8 +446,8 @@
         }
 
         .goal-tag {
-            background: rgba(168, 85, 247, 0.15);
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            background: rgba(109, 69, 168, 0.15);
+            border: 1px solid rgba(109, 69, 168, 0.3);
             color: var(--accent-purple);
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
@@ -438,7 +471,7 @@
             width: 4px;
             background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
             border-radius: 2px;
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+            box-shadow: 0 0 10px rgba(14, 116, 144, 0.15);
         }
 
         .roadmap-node {
@@ -475,7 +508,7 @@
 
         .roadmap-node.completed .roadmap-marker::after {
             content: "✓";
-            color: white;
+            color: var(--text-on-accent);
             font-size: 0.7rem;
             font-weight: bold;
         }
@@ -491,7 +524,6 @@
             border-radius: 16px;
             padding: 1.5rem 2rem;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(8px);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -502,8 +534,8 @@
 
         .roadmap-card:hover {
             transform: translateX(8px);
-            border-color: rgba(6, 182, 212, 0.3);
-            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.08);
+            border-color: rgba(14, 116, 144, 0.3);
+            box-shadow: 0 8px 30px rgba(14, 116, 144, 0.08);
         }
 
         .roadmap-card-info {
@@ -512,7 +544,7 @@
         }
 
         .roadmap-card-badge {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             padding: 0.2rem 0.6rem;
             border-radius: 50px;
             font-size: 0.8rem;
@@ -544,7 +576,7 @@
 
         /* Dropdown custom styling */
         .status-dropdown {
-            background: #1e293b;
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.5rem 1rem;
@@ -557,11 +589,11 @@
         }
 
         .status-dropdown:hover {
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: var(--text-ghost);
         }
 
         .status-dropdown option {
-            background: #0f172a;
+            background: var(--card-bg-alt);
             color: var(--text-primary);
         }
 
@@ -581,8 +613,8 @@
 
         .btn-primary {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+            color: var(--text-on-accent);
+            box-shadow: 0 4px 15px rgba(14, 116, 144, 0.2);
         }
 
         .btn-primary:hover {
@@ -591,14 +623,14 @@
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(var(--ink-rgb), 0.1);
+            border-color: var(--text-ghost);
         }
 
         /* Glossary Explorer View Specific */
@@ -617,7 +649,7 @@
 
         .search-input {
             width: 100%;
-            background: rgba(30, 41, 59, 0.5);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.75rem 1.25rem 0.75rem 2.75rem;
@@ -630,7 +662,7 @@
 
         .search-input:focus {
             border-color: var(--accent-cyan);
-            background: rgba(30, 41, 59, 0.8);
+            background: var(--card-bg-alt);
             box-shadow: var(--glow);
         }
 
@@ -644,7 +676,7 @@
         }
 
         .category-filter {
-            background: rgba(30, 41, 59, 0.5);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.75rem 1.25rem;
@@ -681,8 +713,8 @@
 
         .glossary-card:hover {
             transform: translateY(-3px);
-            border-color: rgba(168, 85, 247, 0.3);
-            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.08);
+            border-color: rgba(109, 69, 168, 0.3);
+            box-shadow: 0 8px 30px rgba(109, 69, 168, 0.08);
         }
 
         .glossary-card-header {
@@ -716,7 +748,7 @@
 
         .glossary-card-def {
             font-size: 0.9rem;
-            color: #cbd5e1;
+            color: var(--text-body);
             line-height: 1.5;
         }
 
@@ -739,8 +771,8 @@
 
         .resource-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.08);
+            border-color: rgba(60, 117, 73, 0.3);
+            box-shadow: 0 8px 30px rgba(60, 117, 73, 0.08);
         }
 
         .resource-type-badge {
@@ -755,27 +787,27 @@
         }
 
         .resource-type-article {
-            background: rgba(6, 182, 212, 0.15);
+            background: rgba(14, 116, 144, 0.15);
             color: var(--accent-cyan);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            border: 1px solid rgba(14, 116, 144, 0.3);
         }
 
         .resource-type-video {
-            background: rgba(245, 158, 11, 0.15);
+            background: rgba(170, 78, 7, 0.15);
             color: var(--accent-orange);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            border: 1px solid rgba(170, 78, 7, 0.3);
         }
 
         .resource-type-paper {
-            background: rgba(168, 85, 247, 0.15);
+            background: rgba(109, 69, 168, 0.15);
             color: var(--accent-purple);
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            border: 1px solid rgba(109, 69, 168, 0.3);
         }
 
         .resource-type-wisdom {
-            background: rgba(236, 72, 153, 0.15);
+            background: rgba(176, 58, 98, 0.15);
             color: var(--accent-pink);
-            border: 1px solid rgba(236, 72, 153, 0.3);
+            border: 1px solid rgba(176, 58, 98, 0.3);
         }
 
         .resource-title {
@@ -807,8 +839,7 @@
         }
 
         .resource-link:hover {
-            color: white;
-            text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+            color: var(--accent-cyan);
         }
 
         /* Final Quiz / Assessment Styles */
@@ -865,7 +896,7 @@
         }
 
         .quiz-option-item {
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             padding: 1rem 1.25rem;
             border-radius: 12px;
@@ -879,25 +910,25 @@
 
         .quiz-option-item:hover {
             border-color: var(--accent-cyan);
-            background: rgba(30, 41, 59, 0.6);
+            background: var(--card-bg-alt);
         }
 
         .quiz-option-item.selected {
             border-color: var(--accent-purple);
-            background: rgba(168, 85, 247, 0.1);
+            background: rgba(109, 69, 168, 0.1);
         }
 
         .quiz-option-item.correct {
             border-color: var(--accent-green);
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
+            background: rgba(60, 117, 73, 0.1);
+            color: var(--accent-green);
             font-weight: bold;
         }
 
         .quiz-option-item.incorrect {
-            border-color: #ef4444;
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171;
+            border-color: var(--accent-red);
+            background: rgba(179, 38, 30, 0.1);
+            color: var(--accent-red);
         }
 
         .quiz-bullet {
@@ -916,19 +947,19 @@
         .quiz-option-item.selected .quiz-bullet {
             border-color: var(--accent-purple);
             background: var(--accent-purple);
-            color: white;
+            color: var(--text-on-accent);
         }
 
         .quiz-option-item.correct .quiz-bullet {
             border-color: var(--accent-green);
             background: var(--accent-green);
-            color: white;
+            color: var(--text-on-accent);
         }
 
         .quiz-option-item.incorrect .quiz-bullet {
-            border-color: #ef4444;
-            background: #ef4444;
-            color: white;
+            border-color: var(--accent-red);
+            background: var(--accent-red);
+            color: var(--text-on-accent);
         }
 
         .quiz-nav-footer {
@@ -942,14 +973,14 @@
 
         /* Certificate display styles */
         .certificate-wrapper {
-            background: linear-gradient(135deg, #1e1b4b, #030712);
-            border: 6px double #312e81;
+            background: linear-gradient(135deg, var(--card-bg-alt), var(--card-bg-alt));
+            border: 6px double var(--border-strong);
             border-radius: 20px;
             padding: 3rem 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 20px 50px rgba(90, 70, 45, .07);
             margin-top: 1rem;
         }
 
@@ -961,15 +992,15 @@
             width: 140%;
             height: 140%;
             background-image: 
-                radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 10% 10%, rgba(14, 116, 144, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(109, 69, 168, 0.05) 0%, transparent 40%);
             pointer-events: none;
         }
 
         .cert-badge {
             font-size: 4.5rem;
             margin-bottom: 1.5rem;
-            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.4));
+            filter: drop-shadow(0 0 10px rgba(170, 78, 7, 0.4));
         }
 
         .cert-title {
@@ -979,7 +1010,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
         }
 
         .cert-subtitle {
@@ -1002,8 +1033,8 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--accent-green);
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px dashed rgba(16, 185, 129, 0.3);
+            background: rgba(60, 117, 73, 0.1);
+            border: 1px dashed rgba(60, 117, 73, 0.3);
             display: inline-block;
             padding: 0.5rem 1.5rem;
             border-radius: 10px;
@@ -1014,12 +1045,12 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            border: 4px solid #fef3c7;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange));
+            border: 4px solid var(--tint-orange);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #78350f;
+            color: var(--text-on-accent);
             font-weight: 900;
             font-size: 0.75rem;
             margin: 0 auto 1.5rem auto;
@@ -1038,7 +1069,7 @@
         .mobile-hamburger {
             display: none;
             margin-left: auto;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             font-size: 1.5rem;
@@ -1068,7 +1099,7 @@
                 border-bottom: 1px solid var(--border-color);
                 padding: 1.25rem 1.5rem;
                 z-index: 90;
-                box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45);
+                box-shadow: 0 16px 34px rgba(90, 70, 45, .07);
             }
             .nav-menu.open { display: flex; }
             .nav-item button { width: 100%; min-height: 44px; }
@@ -1150,7 +1181,7 @@
         }
 
         .lang-toggle-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0 1rem;
@@ -1167,8 +1198,8 @@
         }
         
         .lang-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(var(--ink-rgb), 0.1);
+            border-color: var(--text-ghost);
             transform: scale(1.05);
         }
         
@@ -1209,11 +1240,8 @@
             }
         }
 
-        /* backdrop-filter blur is GPU-expensive on phones — drop it on small screens */
         @media (max-width: 768px) {
             .card, .roadmap-card {
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
             }
         }
     </style>
@@ -1290,9 +1318,9 @@
         <!-- DASHBOARD VIEW -->
         <section class="view-section active" id="view-dashboard">
             <!-- Course Attribution Banner -->
-            <div style="text-align: center; margin-bottom: 2rem; padding: 2rem 1.5rem; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 16px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6)); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(6, 182, 212, 0.15); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="text-align: center; margin-bottom: 2rem; padding: 2rem 1.5rem; border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 16px; background: linear-gradient(135deg, var(--card-bg-alt), var(--card-bg-alt)); box-shadow: 0 8px 32px rgba(90, 70, 45, .07), 0 0 20px rgba(14, 116, 144, 0.15); position: relative; overflow: hidden;">
                 <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div>
-                <h3 style="font-size: 1.25rem; line-height: 1.6; margin-bottom: 0.75rem; color: #ffffff; font-weight: 600; letter-spacing: 0.5px;">Helping you learn Transformers, the core architecture behind all modern large language models like ChatGPT, Claude, and Gemini.</h3>
+                <h3 style="font-size: 1.25rem; line-height: 1.6; margin-bottom: 0.75rem; color: var(--text-primary); font-weight: 600; letter-spacing: 0.5px;">Helping you learn Transformers, the core architecture behind all modern large language models like ChatGPT, Claude, and Gemini.</h3>
                 <p style="font-size: 1rem; color: var(--text-secondary); margin: 0;">Course made by <a href="https://web.facebook.com/fahmid.hasan.190797/" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-weight: 700; border-bottom: 1px solid var(--accent-cyan); padding-bottom: 2px; transition: all 0.3s ease;">Fahmid Hasan</a></p>
             </div>
 
@@ -1338,7 +1366,7 @@
             <div class="card">
                 <div class="mission-header">
                     <h2 id="mission-card-title">Learning Mission (আমাদের উদ্দেশ্য)</h2>
-                    <span class="goal-tag" id="mission-tracker-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: var(--accent-green);">Interactive Tracker</span>
+                    <span class="goal-tag" id="mission-tracker-badge" style="background: rgba(60, 117, 73, 0.15); border-color: rgba(60, 117, 73, 0.3); color: var(--accent-green);">Interactive Tracker</span>
                 </div>
                 <p id="mission-card-desc">LLM (Large Language Model) এর "behind the scene" বা ভেতরের মেকানিজম স্পষ্টভাবে বোঝা। কোনো জটিল গাণিতিক ফর্মুলা বা কোডিং জটলা ছাড়া <strong>Conceptual Intuition</strong> নিজের আয়ত্তে আনা, যাতে পরবর্তীতে যেকোনো advanced LLM concept সহজে ধরতে পারেন।</p>
                 
@@ -1382,7 +1410,7 @@
             </div>
 
             <!-- Quick Start Box -->
-            <div class="card" id="quick-start-card" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(168, 85, 247, 0.08)); border-color: rgba(6, 182, 212, 0.25);">
+            <div class="card" id="quick-start-card" style="background: linear-gradient(135deg, rgba(14, 116, 144, 0.08), rgba(109, 69, 168, 0.08)); border-color: rgba(14, 116, 144, 0.25);">
                 <h2 id="quick-start-title">Quick Start Guide</h2>
                 <p id="quick-start-desc">শেখ শুরু করার জন্য <strong>"Syllabus (লেসন ম্যাপ)"</strong> ট্যাবে চলে যান। সেখানে সিরিয়ালি সাজানো লেসনগুলো পড়তে পারবেন। প্রতিটি লেসন পড়ার সময় আপনি তা <strong>"In Progress"</strong> বা <strong>"Completed"</strong> হিসেবে চিহ্নিত করতে পারেন, যা উপরে আপনার ড্যাশবোর্ডের প্রোগ্রেস ও ট্র্যাকার আপডেট করে রাখবে!</p>
                 <div style="margin-top: 1rem; display: flex; gap: 1rem;">
@@ -1471,7 +1499,7 @@
                         <div class="cert-subtitle" id="cert-subtitle">Bengali Transformer Learning Hub</div>
                         <div class="cert-statement" id="cert-statement">
                             গর্বের সাথে প্রত্যয়ন করা যাচ্ছে যে,<br>
-                            <strong style="font-size: 1.6rem; color: white;" id="cert-user-name">শিক্ষার্থী</strong><br>
+                            <strong style="font-size: 1.6rem; color: var(--text-primary);" id="cert-user-name">শিক্ষার্থী</strong><br>
                             সাফল্যের সাথে <strong>Transformer Architecture and LLM Mechanics</strong>-এর কুইজ সম্পন্ন করেছেন।
                         </div>
                         <div class="cert-score" id="cert-final-score">Score: 5 / 5 (100%)</div>
@@ -2431,7 +2459,7 @@
                 statusEl.innerText = isEn ? `Certified (${quizScore}/5)` : `Certified (${quizScore}/5)`;
                 scoreSubEl.innerText = isEn ? `Latest Score: ${Math.round((quizScore/5)*100)}% • Quiz Completed` : `সর্বশেষ স্কোর: ${Math.round((quizScore/5)*100)}% • কুইজ সম্পন্ন`;
                 badgeEl.innerText = "★";
-                badgeEl.style.filter = "drop-shadow(0 0 10px rgba(16, 185, 129, 0.4))";
+                badgeEl.style.filter = "drop-shadow(0 0 10px rgba(60, 117, 73, 0.4))";
             } else {
                 statusEl.innerText = isEn ? "Not Attempted" : "অংশগ্রহণ করা হয়নি";
                 scoreSubEl.innerText = isEn ? "Complete the quiz to earn your certificate" : "কুইজ দিয়ে সার্টিফিকেট অর্জন করুন";

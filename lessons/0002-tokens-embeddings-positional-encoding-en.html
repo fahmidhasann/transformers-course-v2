@@ -9,15 +9,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-cyan: #06b6d4;
-            --accent-purple: #a855f7;
-            --accent-green: #10b981;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            /* Surfaces */
+            --bg-color:       #FAF6F0;
+            --bg-sunk:        #F2ECE2;
+            --card-bg:        #FFFCF7;
+            --card-bg-alt:    #F5EFE6;
+            --panel-bg:       #FBF6EE;
+            --sidebar-bg:     #FFFCF7;
+
+            /* Lines */
+            --border-color:   #E6DBCB;
+            --border-strong:  #D6C6AF;
+            --border-subtle:  #EFE7DA;
+
+            /* Ink */
+            --text-primary:   #2B2622;
+            --text-body:      #3A342E;
+            --text-secondary: #6E635A;
+            --text-muted:     #756C63;
+            --text-ghost:     #918880;
+            --text-on-accent: #FFFDF9;
+            --ink-rgb:        43, 38, 34;
+
+            /* Accents (retuned for a light ground) */
+            --accent-cyan:    #0E7490;
+            --accent-purple:  #6D45A8;
+            --accent-green:   #3C7549;
+            --accent-orange:  #AA4E07;
+            --accent-pink:    #B03A62;
+            --accent-blue:    #1D5FA8;
+            --accent-red:     #B3261E;
+
+            /* Accent tints */
+            --tint-cyan:      #E4F0F3;
+            --tint-purple:    #EFE9F7;
+            --tint-green:     #E8F1E9;
+            --tint-orange:    #FBEEDC;
+            --tint-pink:      #FAE8EE;
+            --tint-neutral:   #F1E9DD;
+
+            /* Depth */
+            --shadow:         0 1px 2px rgba(90,70,45,.05), 0 6px 20px rgba(90,70,45,.07);
+            --shadow-soft:    0 1px 3px rgba(90,70,45,.06);
+            --ring:           0 0 0 3px rgba(14,116,144,.14);
+            --glow:           var(--ring);
+
+            /* Type */
+            --font-heading:   'Outfit', 'Hind Siliguri', sans-serif;
+            --font-body:      'Hind Siliguri', system-ui, sans-serif;
+            --font-main:      var(--font-body);
         }
 
         * {
@@ -27,20 +67,26 @@
         }
 
         body {
-            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.75;
+            font-size: 1.0625rem;
             padding: 2rem 1rem;
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(196,146,86,.10) 0px, transparent 55%),
+                radial-gradient(at 100% 100%, rgba(122,148,132,.10) 0px, transparent 55%);
+        }
+
+        h1, h2, h3, h4, h5, h6, .badge, .site-nav-brand-name, .sidebar-brand-name {
+            font-family: var(--font-heading);
+            letter-spacing: -0.01em;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
             position: relative;
             overflow-x: clip;
@@ -53,7 +99,7 @@
 
         .badge {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
+            color: var(--text-on-accent);
             padding: 0.3rem 1rem;
             border-radius: 50px;
             font-size: 0.85rem;
@@ -68,9 +114,7 @@
             font-size: 2.3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
         }
 
         .subtitle {
@@ -85,8 +129,6 @@
             padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
         }
 
         h2 {
@@ -102,7 +144,8 @@
 
         p {
             margin-bottom: 1rem;
-            color: #cbd5e1;
+            line-height: 1.8;
+            color: var(--text-body);
         }
 
         .highlight {
@@ -111,19 +154,19 @@
         }
 
         .tech-term {
-            font-family: 'Outfit', sans-serif;
-            background: rgba(255, 255, 255, 0.08);
+            font-family: var(--font-heading);
+            background: var(--tint-neutral);
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
-            color: #e2e8f0;
+            color: var(--text-primary);
             font-size: 0.95rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
         }
 
         ul, ol {
             margin-bottom: 1rem;
             padding-left: 1.5rem;
-            color: #cbd5e1;
+            color: var(--text-body);
         }
 
         li {
@@ -153,7 +196,7 @@
 
         .vector-visualizer {
             flex: 1.8;
-            background: rgba(15, 23, 42, 0.8);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1rem;
@@ -173,11 +216,11 @@
         .axis-label {
             fill: var(--text-secondary);
             font-size: 11px;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
         }
 
         .grid-line {
-            stroke: rgba(255, 255, 255, 0.06);
+            stroke: rgba(var(--ink-rgb), 0.06);
             stroke-width: 1;
         }
 
@@ -214,27 +257,27 @@
         }
 
         .pe-word-btn {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(var(--ink-rgb), 0.04);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.6rem 1.2rem;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
             font-weight: 600;
         }
 
         .pe-word-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(var(--ink-rgb), 0.08);
             border-color: var(--accent-purple);
         }
 
         .pe-word-btn.active {
             background: var(--accent-purple);
-            color: white;
+            color: var(--text-on-accent);
             border-color: var(--accent-purple);
-            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 12px rgba(109, 69, 168, 0.4);
         }
 
         .vector-table {
@@ -250,7 +293,7 @@
             padding: 1rem 1.5rem;
             text-align: left;
             border: none;
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--card-bg-alt);
         }
 
         .vector-table tbody tr td:first-child {
@@ -316,7 +359,7 @@
             font-size: 0.85rem;
             font-weight: 500;
             border-radius: 16px;
-            color: white;
+            color: var(--text-primary);
             transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
                         background-color 0.2s ease,
                         border-color 0.2s ease,
@@ -324,7 +367,7 @@
             flex-shrink: 0;
             position: relative;
             cursor: default;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(var(--ink-rgb), 0.1);
         }
 
         .vector-math-symbol {
@@ -337,8 +380,8 @@
         }
 
         .formula-box {
-            font-family: 'Outfit', sans-serif;
-            background: rgba(255, 255, 255, 0.03);
+            font-family: var(--font-heading);
+            background: rgba(var(--ink-rgb), 0.03);
             border: 1px solid var(--border-color);
             padding: 0.75rem;
             border-radius: 8px;
@@ -362,15 +405,15 @@
         }
 
         .vector-block.active-dim {
-            border-color: #fff !important;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
+            border-color: var(--border-color) !important;
+            box-shadow: 0 0 12px rgba(90, 70, 45, 0.45);
             transform: scale(1.15); /* Pop out scale */
             z-index: 10;
         }
 
         /* Quiz Styles */
         .quiz-question {
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
@@ -385,7 +428,7 @@
 
         .quiz-option {
             display: block;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(var(--ink-rgb), 0.03);
             border: 1px solid var(--border-color);
             padding: 0.85rem 1rem;
             border-radius: 8px;
@@ -396,18 +439,18 @@
         }
 
         .quiz-option:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(var(--ink-rgb), 0.08);
             border-color: var(--accent-cyan);
         }
 
         .quiz-option.correct {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(60, 117, 73, 0.15);
             border-color: var(--accent-green);
         }
 
         .quiz-option.incorrect {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: #ef4444;
+            background: rgba(179, 38, 30, 0.15);
+            border-color: var(--accent-red);
         }
 
         .quiz-feedback {
@@ -420,16 +463,16 @@
         }
 
         .quiz-feedback.success {
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(60, 117, 73, 0.1);
             color: var(--accent-green);
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(60, 117, 73, 0.2);
             display: block;
         }
 
         .quiz-feedback.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(179, 38, 30, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(179, 38, 30, 0.2);
             display: block;
         }
 
@@ -459,7 +502,7 @@
         }
 
         select, button {
-            background: rgba(30, 41, 59, 0.9);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.75rem 1rem;
@@ -533,43 +576,41 @@
             border-radius: 14px;
             text-align: center;
             position: relative;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         /* Sentence 1 (Cyan/Blue Theme - Non-Warning) */
         .sentence-compare-box.sentence-1 {
-            background: linear-gradient(145deg, rgba(6, 182, 212, 0.14), rgba(15, 23, 42, 0.85));
-            border: 1.5px solid rgba(6, 182, 212, 0.45);
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            background: linear-gradient(145deg, rgba(14, 116, 144, 0.14), var(--card-bg-alt));
+            border: 1.5px solid rgba(14, 116, 144, 0.45);
+            box-shadow: 0 8px 25px rgba(14, 116, 144, 0.15), inset 0 1px 0 rgba(90, 70, 45, 0.12);
         }
         .sentence-compare-box.sentence-1:hover {
             transform: translateY(-3px);
-            border-color: rgba(6, 182, 212, 0.75);
-            box-shadow: 0 12px 30px rgba(6, 182, 212, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(14, 116, 144, 0.75);
+            box-shadow: 0 12px 30px rgba(14, 116, 144, 0.28), inset 0 1px 0 rgba(90, 70, 45, 0.2);
         }
         .sentence-compare-box.sentence-1 .sentence-badge {
-            background: linear-gradient(135deg, #0284c7, #06b6d4);
-            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-cyan));
+            box-shadow: 0 4px 14px rgba(14, 116, 144, 0.5);
+            border: 1px solid rgba(var(--ink-rgb), 0.3);
         }
 
         /* Sentence 2 (Indigo/Purple Theme - Non-Warning) */
         .sentence-compare-box.sentence-2 {
-            background: linear-gradient(145deg, rgba(168, 85, 247, 0.14), rgba(15, 23, 42, 0.85));
-            border: 1.5px solid rgba(168, 85, 247, 0.45);
-            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            background: linear-gradient(145deg, rgba(109, 69, 168, 0.14), var(--card-bg-alt));
+            border: 1.5px solid rgba(109, 69, 168, 0.45);
+            box-shadow: 0 8px 25px rgba(109, 69, 168, 0.15), inset 0 1px 0 rgba(90, 70, 45, 0.12);
         }
         .sentence-compare-box.sentence-2:hover {
             transform: translateY(-3px);
-            border-color: rgba(168, 85, 247, 0.75);
-            box-shadow: 0 12px 30px rgba(168, 85, 247, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(109, 69, 168, 0.75);
+            box-shadow: 0 12px 30px rgba(109, 69, 168, 0.28), inset 0 1px 0 rgba(90, 70, 45, 0.2);
         }
         .sentence-compare-box.sentence-2 .sentence-badge {
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
-            box-shadow: 0 4px 14px rgba(168, 85, 247, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple));
+            box-shadow: 0 4px 14px rgba(109, 69, 168, 0.5);
+            border: 1px solid rgba(var(--ink-rgb), 0.3);
         }
 
         .sentence-badge {
@@ -577,13 +618,13 @@
             top: -14px;
             left: 50%;
             transform: translateX(-50%);
-            color: #ffffff;
+            color: var(--text-on-accent);
             padding: 0.25rem 0.95rem;
             border-radius: 20px;
             font-size: 0.82rem;
             font-weight: 700;
             letter-spacing: 0.03em;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 1px 2px rgba(90, 70, 45, .07);
         }
 
         .sentence-text {
@@ -591,27 +632,24 @@
             font-weight: 700;
             margin-bottom: 0.5rem;
             margin-top: 0.5rem;
-            color: #ffffff;
+            color: var(--text-primary);
             letter-spacing: 0.01em;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         .sentence-subtext {
-            color: #cbd5e1;
+            color: var(--text-body);
             font-size: 0.95rem;
             font-weight: 500;
         }
 
         /* Solution Container & Positional Vector Diagram Layout */
         .pos-solution-box {
-            background: linear-gradient(145deg, rgba(30, 41, 59, 0.92), rgba(168, 85, 247, 0.12));
-            border: 1.5px solid rgba(168, 85, 247, 0.45);
+            background: linear-gradient(145deg, var(--card-bg-alt), rgba(109, 69, 168, 0.12));
+            border: 1.5px solid rgba(109, 69, 168, 0.45);
             padding: 1.75rem;
             border-radius: 16px;
             margin-top: 2rem;
-            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(109, 69, 168, 0.18), inset 0 1px 0 rgba(90, 70, 45, 0.12);
         }
 
         .pos-vector-diagram {
@@ -619,11 +657,11 @@
             align-items: center;
             justify-content: center;
             gap: 1.25rem;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.75));
+            background: linear-gradient(135deg, var(--card-bg-alt), var(--card-bg-alt));
             padding: 1.75rem 1.25rem;
             border-radius: 14px;
-            border: 1.5px solid rgba(255, 255, 255, 0.14);
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1.5px solid rgba(var(--ink-rgb), 0.14);
+            box-shadow: inset 0 2px 8px rgba(90, 70, 45, .07), 0 4px 20px rgba(90, 70, 45, .07);
             flex-direction: row;
         }
 
@@ -635,7 +673,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 0.6rem;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
             font-weight: 700;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
         }
@@ -645,31 +683,30 @@
         }
 
         .pos-vector-box.cyan {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.35), rgba(6, 182, 212, 0.12));
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.35), rgba(14, 116, 144, 0.12));
             border: 2px solid var(--accent-cyan);
-            color: #ffffff;
-            box-shadow: 0 0 22px rgba(6, 182, 212, 0.45);
+            color: var(--text-primary);
+            box-shadow: 0 0 22px rgba(14, 116, 144, 0.45);
         }
 
         .pos-vector-box.purple {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.35), rgba(168, 85, 247, 0.12));
+            background: linear-gradient(135deg, rgba(109, 69, 168, 0.35), rgba(109, 69, 168, 0.12));
             border: 2px solid var(--accent-purple);
-            color: #ffffff;
-            box-shadow: 0 0 22px rgba(168, 85, 247, 0.45);
+            color: var(--text-primary);
+            box-shadow: 0 0 22px rgba(109, 69, 168, 0.45);
         }
 
         .pos-vector-box.green {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.35), rgba(16, 185, 129, 0.12));
+            background: linear-gradient(135deg, rgba(60, 117, 73, 0.35), rgba(60, 117, 73, 0.12));
             border: 2px solid var(--accent-green);
-            color: #ffffff;
-            box-shadow: 0 0 22px rgba(16, 185, 129, 0.45);
+            color: var(--text-primary);
+            box-shadow: 0 0 22px rgba(60, 117, 73, 0.45);
         }
 
         .pos-vector-math {
             font-size: 2.2rem;
             font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+            color: var(--text-primary);
         }
 
         @media (max-width: 768px) {
@@ -744,11 +781,8 @@
             button {
                 min-height: 44px;
             }
-            /* backdrop-filter blur is GPU-expensive on phones */
             .card,
             .simulator {
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
             }
         }
 
@@ -781,10 +815,8 @@
             z-index: 500;
             margin: -2rem -1rem 2.5rem;
             background: var(--card-bg);
-            -webkit-backdrop-filter: blur(14px);
-            backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 4px 24px rgba(90, 70, 45, .07);
         }
         .site-nav-inner {
             position: relative;
@@ -811,7 +843,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.15rem;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 15px rgba(109, 69, 168, 0.4);
         }
         .site-nav-brand-name {
             font-weight: 700;
@@ -823,7 +855,7 @@
         .site-nav-toggle {
             display: none;
             margin-left: auto;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             font-size: 1.3rem;
@@ -858,7 +890,7 @@
             white-space: nowrap;
             transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
-        .site-nav-link:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.07); }
+        .site-nav-link:hover { color: var(--text-primary); background: rgba(var(--ink-rgb), 0.07); }
         .site-nav-caret { font-size: 0.7em; opacity: 0.85; }
         /* Syllabus dropdown */
         .site-nav-dropdown { position: relative; }
@@ -874,7 +906,7 @@
             background: var(--bg-color);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 18px 44px rgba(90, 70, 45, .07);
             opacity: 0;
             visibility: hidden;
             transform: translateY(-6px);
@@ -895,11 +927,11 @@
             line-height: 1.35;
             border: 1px solid transparent;
         }
-        .site-nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.06); color: var(--text-primary); }
+        .site-nav-dropdown-menu a:hover { background: rgba(var(--ink-rgb), 0.06); color: var(--text-primary); }
         .site-nav-dropdown-menu a.active {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(109, 69, 168, 0.15));
             color: var(--text-primary);
-            border-color: rgba(6, 182, 212, 0.3);
+            border-color: rgba(14, 116, 144, 0.3);
         }
         .site-nav-dropdown-menu .num {
             color: var(--accent-cyan);
@@ -919,7 +951,7 @@
             margin-left: 0.15rem;
         }
         .site-nav-icon-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             height: 40px;
@@ -935,7 +967,7 @@
             white-space: nowrap;
             transition: background 0.25s ease, border-color 0.25s ease;
         }
-        .site-nav-icon-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+        .site-nav-icon-btn:hover { background: rgba(var(--ink-rgb), 0.1); border-color: var(--text-ghost); }
         /* Mobile */
         @media (max-width: 900px) {
             .site-nav-toggle { display: inline-flex; }
@@ -951,7 +983,7 @@
                 padding: 1rem 1.25rem 1.25rem;
                 background: var(--bg-color);
                 border-bottom: 1px solid var(--border-color);
-                box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+                box-shadow: 0 22px 44px rgba(90, 70, 45, .07);
                 display: none;
             }
             .site-nav-menu.open { display: flex; }
@@ -965,7 +997,7 @@
                 min-width: 0;
                 max-width: 100%;
                 box-shadow: none;
-                background: rgba(255, 255, 255, 0.03);
+                background: rgba(var(--ink-rgb), 0.03);
                 margin-top: 0.25rem;
             }
             .site-nav-dropdown.open .site-nav-dropdown-menu { display: block; }
@@ -990,45 +1022,45 @@
     width: 100%; max-width: 420px; height: auto; display: block;
     margin: 0.5rem auto 1rem; overflow: visible;
 }
-.tb-map-svg text { text-anchor: middle; font-family: 'Outfit', sans-serif; font-size: 12px; }
+.tb-map-svg text { text-anchor: middle; font-family: var(--font-heading); font-size: 12px; }
 .tb-map-svg .tb-sub { font-size: 9.5px; }
 .tb-node rect, .tb-node circle {
-    fill: rgba(15, 23, 42, 0.75); stroke: var(--accent-purple); stroke-width: 1.5;
+    fill: var(--card-bg-alt); stroke: var(--accent-purple); stroke-width: 1.5;
     transition: all 0.35s ease;
 }
 .tb-node text { fill: var(--text-secondary); transition: all 0.35s ease; }
 .tb-node.active rect, .tb-node.active circle {
-    fill: rgba(6, 182, 212, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
-    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.55));
+    fill: rgba(14, 116, 144, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px rgba(14, 116, 144, 0.55));
 }
 .tb-node.active text { fill: var(--text-primary); font-weight: 600; }
 .tb-node.dim { opacity: 0.3; }
 .tb-block .tb-block-outline {
-    fill: none; stroke: rgba(168, 85, 247, 0.45); stroke-width: 1.5;
+    fill: none; stroke: rgba(109, 69, 168, 0.45); stroke-width: 1.5;
     stroke-dasharray: 6 4; transition: all 0.35s ease;
 }
 .tb-block .tb-block-label { fill: var(--accent-purple); font-size: 11px; font-weight: 600; transition: all 0.35s ease; }
-.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.5)); }
+.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(14, 116, 144, 0.5)); }
 .tb-block.active .tb-block-label { fill: var(--accent-cyan); }
 .tb-block.dim { opacity: 0.3; }
-.tb-flow { fill: none; stroke: #64748b; stroke-width: 1.6; }
+.tb-flow { fill: none; stroke: var(--border-strong); stroke-width: 1.6; }
 .tb-skip {
-    fill: none; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4 3;
+    fill: none; stroke: var(--border-strong); stroke-width: 1.5; stroke-dasharray: 4 3;
     transition: all 0.35s ease;
 }
-.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.55)); }
+.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(60, 117, 73, 0.55)); }
 .tb-skip.dim { opacity: 0.28; }
 .tb-map-caption { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0; }
 .tb-map-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); margin: 0.2rem 0 1rem; }
 .tb-map-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
 .tb-legend-dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-.tb-legend-active { background: rgba(6, 182, 212, 0.5); box-shadow: 0 0 6px rgba(6, 182, 212, 0.7); border: 1px solid var(--accent-cyan); }
-.tb-legend-rest { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--accent-purple); opacity: 0.45; }
+.tb-legend-active { background: rgba(14, 116, 144, 0.5); box-shadow: 0 0 6px rgba(14, 116, 144, 0.7); border: 1px solid var(--accent-cyan); }
+.tb-legend-rest { background: var(--card-bg-alt); border: 1px solid var(--accent-purple); opacity: 0.45; }
 
 .tb-main-flow {
     stroke-dasharray: 8 6;
     animation: flow-up 1s linear infinite;
-    filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
+    filter: drop-shadow(0 0 4px rgba(14, 116, 144, 0.4));
 }
 @keyframes flow-up {
     to { stroke-dashoffset: -14; }
@@ -1051,7 +1083,7 @@
     padding-bottom: 0;
 }
 .collapsible-card .collapse-toggle {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(var(--ink-rgb), 0.05);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
     width: 36px;
@@ -1088,7 +1120,7 @@
     padding-bottom: 0.75rem;
 }
 .visualizer-tab-btn {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(var(--ink-rgb), 0.03);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
     padding: 0.6rem 1.2rem;
@@ -1100,13 +1132,13 @@
 }
 .visualizer-tab-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(var(--ink-rgb), 0.08);
 }
 .visualizer-tab-btn.active {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+    background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(109, 69, 168, 0.15));
     border-color: var(--accent-cyan);
     color: var(--text-primary);
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+    box-shadow: 0 0 10px rgba(14, 116, 144, 0.2);
 }
 
 .visualizer-view {
@@ -1129,10 +1161,10 @@
 }
 .three-d-viewport-wrapper {
     flex: 1.2;
-    background: radial-gradient(circle at center, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: radial-gradient(circle at center, var(--card-bg-alt) 0%, var(--card-bg-alt) 100%);
+    border: 1px solid rgba(var(--ink-rgb), 0.05);
     border-radius: 12px;
-    box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 32px rgba(90, 70, 45, .07);
     position: relative;
     cursor: grab;
     user-select: none;
@@ -1160,14 +1192,13 @@
 .three-d-tooltip {
     width: 100%;
     box-sizing: border-box;
-    background: rgba(15, 23, 42, 0.75);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--card-bg-alt);
+    border-bottom: 1px solid rgba(var(--ink-rgb), 0.08);
     padding: 0.5rem 1rem;
     color: var(--accent-purple);
     font-weight: 600;
     text-align: center;
     font-size: 0.85rem;
-    backdrop-filter: blur(8px);
     z-index: 10;
     pointer-events: none;
     display: flex;
@@ -1179,7 +1210,7 @@
     font-size: 0.85rem;
     color: var(--text-secondary);
     line-height: 1.4;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(var(--ink-rgb), 0.02);
     border: 1px solid var(--border-color);
     padding: 0.75rem;
     border-radius: 8px;
@@ -1189,7 +1220,7 @@
 .three-d-axis {
     stroke-width: 1;
     stroke-linecap: round;
-    stroke: rgba(255, 255, 255, 0.15);
+    stroke: rgba(var(--ink-rgb), 0.15);
 }
 .three-d-axis-dash {
     stroke-width: 1;
@@ -1198,7 +1229,7 @@
 .three-d-axis-label {
     font-family: 'Outfit', 'Hind Siliguri', sans-serif;
     font-size: 13px;
-    fill: rgba(255, 255, 255, 0.75);
+    fill: rgba(var(--ink-rgb), 0.75);
     font-weight: 600;
     paint-order: stroke;
     stroke: var(--bg-color);
@@ -1209,7 +1240,7 @@
 .three-d-axis-limit-label {
     font-family: 'Outfit', 'Hind Siliguri', sans-serif;
     font-size: 9.5px;
-    fill: rgba(255, 255, 255, 0.4);
+    fill: rgba(var(--ink-rgb), 0.4);
     opacity: 0.7;
 }
 .three-d-word-node {
@@ -1226,7 +1257,7 @@
 .three-d-word-node text {
     font-family: 'Outfit', 'Hind Siliguri', sans-serif;
     font-size: 13px;
-    fill: rgba(255, 255, 255, 0.9);
+    fill: var(--card-bg);
     font-weight: 500;
     paint-order: stroke;
     stroke: var(--bg-color);
@@ -1251,7 +1282,7 @@
     overflow-x: auto;
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    background: rgba(15, 23, 42, 0.4);
+    background: var(--card-bg-alt);
 }
 .heatmap-table {
     width: 100%;
@@ -1264,16 +1295,16 @@
     border-bottom: 1px solid var(--border-color);
 }
 .heatmap-table th {
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--card-bg-alt);
     color: var(--text-primary);
     font-weight: 600;
 }
 .heatmap-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(var(--ink-rgb), 0.02);
 }
 .heatmap-cell {
     font-weight: 700;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-heading);
     border-radius: 6px;
     text-align: center;
     min-width: 60px;
@@ -1329,7 +1360,7 @@
             <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 1.5 L8 5 L0 8.5 z" fill="#64748b"/>
+      <path d="M0 1.5 L8 5 L0 8.5 z" fill="var(--text-muted)"/>
     </marker>
     <linearGradient id="flow-gradient" x1="0%" y1="100%" x2="0%" y2="0%">
       <stop offset="0%" stop-color="var(--accent-purple)" />
@@ -1428,12 +1459,12 @@
             <h2>1. Tokenization (Chopping Text)</h2>
             <p><span class="tech-term">Tokenization</span> is like slicing a pizza. It cuts the input text into small pieces called <span class="tech-term">Tokens</span>. Then, it checks its massive dictionary and assigns an ID number to each piece.</p>
             
-            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; text-align: center;">
+            <div style="background: rgba(var(--ink-rgb), 0.03); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; text-align: center;">
                 <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Example</div>
                 
                 <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
                     <!-- Step 1: Input Text -->
-                    <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem 1.5rem; border-radius: 8px; font-size: 1.1rem; color: #fff; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);">
+                    <div style="background: rgba(14, 116, 144, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem 1.5rem; border-radius: 8px; font-size: 1.1rem; color: var(--text-primary); box-shadow: 0 4px 12px rgba(14, 116, 144, 0.2);">
                         "The cat slept"
                     </div>
                     
@@ -1442,9 +1473,9 @@
                     
                     <!-- Step 2: Tokens -->
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                        <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);">"The"</div>
-                        <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);">" cat"</div>
-                        <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);">" slept"</div>
+                        <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(109, 69, 168, 0.2);">"The"</div>
+                        <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(109, 69, 168, 0.2);">" cat"</div>
+                        <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; box-shadow: 0 4px 12px rgba(109, 69, 168, 0.2);">" slept"</div>
                     </div>
                     
                     <!-- Arrow -->
@@ -1452,9 +1483,9 @@
                     
                     <!-- Step 3: IDs -->
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: #10b981; font-weight: bold; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">464</div>
-                        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: #10b981; font-weight: bold; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">3797</div>
-                        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: #10b981; font-weight: bold; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">18534</div>
+                        <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">464</div>
+                        <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">3797</div>
+                        <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">18534</div>
                     </div>
                 </div>
             </div>
@@ -1465,7 +1496,7 @@
             </ul>
 
             <!-- Sub-word Tokenization & BPE Card -->
-            <div class="note-card" style="margin-top: 1.5rem; background: rgba(168, 85, 247, 0.06); border: 1px solid rgba(168, 85, 247, 0.25); padding: 1.5rem; border-radius: 12px;">
+            <div class="note-card" style="margin-top: 1.5rem; background: rgba(109, 69, 168, 0.06); border: 1px solid rgba(109, 69, 168, 0.25); padding: 1.5rem; border-radius: 12px;">
                 <h3 style="color: var(--accent-purple); margin-top: 0; margin-bottom: 0.8rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
                     💡 Handling Unknown Words: Sub-word Tokenization (BPE)
                 </h3>
@@ -1474,14 +1505,14 @@
                 </p>
 
                 <!-- BPE Flow Diagram -->
-                <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem; text-align: center;">
+                <div style="background: var(--card-bg-alt); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem; text-align: center;">
                     <div style="font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; letter-spacing: 1px; margin-bottom: 1rem;">
                         Visual Process Flow (BPE Sub-Word Breakdown Example)
                     </div>
 
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
                         <!-- OOV Input Word -->
-                        <div style="background: rgba(239, 68, 68, 0.15); border: 1px dashed #ef4444; color: #f87171; padding: 0.6rem 1.4rem; border-radius: 8px; font-size: 1.1rem; font-weight: bold;">
+                        <div style="background: rgba(179, 38, 30, 0.15); border: 1px dashed var(--accent-red); color: var(--accent-red); padding: 0.6rem 1.4rem; border-radius: 8px; font-size: 1.1rem; font-weight: bold;">
                             Unknown Word (OOV Input): "unhappiness"
                         </div>
 
@@ -1489,18 +1520,18 @@
 
                         <!-- Sub-words Badges -->
                         <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center;">
-                            <div style="background: rgba(168, 85, 247, 0.2); border: 1px solid var(--accent-purple); padding: 0.6rem 1rem; border-radius: 8px; font-family: monospace;">
-                                <div style="color: #c084fc; font-weight: bold;">"un"</div>
+                            <div style="background: rgba(109, 69, 168, 0.2); border: 1px solid var(--accent-purple); padding: 0.6rem 1rem; border-radius: 8px; font-family: monospace;">
+                                <div style="color: var(--accent-purple); font-weight: bold;">"un"</div>
                                 <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.2rem;">Prefix</div>
                             </div>
                             <div style="color: var(--text-secondary); align-self: center;">+</div>
-                            <div style="background: rgba(168, 85, 247, 0.2); border: 1px solid var(--accent-purple); padding: 0.6rem 1rem; border-radius: 8px; font-family: monospace;">
-                                <div style="color: #c084fc; font-weight: bold;">"happi"</div>
+                            <div style="background: rgba(109, 69, 168, 0.2); border: 1px solid var(--accent-purple); padding: 0.6rem 1rem; border-radius: 8px; font-family: monospace;">
+                                <div style="color: var(--accent-purple); font-weight: bold;">"happi"</div>
                                 <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.2rem;">Root</div>
                             </div>
                             <div style="color: var(--text-secondary); align-self: center;">+</div>
-                            <div style="background: rgba(168, 85, 247, 0.2); border: 1px solid var(--accent-purple); padding: 0.6rem 1rem; border-radius: 8px; font-family: monospace;">
-                                <div style="color: #c084fc; font-weight: bold;">"ness"</div>
+                            <div style="background: rgba(109, 69, 168, 0.2); border: 1px solid var(--accent-purple); padding: 0.6rem 1rem; border-radius: 8px; font-family: monospace;">
+                                <div style="color: var(--accent-purple); font-weight: bold;">"ness"</div>
                                 <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.2rem;">Suffix</div>
                             </div>
                         </div>
@@ -1509,13 +1540,13 @@
 
                         <!-- Token IDs -->
                         <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center;">
-                            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); color: #34d399; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; font-family: monospace;">
+                            <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; font-family: monospace;">
                                 ID: 421
                             </div>
-                            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); color: #34d399; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; font-family: monospace;">
+                            <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; font-family: monospace;">
                                 ID: 8932
                             </div>
-                            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); color: #34d399; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; font-family: monospace;">
+                            <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; font-family: monospace;">
                                 ID: 1205
                             </div>
                         </div>
@@ -1531,10 +1562,10 @@
             
             <p>To fix this, we use <span class="tech-term">Embeddings</span>. We replace the simple barcode with a long list of numbers (a <span class="tech-term">Vector</span>). Think of this vector as a detailed "identity profile" (or characteristic card) for the word.</p>
             
-            <div style="position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(20, 25, 35, 0.9) 0%, rgba(10, 15, 25, 0.95) 100%); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2rem; border-radius: 16px; margin-top: 2rem; box-shadow: 0 12px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);">
-                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1rem;">
-                    <h3 style="margin: 0; font-weight: 600; color: #fff; font-size: 1.1rem; letter-spacing: 0.5px;">Token to Embedding Vector Mapping <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 400;">(from previous example)</span></h3>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.03); padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="position: relative; overflow: hidden; background: linear-gradient(180deg, var(--card-bg-alt) 0%, var(--card-bg-alt) 100%); border: 1px solid rgba(var(--ink-rgb), 0.08); padding: 2rem; border-radius: 16px; margin-top: 2rem; box-shadow: 0 12px 40px rgba(90, 70, 45, .07), inset 0 1px 0 rgba(90, 70, 45,0.1);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid rgba(var(--ink-rgb),0.06); padding-bottom: 1rem;">
+                    <h3 style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 1.1rem; letter-spacing: 0.5px;">Token to Embedding Vector Mapping <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 400;">(from previous example)</span></h3>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(var(--ink-rgb),0.03); padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid rgba(var(--ink-rgb),0.05);">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                         <span style="font-family: 'Outfit', monospace; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Dimensions <span style="color: var(--accent-cyan); font-weight: 600;">4</span></span>
                     </div>
@@ -1543,10 +1574,10 @@
                 <div style="display: flex; flex-direction: column; gap: 0.8rem; font-family: 'Outfit', monospace; font-size: 1rem; overflow-x: auto;">
                     
                     <!-- Row 1 -->
-                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.015)'; this.style.borderColor='rgba(255,255,255,0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(var(--ink-rgb),0.015); border: 1px solid rgba(var(--ink-rgb),0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(var(--ink-rgb),0.04)'; this.style.borderColor='rgba(var(--ink-rgb),0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(90, 70, 45, .07)';" onmouseout="this.style.background='rgba(var(--ink-rgb),0.015)'; this.style.borderColor='rgba(var(--ink-rgb),0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                         
                         <div style="display: flex; align-items: center; gap: 1rem; width: 35%;">
-                            <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); color: #fff; padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(168, 85, 247, 0.1);">
+                            <div style="background: rgba(109, 69, 168, 0.1); border: 1px solid rgba(109, 69, 168, 0.3); color: var(--text-primary); padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(109, 69, 168, 0.1);">
                                 "The"
                             </div>
                             <div style="display: flex; flex-direction: column;">
@@ -1560,22 +1591,22 @@
                         </div>
 
                         <div style="width: 55%; display: flex; align-items: center; justify-content: flex-end; gap: 0.8rem;">
-                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">[</span>
+                            <span style="color: var(--text-ghost); font-size: 1.5rem; font-weight: 300;">[</span>
                             <div style="display: flex; gap: 1rem; color: var(--text-primary); letter-spacing: 1px;">
-                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.15</span>
-                                <span style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);">-0.22</span>
-                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.84</span>
-                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.50</span>
+                                <span style="color: var(--accent-green); text-shadow: 0 0 10px rgba(60, 117, 73, 0.2);">+0.15</span>
+                                <span style="color: var(--accent-red); text-shadow: 0 0 10px rgba(179, 38, 30, 0.2);">-0.22</span>
+                                <span style="color: var(--accent-green); text-shadow: 0 0 10px rgba(60, 117, 73, 0.2);">+0.84</span>
+                                <span style="color: var(--accent-green); text-shadow: 0 0 10px rgba(60, 117, 73, 0.2);">+0.50</span>
                             </div>
-                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">]</span>
+                            <span style="color: var(--text-ghost); font-size: 1.5rem; font-weight: 300;">]</span>
                         </div>
                     </div>
 
                     <!-- Row 2 -->
-                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.015)'; this.style.borderColor='rgba(255,255,255,0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(var(--ink-rgb),0.015); border: 1px solid rgba(var(--ink-rgb),0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(var(--ink-rgb),0.04)'; this.style.borderColor='rgba(var(--ink-rgb),0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(90, 70, 45, .07)';" onmouseout="this.style.background='rgba(var(--ink-rgb),0.015)'; this.style.borderColor='rgba(var(--ink-rgb),0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                         
                         <div style="display: flex; align-items: center; gap: 1rem; width: 35%;">
-                            <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); color: #fff; padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(56, 189, 248, 0.1);">
+                            <div style="background: rgba(14, 116, 144, 0.1); border: 1px solid rgba(14, 116, 144, 0.3); color: var(--text-primary); padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(14, 116, 144, 0.1);">
                                 " cat"
                             </div>
                             <div style="display: flex; flex-direction: column;">
@@ -1589,22 +1620,22 @@
                         </div>
 
                         <div style="width: 55%; display: flex; align-items: center; justify-content: flex-end; gap: 0.8rem;">
-                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">[</span>
+                            <span style="color: var(--text-ghost); font-size: 1.5rem; font-weight: 300;">[</span>
                             <div style="display: flex; gap: 1rem; color: var(--text-primary); letter-spacing: 1px;">
-                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.92</span>
-                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.81</span>
-                                <span style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);">-0.10</span>
-                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.33</span>
+                                <span style="color: var(--accent-green); text-shadow: 0 0 10px rgba(60, 117, 73, 0.2);">+0.92</span>
+                                <span style="color: var(--accent-green); text-shadow: 0 0 10px rgba(60, 117, 73, 0.2);">+0.81</span>
+                                <span style="color: var(--accent-red); text-shadow: 0 0 10px rgba(179, 38, 30, 0.2);">-0.10</span>
+                                <span style="color: var(--accent-green); text-shadow: 0 0 10px rgba(60, 117, 73, 0.2);">+0.33</span>
                             </div>
-                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">]</span>
+                            <span style="color: var(--text-ghost); font-size: 1.5rem; font-weight: 300;">]</span>
                         </div>
                     </div>
 
                     <!-- Row 3 -->
-                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,255,255,0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)';" onmouseout="this.style.background='rgba(255,255,255,0.015)'; this.style.borderColor='rgba(255,255,255,0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                    <div style="display: flex; align-items: center; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(var(--ink-rgb),0.015); border: 1px solid rgba(var(--ink-rgb),0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; min-width: 600px; position: relative; overflow: hidden;" onmouseover="this.style.background='rgba(var(--ink-rgb),0.04)'; this.style.borderColor='rgba(var(--ink-rgb),0.1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(90, 70, 45, .07)';" onmouseout="this.style.background='rgba(var(--ink-rgb),0.015)'; this.style.borderColor='rgba(var(--ink-rgb),0.03)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                         
                         <div style="display: flex; align-items: center; gap: 1rem; width: 35%;">
-                            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #fff; padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.1);">
+                            <div style="background: rgba(60, 117, 73, 0.1); border: 1px solid rgba(60, 117, 73, 0.3); color: var(--text-primary); padding: 0.4rem 1rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(60, 117, 73, 0.1);">
                                 " slept"
                             </div>
                             <div style="display: flex; flex-direction: column;">
@@ -1618,14 +1649,14 @@
                         </div>
 
                         <div style="width: 55%; display: flex; align-items: center; justify-content: flex-end; gap: 0.8rem;">
-                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">[</span>
+                            <span style="color: var(--text-ghost); font-size: 1.5rem; font-weight: 300;">[</span>
                             <div style="display: flex; gap: 1rem; color: var(--text-primary); letter-spacing: 1px;">
-                                <span style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);">-0.45</span>
-                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.27</span>
-                                <span style="color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">+0.89</span>
-                                <span style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);">-0.62</span>
+                                <span style="color: var(--accent-red); text-shadow: 0 0 10px rgba(179, 38, 30, 0.2);">-0.45</span>
+                                <span style="color: var(--accent-green); text-shadow: 0 0 10px rgba(60, 117, 73, 0.2);">+0.27</span>
+                                <span style="color: var(--accent-green); text-shadow: 0 0 10px rgba(60, 117, 73, 0.2);">+0.89</span>
+                                <span style="color: var(--accent-red); text-shadow: 0 0 10px rgba(179, 38, 30, 0.2);">-0.62</span>
                             </div>
-                            <span style="color: rgba(255,255,255,0.2); font-size: 1.5rem; font-weight: 300;">]</span>
+                            <span style="color: var(--text-ghost); font-size: 1.5rem; font-weight: 300;">]</span>
                         </div>
                     </div>
 
@@ -1654,7 +1685,7 @@
                                 <svg class="three-d-svg notranslate" translate="no" id="three-d-svg" viewBox="0 0 500 500">
                                     <defs>
                                         <marker id="arrow-axis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(255, 255, 255, 0.2)" />
+                                            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(var(--ink-rgb), 0.2)" />
                                         </marker>
                                     </defs>
                                     <!-- Axes and geometry will be injected dynamically -->
@@ -1727,11 +1758,11 @@
                     </div>
                     <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                         <button id="run-math-btn" onclick="runVectorMath(false)" style="flex: 1; padding: 0.85rem;">▶ Run All</button>
-                        <button id="step-math-btn" onclick="runVectorMath(true)" style="flex: 1; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);">Step-by-Step</button>
+                        <button id="step-math-btn" onclick="runVectorMath(true)" style="flex: 1; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple));">Step-by-Step</button>
                     </div>
-                    <button id="next-step-btn" onclick="nextVectorStep()" style="width: 100%; margin-top: 0.4rem; padding: 0.75rem; display: none; background: linear-gradient(135deg, #059669, #0891b2);">Next Step →</button>
+                    <button id="next-step-btn" onclick="nextVectorStep()" style="width: 100%; margin-top: 0.4rem; padding: 0.75rem; display: none; background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));">Next Step →</button>
 
-                    <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); min-height: 120px;">
+                    <div style="background: var(--card-bg-alt); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); min-height: 120px;">
                         <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Explanation & Equation:</h4>
                         <div id="vector-narration" style="font-size: 0.95rem; line-height: 1.5;">
                             Select a relationship and click Run...
@@ -1746,7 +1777,7 @@
                                 <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-cyan)" />
                             </marker>
                             <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-red)" />
                             </marker>
                             <marker id="arrow-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                                 <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-purple)" />
@@ -1767,25 +1798,25 @@
 
                         <!-- Math Vector Lines -->
                         <g id="vector-A-group" style="opacity:0">
-                            <line id="vector-A" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-cyan)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-cyan)" style="filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.6));" />
+                            <line id="vector-A" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-cyan)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-cyan)" style="filter: drop-shadow(0 0 4px rgba(14, 116, 144, 0.6));" />
                             <text id="label-A" x="0" y="0" fill="var(--accent-cyan)" font-size="12" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
                         </g>
                         <g id="vector-B-group" style="opacity:0">
-                            <line id="vector-B" x1="0" y1="0" x2="0" y2="0" stroke="#ef4444" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-red)" style="filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.6));" />
-                            <text id="label-B" x="0" y="0" fill="#ef4444" font-size="12" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
+                            <line id="vector-B" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-red)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-red)" style="filter: drop-shadow(0 0 4px rgba(179, 38, 30, 0.6));" />
+                            <text id="label-B" x="0" y="0" fill="var(--accent-red)" font-size="12" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
                         </g>
                         <g id="vector-C-group" style="opacity:0">
-                            <line id="vector-C" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-purple)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-purple)" style="filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.6));" />
+                            <line id="vector-C" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-purple)" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-purple)" style="filter: drop-shadow(0 0 4px rgba(109, 69, 168, 0.6));" />
                             <text id="label-C" x="0" y="0" fill="var(--accent-purple)" font-size="12" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
                         </g>
                         <g id="vector-R-group" style="opacity:0">
-                            <line id="vector-R" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-green)" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-green)" style="filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8));" />
+                            <line id="vector-R" x1="0" y1="0" x2="0" y2="0" stroke="var(--accent-green)" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-green)" style="filter: drop-shadow(0 0 8px rgba(60, 117, 73, 0.8));" />
                             <text id="label-R" x="0" y="0" fill="var(--accent-green)" font-size="14" font-weight="bold" font-family="'Outfit', sans-serif" text-anchor="middle" dominant-baseline="middle"></text>
                         </g>
                         
                         <!-- Dashed Projection Lines -->
-                        <line id="proj-x" x1="0" y1="0" x2="0" y2="0" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="5,5" style="opacity:0" />
-                        <line id="proj-y" x1="0" y1="0" x2="0" y2="0" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="5,5" style="opacity:0" />
+                        <line id="proj-x" x1="0" y1="0" x2="0" y2="0" stroke="rgba(var(--ink-rgb),0.35)" stroke-width="1.5" stroke-dasharray="5,5" style="opacity:0" />
+                        <line id="proj-y" x1="0" y1="0" x2="0" y2="0" stroke="rgba(var(--ink-rgb),0.35)" stroke-width="1.5" stroke-dasharray="5,5" style="opacity:0" />
 
                         <!-- Plotted word dots -->
                         <g id="word-points"></g>
@@ -1826,7 +1857,7 @@
                         <div class="pos-vector-box cyan">
                             <span style="font-size: 1.4rem; font-weight: 700;">"cat"</span>
                         </div>
-                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Word Vector</div>
+                        <div style="font-weight: 600; font-size: 1rem; color: var(--text-primary);">Word Vector</div>
                         <div style="font-size: 0.85rem; color: var(--text-secondary);">Word Meaning</div>
                     </div>
                     
@@ -1836,7 +1867,7 @@
                         <div class="pos-vector-box purple">
                             <span style="font-size: 1.2rem; font-weight: 700;">Pos 2</span>
                         </div>
-                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Position Vector</div>
+                        <div style="font-weight: 600; font-size: 1rem; color: var(--text-primary);">Position Vector</div>
                         <div style="font-size: 0.85rem; color: var(--text-secondary);">Position Tag</div>
                     </div>
                     
@@ -1846,7 +1877,7 @@
                         <div class="pos-vector-box green">
                             <span style="font-size: 0.95rem; font-weight: 700; text-align: center; line-height: 1.25;">"cat"<br>Pos 2</span>
                         </div>
-                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Final Token</div>
+                        <div style="font-weight: 600; font-size: 1rem; color: var(--text-primary);">Final Token</div>
                         <div style="font-size: 0.85rem; color: var(--text-secondary);">Meaning + Order</div>
                     </div>
                 </div>
@@ -1936,7 +1967,7 @@
                         </tbody>
                     </table>
 
-                    <div id="pe-explanation" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-top: 1rem; font-size: 0.95rem;">
+                    <div id="pe-explanation" style="background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-top: 1rem; font-size: 0.95rem;">
                         <!-- Dynamically loaded -->
                     </div>
                 </div>
@@ -2320,11 +2351,11 @@
             }
             
             if (type === 'word') {
-                return `rgba(6, 182, 212, ${0.15 + norm * 0.85})`; // Cyan glow
+                return `rgba(14, 116, 144, ${0.15 + norm * 0.85})`; // Cyan glow
             } else if (type === 'pos') {
-                return `rgba(168, 85, 247, ${0.15 + norm * 0.85})`; // Purple glow
+                return `rgba(109, 69, 168, ${0.15 + norm * 0.85})`; // Purple glow
             } else {
-                return `rgba(16, 185, 129, ${0.15 + norm * 0.85})`; // Green glow
+                return `rgba(60, 117, 73, ${0.15 + norm * 0.85})`; // Green glow
             }
         }
 
@@ -2376,7 +2407,7 @@
 
             if (data.idx === 0 || data.idx === 3) {
                 explanationText += `
-                    <div style="background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    <div style="background: rgba(14, 116, 144, 0.05); border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
                         <strong>🔍 Interesting Observation:</strong> <br>
                         The input sentence contains the word <strong>"${data.word}"</strong> twice (at positions 0 and 3). 
                         Because they have the same meaning, their <strong>Word Vectors (W) are identical</strong>. However, because they are in different locations, their <strong>Position Vectors (P) are different</strong>. 
@@ -2595,11 +2626,11 @@
             const ticks = [-1.0, 1.0];
             ticks.forEach(t => {
                 const ptX = project3D(t, 0, 0);
-                axesGroup.innerHTML += `<line x1="${ptX.x}" y1="${ptX.y - 4}" x2="${ptX.x}" y2="${ptX.y + 4}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />`;
+                axesGroup.innerHTML += `<line x1="${ptX.x}" y1="${ptX.y - 4}" x2="${ptX.x}" y2="${ptX.y + 4}" stroke="rgba(var(--ink-rgb), 0.15)" stroke-width="1" />`;
                 const ptY = project3D(0, t, 0);
-                axesGroup.innerHTML += `<line x1="${ptY.x - 4}" y1="${ptY.y}" x2="${ptY.x + 4}" y2="${ptY.y}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />`;
+                axesGroup.innerHTML += `<line x1="${ptY.x - 4}" y1="${ptY.y}" x2="${ptY.x + 4}" y2="${ptY.y}" stroke="rgba(var(--ink-rgb), 0.15)" stroke-width="1" />`;
                 const ptZ = project3D(0, 0, t);
-                axesGroup.innerHTML += `<line x1="${ptZ.x - 3}" y1="${ptZ.y - 3}" x2="${ptZ.x + 3}" y2="${ptZ.y + 3}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />`;
+                axesGroup.innerHTML += `<line x1="${ptZ.x - 3}" y1="${ptZ.y - 3}" x2="${ptZ.x + 3}" y2="${ptZ.y + 3}" stroke="rgba(var(--ink-rgb), 0.15)" stroke-width="1" />`;
             });
 
             // Axis labels (positive and negative ends)
@@ -2714,9 +2745,9 @@
                 const tr = document.createElement('tr');
                 
                 const getHeatCell = (val, type) => {
-                    const color = val > 0 ? `rgba(6, 182, 212, ${Math.abs(val) * 0.4})` : `rgba(168, 85, 247, ${Math.abs(val) * 0.4})`;
-                    const border = val > 0 ? 'rgba(6, 182, 212, 0.3)' : 'rgba(168, 85, 247, 0.3)';
-                    const textCol = val > 0 ? '#22d3ee' : '#d8b4fe';
+                    const color = val > 0 ? `rgba(14, 116, 144, ${Math.abs(val) * 0.4})` : `rgba(109, 69, 168, ${Math.abs(val) * 0.4})`;
+                    const border = val > 0 ? 'rgba(14, 116, 144, 0.3)' : 'rgba(109, 69, 168, 0.3)';
+                    const textCol = val > 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)';
                     const sign = val > 0 ? '+' : '';
                     return `<td style="text-align: center;"><div class="heatmap-cell" style="background:${color}; border:1px solid ${border}; color:${textCol}; padding:0.4rem 0.2rem;">${sign}${val.toFixed(1)}</div></td>`;
                 };

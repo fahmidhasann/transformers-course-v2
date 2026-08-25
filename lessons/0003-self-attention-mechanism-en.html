@@ -9,15 +9,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-cyan: #06b6d4;
-            --accent-purple: #a855f7;
-            --accent-green: #10b981;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            /* Surfaces */
+            --bg-color:       #FAF6F0;
+            --bg-sunk:        #F2ECE2;
+            --card-bg:        #FFFCF7;
+            --card-bg-alt:    #F5EFE6;
+            --panel-bg:       #FBF6EE;
+            --sidebar-bg:     #FFFCF7;
+
+            /* Lines */
+            --border-color:   #E6DBCB;
+            --border-strong:  #D6C6AF;
+            --border-subtle:  #EFE7DA;
+
+            /* Ink */
+            --text-primary:   #2B2622;
+            --text-body:      #3A342E;
+            --text-secondary: #6E635A;
+            --text-muted:     #756C63;
+            --text-ghost:     #918880;
+            --text-on-accent: #FFFDF9;
+            --ink-rgb:        43, 38, 34;
+
+            /* Accents (retuned for a light ground) */
+            --accent-cyan:    #0E7490;
+            --accent-purple:  #6D45A8;
+            --accent-green:   #3C7549;
+            --accent-orange:  #AA4E07;
+            --accent-pink:    #B03A62;
+            --accent-blue:    #1D5FA8;
+            --accent-red:     #B3261E;
+
+            /* Accent tints */
+            --tint-cyan:      #E4F0F3;
+            --tint-purple:    #EFE9F7;
+            --tint-green:     #E8F1E9;
+            --tint-orange:    #FBEEDC;
+            --tint-pink:      #FAE8EE;
+            --tint-neutral:   #F1E9DD;
+
+            /* Depth */
+            --shadow:         0 1px 2px rgba(90,70,45,.05), 0 6px 20px rgba(90,70,45,.07);
+            --shadow-soft:    0 1px 3px rgba(90,70,45,.06);
+            --ring:           0 0 0 3px rgba(14,116,144,.14);
+            --glow:           var(--ring);
+
+            /* Type */
+            --font-heading:   'Outfit', 'Hind Siliguri', sans-serif;
+            --font-body:      'Hind Siliguri', system-ui, sans-serif;
+            --font-main:      var(--font-body);
         }
 
         * {
@@ -27,20 +67,26 @@
         }
 
         body {
-            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.75;
+            font-size: 1.0625rem;
             padding: 2rem 1rem;
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(196,146,86,.10) 0px, transparent 55%),
+                radial-gradient(at 100% 100%, rgba(122,148,132,.10) 0px, transparent 55%);
+        }
+
+        h1, h2, h3, h4, h5, h6, .badge, .site-nav-brand-name, .sidebar-brand-name {
+            font-family: var(--font-heading);
+            letter-spacing: -0.01em;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
             position: relative;
             overflow-x: clip;
@@ -53,7 +99,7 @@
 
         .badge {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
+            color: var(--text-on-accent);
             padding: 0.3rem 1rem;
             border-radius: 50px;
             font-size: 0.85rem;
@@ -68,9 +114,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
         }
 
         .subtitle {
@@ -85,8 +129,6 @@
             padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
         }
 
         h2 {
@@ -109,7 +151,8 @@
 
         p {
             margin-bottom: 1rem;
-            color: #cbd5e1;
+            line-height: 1.8;
+            color: var(--text-body);
         }
 
         .highlight {
@@ -123,13 +166,13 @@
         }
 
         .tech-term {
-            font-family: 'Outfit', sans-serif;
-            background: rgba(255, 255, 255, 0.08);
+            font-family: var(--font-heading);
+            background: var(--tint-neutral);
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
-            color: #e2e8f0;
+            color: var(--text-primary);
             font-size: 0.95rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
         }
 
         /* Analogy Card Grid */
@@ -142,14 +185,14 @@
         }
 
         .analogy-card {
-            background: rgba(30, 41, 59, 0.5);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(90, 70, 45, .07);
         }
 
         .analogy-card::before {
@@ -163,8 +206,8 @@
         }
 
         .analogy-card:nth-child(1) {
-            background: linear-gradient(180deg, rgba(6, 182, 212, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%);
-            border-color: rgba(6, 182, 212, 0.3);
+            background: linear-gradient(180deg, rgba(14, 116, 144, 0.1) 0%, var(--card-bg-alt) 100%);
+            border-color: rgba(14, 116, 144, 0.3);
         }
         .analogy-card:nth-child(1)::before {
             background: var(--accent-cyan);
@@ -172,17 +215,17 @@
         }
         .analogy-card:nth-child(1):hover {
             border-color: var(--accent-cyan);
-            background: linear-gradient(180deg, rgba(6, 182, 212, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%);
+            background: linear-gradient(180deg, rgba(14, 116, 144, 0.15) 0%, var(--card-bg-alt) 100%);
             transform: translateY(-4px);
         }
         .analogy-card:nth-child(1) .analogy-icon {
             color: var(--accent-cyan);
-            background: rgba(6, 182, 212, 0.15);
+            background: rgba(14, 116, 144, 0.15);
         }
 
         .analogy-card:nth-child(2) {
-            background: linear-gradient(180deg, rgba(168, 85, 247, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%);
-            border-color: rgba(168, 85, 247, 0.3);
+            background: linear-gradient(180deg, rgba(109, 69, 168, 0.1) 0%, var(--card-bg-alt) 100%);
+            border-color: rgba(109, 69, 168, 0.3);
         }
         .analogy-card:nth-child(2)::before {
             background: var(--accent-purple);
@@ -190,17 +233,17 @@
         }
         .analogy-card:nth-child(2):hover {
             border-color: var(--accent-purple);
-            background: linear-gradient(180deg, rgba(168, 85, 247, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%);
+            background: linear-gradient(180deg, rgba(109, 69, 168, 0.15) 0%, var(--card-bg-alt) 100%);
             transform: translateY(-4px);
         }
         .analogy-card:nth-child(2) .analogy-icon {
             color: var(--accent-purple);
-            background: rgba(168, 85, 247, 0.15);
+            background: rgba(109, 69, 168, 0.15);
         }
 
         .analogy-card:nth-child(3) {
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%);
-            border-color: rgba(16, 185, 129, 0.3);
+            background: linear-gradient(180deg, rgba(60, 117, 73, 0.1) 0%, var(--card-bg-alt) 100%);
+            border-color: rgba(60, 117, 73, 0.3);
         }
         .analogy-card:nth-child(3)::before {
             background: var(--accent-green);
@@ -208,12 +251,12 @@
         }
         .analogy-card:nth-child(3):hover {
             border-color: var(--accent-green);
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%);
+            background: linear-gradient(180deg, rgba(60, 117, 73, 0.15) 0%, var(--card-bg-alt) 100%);
             transform: translateY(-4px);
         }
         .analogy-card:nth-child(3) .analogy-icon {
             color: var(--accent-green);
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(60, 117, 73, 0.15);
         }
 
         .analogy-icon {
@@ -238,7 +281,7 @@
         /* Simulator Styles */
         .simulator {
             margin-top: 2rem;
-            background: rgba(15, 23, 42, 0.8);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
@@ -258,7 +301,7 @@
         }
 
         select, input, button {
-            background: rgba(30, 41, 59, 0.9);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.75rem 1rem;
@@ -293,7 +336,7 @@
         /* Interactive Map Area */
         .attention-visualization-container {
             position: relative;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 2.5rem 1rem;
@@ -322,9 +365,9 @@
         .word-node {
             padding: 0.5rem 0.8rem;
             border-radius: 8px;
-            background: rgba(30, 41, 59, 0.8);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
             font-weight: 600;
             user-select: none;
             transition: all 0.2s ease;
@@ -339,25 +382,25 @@
 
         .query-node:hover {
             border-color: var(--accent-cyan);
-            background: rgba(6, 182, 212, 0.15);
+            background: rgba(14, 116, 144, 0.15);
             transform: translateY(-2px);
         }
 
         .query-node.active-query {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(168, 85, 247, 0.25));
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.25), rgba(109, 69, 168, 0.25));
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
-            color: #fff;
+            box-shadow: 0 0 15px rgba(14, 116, 144, 0.4);
+            color: var(--text-primary);
         }
 
         .key-node {
-            background: rgba(15, 23, 42, 0.7);
-            border-color: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg-alt);
+            border-color: rgba(var(--ink-rgb), 0.05);
         }
 
         .key-node.active-key {
             border-color: var(--accent-purple);
-            background: rgba(168, 85, 247, 0.1);
+            background: rgba(109, 69, 168, 0.1);
         }
 
         .attention-svg {
@@ -382,7 +425,7 @@
 
         /* Details Panel */
         .attention-details-panel {
-            background: rgba(30, 41, 59, 0.4);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
@@ -403,7 +446,7 @@
         }
 
         .weight-label {
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
             font-weight: bold;
             width: 100px;
             font-size: 0.9rem;
@@ -411,7 +454,7 @@
 
         .weight-bar-bg {
             flex-grow: 1;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             height: 10px;
             border-radius: 5px;
             overflow: hidden;
@@ -425,7 +468,7 @@
         }
 
         .weight-val {
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
             font-size: 0.85rem;
             width: 45px;
             text-align: right;
@@ -440,7 +483,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-secondary);
-            background: rgba(15, 23, 42, 0.9);
+            background: var(--card-bg-alt);
             padding: 0.1rem 0.5rem;
             border-radius: 4px;
             border: 1px solid var(--border-color);
@@ -469,7 +512,7 @@
 
         .quiz-option {
             display: block;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(var(--ink-rgb), 0.03);
             border: 1px solid var(--border-color);
             padding: 1rem;
             border-radius: 8px;
@@ -480,18 +523,18 @@
         }
 
         .quiz-option:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(var(--ink-rgb), 0.08);
             border-color: var(--accent-cyan);
         }
 
         .quiz-option.correct {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(60, 117, 73, 0.15);
             border-color: var(--accent-green);
         }
 
         .quiz-option.incorrect {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: #ef4444;
+            background: rgba(179, 38, 30, 0.15);
+            border-color: var(--accent-red);
         }
 
         .quiz-feedback {
@@ -503,16 +546,16 @@
         }
 
         .quiz-feedback.success {
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(60, 117, 73, 0.1);
             color: var(--accent-green);
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(60, 117, 73, 0.2);
             display: block;
         }
 
         .quiz-feedback.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(179, 38, 30, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(179, 38, 30, 0.2);
             display: block;
         }
 
@@ -631,11 +674,8 @@
             button {
                 min-height: 44px;
             }
-            /* backdrop-filter blur is GPU-expensive on phones */
             .card,
             .simulator {
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
             }
         }
 
@@ -656,10 +696,8 @@
             z-index: 500;
             margin: -2rem -1rem 2.5rem;
             background: var(--card-bg);
-            -webkit-backdrop-filter: blur(14px);
-            backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 4px 24px rgba(90, 70, 45, .07);
         }
         .site-nav-inner {
             position: relative;
@@ -686,7 +724,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.15rem;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 15px rgba(109, 69, 168, 0.4);
         }
         .site-nav-brand-name {
             font-weight: 700;
@@ -698,7 +736,7 @@
         .site-nav-toggle {
             display: none;
             margin-left: auto;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             font-size: 1.3rem;
@@ -733,7 +771,7 @@
             white-space: nowrap;
             transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
-        .site-nav-link:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.07); }
+        .site-nav-link:hover { color: var(--text-primary); background: rgba(var(--ink-rgb), 0.07); }
         .site-nav-caret { font-size: 0.7em; opacity: 0.85; }
         /* Syllabus dropdown */
         .site-nav-dropdown { position: relative; }
@@ -749,7 +787,7 @@
             background: var(--bg-color);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 18px 44px rgba(90, 70, 45, .07);
             opacity: 0;
             visibility: hidden;
             transform: translateY(-6px);
@@ -770,11 +808,11 @@
             line-height: 1.35;
             border: 1px solid transparent;
         }
-        .site-nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.06); color: var(--text-primary); }
+        .site-nav-dropdown-menu a:hover { background: rgba(var(--ink-rgb), 0.06); color: var(--text-primary); }
         .site-nav-dropdown-menu a.active {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(109, 69, 168, 0.15));
             color: var(--text-primary);
-            border-color: rgba(6, 182, 212, 0.3);
+            border-color: rgba(14, 116, 144, 0.3);
         }
         .site-nav-dropdown-menu .num {
             color: var(--accent-cyan);
@@ -794,7 +832,7 @@
             margin-left: 0.15rem;
         }
         .site-nav-icon-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             height: 40px;
@@ -810,7 +848,7 @@
             white-space: nowrap;
             transition: background 0.25s ease, border-color 0.25s ease;
         }
-        .site-nav-icon-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+        .site-nav-icon-btn:hover { background: rgba(var(--ink-rgb), 0.1); border-color: var(--text-ghost); }
         /* Mobile */
         @media (max-width: 900px) {
             .site-nav-toggle { display: inline-flex; }
@@ -826,7 +864,7 @@
                 padding: 1rem 1.25rem 1.25rem;
                 background: var(--bg-color);
                 border-bottom: 1px solid var(--border-color);
-                box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+                box-shadow: 0 22px 44px rgba(90, 70, 45, .07);
                 display: none;
             }
             .site-nav-menu.open { display: flex; }
@@ -840,7 +878,7 @@
                 min-width: 0;
                 max-width: 100%;
                 box-shadow: none;
-                background: rgba(255, 255, 255, 0.03);
+                background: rgba(var(--ink-rgb), 0.03);
                 margin-top: 0.25rem;
             }
             .site-nav-dropdown.open .site-nav-dropdown-menu { display: block; }
@@ -862,7 +900,7 @@
         /* Step Worked-Example (expandable) */
         .step-example {
             margin-top: 0.9rem;
-            border-top: 1px dashed rgba(255, 255, 255, 0.12);
+            border-top: 1px dashed rgba(var(--ink-rgb), 0.12);
             padding-top: 0.6rem;
         }
         .step-example > summary {
@@ -889,7 +927,7 @@
         .step-example .example-body {
             margin-top: 0.7rem;
             padding: 0.9rem 1rem;
-            background: rgba(0, 0, 0, 0.25);
+            background: var(--card-bg-alt);
             border-radius: 8px;
             font-size: 0.9rem;
             line-height: 1.7;
@@ -899,13 +937,13 @@
         .step-example .calc {
             display: block;
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(var(--ink-rgb), 0.05);
+            border: 1px solid rgba(var(--ink-rgb), 0.06);
             border-radius: 6px;
             padding: 0.6rem 0.8rem;
             margin: 0.55rem 0;
             font-size: 0.82rem;
-            color: #e2e8f0;
+            color: var(--text-secondary);
             white-space: pre-wrap;
             line-height: 1.8;
         }
@@ -915,45 +953,45 @@
     width: 100%; max-width: 420px; height: auto; display: block;
     margin: 0.5rem auto 1rem; overflow: visible;
 }
-.tb-map-svg text { text-anchor: middle; font-family: 'Outfit', sans-serif; font-size: 12px; }
+.tb-map-svg text { text-anchor: middle; font-family: var(--font-heading); font-size: 12px; }
 .tb-map-svg .tb-sub { font-size: 9.5px; }
 .tb-node rect, .tb-node circle {
-    fill: rgba(15, 23, 42, 0.75); stroke: var(--accent-purple); stroke-width: 1.5;
+    fill: var(--card-bg-alt); stroke: var(--accent-purple); stroke-width: 1.5;
     transition: all 0.35s ease;
 }
 .tb-node text { fill: var(--text-secondary); transition: all 0.35s ease; }
 .tb-node.active rect, .tb-node.active circle {
-    fill: rgba(6, 182, 212, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
-    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.55));
+    fill: rgba(14, 116, 144, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px rgba(14, 116, 144, 0.55));
 }
 .tb-node.active text { fill: var(--text-primary); font-weight: 600; }
 .tb-node.dim { opacity: 0.3; }
 .tb-block .tb-block-outline {
-    fill: none; stroke: rgba(168, 85, 247, 0.45); stroke-width: 1.5;
+    fill: none; stroke: rgba(109, 69, 168, 0.45); stroke-width: 1.5;
     stroke-dasharray: 6 4; transition: all 0.35s ease;
 }
 .tb-block .tb-block-label { fill: var(--accent-purple); font-size: 11px; font-weight: 600; transition: all 0.35s ease; }
-.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.5)); }
+.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(14, 116, 144, 0.5)); }
 .tb-block.active .tb-block-label { fill: var(--accent-cyan); }
 .tb-block.dim { opacity: 0.3; }
-.tb-flow { fill: none; stroke: #64748b; stroke-width: 1.6; }
+.tb-flow { fill: none; stroke: var(--border-strong); stroke-width: 1.6; }
 .tb-skip {
-    fill: none; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4 3;
+    fill: none; stroke: var(--border-strong); stroke-width: 1.5; stroke-dasharray: 4 3;
     transition: all 0.35s ease;
 }
-.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.55)); }
+.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(60, 117, 73, 0.55)); }
 .tb-skip.dim { opacity: 0.28; }
 .tb-map-caption { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0; }
 .tb-map-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); margin: 0.2rem 0 1rem; }
 .tb-map-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
 .tb-legend-dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-.tb-legend-active { background: rgba(6, 182, 212, 0.5); box-shadow: 0 0 6px rgba(6, 182, 212, 0.7); border: 1px solid var(--accent-cyan); }
-.tb-legend-rest { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--accent-purple); opacity: 0.45; }
+.tb-legend-active { background: rgba(14, 116, 144, 0.5); box-shadow: 0 0 6px rgba(14, 116, 144, 0.7); border: 1px solid var(--accent-cyan); }
+.tb-legend-rest { background: var(--card-bg-alt); border: 1px solid var(--accent-purple); opacity: 0.45; }
 
 .tb-main-flow {
     stroke-dasharray: 8 6;
     animation: flow-up 1s linear infinite;
-    filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
+    filter: drop-shadow(0 0 4px rgba(14, 116, 144, 0.4));
 }
 @keyframes flow-up {
     to { stroke-dashoffset: -14; }
@@ -1004,7 +1042,7 @@
             <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 1.5 L8 5 L0 8.5 z" fill="#64748b"/>
+      <path d="M0 1.5 L8 5 L0 8.5 z" fill="var(--text-muted)"/>
     </marker>
     <linearGradient id="flow-gradient" x1="0%" y1="100%" x2="0%" y2="0%">
       <stop offset="0%" stop-color="var(--accent-purple)" />
@@ -1094,48 +1132,48 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin: 1.5rem 0;">
                 
                 <!-- Sentence 1 Card -->
-                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.6rem;">
+                <div style="background: var(--card-bg-alt); border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 20px rgba(90, 70, 45, .07);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(var(--ink-rgb),0.08); padding-bottom: 0.6rem;">
                         <span style="font-weight: 700; color: var(--accent-cyan); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Sentence 1</span>
-                        <span style="background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;">Financial Context</span>
+                        <span style="background: rgba(14, 116, 144, 0.15); color: var(--accent-cyan); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;">Financial Context</span>
                     </div>
                     
-                    <div style="font-size: 1.05rem; background: rgba(30, 41, 59, 0.5); padding: 0.8rem 1rem; border-radius: 8px; line-height: 1.6;">
-                        "I deposited my <span style="background: rgba(6, 182, 212, 0.25); color: #38bdf8; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(6, 182, 212, 0.4); font-weight: 600;">money 💰</span> at the <span style="background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.4); font-weight: 700;">bank</span>."
+                    <div style="font-size: 1.05rem; background: var(--card-bg-alt); padding: 0.8rem 1rem; border-radius: 8px; line-height: 1.6;">
+                        "I deposited my <span style="background: rgba(14, 116, 144, 0.25); color: var(--accent-cyan); padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(14, 116, 144, 0.4); font-weight: 600;">money 💰</span> at the <span style="background: rgba(109, 69, 168, 0.25); color: var(--accent-purple); padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(109, 69, 168, 0.4); font-weight: 700;">bank</span>."
                     </div>
 
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.85rem; background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 6px;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.85rem; background: rgba(var(--ink-rgb),0.02); padding: 0.5rem; border-radius: 6px;">
                         <span>Context Keyword: <strong>money</strong></span>
                         <span style="color: var(--accent-cyan);">➔</span>
                         <span>Resolves <strong>bank</strong></span>
                     </div>
 
-                    <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid var(--accent-cyan); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
+                    <div style="background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(109, 69, 168, 0.15)); border: 1px solid var(--accent-cyan); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
                         <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">Resolved Meaning</span>
-                        <strong style="color: #f8fafc; font-size: 1rem; margin-top: 0.2rem; display: block;">🏦 Financial Institution</strong>
+                        <strong style="color: var(--text-primary); font-size: 1rem; margin-top: 0.2rem; display: block;">🏦 Financial Institution</strong>
                     </div>
                 </div>
 
                 <!-- Sentence 2 Card -->
-                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.6rem;">
+                <div style="background: var(--card-bg-alt); border: 1px solid rgba(60, 117, 73, 0.3); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 20px rgba(90, 70, 45, .07);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(var(--ink-rgb),0.08); padding-bottom: 0.6rem;">
                         <span style="font-weight: 700; color: var(--accent-green); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Sentence 2</span>
-                        <span style="background: rgba(16, 185, 129, 0.15); color: var(--accent-green); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;">Natural Context</span>
+                        <span style="background: rgba(60, 117, 73, 0.15); color: var(--accent-green); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600;">Natural Context</span>
                     </div>
                     
-                    <div style="font-size: 1.05rem; background: rgba(30, 41, 59, 0.5); padding: 0.8rem 1rem; border-radius: 8px; line-height: 1.6;">
-                        "We sat on the muddy <span style="background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.4); font-weight: 700;">bank</span> of the <span style="background: rgba(16, 185, 129, 0.25); color: #34d399; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 600;">river 🌊</span>."
+                    <div style="font-size: 1.05rem; background: var(--card-bg-alt); padding: 0.8rem 1rem; border-radius: 8px; line-height: 1.6;">
+                        "We sat on the muddy <span style="background: rgba(109, 69, 168, 0.25); color: var(--accent-purple); padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(109, 69, 168, 0.4); font-weight: 700;">bank</span> of the <span style="background: rgba(60, 117, 73, 0.25); color: var(--accent-green); padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid rgba(60, 117, 73, 0.4); font-weight: 600;">river 🌊</span>."
                     </div>
 
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.85rem; background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 6px;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.85rem; background: rgba(var(--ink-rgb),0.02); padding: 0.5rem; border-radius: 6px;">
                         <span>Context Keyword: <strong>river</strong></span>
                         <span style="color: var(--accent-green);">➔</span>
                         <span>Resolves <strong>bank</strong></span>
                     </div>
 
-                    <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid var(--accent-green); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
+                    <div style="background: linear-gradient(135deg, rgba(60, 117, 73, 0.15), rgba(109, 69, 168, 0.15)); border: 1px solid var(--accent-green); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
                         <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">Resolved Meaning</span>
-                        <strong style="color: #f8fafc; font-size: 1rem; margin-top: 0.2rem; display: block;">🌊 Riverbank</strong>
+                        <strong style="color: var(--text-primary); font-size: 1rem; margin-top: 0.2rem; display: block;">🌊 Riverbank</strong>
                     </div>
                 </div>
 
@@ -1154,37 +1192,37 @@
                 <div class="analogy-card">
                     <div class="analogy-icon">Q</div>
                     <div class="analogy-title">Query (What I want)</div>
-                    <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0;">This is what a word is looking for. <br><br><strong>Example:</strong> You ask the librarian, <em>"I need a book about AI."</em></p>
+                    <p style="font-size: 0.9rem; color: var(--text-body); margin: 0;">This is what a word is looking for. <br><br><strong>Example:</strong> You ask the librarian, <em>"I need a book about AI."</em></p>
                 </div>
                 <div class="analogy-card">
                     <div class="analogy-icon">K</div>
                     <div class="analogy-title">Key (What I have)</div>
-                    <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0;">This is the label or title of a word. <br><br><strong>Example:</strong> The title printed on the spine of the book.</p>
+                    <p style="font-size: 0.9rem; color: var(--text-body); margin: 0;">This is the label or title of a word. <br><br><strong>Example:</strong> The title printed on the spine of the book.</p>
                 </div>
                 <div class="analogy-card">
                     <div class="analogy-icon">V</div>
                     <div class="analogy-title">Value (The actual content)</div>
-                    <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0;">This is the actual meaning or content of the word. <br><br><strong>Example:</strong> The pages inside the book that you actually read.</p>
+                    <p style="font-size: 0.9rem; color: var(--text-body); margin: 0;">This is the actual meaning or content of the word. <br><br><strong>Example:</strong> The pages inside the book that you actually read.</p>
                 </div>
             </div>
 
             <!-- Concrete Example -->
-            <div style="background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(168,85,247,0.08)); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(34,211,238,0.25); margin-top: 1.5rem;">
+            <div style="background: linear-gradient(135deg, rgba(14, 116, 144,0.08), rgba(109, 69, 168,0.08)); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(14, 116, 144,0.25); margin-top: 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
                     <strong style="color: var(--accent-cyan); font-size: 1.1rem;">Let's See a Real Example</strong>
                 </div>
                 <p style="margin: 0 0 1rem 0;">Suppose we have this sentence:</p>
-                <p style="text-align: center; font-size: 1.1rem; font-style: italic; color: #f1f5f9; background: rgba(15,23,42,0.5); padding: 0.8rem 1rem; border-radius: 8px; margin: 0 0 1.2rem 0;">"The cat drank the milk because <span style="color: var(--accent-cyan); font-weight: bold;">it</span> was hungry."</p>
+                <p style="text-align: center; font-size: 1.1rem; font-style: italic; color: var(--text-primary); background: var(--card-bg-alt); padding: 0.8rem 1rem; border-radius: 8px; margin: 0 0 1.2rem 0;">"The cat drank the milk because <span style="color: var(--accent-cyan); font-weight: bold;">it</span> was hungry."</p>
                 <p style="margin: 0 0 1rem 0;">What does <span class="tech-term">it</span> refer to? The <strong>cat</strong> or the <strong>milk</strong>? Here's how Self-Attention solves it:</p>
 
                 <div style="display: flex; flex-direction: column; gap: 0.7rem;">
-                    <div style="background: rgba(15, 23, 42, 0.4); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
+                    <div style="background: var(--card-bg-alt); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
                         <span style="font-size: 0.95rem;"><strong>Query:</strong> The word "it" asks — <em>"Who is hungry?"</em></span>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.4); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-purple);">
+                    <div style="background: var(--card-bg-alt); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-purple);">
                         <span style="font-size: 0.95rem;"><strong>Key:</strong> We check the labels of all other words. The word "cat" has a label that matches living things that get hungry.</span>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.4); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
+                    <div style="background: var(--card-bg-alt); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
                         <span style="font-size: 0.95rem;"><strong>Value:</strong> Because there's a strong match, "it" absorbs the meaning (Value) of "cat". The mathematical relationship <strong>it = cat</strong> is now established in the model!</span>
                     </div>
                 </div>
@@ -1197,101 +1235,101 @@
             <p>Behind the scenes, the Self-Attention mechanism uses a 4-step math process to mix words together:</p>
             
             <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
-                <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
+                <div style="background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">Step 1: The Matchmaker (Dot Product)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The mechanism compares the Query of one word against the Keys of all other words to see how well they match. This creates a "compatibility score."</p>
-                    <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
+                    <div style="background: rgba(14, 116, 144, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
                         <strong>Example:</strong> For the word <strong>"it"</strong>, the Query asks, <em>"What am I referring to?"</em>. It checks the other words (Keys) in the sentence "The cat drank the milk because it was hungry." Words like "cat" and "milk" will get a high match score.
                     </div>
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: var(--font-heading);">
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                            <div style="display: flex; align-items: center; gap: 0.8rem; background: rgba(30, 41, 59, 0.6); padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
-                                <div style="background: rgba(6, 182, 212, 0.15); border: 1px solid var(--accent-cyan); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary);">Q: "it"</div>
+                            <div style="display: flex; align-items: center; gap: 0.8rem; background: var(--card-bg-alt); padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05);">
+                                <div style="background: rgba(14, 116, 144, 0.15); border: 1px solid var(--accent-cyan); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary);">Q: "it"</div>
                                 <div style="color: var(--text-secondary);">&times;</div>
-                                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600;">K: "cat"</div>
+                                <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600;">K: "cat"</div>
                                 <div style="color: var(--text-secondary);">&#8594;</div>
                                 <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-cyan);">Score: 50</div>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 0.8rem; background: rgba(30, 41, 59, 0.6); padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
-                                <div style="background: rgba(6, 182, 212, 0.15); border: 1px solid var(--accent-cyan); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary);">Q: "it"</div>
+                            <div style="display: flex; align-items: center; gap: 0.8rem; background: var(--card-bg-alt); padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05);">
+                                <div style="background: rgba(14, 116, 144, 0.15); border: 1px solid var(--accent-cyan); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary);">Q: "it"</div>
                                 <div style="color: var(--text-secondary);">&times;</div>
-                                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600;">K: "milk"</div>
+                                <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600;">K: "milk"</div>
                                 <div style="color: var(--text-secondary);">&#8594;</div>
                                 <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-purple);">Score: 40</div>
                             </div>
                         </div>
                     </div>
-                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
                         <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.3rem;">📐 Mathematical Explanation (Dot Product):</strong>
                         <p style="margin: 0; color: var(--text-secondary);">This comparison is calculated via a <strong>Dot Product</strong>. The Query (Q) vector of the target word is multiplied with the Key (K) vector of every other word. A higher dot product result signifies greater semantic alignment!</p>
                     </div>
                 </div>
 
-                <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-purple);">
+                <div style="background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-purple);">
                     <strong style="color: var(--accent-purple);">Step 2: Shrinking the Scores (Scaling)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Sometimes the match scores get too large and break the math later on. To fix this, the mechanism scales all the scores down.</p>
-                    <div style="background: rgba(168, 85, 247, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
+                    <div style="background: rgba(109, 69, 168, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
                         <strong>Example:</strong> Suppose "cat" gets a score of 50, and "milk" gets 40. These numbers are too large and might break the next math step. The model scales them down (e.g., to 5.0 and 4.0) to keep things stable.
                     </div>
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
-                        <div style="display: flex; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: var(--font-heading);">
+                        <div style="display: flex; align-items: center; gap: 1rem; background: var(--card-bg-alt); padding: 1rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05);">
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                <div style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">50</div>
-                                <div style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">40</div>
+                                <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">50</div>
+                                <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">40</div>
                             </div>
                             <div style="display: flex; flex-direction: column; align-items: center; color: var(--text-secondary);">
                                 <div style="font-size: 1.2rem;">&#8594;</div>
                                 <div style="font-size: 0.8rem;">&divide; &radic;d<sub>k</sub></div>
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: #fff; text-align: center;">5.0</div>
-                                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: #fff; text-align: center;">4.0</div>
+                                <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary); text-align: center;">5.0</div>
+                                <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary); text-align: center;">4.0</div>
                             </div>
                         </div>
                     </div>
-                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
                         <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.3rem;">📐 Mathematical Explanation (Scaling Trick):</strong>
                         <p style="margin: 0; color: var(--text-secondary);">To maintain mathematical stability, large dot product values are scaled down by dividing by <strong>&radic;d<sub>k</sub></strong> (the square root of the Key vector dimension). This prevents vanishing gradients during Softmax computation.</p>
                     </div>
                 </div>
 
-                <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
+                <div style="background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">Step 3: Turning Scores into Percentages (Softmax)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The mechanism converts the scaled scores into percentages that add up to 100%. This tells the word exactly how much attention to pay to every other word.</p>
-                    <div style="background: rgba(6, 182, 212, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
+                    <div style="background: rgba(14, 116, 144, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-cyan);">
                         <strong>Example:</strong> Now the mechanism turns the scaled scores into percentages. The word "it" might pay 80% attention to "cat", 15% to "milk", and 5% to other words. The total is always exactly 100%.
                     </div>
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
-                        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
-                            <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; background: rgba(30, 41, 59, 0.6); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); width: 100%; max-width: 500px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: var(--font-heading);">
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: var(--font-heading);">
+                            <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05); width: 100%; max-width: 500px;">
                                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <div style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">5.0</div>
-                                    <div style="background: rgba(15, 23, 42, 0.8); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">4.0</div>
+                                    <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">5.0</div>
+                                    <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">4.0</div>
                                 </div>
                                 
-                                <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem 1rem; border-radius: 8px; font-weight: 700; color: var(--accent-cyan); text-align: center;">
+                                <div style="background: rgba(14, 116, 144, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem 1rem; border-radius: 8px; font-weight: 700; color: var(--accent-cyan); text-align: center;">
                                     Softmax
                                 </div>
                                 
                                 <div style="display: flex; flex-direction: column; gap: 0.8rem; flex-grow: 1;">
                                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                                         <div style="font-weight: 700; width: 45px; text-align: right; color: var(--accent-cyan);">80%</div>
-                                        <div style="flex-grow: 1; height: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden;">
+                                        <div style="flex-grow: 1; height: 12px; background: rgba(var(--ink-rgb),0.1); border-radius: 6px; overflow: hidden;">
                                             <div style="width: 80%; height: 100%; background: var(--accent-cyan);"></div>
                                         </div>
                                         <div style="font-size: 0.8rem; color: var(--text-secondary); width: 35px;">cat</div>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                                         <div style="font-weight: 700; width: 45px; text-align: right; color: var(--accent-purple);">15%</div>
-                                        <div style="flex-grow: 1; height: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden;">
+                                        <div style="flex-grow: 1; height: 12px; background: rgba(var(--ink-rgb),0.1); border-radius: 6px; overflow: hidden;">
                                             <div style="width: 15%; height: 100%; background: var(--accent-purple);"></div>
                                         </div>
                                         <div style="font-size: 0.8rem; color: var(--text-secondary); width: 35px;">milk</div>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                        <div style="font-weight: 700; width: 45px; text-align: right; color: #64748b;">5%</div>
-                                        <div style="flex-grow: 1; height: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden;">
-                                            <div style="width: 5%; height: 100%; background: #64748b;"></div>
+                                        <div style="font-weight: 700; width: 45px; text-align: right; color: var(--text-muted);">5%</div>
+                                        <div style="flex-grow: 1; height: 12px; background: rgba(var(--ink-rgb),0.1); border-radius: 6px; overflow: hidden;">
+                                            <div style="width: 5%; height: 100%; background: var(--text-muted);"></div>
                                         </div>
                                         <div style="font-size: 0.8rem; color: var(--text-secondary); width: 35px;">...</div>
                                     </div>
@@ -1299,27 +1337,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                    <div class="note-card" style="margin-top: 0.8rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;">
                         <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.3rem;">📐 Mathematical Explanation (Softmax Output):</strong>
                         <p style="margin: 0; color: var(--text-secondary);">The scaled scores are passed through a <strong>Softmax</strong> function. Softmax converts raw scores into probability values between 0 and 1 that sum to 100%, producing the final <strong>Attention Weights</strong>.</p>
                     </div>
                 </div>
 
-                <div style="background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-green);">
+                <div style="background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-green);">
                     <strong style="color: var(--accent-green);">Step 4: Combining Meanings (Weighted Sum)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Finally, the Self-Attention mechanism gathers the "Values" (meanings) of the other words, taking a lot from words with high percentages and very little from words with low percentages. It mixes them all together into a new, context-rich super-word!</p>
-                    <div style="background: rgba(16, 185, 129, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
+                    <div style="background: rgba(60, 117, 73, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
                         <strong>Example:</strong> To build the final meaning for <strong>"it"</strong>, the mechanism takes a large piece (80%) of the "cat" Value, and a small piece (15%) of the "milk" Value. Because the sentence mentioned "hungry", the mathematical calculation resolves "it" to the cat! The word "it" now contains the context of a hungry cat.
                     </div>
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 1.5rem 0; font-family: 'Outfit', sans-serif;">
-                        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; background: rgba(30, 41, 59, 0.6); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
-                            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); padding: 0.6rem 1rem; border-radius: 8px;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 1.5rem 0; font-family: var(--font-heading);">
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(60, 117, 73, 0.1); border: 1px solid var(--accent-green); padding: 0.6rem 1rem; border-radius: 8px;">
                                 <div style="font-weight: 700; color: var(--accent-green);">80%</div>
                                 <div style="color: var(--text-secondary);">&times;</div>
                                 <div style="font-weight: 600;">V: "cat"</div>
                             </div>
                             <div style="font-size: 1.5rem; color: var(--text-secondary); font-weight: 300;">+</div>
-                            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); padding: 0.6rem 1rem; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(60, 117, 73, 0.1); border: 1px solid var(--accent-green); padding: 0.6rem 1rem; border-radius: 8px;">
                                 <div style="font-weight: 700; color: var(--accent-green);">15%</div>
                                 <div style="color: var(--text-secondary);">&times;</div>
                                 <div style="font-weight: 600;">V: "milk"</div>
@@ -1327,7 +1365,7 @@
                             <div style="font-size: 1.5rem; color: var(--text-secondary); font-weight: 300;">+ ...</div>
                         </div>
                         <div style="color: var(--text-secondary); font-size: 1.2rem;">&#8595;</div>
-                        <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 185, 129, 0.2)); border: 1px solid var(--accent-cyan); padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);">
+                        <div style="background: linear-gradient(135deg, rgba(14, 116, 144, 0.2), rgba(60, 117, 73, 0.2)); border: 1px solid var(--accent-cyan); padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 0 15px rgba(14, 116, 144, 0.3);">
                             New Context: "it" (Hungry Cat)
                         </div>
                     </div>
@@ -1365,7 +1403,7 @@
                 <!-- Explanation Panel -->
                 <div class="attention-details-panel" id="details-panel" style="display: none;">
                     <h3 id="details-title" style="color: var(--accent-cyan); margin-top: 0; margin-bottom: 0.5rem; font-size: 1.1rem;"></h3>
-                    <p id="details-text" style="font-size: 0.95rem; color: #cbd5e1; margin-bottom: 1rem;"></p>
+                    <p id="details-text" style="font-size: 0.95rem; color: var(--text-body); margin-bottom: 1rem;"></p>
                     
                     <div class="weight-bars-list" id="weight-bars-list"></div>
                 </div>
@@ -1731,8 +1769,8 @@
                 path.setAttribute('fill', 'none');
                 
                 const strokeColor = weight > 0.35 
-                    ? `rgba(6, 182, 212, ${0.2 + weight * 0.8})` // Cyan
-                    : `rgba(168, 85, 247, ${0.1 + weight * 0.7})`; // Purple
+                    ? `rgba(14, 116, 144, ${0.2 + weight * 0.8})` // Cyan
+                    : `rgba(109, 69, 168, ${0.1 + weight * 0.7})`; // Purple
                 
                 const strokeWidth = 1 + weight * 9;
                 

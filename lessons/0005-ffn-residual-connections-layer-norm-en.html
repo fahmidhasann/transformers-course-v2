@@ -9,15 +9,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-cyan: #06b6d4;
-            --accent-purple: #a855f7;
-            --accent-green: #10b981;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            /* Surfaces */
+            --bg-color:       #FAF6F0;
+            --bg-sunk:        #F2ECE2;
+            --card-bg:        #FFFCF7;
+            --card-bg-alt:    #F5EFE6;
+            --panel-bg:       #FBF6EE;
+            --sidebar-bg:     #FFFCF7;
+
+            /* Lines */
+            --border-color:   #E6DBCB;
+            --border-strong:  #D6C6AF;
+            --border-subtle:  #EFE7DA;
+
+            /* Ink */
+            --text-primary:   #2B2622;
+            --text-body:      #3A342E;
+            --text-secondary: #6E635A;
+            --text-muted:     #756C63;
+            --text-ghost:     #918880;
+            --text-on-accent: #FFFDF9;
+            --ink-rgb:        43, 38, 34;
+
+            /* Accents (retuned for a light ground) */
+            --accent-cyan:    #0E7490;
+            --accent-purple:  #6D45A8;
+            --accent-green:   #3C7549;
+            --accent-orange:  #AA4E07;
+            --accent-pink:    #B03A62;
+            --accent-blue:    #1D5FA8;
+            --accent-red:     #B3261E;
+
+            /* Accent tints */
+            --tint-cyan:      #E4F0F3;
+            --tint-purple:    #EFE9F7;
+            --tint-green:     #E8F1E9;
+            --tint-orange:    #FBEEDC;
+            --tint-pink:      #FAE8EE;
+            --tint-neutral:   #F1E9DD;
+
+            /* Depth */
+            --shadow:         0 1px 2px rgba(90,70,45,.05), 0 6px 20px rgba(90,70,45,.07);
+            --shadow-soft:    0 1px 3px rgba(90,70,45,.06);
+            --ring:           0 0 0 3px rgba(14,116,144,.14);
+            --glow:           var(--ring);
+
+            /* Type */
+            --font-heading:   'Outfit', 'Hind Siliguri', sans-serif;
+            --font-body:      'Hind Siliguri', system-ui, sans-serif;
+            --font-main:      var(--font-body);
         }
 
         * {
@@ -27,20 +67,26 @@
         }
 
         body {
-            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.75;
+            font-size: 1.0625rem;
             padding: 2rem 1rem;
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(196,146,86,.10) 0px, transparent 55%),
+                radial-gradient(at 100% 100%, rgba(122,148,132,.10) 0px, transparent 55%);
+        }
+
+        h1, h2, h3, h4, h5, h6, .badge, .site-nav-brand-name, .sidebar-brand-name {
+            font-family: var(--font-heading);
+            letter-spacing: -0.01em;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
             position: relative;
             overflow-x: clip;
@@ -53,7 +99,7 @@
 
         .badge {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
+            color: var(--text-on-accent);
             padding: 0.3rem 1rem;
             border-radius: 50px;
             font-size: 0.85rem;
@@ -68,9 +114,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
         }
 
         .subtitle {
@@ -85,8 +129,6 @@
             padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
         }
 
         h2 {
@@ -102,7 +144,8 @@
 
         p {
             margin-bottom: 1.2rem;
-            color: #cbd5e1;
+            line-height: 1.8;
+            color: var(--text-body);
             font-size: 1.05rem;
         }
 
@@ -112,17 +155,17 @@
         }
 
         .tech-term {
-            font-family: 'Outfit', sans-serif;
-            background: rgba(255, 255, 255, 0.08);
+            font-family: var(--font-heading);
+            background: var(--tint-neutral);
             padding: 0.15rem 0.4rem;
             border-radius: 4px;
-            color: #e2e8f0;
+            color: var(--text-primary);
             font-size: 0.95rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
         }
 
         .math-block {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--card-bg-alt);
             border-left: 4px solid var(--accent-cyan);
             padding: 1.2rem;
             border-radius: 0 12px 12px 0;
@@ -132,7 +175,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #f8fafc;
+            color: var(--text-primary);
             overflow-x: auto;
         }
 
@@ -157,7 +200,7 @@
         }
 
         .control-panel {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.25rem;
@@ -188,8 +231,8 @@
         }
 
         .sim-tip {
-            background: rgba(56, 189, 248, 0.07);
-            border: 1px solid rgba(56, 189, 248, 0.22);
+            background: rgba(14, 116, 144, 0.07);
+            border: 1px solid rgba(14, 116, 144, 0.22);
             border-radius: 8px;
             padding: 0.7rem 0.9rem;
             font-size: 0.88rem;
@@ -200,7 +243,7 @@
 
         .toggle-switch {
             display: flex;
-            background: rgba(30, 41, 59, 0.8);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 2px;
@@ -221,13 +264,13 @@
 
         .toggle-switch button.active {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
+            color: var(--text-on-accent);
         }
 
         .btn-run {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
             border: none;
-            color: white;
+            color: var(--text-on-accent);
             padding: 0.75rem 1rem;
             border-radius: 8px;
             font-weight: 700;
@@ -238,7 +281,7 @@
         }
 
         .btn-run-backward {
-            background: linear-gradient(135deg, var(--accent-green), #059669);
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-green));
         }
 
         .btn-run:hover, .btn-run-backward:hover {
@@ -251,7 +294,7 @@
         }
 
         .sim-graph-card {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1rem;
@@ -263,7 +306,7 @@
 
         .explanation-panel {
             grid-column: 1 / -1;
-            background: rgba(30, 41, 59, 0.4);
+            background: var(--card-bg-alt);
             border: 1px dashed var(--border-color);
             border-radius: 12px;
             padding: 1.25rem;
@@ -271,7 +314,7 @@
 
         /* SVG Graph Styling */
         .graph-line {
-            stroke: #475569;
+            stroke: var(--border-strong);
             stroke-width: 3;
             fill: none;
             transition: stroke 0.3s, stroke-width 0.3s;
@@ -288,20 +331,20 @@
         }
 
         .graph-node {
-            fill: #1e293b;
-            stroke: #475569;
+            fill: var(--card-bg-alt);
+            stroke: var(--border-strong);
             stroke-width: 2;
             transition: all 0.3s;
         }
 
         .graph-node.active {
             stroke: var(--accent-cyan);
-            fill: rgba(6, 182, 212, 0.1);
+            fill: rgba(14, 116, 144, 0.1);
         }
 
         .graph-node.active-ln {
             stroke: var(--accent-purple);
-            fill: rgba(168, 85, 247, 0.1);
+            fill: rgba(109, 69, 168, 0.1);
         }
 
         .node-text {
@@ -309,7 +352,7 @@
             font-size: 13px;
             font-weight: 600;
             text-anchor: middle;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
         }
 
         .node-subtext {
@@ -375,21 +418,21 @@
             font-size: 0.85rem;
             padding: 0.4rem 0.6rem;
             border-radius: 6px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(var(--ink-rgb), 0.02);
             border: 1px solid transparent;
             color: var(--text-secondary);
             transition: all 0.3s;
         }
 
         .console-steps li.active {
-            background: rgba(6, 182, 212, 0.15);
-            border-color: rgba(6, 182, 212, 0.3);
+            background: rgba(14, 116, 144, 0.15);
+            border-color: rgba(14, 116, 144, 0.3);
             color: var(--text-primary);
         }
 
         .console-steps li.completed {
-            background: rgba(16, 185, 129, 0.08);
-            border-color: rgba(16, 185, 129, 0.2);
+            background: rgba(60, 117, 73, 0.08);
+            border-color: rgba(60, 117, 73, 0.2);
             color: var(--accent-green);
         }
 
@@ -398,7 +441,7 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 0.75rem;
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--card-bg-alt);
             padding: 0.5rem 0.75rem;
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -432,7 +475,7 @@
         .vector-bar-wrapper {
             height: 35px;
             width: 8px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border-radius: 4px;
             display: flex;
             align-items: flex-end;
@@ -464,15 +507,15 @@
         }
 
         .banner-stable {
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(60, 117, 73, 0.1);
             color: var(--accent-green);
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(60, 117, 73, 0.2);
         }
 
         .banner-warning {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(179, 38, 30, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(179, 38, 30, 0.2);
         }
 
         /* Quiz Styles */
@@ -483,7 +526,7 @@
         }
 
         .quiz-question-card {
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.25rem;
@@ -497,7 +540,7 @@
 
         .quiz-option {
             display: block;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(var(--ink-rgb), 0.02);
             border: 1px solid var(--border-color);
             padding: 0.85rem 1rem;
             border-radius: 8px;
@@ -508,20 +551,20 @@
         }
 
         .quiz-option:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(var(--ink-rgb), 0.06);
             border-color: var(--accent-cyan);
         }
 
         .quiz-option.correct {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(60, 117, 73, 0.15);
             border-color: var(--accent-green);
-            color: #e2e8f0;
+            color: var(--text-secondary);
         }
 
         .quiz-option.incorrect {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: #ef4444;
-            color: #e2e8f0;
+            background: rgba(179, 38, 30, 0.15);
+            border-color: var(--accent-red);
+            color: var(--text-secondary);
         }
 
         .quiz-feedback {
@@ -534,16 +577,16 @@
         }
 
         .quiz-feedback.success {
-            background: rgba(16, 185, 129, 0.08);
+            background: rgba(60, 117, 73, 0.08);
             color: var(--accent-green);
-            border: 1px solid rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(60, 117, 73, 0.15);
             display: block;
         }
 
         .quiz-feedback.error {
-            background: rgba(239, 68, 68, 0.08);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.15);
+            background: rgba(179, 38, 30, 0.08);
+            color: var(--accent-red);
+            border: 1px solid rgba(179, 38, 30, 0.15);
             display: block;
         }
 
@@ -675,11 +718,8 @@
             button {
                 min-height: 44px;
             }
-            /* backdrop-filter blur is GPU-expensive on phones */
             .card,
             .simulator {
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
             }
         }
 
@@ -707,10 +747,8 @@
             z-index: 500;
             margin: -2rem -1rem 2.5rem;
             background: var(--card-bg);
-            -webkit-backdrop-filter: blur(14px);
-            backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 4px 24px rgba(90, 70, 45, .07);
         }
         .site-nav-inner {
             position: relative;
@@ -737,7 +775,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.15rem;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 15px rgba(109, 69, 168, 0.4);
         }
         .site-nav-brand-name {
             font-weight: 700;
@@ -749,7 +787,7 @@
         .site-nav-toggle {
             display: none;
             margin-left: auto;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             font-size: 1.3rem;
@@ -784,7 +822,7 @@
             white-space: nowrap;
             transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
-        .site-nav-link:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.07); }
+        .site-nav-link:hover { color: var(--text-primary); background: rgba(var(--ink-rgb), 0.07); }
         .site-nav-caret { font-size: 0.7em; opacity: 0.85; }
         /* Syllabus dropdown */
         .site-nav-dropdown { position: relative; }
@@ -800,7 +838,7 @@
             background: var(--bg-color);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 18px 44px rgba(90, 70, 45, .07);
             opacity: 0;
             visibility: hidden;
             transform: translateY(-6px);
@@ -821,11 +859,11 @@
             line-height: 1.35;
             border: 1px solid transparent;
         }
-        .site-nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.06); color: var(--text-primary); }
+        .site-nav-dropdown-menu a:hover { background: rgba(var(--ink-rgb), 0.06); color: var(--text-primary); }
         .site-nav-dropdown-menu a.active {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(109, 69, 168, 0.15));
             color: var(--text-primary);
-            border-color: rgba(6, 182, 212, 0.3);
+            border-color: rgba(14, 116, 144, 0.3);
         }
         .site-nav-dropdown-menu .num {
             color: var(--accent-cyan);
@@ -845,7 +883,7 @@
             margin-left: 0.15rem;
         }
         .site-nav-icon-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             height: 40px;
@@ -861,7 +899,7 @@
             white-space: nowrap;
             transition: background 0.25s ease, border-color 0.25s ease;
         }
-        .site-nav-icon-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+        .site-nav-icon-btn:hover { background: rgba(var(--ink-rgb), 0.1); border-color: var(--text-ghost); }
         /* Mobile */
         @media (max-width: 900px) {
             .site-nav-toggle { display: inline-flex; }
@@ -877,7 +915,7 @@
                 padding: 1rem 1.25rem 1.25rem;
                 background: var(--bg-color);
                 border-bottom: 1px solid var(--border-color);
-                box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+                box-shadow: 0 22px 44px rgba(90, 70, 45, .07);
                 display: none;
             }
             .site-nav-menu.open { display: flex; }
@@ -891,7 +929,7 @@
                 min-width: 0;
                 max-width: 100%;
                 box-shadow: none;
-                background: rgba(255, 255, 255, 0.03);
+                background: rgba(var(--ink-rgb), 0.03);
                 margin-top: 0.25rem;
             }
             .site-nav-dropdown.open .site-nav-dropdown-menu { display: block; }
@@ -916,45 +954,45 @@
     width: 100%; max-width: 420px; height: auto; display: block;
     margin: 0.5rem auto 1rem; overflow: visible;
 }
-.tb-map-svg text { text-anchor: middle; font-family: 'Outfit', sans-serif; font-size: 12px; }
+.tb-map-svg text { text-anchor: middle; font-family: var(--font-heading); font-size: 12px; }
 .tb-map-svg .tb-sub { font-size: 9.5px; }
 .tb-node rect, .tb-node circle {
-    fill: rgba(15, 23, 42, 0.75); stroke: var(--accent-purple); stroke-width: 1.5;
+    fill: var(--card-bg-alt); stroke: var(--accent-purple); stroke-width: 1.5;
     transition: all 0.35s ease;
 }
 .tb-node text { fill: var(--text-secondary); transition: all 0.35s ease; }
 .tb-node.active rect, .tb-node.active circle {
-    fill: rgba(6, 182, 212, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
-    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.55));
+    fill: rgba(14, 116, 144, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px rgba(14, 116, 144, 0.55));
 }
 .tb-node.active text { fill: var(--text-primary); font-weight: 600; }
 .tb-node.dim { opacity: 0.3; }
 .tb-block .tb-block-outline {
-    fill: none; stroke: rgba(168, 85, 247, 0.45); stroke-width: 1.5;
+    fill: none; stroke: rgba(109, 69, 168, 0.45); stroke-width: 1.5;
     stroke-dasharray: 6 4; transition: all 0.35s ease;
 }
 .tb-block .tb-block-label { fill: var(--accent-purple); font-size: 11px; font-weight: 600; transition: all 0.35s ease; }
-.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.5)); }
+.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(14, 116, 144, 0.5)); }
 .tb-block.active .tb-block-label { fill: var(--accent-cyan); }
 .tb-block.dim { opacity: 0.3; }
-.tb-flow { fill: none; stroke: #64748b; stroke-width: 1.6; }
+.tb-flow { fill: none; stroke: var(--border-strong); stroke-width: 1.6; }
 .tb-skip {
-    fill: none; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4 3;
+    fill: none; stroke: var(--border-strong); stroke-width: 1.5; stroke-dasharray: 4 3;
     transition: all 0.35s ease;
 }
-.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.55)); }
+.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(60, 117, 73, 0.55)); }
 .tb-skip.dim { opacity: 0.28; }
 .tb-map-caption { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0; }
 .tb-map-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); margin: 0.2rem 0 1rem; }
 .tb-map-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
 .tb-legend-dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-.tb-legend-active { background: rgba(6, 182, 212, 0.5); box-shadow: 0 0 6px rgba(6, 182, 212, 0.7); border: 1px solid var(--accent-cyan); }
-.tb-legend-rest { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--accent-purple); opacity: 0.45; }
+.tb-legend-active { background: rgba(14, 116, 144, 0.5); box-shadow: 0 0 6px rgba(14, 116, 144, 0.7); border: 1px solid var(--accent-cyan); }
+.tb-legend-rest { background: var(--card-bg-alt); border: 1px solid var(--accent-purple); opacity: 0.45; }
 
 .tb-main-flow {
     stroke-dasharray: 8 6;
     animation: flow-up 1s linear infinite;
-    filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
+    filter: drop-shadow(0 0 4px rgba(14, 116, 144, 0.4));
 }
 @keyframes flow-up {
     to { stroke-dashoffset: -14; }
@@ -1005,7 +1043,7 @@
             <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 1.5 L8 5 L0 8.5 z" fill="#64748b"/>
+      <path d="M0 1.5 L8 5 L0 8.5 z" fill="var(--text-muted)"/>
     </marker>
     <linearGradient id="flow-gradient" x1="0%" y1="100%" x2="0%" y2="0%">
       <stop offset="0%" stop-color="var(--accent-purple)" />
@@ -1099,76 +1137,76 @@
             <p>After the Attention step allows words to talk to each other, each word's data needs to be processed individually. This is done by the <span class="tech-term">Feed-Forward Network</span> (FFN).</p>
             
             <div style="text-align: center; margin: 2rem 0;">
-                <svg viewBox="0 0 500 250" style="max-width: 100%; height: auto; border-radius: 12px; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <svg viewBox="0 0 500 250" style="max-width: 100%; height: auto; border-radius: 12px; background: var(--card-bg-alt); border: 1px solid rgba(var(--ink-rgb), 0.1); padding: 1.5rem; box-shadow: 0 4px 6px rgba(90, 70, 45, .07);">
                     <!-- Connections Input -> Hidden -->
-                    <line x1="100" y1="80" x2="250" y2="50" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="100" y1="80" x2="250" y2="100" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="100" y1="80" x2="250" y2="150" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="100" y1="80" x2="250" y2="200" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="80" x2="250" y2="50" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="80" x2="250" y2="100" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="80" x2="250" y2="150" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="80" x2="250" y2="200" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
                     
-                    <line x1="100" y1="170" x2="250" y2="50" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="100" y1="170" x2="250" y2="100" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="100" y1="170" x2="250" y2="150" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="100" y1="170" x2="250" y2="200" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="170" x2="250" y2="50" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="170" x2="250" y2="100" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="170" x2="250" y2="150" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="100" y1="170" x2="250" y2="200" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
                     
                     <!-- Connections Hidden -> Output -->
-                    <line x1="250" y1="50" x2="400" y2="80" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="250" y1="100" x2="400" y2="80" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="250" y1="150" x2="400" y2="80" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="250" y1="200" x2="400" y2="80" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="50" x2="400" y2="80" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="100" x2="400" y2="80" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="150" x2="400" y2="80" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="200" x2="400" y2="80" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
                     
-                    <line x1="250" y1="50" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="250" y1="100" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="250" y1="150" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-                    <line x1="250" y1="200" x2="400" y2="170" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="50" x2="400" y2="170" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="100" x2="400" y2="170" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="150" x2="400" y2="170" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
+                    <line x1="250" y1="200" x2="400" y2="170" stroke="var(--border-strong)" stroke-width="1.5" opacity="0.6"/>
 
                     <!-- Flowing Pulses (Input to Hidden) -->
                     <g>
                         <!-- Input 1 (100, 80) -> Hidden 1 (250, 50) -->
-                        <circle r="3" fill="#60a5fa" opacity="0">
+                        <circle r="3" fill="var(--accent-blue)" opacity="0">
                             <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="cy" values="80;50;50" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
                         </circle>
                         <!-- Input 1 (100, 80) -> Hidden 2 (250, 100) -->
-                        <circle r="3" fill="#60a5fa" opacity="0">
+                        <circle r="3" fill="var(--accent-blue)" opacity="0">
                             <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="cy" values="80;100;100" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
                         </circle>
                         <!-- Input 1 (100, 80) -> Hidden 3 (250, 150) -->
-                        <circle r="3" fill="#60a5fa" opacity="0">
+                        <circle r="3" fill="var(--accent-blue)" opacity="0">
                             <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="cy" values="80;150;150" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
                         </circle>
                         <!-- Input 1 (100, 80) -> Hidden 4 (250, 200) -->
-                        <circle r="3" fill="#60a5fa" opacity="0">
+                        <circle r="3" fill="var(--accent-blue)" opacity="0">
                             <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="cy" values="80;200;200" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
                         </circle>
 
                         <!-- Input 2 (100, 170) -> Hidden 1 (250, 50) -->
-                        <circle r="3" fill="#60a5fa" opacity="0">
+                        <circle r="3" fill="var(--accent-blue)" opacity="0">
                             <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="cy" values="170;50;50" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
                         </circle>
                         <!-- Input 2 (100, 170) -> Hidden 2 (250, 100) -->
-                        <circle r="3" fill="#60a5fa" opacity="0">
+                        <circle r="3" fill="var(--accent-blue)" opacity="0">
                             <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="cy" values="170;100;100" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
                         </circle>
                         <!-- Input 2 (100, 170) -> Hidden 3 (250, 150) -->
-                        <circle r="3" fill="#60a5fa" opacity="0">
+                        <circle r="3" fill="var(--accent-blue)" opacity="0">
                             <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="cy" values="170;150;150" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
                         </circle>
                         <!-- Input 2 (100, 170) -> Hidden 4 (250, 200) -->
-                        <circle r="3" fill="#60a5fa" opacity="0">
+                        <circle r="3" fill="var(--accent-blue)" opacity="0">
                             <animate attributeName="cx" values="100;250;250" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="cy" values="170;200;200" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;1" />
                             <animate attributeName="opacity" values="0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.05;0.4;0.41;1" />
@@ -1178,50 +1216,50 @@
                     <!-- Flowing Pulses (Hidden to Output) -->
                     <g>
                         <!-- Hidden 1 (250, 50) -> Output 1 (400, 80) -->
-                        <circle r="3" fill="#a78bfa" opacity="0">
+                        <circle r="3" fill="var(--accent-purple)" opacity="0">
                             <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="cy" values="50;50;80;80" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
                         </circle>
                         <!-- Hidden 2 (250, 100) -> Output 1 (400, 80) -->
-                        <circle r="3" fill="#a78bfa" opacity="0">
+                        <circle r="3" fill="var(--accent-purple)" opacity="0">
                             <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="cy" values="100;100;80;80" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
                         </circle>
                         <!-- Hidden 3 (250, 150) -> Output 1 (400, 80) -->
-                        <circle r="3" fill="#a78bfa" opacity="0">
+                        <circle r="3" fill="var(--accent-purple)" opacity="0">
                             <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="cy" values="150;150;80;80" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
                         </circle>
                         <!-- Hidden 4 (250, 200) -> Output 1 (400, 80) -->
-                        <circle r="3" fill="#a78bfa" opacity="0">
+                        <circle r="3" fill="var(--accent-purple)" opacity="0">
                             <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="cy" values="200;200;80;80" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
                         </circle>
 
                         <!-- Hidden 1 (250, 50) -> Output 2 (400, 170) -->
-                        <circle r="3" fill="#a78bfa" opacity="0">
+                        <circle r="3" fill="var(--accent-purple)" opacity="0">
                             <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="cy" values="50;50;170;170" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
                         </circle>
                         <!-- Hidden 2 (250, 100) -> Output 2 (400, 170) -->
-                        <circle r="3" fill="#a78bfa" opacity="0">
+                        <circle r="3" fill="var(--accent-purple)" opacity="0">
                             <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="cy" values="100;100;170;170" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
                         </circle>
                         <!-- Hidden 3 (250, 150) -> Output 2 (400, 170) -->
-                        <circle r="3" fill="#a78bfa" opacity="0">
+                        <circle r="3" fill="var(--accent-purple)" opacity="0">
                             <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="cy" values="150;150;170;170" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
                         </circle>
                         <!-- Hidden 4 (250, 200) -> Output 2 (400, 170) -->
-                        <circle r="3" fill="#a78bfa" opacity="0">
+                        <circle r="3" fill="var(--accent-purple)" opacity="0">
                             <animate attributeName="cx" values="250;250;400;400" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="cy" values="200;200;170;170" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.8;1" />
                             <animate attributeName="opacity" values="0;0;1;1;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.45;0.8;0.81;1" />
@@ -1231,75 +1269,75 @@
                     <!-- Node Ripples (Activation Effects) -->
                     <g>
                         <!-- Input Ripples -->
-                        <circle cx="100" cy="80" r="16" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0">
+                        <circle cx="100" cy="80" r="16" fill="none" stroke="var(--accent-blue)" stroke-width="2" opacity="0">
                             <animate attributeName="r" values="16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.2;1" />
                             <animate attributeName="opacity" values="0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.2;1" />
                         </circle>
-                        <circle cx="100" cy="170" r="16" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0">
+                        <circle cx="100" cy="170" r="16" fill="none" stroke="var(--accent-blue)" stroke-width="2" opacity="0">
                             <animate attributeName="r" values="16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.2;1" />
                             <animate attributeName="opacity" values="0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.2;1" />
                         </circle>
 
                         <!-- Hidden Ripples -->
-                        <circle cx="250" cy="50" r="16" fill="none" stroke="#10b981" stroke-width="2" opacity="0">
+                        <circle cx="250" cy="50" r="16" fill="none" stroke="var(--accent-green)" stroke-width="2" opacity="0">
                             <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.6;1" />
                             <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.41;0.6;1" />
                         </circle>
-                        <circle cx="250" cy="100" r="16" fill="none" stroke="#10b981" stroke-width="2" opacity="0">
+                        <circle cx="250" cy="100" r="16" fill="none" stroke="var(--accent-green)" stroke-width="2" opacity="0">
                             <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.6;1" />
                             <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.41;0.6;1" />
                         </circle>
-                        <circle cx="250" cy="150" r="16" fill="none" stroke="#10b981" stroke-width="2" opacity="0">
+                        <circle cx="250" cy="150" r="16" fill="none" stroke="var(--accent-green)" stroke-width="2" opacity="0">
                             <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.6;1" />
                             <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.41;0.6;1" />
                         </circle>
-                        <circle cx="250" cy="200" r="16" fill="none" stroke="#10b981" stroke-width="2" opacity="0">
+                        <circle cx="250" cy="200" r="16" fill="none" stroke="var(--accent-green)" stroke-width="2" opacity="0">
                             <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.6;1" />
                             <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.4;0.41;0.6;1" />
                         </circle>
 
                         <!-- Output Ripples -->
-                        <circle cx="400" cy="80" r="16" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0">
+                        <circle cx="400" cy="80" r="16" fill="none" stroke="var(--accent-purple)" stroke-width="2" opacity="0">
                             <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.8;0.95;1" />
                             <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.8;0.81;0.95;1" />
                         </circle>
-                        <circle cx="400" cy="170" r="16" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0">
+                        <circle cx="400" cy="170" r="16" fill="none" stroke="var(--accent-purple)" stroke-width="2" opacity="0">
                             <animate attributeName="r" values="16;16;28;28" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.8;0.95;1" />
                             <animate attributeName="opacity" values="0;0;0.8;0;0" dur="2.5s" repeatCount="indefinite" begin="0s" keyTimes="0;0.8;0.81;0.95;1" />
                         </circle>
                     </g>
 
                     <!-- Input Nodes -->
-                    <circle cx="100" cy="80" r="16" fill="#3b82f6" />
-                    <circle cx="100" cy="170" r="16" fill="#3b82f6" />
-                    <text x="100" y="235" fill="#e2e8f0" font-size="14" font-weight="500" text-anchor="middle" font-family="'Outfit', sans-serif">Input Layer</text>
+                    <circle cx="100" cy="80" r="16" fill="var(--accent-blue)" />
+                    <circle cx="100" cy="170" r="16" fill="var(--accent-blue)" />
+                    <text x="100" y="235" fill="var(--text-secondary)" font-size="14" font-weight="500" text-anchor="middle" font-family="'Outfit', sans-serif">Input Layer</text>
 
                     <!-- Hidden Nodes -->
-                    <circle cx="250" cy="50" r="16" fill="#10b981" />
-                    <circle cx="250" cy="100" r="16" fill="#10b981" />
-                    <circle cx="250" cy="150" r="16" fill="#10b981" />
-                    <circle cx="250" cy="200" r="16" fill="#10b981" />
-                    <text x="250" y="235" fill="#e2e8f0" font-size="14" font-weight="500" text-anchor="middle" font-family="'Outfit', sans-serif">Hidden Layer</text>
+                    <circle cx="250" cy="50" r="16" fill="var(--accent-green)" />
+                    <circle cx="250" cy="100" r="16" fill="var(--accent-green)" />
+                    <circle cx="250" cy="150" r="16" fill="var(--accent-green)" />
+                    <circle cx="250" cy="200" r="16" fill="var(--accent-green)" />
+                    <text x="250" y="235" fill="var(--text-secondary)" font-size="14" font-weight="500" text-anchor="middle" font-family="'Outfit', sans-serif">Hidden Layer</text>
 
                     <!-- Output Nodes -->
-                    <circle cx="400" cy="80" r="16" fill="#8b5cf6" />
-                    <circle cx="400" cy="170" r="16" fill="#8b5cf6" />
-                    <text x="400" y="235" fill="#e2e8f0" font-size="14" font-weight="500" text-anchor="middle" font-family="'Outfit', sans-serif">Output Layer</text>
+                    <circle cx="400" cy="80" r="16" fill="var(--accent-purple)" />
+                    <circle cx="400" cy="170" r="16" fill="var(--accent-purple)" />
+                    <text x="400" y="235" fill="var(--text-secondary)" font-size="14" font-weight="500" text-anchor="middle" font-family="'Outfit', sans-serif">Output Layer</text>
                 </svg>
             </div>
             
             <p><strong>How does it work?</strong></p>
             <p>Think of the FFN as a giant <span class="highlight">memory bank of facts</span>. While Attention says, "Hey, 'barking' is connected to 'dog'," the FFN takes that and says, "Ah, 'dog' plus 'barking' means we are talking about an animal, maybe I should access my facts about pets."</p>
 
-            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-body); list-style-type: square;">
                 <li><strong>Attention:</strong> "Who am I connected to?" (Group work)</li>
                 <li><strong>FFN:</strong> "Based on those connections, what facts do I know?" (Individual work)</li>
             </ul>
 
-            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
+            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
                 <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.4rem;">📐 Mathematical Explanation: Inside FFN</strong>
                 <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">The Feed-Forward Network is a two-layer neural network with a non-linear activation function (such as GELU or SwiGLU) in the middle:</p>
-                <div class="math-block" style="background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; text-align: center; margin: 0.5rem 0; font-family: monospace;">
+                <div class="math-block" style="background: var(--card-bg-alt); padding: 0.6rem; border-radius: 6px; text-align: center; margin: 0.5rem 0; font-family: monospace;">
                     FFN(x) = Activation(x W₁ + b₁) W₂ + b₂
                 </div>
                 <p style="margin: 0; color: var(--text-secondary);">The first layer expands the input dimension (typically 4x) to capture complex factual knowledge, the activation function filters feature activations, and the second layer projects it back to the standard model dimension.</p>
@@ -1316,12 +1354,12 @@
             
             <p>Before a word goes into a complex processing layer, the architecture preserves an unaltered copy of it. The original word takes the "express highway" and jumps straight to the end of the layer, where it is added back to the newly processed data.</p>
             
-            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-body); list-style-type: square;">
                 <li>This ensures the model never loses the original input information.</li>
                 <li>If a layer makes a mistake or distorts feature representations, the preserved copy remains intact to stabilize learning!</li>
             </ul>
 
-            <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+            <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(90, 70, 45, .07);">
                 <svg width="400" height="280" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <marker id="arrow-cyan-en" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -1366,10 +1404,10 @@
                 </svg>
             </div>
 
-            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
+            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
                 <strong style="color: var(--accent-purple); display: block; margin-bottom: 0.4rem;">📐 Mathematical Explanation: Backpropagation & Skip Connections</strong>
                 <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">Mathematically, the residual addition equation is:</p>
-                <div class="math-block" style="background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; text-align: center; margin: 0.5rem 0; font-family: monospace;">
+                <div class="math-block" style="background: var(--card-bg-alt); padding: 0.6rem; border-radius: 6px; text-align: center; margin: 0.5rem 0; font-family: monospace;">
                     Output = x + SubLayer(x)
                 </div>
                 <p style="margin: 0; color: var(--text-secondary);">During backpropagation, calculus gives <code>1 + derivative(SubLayer)</code>. The <code>+1</code> component acts as an unobstructed gradient highway, enabling gradients to flow cleanly to earlier layers without vanishing.</p>
@@ -1381,20 +1419,20 @@
             <h2>3. The "Volume Control" (Layer Normalization)</h2>
             <p>As the <span class="tech-term">Token Vectors</span> or signals (the numbers we've been talking about) pass through hundreds of layers, they are repeatedly multiplied. Because of this continuous math, the values inside these vectors can explode into insanely huge numbers, or shrink down to zero. The consequences of this happen in two phases:</p>
 
-            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; list-style-type: square;">
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-body); list-style-type: square;">
                 <li><strong>During Training:</strong> If these signals get too crazy, the backpropagation process effectively crashes, and training fails to converge.</li>
                 <li><strong>During Inference:</strong> (Generating new tokens) If the layers don't receive signals at the correct scale, the model will output complete gibberish.</li>
             </ul>
 
             <p>To keep these vector signals healthy and stable, we use <span class="tech-term">Layer Normalization</span> (or LayerNorm). You can think of it as an automatic volume knob.</p>
             
-            <ul style="margin-left: 1.5rem; margin-bottom: 2rem; color: #cbd5e1; list-style-type: square;">
+            <ul style="margin-left: 1.5rem; margin-bottom: 2rem; color: var(--text-body); list-style-type: square;">
                 <li>If the signals get too loud, LayerNorm turns the volume down.</li>
                 <li>If the signals get too quiet, LayerNorm turns them up.</li>
                 <li>This keeps everything perfectly balanced, so the model can train smoothly and answer correctly during inference.</li>
             </ul>
 
-            <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+            <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(90, 70, 45, .07);">
                 <svg width="550" height="250" viewBox="0 0 550 250" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <marker id="arrow-ln" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -1404,13 +1442,13 @@
 
                     <!-- Left: Unstable Signals -->
                     <!-- Very tall -->
-                    <rect x="50" y="40" width="20" height="120" rx="4" fill="#ef4444" opacity="0.8" />
+                    <rect x="50" y="40" width="20" height="120" rx="4" fill="var(--accent-red)" opacity="0.8" />
                     <!-- Very short -->
-                    <rect x="80" y="130" width="20" height="30" rx="4" fill="#3b82f6" opacity="0.8" />
+                    <rect x="80" y="130" width="20" height="30" rx="4" fill="var(--accent-blue)" opacity="0.8" />
                     <!-- Medium -->
-                    <rect x="110" y="90" width="20" height="70" rx="4" fill="#f59e0b" opacity="0.8" />
+                    <rect x="110" y="90" width="20" height="70" rx="4" fill="var(--accent-orange)" opacity="0.8" />
                     <!-- Huge -->
-                    <rect x="140" y="20" width="20" height="140" rx="4" fill="#ef4444" opacity="0.8" />
+                    <rect x="140" y="20" width="20" height="140" rx="4" fill="var(--accent-red)" opacity="0.8" />
                     
                     <text x="105" y="190" fill="var(--text-primary)" font-family="'Outfit', sans-serif" font-size="14" font-weight="600" text-anchor="middle">Unstable Signals</text>
                     <text x="105" y="210" fill="var(--text-secondary)" font-family="'Outfit', sans-serif" font-size="12" text-anchor="middle">(Loud & Quiet)</text>
@@ -1442,7 +1480,7 @@
                 </svg>
             </div>
 
-            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
+            <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
                 <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.4rem;">📐 Mathematical Explanation: Pre-LN vs Post-LN</strong>
                 <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">The normalization formula enforces a mean of 0 and a variance of 1 across token features.</p>
                 <p style="margin: 0; color: var(--text-secondary);">Older Transformer architectures applied normalization <em>after</em> sub-layer computation (Post-LN: <code>LN(x + SubLayer(x))</code>). Modern architectures like Llama, Gemini, and Claude apply normalization <em>before</em> processing (Pre-LN: <code>x + SubLayer(LN(x))</code>), creating a vastly more stable gradient flow during deep network training.</p>
@@ -1495,10 +1533,10 @@
                     <svg id="network-graph" viewBox="80 0 440 440" width="100%" height="440">
                         <defs>
                             <marker id="arrow-fwd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" id="arrow-fwd-path"/>
+                                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--border-strong)" id="arrow-fwd-path"/>
                             </marker>
                             <marker id="arrow-bwd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+                                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--accent-green)"/>
                             </marker>
                         </defs>
 
@@ -1725,20 +1763,20 @@
             const lnNode = document.getElementById('node-ln').querySelector('rect');
             if (state.ln) {
                 lnNode.style.stroke = 'var(--accent-purple)';
-                lnNode.style.fill = 'rgba(168, 85, 247, 0.05)';
+                lnNode.style.fill = 'rgba(109, 69, 168, 0.05)';
             } else {
-                lnNode.style.stroke = '#475569';
-                lnNode.style.fill = 'rgba(30, 41, 59, 0.2)';
+                lnNode.style.stroke = 'var(--border-strong)';
+                lnNode.style.fill = 'var(--card-bg-alt)';
             }
 
             const skipPath = document.getElementById('path-skip');
             const skipLbl = document.getElementById('lbl-path-skip');
             if (state.skip) {
-                skipPath.style.stroke = '#64748b';
+                skipPath.style.stroke = 'var(--border-strong)';
                 skipPath.style.strokeDasharray = 'none';
                 if (skipLbl) skipLbl.style.opacity = '1';
             } else {
-                skipPath.style.stroke = 'rgba(255,255,255,0.05)';
+                skipPath.style.stroke = 'rgba(var(--ink-rgb),0.05)';
                 skipPath.style.strokeDasharray = '4, 4';
                 if (skipLbl) skipLbl.style.opacity = '0.3';
             }
@@ -2044,9 +2082,9 @@
                 // Color coding
                 let barColor = val >= 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)';
                 if (absVal > 2.5) {
-                    barColor = '#ef4444'; // Red for exploding
+                    barColor = 'var(--accent-red)'; // Red for exploding
                 } else if (absVal < 0.15 && absVal > 0) {
-                    barColor = '#64748b'; // Gray for vanishing
+                    barColor = 'var(--text-muted)'; // Gray for vanishing
                 }
                 
                 html += `

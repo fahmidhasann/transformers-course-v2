@@ -9,15 +9,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-cyan: #06b6d4;
-            --accent-purple: #a855f7;
-            --accent-green: #10b981;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            /* Surfaces */
+            --bg-color:       #FAF6F0;
+            --bg-sunk:        #F2ECE2;
+            --card-bg:        #FFFCF7;
+            --card-bg-alt:    #F5EFE6;
+            --panel-bg:       #FBF6EE;
+            --sidebar-bg:     #FFFCF7;
+
+            /* Lines */
+            --border-color:   #E6DBCB;
+            --border-strong:  #D6C6AF;
+            --border-subtle:  #EFE7DA;
+
+            /* Ink */
+            --text-primary:   #2B2622;
+            --text-body:      #3A342E;
+            --text-secondary: #6E635A;
+            --text-muted:     #756C63;
+            --text-ghost:     #918880;
+            --text-on-accent: #FFFDF9;
+            --ink-rgb:        43, 38, 34;
+
+            /* Accents (retuned for a light ground) */
+            --accent-cyan:    #0E7490;
+            --accent-purple:  #6D45A8;
+            --accent-green:   #3C7549;
+            --accent-orange:  #AA4E07;
+            --accent-pink:    #B03A62;
+            --accent-blue:    #1D5FA8;
+            --accent-red:     #B3261E;
+
+            /* Accent tints */
+            --tint-cyan:      #E4F0F3;
+            --tint-purple:    #EFE9F7;
+            --tint-green:     #E8F1E9;
+            --tint-orange:    #FBEEDC;
+            --tint-pink:      #FAE8EE;
+            --tint-neutral:   #F1E9DD;
+
+            /* Depth */
+            --shadow:         0 1px 2px rgba(90,70,45,.05), 0 6px 20px rgba(90,70,45,.07);
+            --shadow-soft:    0 1px 3px rgba(90,70,45,.06);
+            --ring:           0 0 0 3px rgba(14,116,144,.14);
+            --glow:           var(--ring);
+
+            /* Type */
+            --font-heading:   'Outfit', 'Hind Siliguri', sans-serif;
+            --font-body:      'Hind Siliguri', system-ui, sans-serif;
+            --font-main:      var(--font-body);
         }
 
         * {
@@ -27,20 +67,26 @@
         }
 
         body {
-            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+            font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.75;
+            font-size: 1.0625rem;
             padding: 2rem 1rem;
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(196,146,86,.10) 0px, transparent 55%),
+                radial-gradient(at 100% 100%, rgba(122,148,132,.10) 0px, transparent 55%);
+        }
+
+        h1, h2, h3, h4, h5, h6, .badge, .site-nav-brand-name, .sidebar-brand-name {
+            font-family: var(--font-heading);
+            letter-spacing: -0.01em;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
             position: relative;
             overflow-x: clip;
@@ -53,7 +99,7 @@
 
         .badge {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
+            color: var(--text-on-accent);
             padding: 0.3rem 1rem;
             border-radius: 50px;
             font-size: 0.85rem;
@@ -68,9 +114,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
         }
 
         .subtitle {
@@ -85,8 +129,6 @@
             padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
         }
 
         h2 {
@@ -102,7 +144,8 @@
 
         p {
             margin-bottom: 1rem;
-            color: #cbd5e1;
+            line-height: 1.8;
+            color: var(--text-body);
         }
 
         .highlight {
@@ -111,13 +154,13 @@
         }
 
         .tech-term {
-            font-family: 'Outfit', sans-serif;
-            background: rgba(255, 255, 255, 0.08);
+            font-family: var(--font-heading);
+            background: var(--tint-neutral);
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
-            color: #e2e8f0;
+            color: var(--text-primary);
             font-size: 0.95rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
         }
 
         /* Comparison Table Styles */
@@ -129,7 +172,7 @@
         }
 
         .arch-card {
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             overflow: hidden;
@@ -138,8 +181,8 @@
 
         .arch-card.active {
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
-            background: rgba(30, 41, 59, 0.4);
+            box-shadow: 0 0 15px rgba(14, 116, 144, 0.15);
+            background: var(--card-bg-alt);
         }
 
         .arch-card-header {
@@ -150,21 +193,21 @@
         }
 
         .arch-card-header.encoder-only {
-            background: rgba(168, 85, 247, 0.2);
+            background: rgba(109, 69, 168, 0.2);
             color: var(--accent-purple);
-            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            border-bottom: 1px solid rgba(109, 69, 168, 0.3);
         }
 
         .arch-card-header.decoder-only {
-            background: rgba(6, 182, 212, 0.2);
+            background: rgba(14, 116, 144, 0.2);
             color: var(--accent-cyan);
-            border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+            border-bottom: 1px solid rgba(14, 116, 144, 0.3);
         }
 
         .arch-card-header.enc-dec {
-            background: rgba(16, 185, 129, 0.2);
+            background: rgba(60, 117, 73, 0.2);
             color: var(--accent-green);
-            border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+            border-bottom: 1px solid rgba(60, 117, 73, 0.3);
         }
 
         .arch-card-body {
@@ -179,7 +222,7 @@
         .arch-card-body li {
             margin-bottom: 0.8rem;
             font-size: 0.9rem;
-            color: #cbd5e1;
+            color: var(--text-body);
             line-height: 1.5;
         }
 
@@ -205,7 +248,7 @@
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             padding: 1.5rem;
             border-radius: 12px;
@@ -226,7 +269,7 @@
 
         .step-number-badge {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
+            color: var(--text-on-accent);
             padding: 0.2rem 0.8rem;
             border-radius: 20px;
             font-weight: 700;
@@ -246,7 +289,7 @@
             flex-wrap: wrap;
             gap: 0.4rem;
             min-height: 48px;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             padding: 0.6rem;
             border-radius: 8px;
@@ -254,37 +297,37 @@
         }
 
         .sim-token {
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(14, 116, 144, 0.1);
+            border: 1px solid rgba(14, 116, 144, 0.3);
             color: var(--accent-cyan);
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
             font-weight: 600;
             font-size: 0.9rem;
             animation: popIn 0.3s ease;
         }
 
         .sim-token.newly-added {
-            background: rgba(168, 85, 247, 0.2);
+            background: rgba(109, 69, 168, 0.2);
             border-color: var(--accent-purple);
-            color: #e9d5ff;
+            color: var(--accent-purple);
         }
 
         .explanation-box {
-            background: rgba(30, 41, 59, 0.3);
+            background: var(--card-bg-alt);
             border-left: 4px solid var(--accent-purple);
             padding: 1rem;
             border-radius: 0 8px 8px 0;
             font-size: 0.95rem;
-            color: #cbd5e1;
+            color: var(--text-body);
             min-height: 100px;
             line-height: 1.6;
         }
 
         .prediction-value {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.25);
+            background: rgba(60, 117, 73, 0.08);
+            border: 1px solid rgba(60, 117, 73, 0.25);
             padding: 0.8rem 1rem;
             border-radius: 8px;
             color: var(--accent-green);
@@ -298,7 +341,7 @@
         .prediction-probability {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             padding: 0.1rem 0.5rem;
             border-radius: 4px;
         }
@@ -322,11 +365,11 @@
 
         .primary-btn {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
+            color: var(--text-on-accent);
         }
 
         .secondary-btn {
-            background: rgba(30, 41, 59, 0.8);
+            background: var(--card-bg-alt);
             color: var(--text-primary);
             border: 1px solid var(--border-color);
         }
@@ -337,21 +380,21 @@
         }
 
         .reset-btn {
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(179, 38, 30, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(179, 38, 30, 0.2);
             flex-grow: 0;
         }
 
         .reset-btn:hover {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(179, 38, 30, 0.2);
         }
 
         .grid-panel {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: rgba(15, 23, 42, 0.3);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             padding: 1.2rem;
             border-radius: 12px;
@@ -366,7 +409,7 @@
             grid-template-columns: 75px repeat(5, 1fr);
             grid-template-rows: auto repeat(5, 1fr);
             gap: 6px;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--card-bg-alt);
             padding: 12px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
@@ -403,40 +446,40 @@
             align-items: center;
             border-radius: 8px;
             font-size: 0.75rem;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-heading);
             position: relative;
             transition: all 0.3s ease;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(var(--ink-rgb), 0.05);
         }
 
         .grid-cell.active-attention {
-            background: rgba(6, 182, 212, 0.15);
-            border-color: rgba(6, 182, 212, 0.4);
+            background: rgba(14, 116, 144, 0.15);
+            border-color: rgba(14, 116, 144, 0.4);
             color: var(--text-primary);
         }
 
         .grid-cell.active-attention:hover {
-            background: rgba(6, 182, 212, 0.25);
+            background: rgba(14, 116, 144, 0.25);
             border-color: var(--accent-cyan);
         }
 
         .grid-cell.masked {
             background: repeating-linear-gradient(
                 45deg,
-                rgba(30, 41, 59, 0.7),
-                rgba(30, 41, 59, 0.7) 6px,
-                rgba(15, 23, 42, 0.8) 6px,
-                rgba(15, 23, 42, 0.8) 12px
+                var(--card-bg-alt),
+                var(--card-bg-alt) 6px,
+                var(--card-bg-alt) 6px,
+                var(--card-bg-alt) 12px
             );
-            border-color: rgba(255, 255, 255, 0.02);
+            border-color: rgba(var(--ink-rgb), 0.02);
             color: var(--text-secondary);
             opacity: 0.6;
         }
 
         .grid-cell.masked:hover {
             opacity: 0.9;
-            border-color: rgba(239, 68, 68, 0.4);
+            border-color: rgba(179, 38, 30, 0.4);
         }
 
         .grid-cell.inactive-row {
@@ -461,7 +504,7 @@
             bottom: 110%;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
+            background: var(--card-bg-alt);
             border: 1px solid var(--border-color);
             padding: 8px 12px;
             border-radius: 6px;
@@ -473,7 +516,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 12px rgba(90, 70, 45, .07);
             text-align: left;
             line-height: 1.4;
         }
@@ -486,7 +529,7 @@
         /* Quiz Styles */
         .quiz-question {
             margin-bottom: 2rem;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            border-bottom: 1px dashed rgba(var(--ink-rgb), 0.1);
             padding-bottom: 1.5rem;
         }
 
@@ -498,7 +541,7 @@
 
         .quiz-option {
             display: block;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(var(--ink-rgb), 0.03);
             border: 1px solid var(--border-color);
             padding: 1rem;
             border-radius: 8px;
@@ -509,18 +552,18 @@
         }
 
         .quiz-option:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(var(--ink-rgb), 0.08);
             border-color: var(--accent-cyan);
         }
 
         .quiz-option.correct {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(60, 117, 73, 0.15);
             border-color: var(--accent-green);
         }
 
         .quiz-option.incorrect {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: #ef4444;
+            background: rgba(179, 38, 30, 0.15);
+            border-color: var(--accent-red);
         }
 
         .quiz-feedback {
@@ -532,16 +575,16 @@
         }
 
         .quiz-feedback.success {
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(60, 117, 73, 0.1);
             color: var(--accent-green);
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(60, 117, 73, 0.2);
             display: block;
         }
 
         .quiz-feedback.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(179, 38, 30, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(179, 38, 30, 0.2);
             display: block;
         }
 
@@ -675,11 +718,8 @@
             button {
                 min-height: 44px;
             }
-            /* backdrop-filter blur is GPU-expensive on phones */
             .card,
             .simulator {
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
             }
         }
 
@@ -706,10 +746,8 @@
             z-index: 500;
             margin: -2rem -1rem 2.5rem;
             background: var(--card-bg);
-            -webkit-backdrop-filter: blur(14px);
-            backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 4px 24px rgba(90, 70, 45, .07);
         }
         .site-nav-inner {
             position: relative;
@@ -736,7 +774,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.15rem;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 15px rgba(109, 69, 168, 0.4);
         }
         .site-nav-brand-name {
             font-weight: 700;
@@ -748,7 +786,7 @@
         .site-nav-toggle {
             display: none;
             margin-left: auto;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             font-size: 1.3rem;
@@ -783,7 +821,7 @@
             white-space: nowrap;
             transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
-        .site-nav-link:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.07); }
+        .site-nav-link:hover { color: var(--text-primary); background: rgba(var(--ink-rgb), 0.07); }
         .site-nav-caret { font-size: 0.7em; opacity: 0.85; }
         /* Syllabus dropdown */
         .site-nav-dropdown { position: relative; }
@@ -799,7 +837,7 @@
             background: var(--bg-color);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 18px 44px rgba(90, 70, 45, .07);
             opacity: 0;
             visibility: hidden;
             transform: translateY(-6px);
@@ -820,11 +858,11 @@
             line-height: 1.35;
             border: 1px solid transparent;
         }
-        .site-nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.06); color: var(--text-primary); }
+        .site-nav-dropdown-menu a:hover { background: rgba(var(--ink-rgb), 0.06); color: var(--text-primary); }
         .site-nav-dropdown-menu a.active {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(109, 69, 168, 0.15));
             color: var(--text-primary);
-            border-color: rgba(6, 182, 212, 0.3);
+            border-color: rgba(14, 116, 144, 0.3);
         }
         .site-nav-dropdown-menu .num {
             color: var(--accent-cyan);
@@ -844,7 +882,7 @@
             margin-left: 0.15rem;
         }
         .site-nav-icon-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(var(--ink-rgb), 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             height: 40px;
@@ -860,7 +898,7 @@
             white-space: nowrap;
             transition: background 0.25s ease, border-color 0.25s ease;
         }
-        .site-nav-icon-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+        .site-nav-icon-btn:hover { background: rgba(var(--ink-rgb), 0.1); border-color: var(--text-ghost); }
         /* Mobile */
         @media (max-width: 900px) {
             .site-nav-toggle { display: inline-flex; }
@@ -876,7 +914,7 @@
                 padding: 1rem 1.25rem 1.25rem;
                 background: var(--bg-color);
                 border-bottom: 1px solid var(--border-color);
-                box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+                box-shadow: 0 22px 44px rgba(90, 70, 45, .07);
                 display: none;
             }
             .site-nav-menu.open { display: flex; }
@@ -890,7 +928,7 @@
                 min-width: 0;
                 max-width: 100%;
                 box-shadow: none;
-                background: rgba(255, 255, 255, 0.03);
+                background: rgba(var(--ink-rgb), 0.03);
                 margin-top: 0.25rem;
             }
             .site-nav-dropdown.open .site-nav-dropdown-menu { display: block; }
@@ -915,45 +953,45 @@
     width: 100%; max-width: 420px; height: auto; display: block;
     margin: 0.5rem auto 1rem; overflow: visible;
 }
-.tb-map-svg text { text-anchor: middle; font-family: 'Outfit', sans-serif; font-size: 12px; }
+.tb-map-svg text { text-anchor: middle; font-family: var(--font-heading); font-size: 12px; }
 .tb-map-svg .tb-sub { font-size: 9.5px; }
 .tb-node rect, .tb-node circle {
-    fill: rgba(15, 23, 42, 0.75); stroke: var(--accent-purple); stroke-width: 1.5;
+    fill: var(--card-bg-alt); stroke: var(--accent-purple); stroke-width: 1.5;
     transition: all 0.35s ease;
 }
 .tb-node text { fill: var(--text-secondary); transition: all 0.35s ease; }
 .tb-node.active rect, .tb-node.active circle {
-    fill: rgba(6, 182, 212, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
-    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.55));
+    fill: rgba(14, 116, 144, 0.18); stroke: var(--accent-cyan); stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px rgba(14, 116, 144, 0.55));
 }
 .tb-node.active text { fill: var(--text-primary); font-weight: 600; }
 .tb-node.dim { opacity: 0.3; }
 .tb-block .tb-block-outline {
-    fill: none; stroke: rgba(168, 85, 247, 0.45); stroke-width: 1.5;
+    fill: none; stroke: rgba(109, 69, 168, 0.45); stroke-width: 1.5;
     stroke-dasharray: 6 4; transition: all 0.35s ease;
 }
 .tb-block .tb-block-label { fill: var(--accent-purple); font-size: 11px; font-weight: 600; transition: all 0.35s ease; }
-.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.5)); }
+.tb-block.active .tb-block-outline { stroke: var(--accent-cyan); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(14, 116, 144, 0.5)); }
 .tb-block.active .tb-block-label { fill: var(--accent-cyan); }
 .tb-block.dim { opacity: 0.3; }
-.tb-flow { fill: none; stroke: #64748b; stroke-width: 1.6; }
+.tb-flow { fill: none; stroke: var(--border-strong); stroke-width: 1.6; }
 .tb-skip {
-    fill: none; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 4 3;
+    fill: none; stroke: var(--border-strong); stroke-width: 1.5; stroke-dasharray: 4 3;
     transition: all 0.35s ease;
 }
-.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.55)); }
+.tb-skip.active { stroke: var(--accent-green); stroke-width: 2.2; filter: drop-shadow(0 0 5px rgba(60, 117, 73, 0.55)); }
 .tb-skip.dim { opacity: 0.28; }
 .tb-map-caption { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0; }
 .tb-map-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); margin: 0.2rem 0 1rem; }
 .tb-map-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
 .tb-legend-dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-.tb-legend-active { background: rgba(6, 182, 212, 0.5); box-shadow: 0 0 6px rgba(6, 182, 212, 0.7); border: 1px solid var(--accent-cyan); }
-.tb-legend-rest { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--accent-purple); opacity: 0.45; }
+.tb-legend-active { background: rgba(14, 116, 144, 0.5); box-shadow: 0 0 6px rgba(14, 116, 144, 0.7); border: 1px solid var(--accent-cyan); }
+.tb-legend-rest { background: var(--card-bg-alt); border: 1px solid var(--accent-purple); opacity: 0.45; }
 
 .tb-main-flow {
     stroke-dasharray: 8 6;
     animation: flow-up 1s linear infinite;
-    filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
+    filter: drop-shadow(0 0 4px rgba(14, 116, 144, 0.4));
 }
 @keyframes flow-up {
     to { stroke-dashoffset: -14; }
@@ -1004,7 +1042,7 @@
             <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 1.5 L8 5 L0 8.5 z" fill="#64748b"/>
+      <path d="M0 1.5 L8 5 L0 8.5 z" fill="var(--text-muted)"/>
     </marker>
     <linearGradient id="flow-gradient" x1="0%" y1="100%" x2="0%" y2="0%">
       <stop offset="0%" stop-color="var(--accent-purple)" />
@@ -1140,49 +1178,49 @@
             <p>Suppose we want to train a Transformer model using this sentence: <span class="highlight">"LLMs are changing our world"</span>.</p>
             <p>To speed up the training process, we usually feed the entire sentence to the model all at once. However, the model needs to learn step-by-step—first, it should only see <code>"LLMs"</code> to predict the next word <code>"are"</code>, and then see <code>"LLMs are"</code> to predict <code>"changing"</code>.</p>
             <p>Now, if the model can see the entire sentence in advance, it could easily "cheat" by looking at the upcoming words (like <code>"changing"</code>). To prevent the model from cheating by peeking at future words, we use a technique called <span class="tech-term">Causal Masking</span>. This hides the future words, ensuring the model learns the actual task of predicting the next word by only looking at the past words.</p>
-            <p style="background: rgba(168, 85, 247, 0.1); border-left: 4px solid var(--accent-purple); padding: 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem;"><strong>Simply put:</strong> Imagine reading a book through a small cutout hole that only shows the words you've read so far. You cannot see the next words. <span class="highlight">Causal Masking</span> works exactly like this hole!</p>
+            <p style="background: rgba(109, 69, 168, 0.1); border-left: 4px solid var(--accent-purple); padding: 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem;"><strong>Simply put:</strong> Imagine reading a book through a small cutout hole that only shows the words you've read so far. You cannot see the next words. <span class="highlight">Causal Masking</span> works exactly like this hole!</p>
             
-            <div class="masking-diagram" style="margin: 2rem 0; font-family: 'Outfit', monospace; font-size: 0.95rem; background: rgba(15, 23, 42, 0.4); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto;">
+            <div class="masking-diagram" style="margin: 2rem 0; font-family: 'Outfit', monospace; font-size: 0.95rem; background: var(--card-bg-alt); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto;">
                 <div style="display: flex; flex-direction: column; gap: 12px; min-width: 500px;">
-                    <div style="display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; font-weight: 600; color: var(--text-secondary);">
+                    <div style="display: flex; align-items: center; border-bottom: 1px solid rgba(var(--ink-rgb),0.1); padding-bottom: 8px; font-weight: 600; color: var(--text-secondary);">
                         <div style="flex: 1.5;">Model Input</div>
                         <div style="flex: 1.5;">Masked Words</div>
                         <div style="width: 140px; text-align: center; color: var(--accent-blue);">Target Prediction</div>
                     </div>
                     
                     <div style="display: flex; align-items: center; padding: 4px 0;">
-                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs</span></div>
-                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">are changing our world</div>
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(14, 116, 144, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(14, 116, 144, 0.3);">LLMs</span></div>
+                        <div style="flex: 1.5; color: var(--text-ghost); text-decoration: line-through; text-decoration-color: var(--text-ghost);">are changing our world</div>
                         <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">are</div>
                     </div>
                     
                     <div style="display: flex; align-items: center; padding: 4px 0;">
-                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are</span></div>
-                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">changing our world</div>
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(14, 116, 144, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(14, 116, 144, 0.3);">LLMs are</span></div>
+                        <div style="flex: 1.5; color: var(--text-ghost); text-decoration: line-through; text-decoration-color: var(--text-ghost);">changing our world</div>
                         <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">changing</div>
                     </div>
                     
                     <div style="display: flex; align-items: center; padding: 4px 0;">
-                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing</span></div>
-                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">our world</div>
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(14, 116, 144, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(14, 116, 144, 0.3);">LLMs are changing</span></div>
+                        <div style="flex: 1.5; color: var(--text-ghost); text-decoration: line-through; text-decoration-color: var(--text-ghost);">our world</div>
                         <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">our</div>
                     </div>
                     
                     <div style="display: flex; align-items: center; padding: 4px 0;">
-                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing our</span></div>
-                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.3);">world</div>
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(14, 116, 144, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(14, 116, 144, 0.3);">LLMs are changing our</span></div>
+                        <div style="flex: 1.5; color: var(--text-ghost); text-decoration: line-through; text-decoration-color: var(--text-ghost);">world</div>
                         <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">world</div>
                     </div>
                     
                     <div style="display: flex; align-items: center; padding: 4px 0;">
-                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(45, 212, 191, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(45, 212, 191, 0.3);">LLMs are changing our world</span></div>
-                        <div style="flex: 1.5; color: rgba(255, 255, 255, 0.2);"></div>
+                        <div style="flex: 1.5; color: var(--text-primary);"><span style="background: rgba(14, 116, 144, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(14, 116, 144, 0.3);">LLMs are changing our world</span></div>
+                        <div style="flex: 1.5; color: var(--text-ghost);"></div>
                         <div style="width: 140px; text-align: center; font-weight: 600; color: var(--accent-purple);">&lt;EOS&gt;</div>
                     </div>
                 </div>
             </div>
             
-            <div class="note-card" style="margin-top: 1.5rem; margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 1.2rem; border-radius: 10px;">
+            <div class="note-card" style="margin-top: 1.5rem; margin-bottom: 1rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 1.2rem; border-radius: 10px;">
                 <h4 style="color: var(--accent-purple); margin-top: 0; margin-bottom: 0.8rem; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
                     📐 Mathematical Explanation: How Causal Masking Works
                 </h4>
@@ -1190,7 +1228,7 @@
                     We construct a <strong>Mask Matrix (M)</strong> containing zeros (0) for allowed past/current tokens and <strong>Negative Infinity (-&infin;)</strong> for masked future tokens.
                 </p>
                 <div style="display: flex; justify-content: center; margin: 1rem 0;">
-                    <div style="font-family: 'Outfit', monospace; background: rgba(15, 23, 42, 0.7); padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); display: inline-block; width: 100%; max-width: 320px;">
+                    <div style="font-family: 'Outfit', monospace; background: var(--card-bg-alt); padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); display: inline-block; width: 100%; max-width: 320px;">
                         <div style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.6rem; text-align: center; font-weight: bold;">Causal Mask Matrix (M)</div>
                         <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.93rem; align-items: center;">
                             <div>[ &nbsp; 0, -&infin;, -&infin;, -&infin;, -&infin; ]</div>
@@ -1207,7 +1245,7 @@
                     The <span class="tech-term">Causal Mask Matrix (M)</span> is added directly to the raw attention scores (logits) before computing probabilities:
                 </p>
                 
-                <div style="background: rgba(15, 23, 42, 0.6); padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Outfit', monospace; text-align: center; font-size: 1rem; margin: 0.8rem 0;">
+                <div style="background: var(--card-bg-alt); padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Outfit', monospace; text-align: center; font-size: 1rem; margin: 0.8rem 0;">
                     Attention(Q, K, V) = Softmax( <span class="highlight">Q K<sup>T</sup> / &radic;d<sub>k</sub></span> + <span style="color: var(--accent-purple); font-weight: bold;">M</span> ) V
                 </div>
                 
@@ -1228,45 +1266,45 @@
                 4. <strong><span class="tech-term">Loop & Stop Signal</span>:</strong> This loop continues iteratively until the model generates a special token called <span class="tech-term">&lt;EOS&gt; (End of Sequence)</span>.
             </p>
 
-            <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+            <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(90, 70, 45, .07);">
                 <svg width="600" height="250" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <marker id="arrow-ar-en" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-color, #10b981)" />
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-color, var(--accent-green))" />
                         </marker>
                         <marker id="arrow-ar-loop-en" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-secondary, #94a3b8)" />
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-secondary, var(--text-muted))" />
                         </marker>
                     </defs>
 
                     <!-- Input Box -->
-                    <rect x="20" y="80" width="130" height="60" rx="8" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" stroke-width="2" />
-                    <text x="85" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Input Prompt</text>
-                    <text x="85" y="125" fill="var(--text-secondary, #94a3b8)" font-family="monospace" font-size="12" text-anchor="middle">"LLMs are"</text>
+                    <rect x="20" y="80" width="130" height="60" rx="8" fill="rgba(29, 95, 168, 0.1)" stroke="var(--accent-blue)" stroke-width="2" />
+                    <text x="85" y="105" fill="var(--text-primary, var(--text-primary))" font-family="Outfit, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Input Prompt</text>
+                    <text x="85" y="125" fill="var(--text-secondary, var(--text-muted))" font-family="monospace" font-size="12" text-anchor="middle">"LLMs are"</text>
 
                     <!-- Arrow 1 -->
-                    <path d="M 150 110 L 220 110" stroke="var(--primary-color, #10b981)" stroke-width="2" fill="none" marker-end="url(#arrow-ar-en)" />
+                    <path d="M 150 110 L 220 110" stroke="var(--primary-color, var(--accent-green))" stroke-width="2" fill="none" marker-end="url(#arrow-ar-en)" />
 
                     <!-- Model Box -->
-                    <rect x="230" y="50" width="140" height="120" rx="12" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="2" />
-                    <text x="300" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="18" font-weight="700" text-anchor="middle">LLM</text>
-                    <text x="300" y="125" fill="var(--text-secondary, #94a3b8)" font-family="Outfit, sans-serif" font-size="12" text-anchor="middle">(Decoder)</text>
+                    <rect x="230" y="50" width="140" height="120" rx="12" fill="rgba(60, 117, 73, 0.1)" stroke="var(--accent-green)" stroke-width="2" />
+                    <text x="300" y="105" fill="var(--text-primary, var(--text-primary))" font-family="Outfit, sans-serif" font-size="18" font-weight="700" text-anchor="middle">LLM</text>
+                    <text x="300" y="125" fill="var(--text-secondary, var(--text-muted))" font-family="Outfit, sans-serif" font-size="12" text-anchor="middle">(Decoder)</text>
 
                     <!-- Arrow 2 -->
-                    <path d="M 370 110 L 440 110" stroke="var(--primary-color, #10b981)" stroke-width="2" fill="none" marker-end="url(#arrow-ar-en)" />
+                    <path d="M 370 110 L 440 110" stroke="var(--primary-color, var(--accent-green))" stroke-width="2" fill="none" marker-end="url(#arrow-ar-en)" />
 
                     <!-- Output Token Box -->
-                    <rect x="450" y="80" width="130" height="60" rx="8" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2" />
-                    <text x="515" y="105" fill="var(--text-primary, #f8fafc)" font-family="Outfit, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Next Token</text>
-                    <text x="515" y="125" fill="var(--text-secondary, #94a3b8)" font-family="monospace" font-size="12" text-anchor="middle">"changing"</text>
+                    <rect x="450" y="80" width="130" height="60" rx="8" fill="rgba(170, 78, 7, 0.1)" stroke="var(--accent-orange)" stroke-width="2" />
+                    <text x="515" y="105" fill="var(--text-primary, var(--text-primary))" font-family="Outfit, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Next Token</text>
+                    <text x="515" y="125" fill="var(--text-secondary, var(--text-muted))" font-family="monospace" font-size="12" text-anchor="middle">"changing"</text>
 
                     <!-- Loop Path -->
-                    <path d="M 515 140 L 515 200 L 85 200 L 85 140" stroke="var(--text-secondary, #94a3b8)" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-ar-loop-en)" />
+                    <path d="M 515 140 L 515 200 L 85 200 L 85 140" stroke="var(--text-secondary, var(--border-strong))" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-ar-loop-en)" />
                     
                     <!-- Loop Text Background -->
                     <rect x="220" y="190" width="160" height="20" fill="var(--bg-color)" />
                     <!-- Loop Text -->
-                    <text x="300" y="204" fill="var(--text-secondary, #94a3b8)" font-family="Outfit, sans-serif" font-size="12" font-weight="500" text-anchor="middle">Context Update (Loop)</text>
+                    <text x="300" y="204" fill="var(--text-secondary, var(--text-muted))" font-family="Outfit, sans-serif" font-size="12" font-weight="500" text-anchor="middle">Context Update (Loop)</text>
                 </svg>
             </div>
         </div>
@@ -1274,7 +1312,7 @@
         <!-- Interactive simulator card -->
         <div class="card">
             <h2>Interactive Causal Masking & Autoregressive Grid</h2>
-            <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); padding: 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem;">
+            <div style="background: rgba(60, 117, 73, 0.1); border-left: 4px solid var(--accent-green); padding: 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem;">
                 <strong>💡 Training vs Inference (Crucial Concept):</strong><br>
                 This diagram is actually showing two things at once. The <strong>locked or masked matrix</strong> is primarily used during model <strong>Training</strong>. When the model is fed the entire sentence at once to learn, this matrix ensures it cannot peek at future words.<br><br>
                 On the other hand, when you click the <strong>"Next Step"</strong> button to generate words step-by-step, this is called <strong>Inference</strong> (just like when you chat with ChatGPT). During inference, the future words literally don't exist yet, so the model builds the sentence one word at a time and moves forward!
@@ -1326,11 +1364,11 @@
                     
                     <div style="display: flex; flex-direction: column; gap: 0.4rem; justify-content: center; margin-top: 1rem; font-size: 0.75rem; color: var(--text-secondary);">
                         <div style="display: flex; align-items: center; gap: 6px;">
-                            <span style="display: inline-block; width: 12px; height: 12px; background: rgba(6, 182, 212, 0.15); border: 1px solid var(--accent-cyan); border-radius: 2px;"></span>
+                            <span style="display: inline-block; width: 12px; height: 12px; background: rgba(14, 116, 144, 0.15); border: 1px solid var(--accent-cyan); border-radius: 2px;"></span>
                             <span>Allowed Attention</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 6px;">
-                            <span style="display: inline-block; width: 12px; height: 12px; background: repeating-linear-gradient(45deg, rgba(30,41,59,0.7), rgba(30,41,59,0.7) 3px, rgba(15,23,42,0.8) 3px, rgba(15,23,42,0.8) 6px); border: 1px solid rgba(255,255,255,0.1); border-radius: 2px;"></span>
+                            <span style="display: inline-block; width: 12px; height: 12px; background: repeating-linear-gradient(45deg, var(--card-bg-alt), var(--card-bg-alt) 3px, var(--card-bg-alt) 3px, var(--card-bg-alt) 6px); border: 1px solid rgba(var(--ink-rgb),0.1); border-radius: 2px;"></span>
                             <span>Causal Masked (Future words, blocked)</span>
                         </div>
                     </div>
@@ -1514,7 +1552,7 @@
                         cell.className = 'grid-cell active-attention';
                         // Highlight current active row's cells with a slight effect
                         if (i === currentStep - 1) {
-                            cell.style.background = 'rgba(6, 182, 212, 0.25)';
+                            cell.style.background = 'rgba(14, 116, 144, 0.25)';
                             cell.style.borderColor = 'var(--accent-cyan)';
                         }
                         cell.innerHTML = `

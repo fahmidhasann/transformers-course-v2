@@ -12,7 +12,7 @@ This codebase is a **premium, interactive, and visually stunning web platform** 
 - **Medium of Instruction:** Bengali (বাংলা) for explanatory text, ensuring a smooth learning experience for native speakers.
 - **English Technical Terms:** Technical concepts (e.g., *Self-Attention*, *Query*, *Key*, *Value*, *Causal Masking*) must remain in English and be formatted appropriately using HTML classes.
 - **Intuition & Concepts:** Focus on conceptual clarity, visual animations, and metaphors rather than deep mathematical derivations or code implementation details.
-- **High-Fidelity Aesthetics:** Built with a modern dark-mode-first look (supports theme toggling), utilizing custom CSS gradients, glassmorphic cards, glow animations, and premium typography.
+- **Calm Reading Aesthetics:** A single warm ivory theme built for long study sessions — paper-like surfaces, warm near-black ink, muted accents that stay legible on a light ground, and generous line-height. Flat and quiet rather than glassy or neon.
 
 ---
 
@@ -74,25 +74,19 @@ Each lesson is a standalone HTML document loaded inside an iframe in `index.html
 
 ## 4. Key Systems & State Syncing
 
-### Theme Toggle System
-The website features a highly polished dark-first theme system.
-- Toggling is performed by adding/removing the class `light` from `document.documentElement` (`<html>`).
-- Transitions are smoothed via the CSS wildcard transition rule:
-  ```css
-  *, *::before, *::after {
-      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-  }
-  ```
-- Lessons read the parent window's theme state on load and synchronize accordingly.
-- The state is persisted in localStorage under `theme = 'light' | 'dark'`.
+### Theme (single warm light theme)
+The site uses **one** theme — a warm ivory reading surface tuned for long study sessions. There is no dark mode and no theme toggle; do not add one unless asked.
+- Every colour is defined once in the `:root` block of each page's `<style>`. That block is **identical in all 13 files** — if you change a token, change it in all of them.
+- Never hardcode a colour in CSS, an inline `style`, an SVG attribute, or JS. Use the tokens below. A hardcoded hex is a bug: it will not follow the theme.
+- Low-alpha overlays use ink, not white: `rgba(var(--ink-rgb), 0.08)` darkens a light surface. `rgba(255,255,255,…)` is always wrong here.
+- Intensity → colour scales (heatmaps, attention weights) keep their alpha curve and vary only the base accent RGB, e.g. `rgba(14, 116, 144, ${0.15 + norm * 0.85})`.
 
 ### LocalStorage Keys
 To maintain state across page reloads:
-- `theme`: `'light'` or `'dark'`.
-- `checkedGoals`: A serialized JSON array of strings containing IDs of checked items on the Dashboard Mission card (e.g., `["goal-0", "goal-2"]`).
-- `roadmapProgress`: A serialized JSON object mapping lesson IDs to their completion state (e.g., `{"0001-high-level-llm-pipeline": "completed", "0002-tokens-embeddings-positional-encoding": "in-progress"}`).
-- `lessonsProgress`: An array tracking specific completed lessons.
-- `quizScore`: Stores user scores for assessment tests.
+- `lang`: `'bn'` or `'en'` — the active language, read by every page on load.
+- `transformer_lessons_progress`: JSON map of lesson id → status.
+- `transformer_goals`: JSON array of mission-goal checkbox states (`index.html`).
+- `transformer_quiz_score`: numeric score from the final assessment (`index.html`).
 
 ---
 
@@ -105,8 +99,12 @@ If you are asked to modify or expand this codebase, follow these rules:
    - Use English for technical concepts. Wrap English technical terms in a `<span class="tech-term">` tag (e.g., `<span class="tech-term">Self-Attention</span>`).
 2. **Style & CSS:**
    - **Do NOT use Tailwind CSS** unless explicitly requested by the user. Use Vanilla CSS custom variables.
-   - Use custom colors (HSL/RGB variables) to manage themes. Keep the glassmorphic card borders, subtle glows (`box-shadow: var(--glow)`), and radial gradients for the background.
-   - Use `Outfit` (for English/headers) and `Hind Siliguri` (for Bengali text) from Google Fonts:
+   - Use the `:root` design tokens — never a raw colour value. Surfaces: `--bg-color` (page), `--card-bg` (raised card), `--card-bg-alt` (code, tables, sub-panels), `--panel-bg` (diagram containers). Ink: `--text-primary` (headings), `--text-body` (prose), `--text-secondary`, `--text-muted`, `--text-ghost` (masked text), `--text-on-accent` (text on a solid accent fill only). Lines: `--border-color`, `--border-strong`. Depth: `--shadow`, `--shadow-soft`, `--ring` (focus/emphasis).
+   - Accents keep their historical names but are tuned for a light ground: `--accent-cyan` (teal), `--accent-purple`, `--accent-green`, `--accent-orange`, `--accent-pink`, `--accent-blue`, `--accent-red`. Each has a matching low-emphasis fill: `--tint-cyan`, `--tint-purple`, etc.
+   - Flat and calm, not glassy: no `backdrop-filter`, no neon glows, no gradient clip-text headings. Signal "active" with a 2px accent border plus a `--tint-*` fill.
+   - Every accent and ink token clears 4.5:1 against `--bg-color`, `--card-bg`, and `--card-bg-alt`. If you add a colour, check it.
+   - Type: `--font-heading` (Outfit) for headings and chips; `--font-body` (Hind Siliguri, which supplies both Bengali and a matching Latin) for prose. Body is `1.0625rem`/`1.75`, prose `1.8`, reading column `860px`.
+   - Fonts loaded from Google Fonts:
      ```html
      <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
      ```
