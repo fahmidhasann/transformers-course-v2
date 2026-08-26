@@ -1,0 +1,54 @@
+/* Warm ivory reading theme — the single source of truth for every colour and font.
+ * Was duplicated verbatim in all 13 HTML files; now linked by each of them.
+ * Never hardcode a colour anywhere else. See docs/AGENTS.md §4. */
+:root {
+    /* Surfaces */
+    --bg-color:       #FAF6F0;
+    --bg-sunk:        #F2ECE2;
+    --card-bg:        #FFFCF7;
+    --card-bg-alt:    #F5EFE6;
+    --panel-bg:       #FBF6EE;
+    --sidebar-bg:     #FFFCF7;
+
+    /* Lines */
+    --border-color:   #E6DBCB;
+    --border-strong:  #D6C6AF;
+    --border-subtle:  #EFE7DA;
+
+    /* Ink */
+    --text-primary:   #2B2622;
+    --text-body:      #3A342E;
+    --text-secondary: #6E635A;
+    --text-muted:     #756C63;
+    --text-ghost:     #918880;
+    --text-on-accent: #FFFDF9;
+    --ink-rgb:        43, 38, 34;
+
+    /* Accents (retuned for a light ground) */
+    --accent-cyan:    #0E7490;
+    --accent-purple:  #6D45A8;
+    --accent-green:   #3C7549;
+    --accent-orange:  #AA4E07;
+    --accent-pink:    #B03A62;
+    --accent-blue:    #1D5FA8;
+    --accent-red:     #B3261E;
+
+    /* Accent tints */
+    --tint-cyan:      #E4F0F3;
+    --tint-purple:    #EFE9F7;
+    --tint-green:     #E8F1E9;
+    --tint-orange:    #FBEEDC;
+    --tint-pink:      #FAE8EE;
+    --tint-neutral:   #F1E9DD;
+
+    /* Depth */
+    --shadow:         0 1px 2px rgba(90,70,45,.05), 0 6px 20px rgba(90,70,45,.07);
+    --shadow-soft:    0 1px 3px rgba(90,70,45,.06);
+    --ring:           0 0 0 3px rgba(14,116,144,.14);
+    --glow:           var(--ring);
+
+    /* Type */
+    --font-heading:   'Outfit', 'Hind Siliguri', sans-serif;
+    --font-body:      'Hind Siliguri', system-ui, sans-serif;
+    --font-main:      var(--font-body);
+}

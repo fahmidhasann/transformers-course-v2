@@ -3,7 +3,9 @@
 Project guide for Claude Code. Read [AGENTS.md](AGENTS.md) for full architecture, conventions, and how to add a lesson — it is the canonical developer guide.
 
 ## ⚠️ Bilingual parity rule (must follow)
-Every lesson exists as a Bangla (`lessons/NNNN-name.html`) and English (`lessons/NNNN-name-en.html`) twin with fully duplicated markup + JS. Any change to a feature, widget, button, or script in one file MUST be applied to its twin in the same task — translate only user-facing text; keep logic, IDs, and structure identical. Before finishing, diff the pair (e.g. counts of `<button`, `onclick=`, `function `) to confirm parity.
+Every lesson exists as a Bangla (`lessons/NNNN-name.html`) and English (`lessons/NNNN-name-en.html`) twin. Any change to a feature, widget, button, or script in one file MUST be applied to its twin in the same task — translate only user-facing text; keep logic, IDs, and structure identical. Before finishing, diff the pair (e.g. counts of `<button`, `onclick=`, `function `) to confirm parity.
+
+Shared code is exempt because it cannot drift: the theme, all navigation, and the lesson manifest live in `assets/` and are linked by every page. **Put anything common there rather than copying it into 12 files.** See `docs/AGENTS.md` §3 for the navigation layers and the cascade warning.
 
 ## graphify
 

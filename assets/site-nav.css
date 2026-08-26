@@ -1,0 +1,598 @@
+/* ============================================================================
+ * Shared navigation — one implementation for all 13 pages.
+ *
+ * Reading model: the site is a linear course read mostly on a phone, so every
+ * frequent action lives in the THUMB ZONE at the bottom of the screen, not in
+ * a hamburger at the top. Layers:
+ *
+ *   .site-nav      sticky top bar  — identity, language, reading progress
+ *   .reader-bar    fixed bottom bar (<=900px) — prev / contents / next
+ *   .reader-sheet  bottom sheet    (<=900px) — sections + all lessons
+ *   .toc-rail      sticky side rail (>=1200px) — sections, always visible
+ *
+ * Was duplicated in all 12 lesson files; edit here only.
+ * ==========================================================================*/
+
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    margin: -2rem -1rem 2.5rem;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 24px rgba(90, 70, 45, .07);
+}
+.site-nav-inner {
+    position: relative;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 1.25rem;
+}
+.site-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.site-nav-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    box-shadow: 0 0 15px rgba(109, 69, 168, 0.4);
+}
+.site-nav-brand-name {
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+.site-nav-toggle {
+    display: none;
+    margin-left: auto;
+    background: rgba(var(--ink-rgb), 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.site-nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: auto;
+}
+.site-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: none;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.site-nav-link:hover { color: var(--text-primary); background: rgba(var(--ink-rgb), 0.07); }
+.site-nav-caret { font-size: 0.7em; opacity: 0.85; }
+/* Syllabus dropdown */
+.site-nav-dropdown { position: relative; }
+.site-nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    min-width: 320px;
+    max-width: 88vw;
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: 0 18px 44px rgba(90, 70, 45, .07);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 60;
+}
+.site-nav-dropdown.open .site-nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.site-nav-dropdown-menu li { margin: 0; }
+.site-nav-dropdown-menu a {
+    display: flex;
+    gap: 0.55rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.35;
+    border: 1px solid transparent;
+}
+.site-nav-dropdown-menu a:hover { background: rgba(var(--ink-rgb), 0.06); color: var(--text-primary); }
+.site-nav-dropdown-menu a.active {
+    background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(109, 69, 168, 0.15));
+    color: var(--text-primary);
+    border-color: rgba(14, 116, 144, 0.3);
+}
+.site-nav-dropdown-menu .num {
+    color: var(--accent-cyan);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+/* Prev / Next pager */
+.site-nav-pager { display: flex; align-items: center; gap: 0.3rem; }
+.site-nav-link.disabled { opacity: 0.35; pointer-events: none; cursor: default; }
+/* Controls (language + theme) */
+.site-nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-left: 1px solid var(--border-color);
+    padding-left: 0.7rem;
+    margin-left: 0.15rem;
+}
+.site-nav-icon-btn {
+    background: rgba(var(--ink-rgb), 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    height: 40px;
+    padding: 0 0.7rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+.site-nav-icon-btn:hover { background: rgba(var(--ink-rgb), 0.1); border-color: var(--text-ghost); }
+
+/* Reserve the scrollbar gutter so locking body scroll for the sheet does not
+   reflow the whole page by a scrollbar's width. */
+html { scrollbar-gutter: stable; }
+
+/* --- Reading progress hairline (sits on the nav's bottom edge) ------------ */
+.site-nav-progress {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 3px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    pointer-events: none;
+}
+
+/* --- Lesson title in the top bar (mobile only) --------------------------- */
+.site-nav-title {
+    display: none;
+    min-width: 0;
+    flex: 1;
+    margin: 0 0.5rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* --- Shared section list (used by both the sheet and the rail) ------------ */
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list a {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    padding: 0.75rem 0.7rem;
+    border-radius: 9px;
+    border-left: 2px solid transparent;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.toc-list a:hover { background: rgba(var(--ink-rgb), 0.06); color: var(--text-primary); }
+.toc-list a .num {
+    color: var(--accent-cyan);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+}
+.toc-list a.current {
+    background: var(--tint-cyan);
+    border-left-color: var(--accent-cyan);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* --- Desktop section rail (only where there is genuinely room) ------------ */
+.toc-rail { display: none; }
+@media (min-width: 1200px) {
+    /* Shift the 860px reading column left so the rail has its own space
+       instead of overlapping the prose. `html .container` outranks each
+       lesson's own `.container { margin: 0 auto }`, declared later in the
+       cascade, which would otherwise re-centre the column under the rail. */
+    html .container {
+        margin-left: max(1.5rem, calc(50% - 570px));
+        margin-right: auto;
+    }
+    .toc-rail {
+        display: block;
+        position: fixed;
+        top: 6.5rem;
+        /* Same formula as the column's left edge, plus its 860px width and a
+           32px gutter, so the rail tracks the column at every width. */
+        left: calc(max(1.5rem, 50% - 570px) + 892px);
+        width: 220px;
+        max-height: calc(100vh - 9rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-left: 0.75rem;
+        border-left: 1px solid var(--border-color);
+        z-index: 40;
+    }
+    .toc-rail-heading {
+        font-family: var(--font-heading);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin: 0 0 0.6rem 0.7rem;
+    }
+    .toc-rail .toc-list a { font-size: 0.84rem; padding: 0.4rem 0.6rem; }
+}
+
+/* --- Mobile: top bar slims down, everything else moves to the bottom ------ */
+@media (max-width: 900px) {
+    /* The pager, syllabus dropdown and "Hub" link all live in .reader-bar now,
+       so the hamburger and its dropdown panel are gone entirely. */
+    .site-nav-toggle,
+    .site-nav-menu .site-nav-pager,
+    .site-nav-menu .site-nav-dropdown,
+    .site-nav-menu > a.site-nav-link { display: none; }
+    .site-nav-title { display: block; }
+    .site-nav-brand-name { display: none; }
+    .site-nav-menu { margin-left: 0; }
+    .site-nav-inner { gap: 0.5rem; padding: 0.5rem 0.85rem; }
+    .site-nav-controls { border-left: none; padding-left: 0; margin-left: 0; }
+
+    /* 44px minimum tap targets on touch screens. */
+    .site-nav-brand { min-width: 44px; min-height: 44px; align-items: center; }
+    .site-nav-icon-btn { min-width: 44px; min-height: 44px; }
+
+    /* Room for the fixed bottom bar so the last card is never covered.
+       `html body` outranks each lesson's own `padding` shorthand, which is
+       declared later in the cascade and would otherwise reset this. */
+    html body { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 768px) {
+    .site-nav { margin: -1.25rem -0.85rem 2rem; }
+}
+
+/* --- The thumb zone: fixed bottom bar ------------------------------------ */
+.reader-bar { display: none; }
+@media (max-width: 900px) {
+    .reader-bar {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 600;
+        align-items: stretch;
+        gap: 0.35rem;
+        padding: 0.4rem 0.5rem;
+        padding-bottom: calc(0.4rem + env(safe-area-inset-bottom, 0px));
+        background: var(--card-bg);
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 -6px 24px rgba(90, 70, 45, .09);
+        transition: transform 0.25s ease;
+    }
+    /* Hidden while reading downward, back on the first upward scroll. */
+    .reader-bar.tucked { transform: translateY(110%); }
+
+    .reader-bar-step {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+        min-width: 64px;
+        min-height: 48px;
+        padding: 0 0.6rem;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        background: var(--card-bg-alt);
+        color: var(--text-secondary);
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .reader-bar-step:active { background: rgba(var(--ink-rgb), 0.08); }
+    .reader-bar-step.disabled { opacity: 0.35; pointer-events: none; }
+
+    /* Centre control: current section readout AND the sheet trigger. */
+    .reader-bar-toc {
+        flex: 1 1 auto;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        min-height: 48px;
+        padding: 0 0.75rem;
+        border: 1px solid var(--accent-cyan);
+        border-radius: 12px;
+        background: var(--tint-cyan);
+        color: var(--text-primary);
+        font-family: inherit;
+        cursor: pointer;
+        text-align: left;
+    }
+    .reader-bar-toc-icon { flex-shrink: 0; font-size: 1rem; line-height: 1; }
+    .reader-bar-toc-label {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 600;
+        font-size: 0.88rem;
+    }
+    .reader-bar-toc-count {
+        flex-shrink: 0;
+        font-size: 0.78rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: var(--accent-cyan);
+    }
+}
+
+/* --- The contents sheet -------------------------------------------------- */
+.reader-sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 700;
+    background: rgba(var(--ink-rgb), 0.42);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0s 0.25s;
+}
+.reader-sheet-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.25s ease, visibility 0s 0s;
+}
+
+.reader-sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 710;
+    display: flex;
+    flex-direction: column;
+    max-height: 76vh;
+    background: var(--bg-color);
+    border-top: 1px solid var(--border-color);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -18px 44px rgba(90, 70, 45, .16);
+    transform: translateY(100%);
+    visibility: hidden;
+    /* visibility flips instantly on open (so the sheet can take focus) and
+       waits for the slide-out to finish on close. */
+    transition: transform 0.28s cubic-bezier(.32, .72, 0, 1), visibility 0s 0.28s;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.reader-sheet.open {
+    transform: translateY(0);
+    visibility: visible;
+    transition: transform 0.28s cubic-bezier(.32, .72, 0, 1), visibility 0s 0s;
+}
+
+.reader-sheet-grip {
+    width: 40px;
+    height: 4px;
+    margin: 0.6rem auto 0.2rem;
+    border-radius: 2px;
+    background: var(--border-strong);
+    flex-shrink: 0;
+}
+.reader-sheet-tabs {
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.6rem 1rem 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.reader-sheet-tab {
+    flex: 1;
+    min-height: 42px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+}
+.reader-sheet-tab[aria-selected="true"] {
+    border-color: var(--accent-cyan);
+    border-width: 2px;
+    background: var(--tint-cyan);
+    color: var(--text-primary);
+}
+.reader-sheet-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.7rem 1rem 1.1rem;
+}
+.reader-sheet-panel[hidden] { display: none; }
+
+/* Lesson rows inside the sheet's "all lessons" panel. */
+.sheet-lesson-list { list-style: none; margin: 0; padding: 0; }
+.sheet-lesson-list a {
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+    padding: 0.7rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+.sheet-lesson-list a.active {
+    background: var(--tint-cyan);
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.sheet-lesson-dot {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--border-strong);
+}
+.sheet-lesson-dot.in-progress { border-color: var(--accent-orange); background: var(--accent-orange); }
+.sheet-lesson-dot.completed  { border-color: var(--accent-green);  background: var(--accent-green); }
+.sheet-lesson-list .num {
+    color: var(--accent-cyan);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+}
+.sheet-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border-color);
+}
+.sheet-links a {
+    flex: 1;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.88rem;
+}
+
+/* --- Sideways-scrolling panels ------------------------------------------
+   Wide diagrams and tables scroll inside their own container rather than
+   breaking the page, but on a phone nothing says so. An inset shadow is
+   painted against the padding box, so it stays pinned to the right edge while
+   the content scrolls under it. Applied by site-nav.js only to panels that
+   actually overflow, and removed once you reach the end. */
+.x-scrollable {
+    box-shadow: inset -18px 0 14px -14px rgba(var(--ink-rgb), 0.38);
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+}
+.x-scrollable.at-start { box-shadow: inset -18px 0 14px -14px rgba(var(--ink-rgb), 0.38); }
+.x-scrollable.at-end   { box-shadow: inset  18px 0 14px -14px rgba(var(--ink-rgb), 0.38); }
+.x-scrollable.at-both  {
+    box-shadow: inset -18px 0 14px -14px rgba(var(--ink-rgb), 0.38),
+                inset  18px 0 14px -14px rgba(var(--ink-rgb), 0.38);
+}
+
+/* --- End-of-lesson card: close the loop where the reading happens --------- */
+.lesson-end {
+    margin: 2rem 0 1rem;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+}
+.lesson-end-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 1rem;
+}
+.lesson-end-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+.lesson-end-complete {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 46px;
+    padding: 0 1.1rem;
+    border: 2px solid var(--accent-green);
+    border-radius: 12px;
+    background: var(--tint-green);
+    color: var(--accent-green);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+.lesson-end-complete[aria-pressed="true"] {
+    background: var(--accent-green);
+    color: var(--text-on-accent);
+}
+.lesson-end-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 46px;
+    padding: 0 1.1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-bg-alt);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+}
+.lesson-end-next .label { color: var(--text-muted); font-weight: 500; }
+
+/* --- Motion preferences -------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .reader-bar,
+    .reader-sheet,
+    .reader-sheet-backdrop { transition: none; }
+    .reader-bar.tucked { transform: none; }
+}

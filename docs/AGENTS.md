@@ -21,6 +21,11 @@ This codebase is a **premium, interactive, and visually stunning web platform** 
 The repository is structured as a lightweight, static client-side web application:
 
 ```
+├── assets/                 # Shared front-end, linked by all 13 pages
+│   ├── theme.css           # The :root design tokens (single source of truth)
+│   ├── site-nav.css        # Every navigation style: top bar, bottom bar, sheet, TOC rail
+│   ├── site-nav.js         # The navigation controller for lesson pages
+│   └── lessons.js          # window.LESSONS — the single lesson manifest + localStorage helpers
 ├── docs/                   # Developer guides and knowledge base
 │   ├── AGENTS.md           # This developer/agent guide (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/AGENTS.md)
 │   ├── CLAUDE.md           # Instructions for Claude
@@ -36,7 +41,7 @@ The repository is structured as a lightweight, static client-side web applicatio
 │       ├── 0005-ffn-residual-connections-layer-norm.md
 │       └── 0006-decoder-only-vs-encoder-decoder.md
 ├── index.html              # Core application dashboard (clickable link: file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html)
-└── lessons/                # Self-contained lesson HTML pages loaded via iframe in the dashboard
+└── lessons/                # Standalone lesson pages (full page navigation, no iframe)
     ├── 0001-high-level-llm-pipeline.html
     ├── 0002-tokens-embeddings-positional-encoding.html
     ├── 0003-self-attention-mechanism.html
@@ -56,13 +61,13 @@ The platform operates as a single-page application (SPA) with a tabbed dashboard
 ### Dashboard: [index.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html)
 - **Sidebar Navigation:** Let's users switch between different views:
   - `#view-dashboard`: Main hub showing global progress, an interactive **Mission Checklist** loaded from `docs/MISSION.md`, and an interactive **Roadmap Timeline**.
-  - `#view-lessons`: Listing lessons, displaying duration, progress trackers, and allowing users to launch lesson files inside an iframe.
+  - `#view-lessons`: Listing lessons, displaying duration and progress trackers, and navigating to a lesson file.
   - `#view-glossary`: Interactive search and category filters for terminology (synchronized with `glossaryData`).
   - `#view-resources`: Curated card list of links to articles, papers, videos, and machine learning communities.
   - `#view-quiz`: A final assessment to test the user's overall knowledge.
 
 ### Lesson Pages: `lessons/*.html`
-Each lesson is a standalone HTML document loaded inside an iframe in `index.html`. They inherit settings (such as the active theme) from the parent window.
+Each lesson is a standalone HTML document. `openLesson()` in `index.html` performs a full page navigation to it — there is **no iframe**. A lesson page links `assets/theme.css` + `assets/site-nav.css` and loads `assets/lessons.js` + `assets/site-nav.js`; everything else in the file is that lesson's own content, styles, and simulator.
 - **Lesson 1:** [high-level-llm-pipeline.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/lessons/0001-high-level-llm-pipeline.html) - Focuses on the next token predictor. Contains the **Interactive Pipeline Simulator** (interactive tabs showing tokenization, embeddings, self-attention scores, and prediction probabilities).
 - **Lesson 2:** [tokens-embeddings-positional-encoding.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/lessons/0002-tokens-embeddings-positional-encoding.html) - Covers sub-word tokenization (BPE), semantic embedding vector spaces, and positional encoding trigonometry.
 - **Lesson 3:** [self-attention-mechanism.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/lessons/0003-self-attention-mechanism.html) - Focuses on Query, Key, and Value vectors. Contains the **Interactive Attention Simulator** (dynamic SVG connection lines showing how weights change based on context like "it" and "bank").
@@ -72,11 +77,30 @@ Each lesson is a standalone HTML document loaded inside an iframe in `index.html
 
 ---
 
+### Navigation (all of it lives in `assets/`)
+
+The site is a linear course read mostly on a phone, so the frequent actions sit in the **thumb zone** at the bottom of the screen rather than behind a hamburger at the top.
+
+| Layer | Where | Shown |
+|---|---|---|
+| `.site-nav` | markup in each lesson, styles in `site-nav.css` | always — identity, language, reading-progress hairline |
+| `.reader-bar` | injected by `site-nav.js` | ≤900px — `‹ Prev · ☰ current section n/N · Next ›`, tucks away while scrolling down |
+| `.reader-sheet` | injected by `site-nav.js` | ≤900px — bottom sheet with two tabs: this lesson's sections, and all lessons |
+| `.toc-rail` | injected by `site-nav.js` | ≥1200px — sticky section rail beside the reading column |
+| `.lesson-end` | injected by `site-nav.js` | always — "mark complete" + "next lesson" |
+| hub tab bar | `index.html` restyles its own `.nav-menu` | ≤900px — five fixed bottom tabs |
+
+**The section list is generated, not authored.** `site-nav.js` walks `.container .card > h2` and assigns `id="sec-1" … "sec-N"`. Index-based ids keep an anchor valid across the bn/en twins, which text slugs would not. So: give every content card exactly one `<h2>`, and write it as a heading worth seeing in a table of contents — that is all a new section needs.
+
+**One breakpoint: 900px.** Above it, desktop navigation; below it, the bottom bar. Do not introduce a second nav breakpoint.
+
+**Cascade warning.** `assets/*.css` is linked *before* each page's own inline `<style>`, so a same-specificity rule in the page wins. Where a shared rule must survive (`html body { padding-bottom }`, `html .container { margin-left }`), the extra element selector is deliberate — do not "simplify" it away.
+
 ## 4. Key Systems & State Syncing
 
 ### Theme (single warm light theme)
 The site uses **one** theme — a warm ivory reading surface tuned for long study sessions. There is no dark mode and no theme toggle; do not add one unless asked.
-- Every colour is defined once in the `:root` block of each page's `<style>`. That block is **identical in all 13 files** — if you change a token, change it in all of them.
+- Every colour is defined once in [`assets/theme.css`](../assets/theme.css), linked by all 13 pages. Change a token there and it changes everywhere — there are no per-page copies any more.
 - Never hardcode a colour in CSS, an inline `style`, an SVG attribute, or JS. Use the tokens below. A hardcoded hex is a bug: it will not follow the theme.
 - Low-alpha overlays use ink, not white: `rgba(var(--ink-rgb), 0.08)` darkens a light surface. `rgba(255,255,255,…)` is always wrong here.
 - Intensity → colour scales (heatmaps, attention weights) keep their alpha curve and vary only the base accent RGB, e.g. `rgba(14, 116, 144, ${0.15 + norm * 0.85})`.
@@ -87,6 +111,9 @@ To maintain state across page reloads:
 - `transformer_lessons_progress`: JSON map of lesson id → status.
 - `transformer_goals`: JSON array of mission-goal checkbox states (`index.html`).
 - `transformer_quiz_score`: numeric score from the final assessment (`index.html`).
+- `transformer_lesson_scroll`: `{lessonId: offset, __last: lessonId}` — the reading position `site-nav.js` records, used by the hub's "continue reading" card.
+
+Key names live in `window.LS_KEYS` and reads/writes go through `window.lsGet` / `window.lsSet` (both in `assets/lessons.js`), which swallow the exceptions private-mode browsers throw. Do not call `localStorage` directly in new code.
 
 ---
 
@@ -99,7 +126,7 @@ If you are asked to modify or expand this codebase, follow these rules:
    - Use English for technical concepts. Wrap English technical terms in a `<span class="tech-term">` tag (e.g., `<span class="tech-term">Self-Attention</span>`).
 2. **Style & CSS:**
    - **Do NOT use Tailwind CSS** unless explicitly requested by the user. Use Vanilla CSS custom variables.
-   - Use the `:root` design tokens — never a raw colour value. Surfaces: `--bg-color` (page), `--card-bg` (raised card), `--card-bg-alt` (code, tables, sub-panels), `--panel-bg` (diagram containers). Ink: `--text-primary` (headings), `--text-body` (prose), `--text-secondary`, `--text-muted`, `--text-ghost` (masked text), `--text-on-accent` (text on a solid accent fill only). Lines: `--border-color`, `--border-strong`. Depth: `--shadow`, `--shadow-soft`, `--ring` (focus/emphasis).
+   - Tokens live in `assets/theme.css`. Use them — never a raw colour value. Surfaces: `--bg-color` (page), `--card-bg` (raised card), `--card-bg-alt` (code, tables, sub-panels), `--panel-bg` (diagram containers). Ink: `--text-primary` (headings), `--text-body` (prose), `--text-secondary`, `--text-muted`, `--text-ghost` (masked text), `--text-on-accent` (text on a solid accent fill only). Lines: `--border-color`, `--border-strong`. Depth: `--shadow`, `--shadow-soft`, `--ring` (focus/emphasis).
    - Accents keep their historical names but are tuned for a light ground: `--accent-cyan` (teal), `--accent-purple`, `--accent-green`, `--accent-orange`, `--accent-pink`, `--accent-blue`, `--accent-red`. Each has a matching low-emphasis fill: `--tint-cyan`, `--tint-purple`, etc.
    - Flat and calm, not glassy: no `backdrop-filter`, no neon glows, no gradient clip-text headings. Signal "active" with a 2px accent border plus a `--tint-*` fill.
    - Every accent and ink token clears 4.5:1 against `--bg-color`, `--card-bg`, and `--card-bg-alt`. If you add a colour, check it.
@@ -119,26 +146,26 @@ If you are asked to modify or expand this codebase, follow these rules:
 
 ## 6. How to Add a New Lesson
 
-To add a new lesson (e.g., Lesson 7: "KV Cache and Inference Optimization"):
+To add a new lesson (e.g. Lesson 7: "KV Cache and Inference Optimization"):
 
-1. **Create HTML Page:**
-   - Add `0007-kv-cache-inference-optimization.html` inside [lessons/](file:///Users/fahmidhasantaohid/Documents/Transformers%202/lessons).
-   - Implement the theme-syncing script block in the `<head>` and a toggle button.
-   - Use the `<span class="tech-term">` tags for technical English terms.
-   - Add a custom interactive simulator for KV cache visual progression.
-2. **Register in Dashboard:**
-   - Modify the `lessonsData` array inside [index.html](file:///Users/fahmidhasantaohid/Documents/Transformers%202/index.html) by adding a new lesson configuration object:
-     ```javascript
-     {
-         id: "0007-kv-cache-inference-optimization",
-         num: "07",
-         title: "KV Cache এবং Inference অপ্টিমাইজেশন",
-         desc: "...",
-         file: "lessons/0007-kv-cache-inference-optimization.html",
-         duration: "20 min"
-     }
-     ```
-3. **Create Learning Record:**
-   - Add `0007-kv-cache-inference-optimization.md` inside [docs/learning-records/](file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/learning-records) tracking the concepts covered in this step.
-4. **Update Mission Checklist / Glossary:**
-   - If new glossary terms are introduced, add them to `glossaryData` in `index.html` and append them to [docs/GLOSSARY.md](file:///Users/fahmidhasantaohid/Documents/Transformers%202/docs/GLOSSARY.md).
+1. **Register it once** in [`assets/lessons.js`](../assets/lessons.js) by appending to `window.LESSONS`:
+   ```javascript
+   {
+       id: "0007-kv-cache-inference-optimization",
+       num: "07",
+       duration: "20 min",
+       bn: "KV Cache এবং Inference অপ্টিমাইজেশন",
+       en: "KV Cache and Inference Optimization",
+       bnDesc: "...",
+       enDesc: "..."
+   }
+   ```
+   The hub's lesson list, the syllabus dropdown, prev/next on every page, the contents sheet, and the "continue reading" card all read from here. There is nothing else to register.
+
+2. **Create both HTML twins** in [lessons/](../lessons): `0007-kv-cache-inference-optimization.html` and `…-en.html`. Start from an existing lesson — the head links, the `<nav class="site-nav">` block, and the two `<script src="../assets/…">` tags are identical in all of them and must stay that way.
+
+3. **Structure the content** as `.card` blocks inside `.container`, each opening with exactly one `<h2>`. Those headings become the table of contents automatically; you do not write one.
+
+4. **Create a learning record** at [docs/learning-records/](learning-records)`/0007-kv-cache-inference-optimization.md`.
+
+5. **Update the glossary** if new terms appear: `glossaryData` in `index.html` and [docs/GLOSSARY.md](GLOSSARY.md).

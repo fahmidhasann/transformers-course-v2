@@ -7,58 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/theme.css">
+    <link rel="stylesheet" href="assets/site-nav.css">
     <style>
-        :root {
-            /* Surfaces */
-            --bg-color:       #FAF6F0;
-            --bg-sunk:        #F2ECE2;
-            --card-bg:        #FFFCF7;
-            --card-bg-alt:    #F5EFE6;
-            --panel-bg:       #FBF6EE;
-            --sidebar-bg:     #FFFCF7;
-
-            /* Lines */
-            --border-color:   #E6DBCB;
-            --border-strong:  #D6C6AF;
-            --border-subtle:  #EFE7DA;
-
-            /* Ink */
-            --text-primary:   #2B2622;
-            --text-body:      #3A342E;
-            --text-secondary: #6E635A;
-            --text-muted:     #756C63;
-            --text-ghost:     #918880;
-            --text-on-accent: #FFFDF9;
-            --ink-rgb:        43, 38, 34;
-
-            /* Accents (retuned for a light ground) */
-            --accent-cyan:    #0E7490;
-            --accent-purple:  #6D45A8;
-            --accent-green:   #3C7549;
-            --accent-orange:  #AA4E07;
-            --accent-pink:    #B03A62;
-            --accent-blue:    #1D5FA8;
-            --accent-red:     #B3261E;
-
-            /* Accent tints */
-            --tint-cyan:      #E4F0F3;
-            --tint-purple:    #EFE9F7;
-            --tint-green:     #E8F1E9;
-            --tint-orange:    #FBEEDC;
-            --tint-pink:      #FAE8EE;
-            --tint-neutral:   #F1E9DD;
-
-            /* Depth */
-            --shadow:         0 1px 2px rgba(90,70,45,.05), 0 6px 20px rgba(90,70,45,.07);
-            --shadow-soft:    0 1px 3px rgba(90,70,45,.06);
-            --ring:           0 0 0 3px rgba(14,116,144,.14);
-            --glow:           var(--ring);
-
-            /* Type */
-            --font-heading:   'Outfit', 'Hind Siliguri', sans-serif;
-            --font-body:      'Hind Siliguri', system-ui, sans-serif;
-            --font-main:      var(--font-body);
-        }
 
         * {
             box-sizing: border-box;
@@ -182,53 +133,6 @@
         .nav-item:hover svg {
             transform: scale(1.1);
         }
-
-        .sidebar-footer {
-            display: none;
-            margin-top: auto;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-align: center;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.25rem 1rem;
-            background: var(--card-bg-alt);
-            box-shadow: 0 4px 15px rgba(90, 70, 45, .07);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-        }
-
-        .sidebar-footer:hover {
-            border-color: rgba(14, 116, 144, 0.35);
-            box-shadow: 0 8px 25px rgba(14, 116, 144, 0.15);
-            transform: translateY(-2px);
-            background: var(--card-bg-alt);
-        }
-
-        .sidebar-footer a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s ease, text-shadow 0.2s ease;
-        }
-
-        .sidebar-footer a:hover {
-            color: var(--accent-purple);
-            text-shadow: 0 0 8px rgba(109, 69, 168, 0.4);
-        }
-
-
 
         /* Main Content Panel */
         .main-panel {
@@ -1065,44 +969,106 @@
             font-style: italic;
         }
 
-        /* Mobile responsive adjustments */
-        .mobile-hamburger {
-            display: none;
-            margin-left: auto;
-            background: rgba(var(--ink-rgb), 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            line-height: 1;
-            cursor: pointer;
-            min-width: 44px;
-            min-height: 44px;
+        /* Continue reading — the primary action for anyone coming back. */
+        .resume-card {
+            display: flex;
             align-items: center;
-            justify-content: center;
-            border-radius: 10px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.15rem 1.35rem;
+            border: 2px solid var(--accent-cyan);
+            border-radius: 16px;
+            background: var(--tint-cyan);
+            text-decoration: none;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .resume-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+        .resume-card-body { flex: 1; min-width: 0; }
+        .resume-card-eyebrow {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 0.25rem;
+        }
+        .resume-card-title {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+        .resume-card-arrow { flex-shrink: 0; font-size: 1.5rem; color: var(--accent-cyan); }
+        @media (max-width: 480px) {
+            .resume-card { padding: 1rem; gap: 0.7rem; }
+            .resume-card-title { font-size: 0.98rem; }
         }
 
-        /* Collapse the horizontal nav into a hamburger menu when the bilingual labels stop fitting */
-        @media (max-width: 1024px) {
-            .mobile-hamburger { display: flex; }
+        /* Mobile: the top nav becomes a fixed bottom tab bar.
+           Five views, thumb-reachable, matching .reader-bar on the lesson pages
+           so the whole site reads as one product. Same <ul>, restyled. */
+        .nav-tab-label { display: none; }
+
+        @media (max-width: 900px) {
             .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
+                position: fixed;
                 left: 0;
                 right: 0;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0.25rem;
-                margin-left: 0;
-                background-color: var(--sidebar-bg);
-                border-bottom: 1px solid var(--border-color);
-                padding: 1.25rem 1.5rem;
-                z-index: 90;
-                box-shadow: 0 16px 34px rgba(90, 70, 45, .07);
+                bottom: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                gap: 0;
+                padding: 0.3rem 0.2rem;
+                padding-bottom: calc(0.3rem + env(safe-area-inset-bottom, 0px));
+                background-color: var(--card-bg);
+                border-top: 1px solid var(--border-color);
+                box-shadow: 0 -6px 24px rgba(90, 70, 45, .09);
+                z-index: 600;
             }
-            .nav-menu.open { display: flex; }
-            .nav-item button { width: 100%; min-height: 44px; }
+            .nav-item { flex: 1 1 0; min-width: 0; }
+            .nav-item button {
+                width: 100%;
+                min-height: 54px;
+                flex-direction: column;
+                justify-content: center;
+                gap: 0.15rem;
+                padding: 0.3rem 0.15rem;
+                border-radius: 10px;
+            }
+            .nav-item button svg { width: 21px; height: 21px; margin: 0; }
+            .nav-text { display: none; }
+            .nav-tab-label {
+                display: block;
+                font-size: 0.66rem;
+                font-weight: 600;
+                line-height: 1.2;
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 100%;
+            }
+            /* Room for the bar so the last card is never covered. Extra
+               specificity beats the `padding` shorthand set at 768px below. */
+            body .main-panel { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+
+            /* Keep the language toggle beside the page title instead of
+               letting it wrap onto a row of its own above the content. */
+            header {
+                flex-wrap: nowrap;
+                align-items: flex-start;
+                gap: 0.75rem;
+                margin-bottom: 1.75rem;
+            }
+            .header-title { min-width: 0; }
+            .header-controls { flex-shrink: 0; }
         }
 
         @media (max-width: 768px) {
@@ -1142,36 +1108,6 @@
                 align-items: stretch;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /* Theme & Language Toggle Button Styles */
         .header-controls {
@@ -1240,10 +1176,6 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .card, .roadmap-card {
-            }
-        }
     </style>
 </head>
 <body>
@@ -1265,37 +1197,40 @@
             <div class="sidebar-brand-name">Transformer Hub</div>
         </div>
 
-        <button class="mobile-hamburger" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">☰</button>
-
         <ul class="nav-menu" id="nav-menu">
             <li class="nav-item active" id="nav-dashboard">
                 <button onclick="switchTab('dashboard')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                     <span class="nav-text" id="nav-text-dashboard">Dashboard (সংক্ষিপ্তসার)</span>
+                    <span class="nav-tab-label" id="nav-tab-dashboard">হোম</span>
                 </button>
             </li>
             <li class="nav-item" id="nav-lessons">
                 <button onclick="switchTab('lessons')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3.5A2.5 2.5 0 0 1 6.5 1H20v21H6.5a2.5 2.5 0 0 1-2.5-2.5z"/></svg>
                     <span class="nav-text" id="nav-text-lessons">Syllabus (লেসন ম্যাপ)</span>
+                    <span class="nav-tab-label" id="nav-tab-lessons">লেসন</span>
                 </button>
             </li>
             <li class="nav-item" id="nav-glossary">
                 <button onclick="switchTab('glossary')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M12 4v16M2 8h20M2 14h20"/></svg>
                     <span class="nav-text" id="nav-text-glossary">Glossary (শব্দকোষ)</span>
+                    <span class="nav-tab-label" id="nav-tab-glossary">শব্দকোষ</span>
                 </button>
             </li>
             <li class="nav-item" id="nav-resources">
                 <button onclick="switchTab('resources')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                     <span class="nav-text" id="nav-text-resources">References (সহায়ক লিংক)</span>
+                    <span class="nav-tab-label" id="nav-tab-resources">রিসোর্স</span>
                 </button>
             </li>
             <li class="nav-item" id="nav-quiz">
                 <button onclick="switchTab('quiz')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
                     <span class="nav-text" id="nav-text-quiz">Assessment (চূড়ান্ত কুইজ)</span>
+                    <span class="nav-tab-label" id="nav-tab-quiz">কুইজ</span>
                 </button>
             </li>
         </ul>
@@ -1317,6 +1252,9 @@
 
         <!-- DASHBOARD VIEW -->
         <section class="view-section active" id="view-dashboard">
+            <!-- Continue reading — filled by renderResumeCard() -->
+            <a class="resume-card" id="resume-card" hidden></a>
+
             <!-- Course Attribution Banner -->
             <div style="text-align: center; margin-bottom: 2rem; padding: 2rem 1.5rem; border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 16px; background: linear-gradient(135deg, var(--card-bg-alt), var(--card-bg-alt)); box-shadow: 0 8px 32px rgba(90, 70, 45, .07), 0 0 20px rgba(14, 116, 144, 0.15); position: relative; overflow: hidden;">
                 <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div>
@@ -1515,58 +1453,18 @@
         </section>
     </main>
 
+<script src="assets/lessons.js"></script>
 <script>
         // --- 1. Static Databases (Bengali) ---
-        const lessonsData = [
-            {
-                id: "0001-high-level-llm-pipeline",
-                num: "01",
-                title: "LLM Pipeline-এর High-Level Intuition",
-                desc: "একটি মানুষের লেখা বাক্য বা প্রম্পট কীভাবে ধাপে ধাপে টোকেনাইজড হয়ে ভেক্টরে রূপ নেয় এবং মডেলের ভেতর দিয়ে প্রসেস হয়ে পরবর্তী শব্দ অনুমান করে তার সামগ্রিক রূপরেখা।",
-                file: "lessons/0001-high-level-llm-pipeline.html",
-                duration: "15 min"
-            },
-            {
-                id: "0002-tokens-embeddings-positional-encoding",
-                num: "02",
-                title: "Tokens, Embeddings এবং Positional Encoding",
-                desc: "কম্পিউটারের সংখ্যা চেনার পেছনের মূল ভিত্তি। টোকেনাইজেশনের BPE অ্যালগরিদম, শব্দের গাণিতিক অর্থ ধারণকারী সেমান্টিক ভেক্টর স্পেস ও সমান্তরাল প্রসেসিংয়ে শব্দের অবস্থান সংরক্ষণের ট্রাইগনোমেট্রিক এনকোডিং পদ্ধতি।",
-                file: "lessons/0002-tokens-embeddings-positional-encoding.html",
-                duration: "20 min"
-            },
-            {
-                id: "0003-self-attention-mechanism",
-                num: "03",
-                title: "Self-Attention Mechanism",
-                desc: "শব্দের প্রসঙ্গের সংকট সমাধানের জাদুকরী কৌশল। YouTube-এর সার্চ অ্যালগরিদমের আদলে Query (Q), Key (K) ও Value (V) ভেক্টরের ডট প্রোডাক্ট, স্কেলিং ও সফটম্যাক্সের সাহায্যে মনোযোগ বন্টন।",
-                file: "lessons/0003-self-attention-mechanism.html",
-                duration: "25 min"
-            },
-            {
-                id: "0004-multi-head-attention-layer-stacking",
-                num: "04",
-                title: "Multi-Head Attention এবং Layer Stacking",
-                desc: "ভাষা আরও নিখুঁতভাবে অনুধাবনের উপায়। একাধিক মনোযোগের ধারা দিয়ে একই শব্দের বহুমাত্রিক সম্পর্ক ক্যাপচার করার Dimension Splitting প্র্যাকটিস ও লেয়ার স্ট্যাকিংয়ের মাধ্যমে গভীর ফিচার তৈরির স্তর বিন্যাস।",
-                file: "lessons/0004-multi-head-attention-layer-stacking.html",
-                duration: "20 min"
-            },
-            {
-                id: "0005-ffn-residual-connections-layer-norm",
-                num: "05",
-                title: "FFN, Residual Connections, and Layer Normalization",
-                desc: "ফিড-ফরোয়ার্ড নেটওয়ার্কের মাধ্যমে নলেজ রিপ্রেজেন্টেশন, এবং গভীর স্তরে সিগন্যাল হারিয়ে যাওয়া রোধ করতে Skip Connections ও ট্রেনিং দ্রুত-স্থিতিশীল করতে Pre-LN লেয়ার নরমালাইজেশন পদ্ধতি।",
-                file: "lessons/0005-ffn-residual-connections-layer-norm.html",
-                duration: "25 min"
-            },
-            {
-                id: "0006-decoder-only-vs-encoder-decoder",
-                num: "06",
-                title: "Decoder-Only Architecture ও Causal Masking",
-                desc: "মডার্ন জেনারেটিভ এআই-এর চালিকাশক্তি। ঐতিহ্যবাহী Seq2Seq আর্কিটেকচারের সাথে ChatGPT/Claude-এর মতো অটো-রিগ্রেসিভ জেনারেটর ডিকোডারের পার্থক্য এবং ভবিষ্যৎ শব্দ আড়াল করার Causal Attention মাস্কিং।",
-                file: "lessons/0006-decoder-only-vs-encoder-decoder.html",
-                duration: "20 min"
-            }
-        ];
+        // Derived from the single manifest in assets/lessons.js.
+        const lessonsData = window.LESSONS.map(l => ({
+            id: l.id,
+            num: l.num,
+            title: l.bn,
+            desc: l.bnDesc,
+            file: `lessons/${l.id}.html`,
+            duration: l.duration
+        }));
 
         const glossaryData = [
             {
@@ -1837,56 +1735,15 @@
         ];
 
         // --- 1. Static Databases (English) ---
-        const lessonsDataEn = [
-            {
-                id: "0001-high-level-llm-pipeline",
-                num: "01",
-                title: "High-Level Intuition of LLM Pipeline",
-                desc: "An overview of how a human-written sentence or prompt is tokenized step-by-step, converted to embedding vectors, and processed through a model to predict the next word.",
-                file: "lessons/0001-high-level-llm-pipeline-en.html",
-                duration: "15 min"
-            },
-            {
-                id: "0002-tokens-embeddings-positional-encoding",
-                num: "02",
-                title: "Tokens, Embeddings, and Positional Encoding",
-                desc: "The foundation of computer word recognition. BPE tokenization algorithm, semantic vector spaces representing word meanings, and trigonometric encoding representing word positions for parallel processing.",
-                file: "lessons/0002-tokens-embeddings-positional-encoding-en.html",
-                duration: "20 min"
-            },
-            {
-                id: "0003-self-attention-mechanism",
-                num: "03",
-                title: "Self-Attention Mechanism",
-                desc: "The magic solution to word context ambiguity. Query (Q), Key (K), and Value (V) vector dot product, scaling, and Softmax attention distribution based on search engine analogies.",
-                file: "lessons/0003-self-attention-mechanism-en.html",
-                duration: "25 min"
-            },
-            {
-                id: "0004-multi-head-attention-layer-stacking",
-                num: "04",
-                title: "Multi-Head Attention and Layer Stacking",
-                desc: "Enhancing language understanding. Capturing multi-dimensional relationships using multiple attention heads via Dimension Splitting, and layer stacking to build hierarchal deep features.",
-                file: "lessons/0004-multi-head-attention-layer-stacking-en.html",
-                duration: "20 min"
-            },
-            {
-                id: "0005-ffn-residual-connections-layer-norm",
-                num: "05",
-                title: "FFN, Residual Connections, and Layer Normalization",
-                desc: "Representing factual knowledge through Feed-Forward Networks, preventing signal vanishing using Skip Connections, and stabilizing deep training with Pre-LN layer normalization.",
-                file: "lessons/0005-ffn-residual-connections-layer-norm-en.html",
-                duration: "25 min"
-            },
-            {
-                id: "0006-decoder-only-vs-encoder-decoder",
-                num: "06",
-                title: "Decoder-Only Architecture and Causal Masking",
-                desc: "The engine of modern generative AI. Differences between Seq2Seq architectures and ChatGPT/Claude-style autoregressive decoders, and Causal Attention masking to hide future words.",
-                file: "lessons/0006-decoder-only-vs-encoder-decoder-en.html",
-                duration: "20 min"
-            }
-        ];
+        // Derived from the single manifest in assets/lessons.js.
+        const lessonsDataEn = window.LESSONS.map(l => ({
+            id: l.id,
+            num: l.num,
+            title: l.en,
+            desc: l.enDesc,
+            file: `lessons/${l.id}-en.html`,
+            duration: l.duration
+        }));
 
         const glossaryDataEn = [
             {
@@ -2218,6 +2075,11 @@
                 "nav-text-glossary": "Glossary Terminology",
                 "nav-text-resources": "References & Links",
                 "nav-text-quiz": "Final Assessment",
+                "nav-tab-dashboard": "Home",
+                "nav-tab-lessons": "Lessons",
+                "nav-tab-glossary": "Glossary",
+                "nav-tab-resources": "Links",
+                "nav-tab-quiz": "Quiz",
                 "syllabus-progress-lbl": "Syllabus Progress",
                 "total-glossary-lbl": "Total Glossary Terms",
                 "total-glossary-count": "25+",
@@ -2299,12 +2161,50 @@
             loadStateFromLocalStorage();
             syncLanguage();
             
-            // Check for hash navigation
-            const hash = window.location.hash.substring(1);
-            if (['dashboard', 'lessons', 'glossary', 'resources', 'quiz'].includes(hash)) {
-                switchTab(hash);
-            }
+            applyHash();
+            renderResumeCard();
         });
+
+        const TABS = ['dashboard', 'lessons', 'glossary', 'resources', 'quiz'];
+
+        // Offer the reader their place back: the lesson they last scrolled in,
+        // otherwise the first one they have not finished.
+        function renderResumeCard() {
+            const card = document.getElementById('resume-card');
+            if (!card) return;
+            const isEn = (currentLang === 'en');
+            const scrolls = window.lsGet(window.LS_KEYS.scroll, {}) || {};
+            const lastId = scrolls.__last;
+
+            let lesson = lastId && activeLessonsData.find(l => l.id === lastId);
+            let resuming = !!lesson;
+            if (!lesson) {
+                lesson = activeLessonsData.find(l => (lessonProgress[l.id] || 'not-started') !== 'completed');
+            }
+            if (!lesson) { card.hidden = true; return; }
+
+            const offset = resuming ? Math.round(scrolls[lesson.id] || 0) : 0;
+            card.href = lesson.file + (offset > 0 ? '?scroll=' + offset : '');
+            card.innerHTML =
+                '<div class="resume-card-body">' +
+                    '<span class="resume-card-eyebrow"></span>' +
+                    '<span class="resume-card-title"></span>' +
+                '</div><span class="resume-card-arrow" aria-hidden="true">&rarr;</span>';
+            card.querySelector('.resume-card-eyebrow').textContent = resuming
+                ? (isEn ? 'Continue reading' : 'পড়া চালিয়ে যান')
+                : (isEn ? 'Start here' : 'এখান থেকে শুরু করুন');
+            card.querySelector('.resume-card-title').textContent =
+                (isEn ? 'Lesson ' : 'লেসন ') + lesson.num + ' — ' + lesson.title;
+            card.hidden = false;
+        }
+
+        function applyHash() {
+            const hash = window.location.hash.substring(1);
+            if (TABS.includes(hash) && hash !== currentTab) switchTab(hash);
+        }
+
+        // Without this the browser back button does nothing on the hub.
+        window.addEventListener('hashchange', applyHash);
 
         // --- 4. LocalStorage Syncing ---
         function loadStateFromLocalStorage() {
@@ -2479,31 +2379,11 @@
             });
             document.getElementById(`nav-${tabId}`).classList.add('active');
 
-            // Close mobile menu if open
-            document.getElementById('nav-menu').classList.remove('open');
-            const hb = document.getElementById('hamburger-btn');
-            hb.innerText = "☰";
-            hb.setAttribute('aria-expanded', 'false');
-
-            // Update main headings
-            const heading = document.getElementById('page-heading');
-            const subheading = document.getElementById('page-subheading');
-
-            if (tabId === 'dashboard') {
-                heading.innerText = 'Dashboard Overview';
-                subheading.innerText = 'স্বাগতম! ট্রান্সফরমার আর্কিটেকচার শেখার যাত্রা শুরু হোক।';
-            } else if (tabId === 'lessons') {
-                heading.innerText = 'Lessons Map';
-                subheading.innerText = '৬টি মডিউলের মাধ্যমে ট্রান্সফরমারের প্রতিটি ব্লকের খুঁটিনাটি বিস্তারিত বুঝে নিন।';
-            } else if (tabId === 'glossary') {
-                heading.innerText = 'Interactive Glossary';
-                subheading.innerText = 'শব্দকোষ এবং জটিল টেকনিক্যাল টার্মগুলোর সহজ বাংলা ব্যাখ্যা।';
-            } else if (tabId === 'resources') {
-                heading.innerText = 'Reference Resources';
-                subheading.innerText = 'শেখার গভীরতা বাড়াতে ও ধারণা পাকা করতে সহায়ক নিবন্ধ, ভিডিও ও পেপারস।';
-            } else if (tabId === 'quiz') {
-                heading.innerText = 'Final Assessment';
-                subheading.innerText = 'সম্পূর্ণ মডিউলের জ্ঞান যাচাই করুন এবং সার্টিফিকেট অর্জন করুন।';
+            // Headings come from tabTranslations, the same source translateDOM uses.
+            const trans = tabTranslations[currentLang][tabId];
+            if (trans) {
+                document.getElementById('page-heading').innerText = trans.title;
+                document.getElementById('page-subheading').innerText = trans.subtitle;
             }
 
             // Show appropriate sections
@@ -2518,19 +2398,6 @@
             }
         }
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('nav-menu');
-            const btn = document.getElementById('hamburger-btn');
-            if (menu.classList.contains('open')) {
-                menu.classList.remove('open');
-                btn.innerText = "☰";
-                btn.setAttribute('aria-expanded', 'false');
-            } else {
-                menu.classList.add('open');
-                btn.innerText = "✕";
-                btn.setAttribute('aria-expanded', 'true');
-            }
-        }
 
         function toggleGoal(idx) {
             missionGoals[idx] = !missionGoals[idx];
@@ -2547,6 +2414,7 @@
             lessonProgress[lessonId] = newStatus;
             saveStateToLocalStorage();
             renderRoadmap();
+            renderResumeCard();
             updateDashboardAnalytics();
 
             // Sync visual status node class directly for smoother feel
@@ -2739,10 +2607,6 @@
             startQuiz();
         }
 
-
-
-
-
         // --- Bilingual Language System ---
         function toggleLanguage() {
             currentLang = currentLang === 'bn' ? 'en' : 'bn';
@@ -2777,6 +2641,7 @@
             renderRoadmap();
             renderGlossary();
             renderResources();
+            renderResumeCard();
             updateDashboardAnalytics();
 
             // 5. Update certificate if completed
