@@ -48,7 +48,7 @@
     --glow:           var(--ring);
 
     /* Type */
-    --font-heading:   'Outfit', 'Hind Siliguri', sans-serif;
-    --font-body:      'Hind Siliguri', system-ui, sans-serif;
+    --font-heading:   'Outfit', 'Noto Sans Bengali', sans-serif;
+    --font-body:      'Noto Sans Bengali', system-ui, sans-serif;
     --font-main:      var(--font-body);
 }

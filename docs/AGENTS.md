@@ -130,10 +130,10 @@ If you are asked to modify or expand this codebase, follow these rules:
    - Accents keep their historical names but are tuned for a light ground: `--accent-cyan` (teal), `--accent-purple`, `--accent-green`, `--accent-orange`, `--accent-pink`, `--accent-blue`, `--accent-red`. Each has a matching low-emphasis fill: `--tint-cyan`, `--tint-purple`, etc.
    - Flat and calm, not glassy: no `backdrop-filter`, no neon glows, no gradient clip-text headings. Signal "active" with a 2px accent border plus a `--tint-*` fill.
    - Every accent and ink token clears 4.5:1 against `--bg-color`, `--card-bg`, and `--card-bg-alt`. If you add a colour, check it.
-   - Type: `--font-heading` (Outfit) for headings and chips; `--font-body` (Hind Siliguri, which supplies both Bengali and a matching Latin) for prose. Body is `1.0625rem`/`1.75`, prose `1.8`, reading column `860px`.
+   - Type: `--font-heading` (Outfit) for headings and chips; `--font-body` (Noto Sans Bengali, which supplies standard, high-legibility Bengali and numerals) for prose. Body is `1.0625rem`/`1.75`, prose `1.8`, reading column `860px`.
    - Fonts loaded from Google Fonts:
      ```html
-     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
      ```
 3. **Interactive Elements:**
    - Keep simulators lightweight and implemented in vanilla JS inside `<script>` tags.
