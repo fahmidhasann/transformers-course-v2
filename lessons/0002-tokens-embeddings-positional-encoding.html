@@ -1257,14 +1257,20 @@
 .three-d-word-node text {
     font-family: 'Outfit', 'Hind Siliguri', sans-serif;
     font-size: 13px;
-    fill: var(--card-bg);
-    font-weight: 500;
+    fill: var(--text-primary);
+    font-weight: 600;
     paint-order: stroke;
-    stroke: var(--bg-color);
+    stroke: var(--card-bg-alt);
     stroke-width: 4px;
     stroke-linejoin: round;
     pointer-events: none;
     letter-spacing: 0.3px;
+    transition: fill 0.2s ease;
+}
+.three-d-word-node:hover text,
+.three-d-word-node.highlighted text {
+    fill: var(--node-color);
+    font-weight: 700;
 }
 .three-d-word-node.highlighted circle {
     r: 9;
