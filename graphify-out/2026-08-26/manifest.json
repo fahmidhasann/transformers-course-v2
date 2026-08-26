@@ -1,122 +1,170 @@
 {
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/.claude/settings.json": {
+  ".claude/settings.json": {
     "mtime": 1781058187.0,
+    "seen": 1787684351.22467,
     "ast_hash": "87f0d903477984d0587a02f8fe185263",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/.claude/settings.local.json": {
+  ".claude/settings.local.json": {
     "mtime": 1781015337.0,
+    "seen": 1787684351.224672,
     "ast_hash": "101c05b77f825dad5f4c5b775c140d8a",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/AGENTS.md": {
-    "mtime": 1781034214.0,
-    "ast_hash": "d279d0281131ea2f3594e3c16db7bc72",
+  ".codex/hooks.json": {
+    "mtime": 1786233336.8983638,
+    "seen": 1787684351.224673,
+    "ast_hash": "9022294730aa0f2f31926dcd590c07f4",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/CLAUDE.md": {
+  "docs/AGENTS.md": {
+    "mtime": 1787684294.4900224,
+    "seen": 1787684351.224674,
+    "ast_hash": "6d9bede3fd9c45daeb8c50d22981bfcd",
+    "semantic_hash": ""
+  },
+  "docs/CLAUDE.md": {
     "mtime": 1781058187.0,
+    "seen": 1787684351.2246752,
     "ast_hash": "ddef8d0be3a5d96916842f9079053b5c",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/GLOSSARY.md": {
+  "docs/GLOSSARY.md": {
     "mtime": 1781278172.35118,
+    "seen": 1787684351.2246752,
     "ast_hash": "aa3023155947e4be71a271f21e0c1cdc",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/MISSION.md": {
+  "docs/MISSION.md": {
     "mtime": 1781167123.9067943,
+    "seen": 1787684351.2246761,
     "ast_hash": "42b064e3058d5f6e82ae91daed5a0246",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/NOTES.md": {
+  "docs/NOTES.md": {
     "mtime": 1780984361.0,
+    "seen": 1787684351.2246761,
     "ast_hash": "cd15d3eca07fba57f08f50630ff7fe69",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/RESOURCES.md": {
+  "docs/RESOURCES.md": {
     "mtime": 1780984364.0,
+    "seen": 1787684351.224677,
     "ast_hash": "eece0a57107046dbebb00b84118a0d7a",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/index.html": {
-    "mtime": 1781292102.718682,
-    "ast_hash": "a8212d3c52ffd15b78702dbcaa005e3a",
-    "semantic_hash": ""
-  },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0001-prior-knowledge.md": {
+  "docs/learning-records/0001-prior-knowledge.md": {
     "mtime": 1780984386.0,
+    "seen": 1787684351.224677,
     "ast_hash": "e98af4aeb912ea7c79b14e9e7661e7bc",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0003-self-attention-mechanism.md": {
+  "docs/learning-records/0002-tokens-embeddings-positional-encoding.md": {
+    "mtime": 1780984572.0,
+    "seen": 1787684351.2246778,
+    "ast_hash": "294c71d9617119b68d521ec91fa61845",
+    "semantic_hash": ""
+  },
+  "docs/learning-records/0003-self-attention-mechanism.md": {
     "mtime": 1780984563.0,
+    "seen": 1787684351.2246778,
     "ast_hash": "3c90080ff10ff6147ff8dd785cd8583f",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0004-multi-head-attention-layer-stacking.md": {
+  "docs/learning-records/0004-multi-head-attention-layer-stacking.md": {
     "mtime": 1780984565.0,
+    "seen": 1787684351.224679,
     "ast_hash": "ec9e4f5f51a9d6f8d83a9941e5ec7068",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0005-ffn-residual-connections-layer-norm.md": {
+  "docs/learning-records/0005-ffn-residual-connections-layer-norm.md": {
     "mtime": 1780984585.0,
+    "seen": 1787684351.224679,
     "ast_hash": "ec7c618c6b0585a5b0cdd96563389589",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/learning-records/0006-decoder-only-vs-encoder-decoder.md": {
+  "docs/learning-records/0006-decoder-only-vs-encoder-decoder.md": {
     "mtime": 1780984566.0,
+    "seen": 1787684351.22468,
     "ast_hash": "851697ff7559795edd51cb9d81ceb455",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0001-high-level-llm-pipeline-en.html": {
-    "mtime": 1781196784.6501284,
-    "ast_hash": "726dc0050c892c6926adb3747059d4c6",
+  "index.html": {
+    "mtime": 1787684196.5576174,
+    "seen": 1787684351.22468,
+    "ast_hash": "73143913491627b6b5060709febcf2ab",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0001-high-level-llm-pipeline.html": {
-    "mtime": 1781196784.6504314,
-    "ast_hash": "b5028ea2bfda38c7e149f96d1cf5ec82",
+  "lessons/0001-high-level-llm-pipeline-en.html": {
+    "mtime": 1787684196.6089618,
+    "seen": 1787684351.224681,
+    "ast_hash": "558c645bd8b69f45d0db390b46d8f465",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0003-self-attention-mechanism-en.html": {
-    "mtime": 1781289400.9442909,
-    "ast_hash": "87c3c9920e3c864cde4e900c44e43951",
+  "lessons/0001-high-level-llm-pipeline.html": {
+    "mtime": 1787684196.6602814,
+    "seen": 1787684351.224681,
+    "ast_hash": "9e048de7e4fa48af186c6c844defa8a5",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0003-self-attention-mechanism.html": {
-    "mtime": 1781289411.224442,
-    "ast_hash": "65bb912d21e902c6a16ce86f35b064ca",
+  "lessons/0002-tokens-embeddings-positional-encoding-en.html": {
+    "mtime": 1787684196.728723,
+    "seen": 1787684351.224682,
+    "ast_hash": "74d0d1537cf787d127ed15ecc574596b",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0004-multi-head-attention-layer-stacking-en.html": {
-    "mtime": 1781286429.290861,
-    "ast_hash": "180587ba304910995d90f9e01d70aa99",
+  "lessons/0002-tokens-embeddings-positional-encoding.html": {
+    "mtime": 1787684196.7961433,
+    "seen": 1787684351.224682,
+    "ast_hash": "d5743b6a5aa5857fad188e23d5b7c861",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0004-multi-head-attention-layer-stacking.html": {
-    "mtime": 1781286429.1949668,
-    "ast_hash": "467fb01c9b91a1bada69fd3853f5b10e",
+  "lessons/0003-self-attention-mechanism-en.html": {
+    "mtime": 1787684196.8451982,
+    "seen": 1787684351.224682,
+    "ast_hash": "ddadbd9912c6abc2e987dad6c6effcaa",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0005-ffn-residual-connections-layer-norm-en.html": {
-    "mtime": 1781289808.3058476,
-    "ast_hash": "4aa0a137fc28421c2c115aad74a0ecf9",
+  "lessons/0003-self-attention-mechanism.html": {
+    "mtime": 1787684196.8927703,
+    "seen": 1787684351.224683,
+    "ast_hash": "6c32b3131956d5892b81492e7a77045f",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0005-ffn-residual-connections-layer-norm.html": {
-    "mtime": 1781289801.893071,
-    "ast_hash": "7fbe8e7896ba829b3c9a97508ff8fad0",
+  "lessons/0004-multi-head-attention-layer-stacking-en.html": {
+    "mtime": 1787684196.9348419,
+    "seen": 1787684351.224683,
+    "ast_hash": "22e28644512ca4f69db31b91b8ada9af",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0006-decoder-only-vs-encoder-decoder-en.html": {
-    "mtime": 1781281059.366118,
-    "ast_hash": "26d586227a511d053a2051eb93a87462",
+  "lessons/0004-multi-head-attention-layer-stacking.html": {
+    "mtime": 1787684196.9774878,
+    "seen": 1787684351.224684,
+    "ast_hash": "8b5b5016b229b42aae140d81999c8f10",
     "semantic_hash": ""
   },
-  "/Users/fahmidhasantaohid/Documents/Course/Transformers 2/lessons/0006-decoder-only-vs-encoder-decoder.html": {
-    "mtime": 1781281049.7289982,
-    "ast_hash": "843efc575fd81973f1433ce2c269d7d2",
+  "lessons/0005-ffn-residual-connections-layer-norm-en.html": {
+    "mtime": 1787684197.031589,
+    "seen": 1787684351.224684,
+    "ast_hash": "b20753cc5751f2e77730ddd5a99aef43",
+    "semantic_hash": ""
+  },
+  "lessons/0005-ffn-residual-connections-layer-norm.html": {
+    "mtime": 1787684197.0853791,
+    "seen": 1787684351.224685,
+    "ast_hash": "3eb9a93f6b0ceb633d4abde844fbf3d7",
+    "semantic_hash": ""
+  },
+  "lessons/0006-decoder-only-vs-encoder-decoder-en.html": {
+    "mtime": 1787684197.1280372,
+    "seen": 1787684351.224685,
+    "ast_hash": "c217a5b137e0c8013ebe0ad8f45f95e5",
+    "semantic_hash": ""
+  },
+  "lessons/0006-decoder-only-vs-encoder-decoder.html": {
+    "mtime": 1787684197.1705346,
+    "seen": 1787684351.2246861,
+    "ast_hash": "f04df07aea9cd8e5a1ec1eafa8278f6e",
     "semantic_hash": ""
   }
 }

@@ -18,15 +18,15 @@
     "semantic_hash": ""
   },
   "docs/AGENTS.md": {
-    "mtime": 1787684294.4900224,
-    "seen": 1787684351.224674,
-    "ast_hash": "6d9bede3fd9c45daeb8c50d22981bfcd",
+    "mtime": 1787722091.4724298,
+    "seen": 1787722201.7531142,
+    "ast_hash": "1bc1e9a0d9dc8da399f060b62a32561a",
     "semantic_hash": ""
   },
   "docs/CLAUDE.md": {
-    "mtime": 1781058187.0,
-    "seen": 1787684351.2246752,
-    "ast_hash": "ddef8d0be3a5d96916842f9079053b5c",
+    "mtime": 1787722091.495533,
+    "seen": 1787722201.753115,
+    "ast_hash": "6e05e10d58ab289a0c16f86fbd6029bb",
     "semantic_hash": ""
   },
   "docs/GLOSSARY.md": {
@@ -90,81 +90,93 @@
     "semantic_hash": ""
   },
   "index.html": {
-    "mtime": 1787684196.5576174,
-    "seen": 1787684351.22468,
-    "ast_hash": "73143913491627b6b5060709febcf2ab",
+    "mtime": 1787721720.073604,
+    "seen": 1787722201.753123,
+    "ast_hash": "60229313f0dd91fa8e669abc4758124e",
     "semantic_hash": ""
   },
   "lessons/0001-high-level-llm-pipeline-en.html": {
-    "mtime": 1787684196.6089618,
-    "seen": 1787684351.224681,
-    "ast_hash": "558c645bd8b69f45d0db390b46d8f465",
+    "mtime": 1787721154.2862263,
+    "seen": 1787722201.753123,
+    "ast_hash": "3fd53ff98ea36c4a2c5e959cd295b434",
     "semantic_hash": ""
   },
   "lessons/0001-high-level-llm-pipeline.html": {
-    "mtime": 1787684196.6602814,
-    "seen": 1787684351.224681,
-    "ast_hash": "9e048de7e4fa48af186c6c844defa8a5",
+    "mtime": 1787721154.2866533,
+    "seen": 1787722201.753124,
+    "ast_hash": "6dc0c821eba257518de4d2d7953c3e21",
     "semantic_hash": ""
   },
   "lessons/0002-tokens-embeddings-positional-encoding-en.html": {
-    "mtime": 1787684196.728723,
-    "seen": 1787684351.224682,
-    "ast_hash": "74d0d1537cf787d127ed15ecc574596b",
+    "mtime": 1787721875.7090495,
+    "seen": 1787722201.753124,
+    "ast_hash": "44eec511085c10ddda44a4827f2d91b0",
     "semantic_hash": ""
   },
   "lessons/0002-tokens-embeddings-positional-encoding.html": {
-    "mtime": 1787684196.7961433,
-    "seen": 1787684351.224682,
-    "ast_hash": "d5743b6a5aa5857fad188e23d5b7c861",
+    "mtime": 1787721875.7097297,
+    "seen": 1787722201.753124,
+    "ast_hash": "e385f6ddb4424719ac04cb85526d1de3",
     "semantic_hash": ""
   },
   "lessons/0003-self-attention-mechanism-en.html": {
-    "mtime": 1787684196.8451982,
-    "seen": 1787684351.224682,
-    "ast_hash": "ddadbd9912c6abc2e987dad6c6effcaa",
+    "mtime": 1787721154.2888036,
+    "seen": 1787722201.7531252,
+    "ast_hash": "a4868a0a0890e68c7216ee5b6e5ba119",
     "semantic_hash": ""
   },
   "lessons/0003-self-attention-mechanism.html": {
-    "mtime": 1787684196.8927703,
-    "seen": 1787684351.224683,
-    "ast_hash": "6c32b3131956d5892b81492e7a77045f",
+    "mtime": 1787721154.289186,
+    "seen": 1787722201.7531252,
+    "ast_hash": "8bbe7739c23d007999a0991bd48584d8",
     "semantic_hash": ""
   },
   "lessons/0004-multi-head-attention-layer-stacking-en.html": {
-    "mtime": 1787684196.9348419,
-    "seen": 1787684351.224683,
-    "ast_hash": "22e28644512ca4f69db31b91b8ada9af",
+    "mtime": 1787721154.2894735,
+    "seen": 1787722201.753126,
+    "ast_hash": "eecacbe01c1fd74b03ac8c52aadf4f62",
     "semantic_hash": ""
   },
   "lessons/0004-multi-head-attention-layer-stacking.html": {
-    "mtime": 1787684196.9774878,
-    "seen": 1787684351.224684,
-    "ast_hash": "8b5b5016b229b42aae140d81999c8f10",
+    "mtime": 1787721154.2898042,
+    "seen": 1787722201.753126,
+    "ast_hash": "8c65b804c03a8a14ebe44bc176703f8e",
     "semantic_hash": ""
   },
   "lessons/0005-ffn-residual-connections-layer-norm-en.html": {
-    "mtime": 1787684197.031589,
-    "seen": 1787684351.224684,
-    "ast_hash": "b20753cc5751f2e77730ddd5a99aef43",
+    "mtime": 1787721154.2903147,
+    "seen": 1787722201.7531269,
+    "ast_hash": "a1c293781272a87cd66bfec6640e03c1",
     "semantic_hash": ""
   },
   "lessons/0005-ffn-residual-connections-layer-norm.html": {
-    "mtime": 1787684197.0853791,
-    "seen": 1787684351.224685,
-    "ast_hash": "3eb9a93f6b0ceb633d4abde844fbf3d7",
+    "mtime": 1787721154.2909265,
+    "seen": 1787722201.7531269,
+    "ast_hash": "5f6565be6a1f778fcec35eb9dccaa27c",
     "semantic_hash": ""
   },
   "lessons/0006-decoder-only-vs-encoder-decoder-en.html": {
-    "mtime": 1787684197.1280372,
-    "seen": 1787684351.224685,
-    "ast_hash": "c217a5b137e0c8013ebe0ad8f45f95e5",
+    "mtime": 1787721154.2912326,
+    "seen": 1787722201.753128,
+    "ast_hash": "5abaf519abb41c8df804ec6ab5f6f9f8",
     "semantic_hash": ""
   },
   "lessons/0006-decoder-only-vs-encoder-decoder.html": {
-    "mtime": 1787684197.1705346,
-    "seen": 1787684351.2246861,
-    "ast_hash": "f04df07aea9cd8e5a1ec1eafa8278f6e",
+    "mtime": 1787721154.291531,
+    "seen": 1787722201.753128,
+    "ast_hash": "4109643cf0933c2a3f74ae19b7563415",
+    "semantic_hash": ""
+  },
+  "assets/lessons.js": {
+    "mtime": 1787720937.358071,
+    "seen": 1787722201.753112,
+    "ast_hash": "cbde6b164a5b5c48df376a6630fd4c59",
+    "semantic_hash": ""
+  },
+  "assets/site-nav.js": {
+    "mtime": 1787722037.057517,
+    "seen": 1787722201.753113,
+    "ast_hash": "8c1ae77d7f8feb11f2f9a3598c2fe821",
     "semantic_hash": ""
   }
 }

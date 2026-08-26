@@ -3,7 +3,7 @@
   "1": "Codebase Guide for AI Agents (AGENTS.md)",
   "2": "Transformer Architecture Glossary",
   "3": "Mission: Transformer Architecture used in Large Language Models (LLMs)",
-  "4": "docs/CLAUDE.md",
+  "4": "site-nav.js",
   "5": "Transformer Architecture Resources",
   "6": "enabledPlugins",
   "7": "Project Settings (Local)",
@@ -24,5 +24,6 @@
   "22": "docs/learning-records/0005-ffn-residual-connections-layer-norm.md",
   "23": "docs/learning-records/0006-decoder-only-vs-encoder-decoder.md",
   "24": "PreToolUse",
-  "25": "frontend-design@claude-plugins-official"
+  "25": "frontend-design@claude-plugins-official",
+  "26": "lessons.js"
 }

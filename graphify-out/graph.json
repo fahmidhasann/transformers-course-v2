@@ -4,6 +4,174 @@
   "graph": {},
   "nodes": [
     {
+      "id": "assets_site_nav_buildtoclist",
+      "label": "buildTocList()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "buildtoclist()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L92"
+    },
+    {
+      "id": "assets_site_nav_closesheet",
+      "label": "closeSheet()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "closesheet()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L231"
+    },
+    {
+      "id": "assets_site_nav_filefor",
+      "label": "fileFor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "filefor()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L31"
+    },
+    {
+      "id": "assets_site_nav_markscrollers",
+      "label": "markScrollers()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "markscrollers()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L322"
+    },
+    {
+      "id": "assets_site_nav_onscrollframe",
+      "label": "onScrollFrame()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "onscrollframe()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L411"
+    },
+    {
+      "id": "assets_site_nav_opensheet",
+      "label": "openSheet()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "opensheet()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L221"
+    },
+    {
+      "id": "assets_site_nav_paintcomplete",
+      "label": "paintComplete()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "paintcomplete()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L305"
+    },
+    {
+      "id": "assets_site_nav_paintedges",
+      "label": "paintEdges()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "paintedges()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L338"
+    },
+    {
+      "id": "assets_site_nav_selecttab",
+      "label": "selectTab()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "selecttab()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L208"
+    },
+    {
+      "id": "assets_site_nav_setcurrentsection",
+      "label": "setCurrentSection()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "setcurrentsection()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L396"
+    },
+    {
+      "id": "assets_site_nav_sheetisopen",
+      "label": "sheetIsOpen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "sheetisopen()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L245"
+    },
+    {
+      "id": "assets_site_nav_t",
+      "label": "t()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "t()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L34"
+    },
+    {
+      "id": "assets_site_nav_titleof",
+      "label": "titleOf()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "titleof()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L32"
+    },
+    {
+      "id": "assets_site_nav_wirepager",
+      "label": "wirePager()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "wirepager()",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L59"
+    },
+    {
       "id": "docs_agents_1_overview_purpose",
       "label": "1. Overview & Purpose",
       "_origin": "ast",
@@ -37,7 +205,7 @@
       "node_kind": "heading",
       "norm_label": "3. core application architecture",
       "source_file": "docs/AGENTS.md",
-      "source_location": "L52"
+      "source_location": "L57"
     },
     {
       "id": "docs_agents_4_key_systems_state_syncing",
@@ -49,7 +217,7 @@
       "node_kind": "heading",
       "norm_label": "4. key systems & state syncing",
       "source_file": "docs/AGENTS.md",
-      "source_location": "L75"
+      "source_location": "L99"
     },
     {
       "id": "docs_agents_5_development_guidelines_constraints",
@@ -61,7 +229,7 @@
       "node_kind": "heading",
       "norm_label": "5. development guidelines & constraints",
       "source_file": "docs/AGENTS.md",
-      "source_location": "L93"
+      "source_location": "L120"
     },
     {
       "id": "docs_agents_6_how_to_add_a_new_lesson",
@@ -73,7 +241,7 @@
       "node_kind": "heading",
       "norm_label": "6. how to add a new lesson",
       "source_file": "docs/AGENTS.md",
-      "source_location": "L120"
+      "source_location": "L147"
     },
     {
       "id": "docs_agents_codebase_guide_for_ai_agents_agents_md",
@@ -97,7 +265,7 @@
       "node_kind": "heading",
       "norm_label": "dashboard: [index.html](file:///users/fahmidhasantaohid/documents/transformers%202/index.html)",
       "source_file": "docs/AGENTS.md",
-      "source_location": "L56"
+      "source_location": "L61"
     },
     {
       "id": "docs_agents_key_design_goals",
@@ -121,7 +289,7 @@
       "node_kind": "heading",
       "norm_label": "lesson pages: `lessons/*.html`",
       "source_file": "docs/AGENTS.md",
-      "source_location": "L64"
+      "source_location": "L69"
     },
     {
       "id": "docs_agents_localstorage_keys",
@@ -133,7 +301,19 @@
       "node_kind": "heading",
       "norm_label": "localstorage keys",
       "source_file": "docs/AGENTS.md",
-      "source_location": "L84"
+      "source_location": "L108"
+    },
+    {
+      "id": "docs_agents_navigation_all_of_it_lives_in_assets",
+      "label": "Navigation (all of it lives in `assets/`)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Codebase Guide for AI Agents (AGENTS.md)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "navigation (all of it lives in `assets/`)",
+      "source_file": "docs/AGENTS.md",
+      "source_location": "L80"
     },
     {
       "id": "docs_agents_theme_single_warm_light_theme",
@@ -145,7 +325,7 @@
       "node_kind": "heading",
       "norm_label": "theme (single warm light theme)",
       "source_file": "docs/AGENTS.md",
-      "source_location": "L77"
+      "source_location": "L101"
     },
     {
       "id": "transformers_2_agents_1_overview_purpose",
@@ -570,6 +750,66 @@
       "source_location": "L1"
     },
     {
+      "id": "docs_agents",
+      "label": "docs/AGENTS.md",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "Transformer Architecture Glossary",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "docs/agents.md",
+      "source_file": "docs/AGENTS.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_claude",
+      "label": "docs/CLAUDE.md",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "Transformer Architecture Glossary",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "docs/claude.md",
+      "source_file": "docs/CLAUDE.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_claude_bilingual_parity_rule_must_follow",
+      "label": "\u26a0\ufe0f Bilingual parity rule (must follow)",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "Transformer Architecture Glossary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u26a0\ufe0f bilingual parity rule (must follow)",
+      "source_file": "docs/CLAUDE.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "docs_claude_claude_md",
+      "label": "docs/CLAUDE.md",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "Transformer Architecture Glossary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "docs/claude.md",
+      "source_file": "docs/CLAUDE.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_claude_graphify",
+      "label": "graphify",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "Transformer Architecture Glossary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "graphify",
+      "source_file": "docs/CLAUDE.md",
+      "source_location": "L10"
+    },
+    {
       "id": "docs_glossary",
       "label": "GLOSSARY.md",
       "_origin": "ast",
@@ -758,6 +998,17 @@
       "source_location": "L3"
     },
     {
+      "id": "assets_lessons",
+      "label": "lessons.js",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "lessons.js",
+      "file_type": "code",
+      "norm_label": "lessons.js",
+      "source_file": "assets/lessons.js",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_mission",
       "label": "MISSION.md",
       "_origin": "ast",
@@ -830,64 +1081,15 @@
       "source_location": "L3"
     },
     {
-      "id": "docs_agents",
-      "label": "docs/AGENTS.md",
+      "id": "assets_site_nav",
+      "label": "site-nav.js",
       "_origin": "ast",
       "community": 4,
-      "community_name": "docs/CLAUDE.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "docs/agents.md",
-      "source_file": "docs/AGENTS.md",
+      "community_name": "site-nav.js",
+      "file_type": "code",
+      "norm_label": "site-nav.js",
+      "source_file": "assets/site-nav.js",
       "source_location": "L1"
-    },
-    {
-      "id": "docs_claude",
-      "label": "docs/CLAUDE.md",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "docs/CLAUDE.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "docs/claude.md",
-      "source_file": "docs/CLAUDE.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_claude_bilingual_parity_rule_must_follow",
-      "label": "\u26a0\ufe0f Bilingual parity rule (must follow)",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "docs/CLAUDE.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\u26a0\ufe0f bilingual parity rule (must follow)",
-      "source_file": "docs/CLAUDE.md",
-      "source_location": "L5"
-    },
-    {
-      "id": "docs_claude_claude_md",
-      "label": "docs/CLAUDE.md",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "docs/CLAUDE.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "docs/claude.md",
-      "source_file": "docs/CLAUDE.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_claude_graphify",
-      "label": "graphify",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "docs/CLAUDE.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "graphify",
-      "source_file": "docs/CLAUDE.md",
-      "source_location": "L8"
     },
     {
       "id": "docs_resources",
@@ -1037,6 +1239,244 @@
   ],
   "links": [
     {
+      "source": "assets_site_nav_markscrollers",
+      "target": "assets_site_nav_paintedges",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L331",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav_onscrollframe",
+      "target": "assets_site_nav_setcurrentsection",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L424",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav_onscrollframe",
+      "target": "assets_site_nav_sheetisopen",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L428",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav_opensheet",
+      "target": "assets_site_nav_selecttab",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L223",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav_paintcomplete",
+      "target": "assets_site_nav_t",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L308",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav_setcurrentsection",
+      "target": "assets_site_nav_t",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L406",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav_wirepager",
+      "target": "assets_site_nav_filefor",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "assets/site-nav.js",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_selecttab",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_opensheet",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_closesheet",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L231",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_sheetisopen",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L245",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_paintcomplete",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L305",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_filefor",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_titleof",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_markscrollers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L322",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_paintedges",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L338",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_t",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_setcurrentsection",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L396",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_onscrollframe",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L411",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_wirepager",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "assets_site_nav",
+      "target": "assets_site_nav_buildtoclist",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "assets/site-nav.js",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
       "source": "docs_agents",
       "target": "docs_agents_codebase_guide_for_ai_agents_agents_md",
       "relation": "contains",
@@ -1066,7 +1506,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/AGENTS.md",
-      "source_location": "L56",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -1077,7 +1517,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/AGENTS.md",
-      "source_location": "L64",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_agents_3_core_application_architecture",
+      "target": "docs_agents_navigation_all_of_it_lives_in_assets",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/AGENTS.md",
+      "source_location": "L80",
       "weight": 1.0
     },
     {
@@ -1088,7 +1539,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/AGENTS.md",
-      "source_location": "L77",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -1099,7 +1550,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/AGENTS.md",
-      "source_location": "L84",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_agents_codebase_guide_for_ai_agents_agents_md",
+      "target": "docs_agents_5_development_guidelines_constraints",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/AGENTS.md",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -1110,7 +1572,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/AGENTS.md",
-      "source_location": "L120",
+      "source_location": "L147",
       "weight": 1.0
     },
     {
@@ -1132,7 +1594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/AGENTS.md",
-      "source_location": "L52",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -1154,18 +1616,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/AGENTS.md",
-      "source_location": "L75",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_agents_codebase_guide_for_ai_agents_agents_md",
-      "target": "docs_agents_5_development_guidelines_constraints",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/AGENTS.md",
-      "source_location": "L93",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -1181,6 +1632,17 @@
     },
     {
       "source": "docs_claude_claude_md",
+      "target": "docs_claude_graphify",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/CLAUDE.md",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_claude_claude_md",
       "target": "docs_claude_bilingual_parity_rule_must_follow",
       "relation": "contains",
       "_origin": "ast",
@@ -1188,17 +1650,6 @@
       "confidence_score": 1.0,
       "source_file": "docs/CLAUDE.md",
       "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_claude_claude_md",
-      "target": "docs_claude_graphify",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/CLAUDE.md",
-      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -1730,6 +2181,17 @@
       "weight": 1.0
     },
     {
+      "source": "docs_agents",
+      "target": "docs_glossary",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/AGENTS.md",
+      "source_location": "L171",
+      "weight": 1.0
+    },
+    {
       "source": "docs_claude",
       "target": "docs_agents",
       "relation": "references",
@@ -1742,5 +2204,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "259411ee05cb8f2c29df9e0ed527f302104cfa29"
+  "built_at_commit": "630c57ac06cd0d38b1b39b59490644b6b7430fc5"
 }
