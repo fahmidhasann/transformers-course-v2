@@ -805,20 +805,20 @@
                     <text x="690" y="95" class="diag-tok">fast.</text>
                     
                     <!-- Arcs -->
-                    <!-- Head 3: cute -> dog. Above arc -->
-                    <path d="M 95 75 Q 125 35 150 72" class="diag-arc diag-arc-h3" marker-end="url(#arr-h3)"/>
+                    <!-- Head 3: dog -> cute (backward under causal mask). Above arc -->
+                    <path d="M 150 75 Q 125 35 97 72" class="diag-arc diag-arc-h3" marker-end="url(#arr-h3)"/>
                     <text x="125" y="25" class="diag-label diag-label-h3">Head 3 (Describer)</text>
 
-                    <!-- Head 1: dog -> chased. Below arc -->
-                    <path d="M 155 105 Q 195 145 230 108" class="diag-arc diag-arc-h1" marker-end="url(#arr-h1)"/>
+                    <!-- Head 1: chased -> dog (backward under causal mask). Below arc -->
+                    <path d="M 235 105 Q 195 145 158 108" class="diag-arc diag-arc-h1" marker-end="url(#arr-h1)"/>
                     <text x="195" y="160" class="diag-label diag-label-h1">Head 1 (Action Tracker)</text>
 
                     <!-- Head 2: it -> cat. Above arc -->
                     <path d="M 495 75 Q 420 10 355 72" class="diag-arc diag-arc-h2" marker-end="url(#arr-h2)"/>
                     <text x="425" y="15" class="diag-label diag-label-h2">Head 2 (Pronoun Detective)</text>
 
-                    <!-- Head 4: running -> fast. Below arc -->
-                    <path d="M 615 105 Q 650 145 685 108" class="diag-arc diag-arc-h4" marker-end="url(#arr-h4)"/>
+                    <!-- Head 4: fast -> running (backward under causal mask). Below arc -->
+                    <path d="M 690 105 Q 650 145 618 108" class="diag-arc diag-arc-h4" marker-end="url(#arr-h4)"/>
                     <text x="650" y="160" class="diag-label diag-label-h4">Head 4 (Order Keeper)</text>
                 </svg>
             </div>
@@ -940,6 +940,7 @@
             <h2>Interactive Multi-Head Attention Visualizer</h2>
             <p>Select different Attention Heads below and click on any word in the sentence (which acts as the <strong>Query Word</strong>). Observe how different heads shift their attention distribution across the sentence.</p>
             
+            <p class="viz-note" style="font-size:0.92rem; background: var(--card-bg-alt); padding: 0.75rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);"><strong>Note:</strong> A <span class="tech-term">causal mask</span> is applied here - a word can never attend to words that come after it, so those weights are always 0%. Each row sums to exactly 100%. (The numbers are illustrative teaching values, not dumped from a trained model.)</p>
             <!-- Head Selector Tabs -->
             <div class="head-selector">
                 <button class="head-btn head1-active active" id="btn-head1" onclick="selectHead('head1')">Head 1: Subject-Verb</button>
@@ -956,10 +957,10 @@
             <!-- Visualizer Feedback & Bars -->
             <div class="viz-details-panel">
                 <div class="layer-detail-title" style="color: var(--accent-cyan);">
-                    <span>Selected Query:</span> <strong id="query-word-display" style="font-family: var(--font-heading); background: rgba(var(--ink-rgb),0.1); padding: 0.1rem 0.6rem; border-radius:4px;">cute</strong>
+                    <span>Selected Query:</span> <strong id="query-word-display" style="font-family: var(--font-heading); background: rgba(var(--ink-rgb),0.1); padding: 0.1rem 0.6rem; border-radius:4px;">chased</strong>
                 </div>
                 <div class="viz-explanation border-head1" id="explanation-box">
-                    "cute" (adjective) directly points to the noun it modifies - which is "dog".
+                    'chased' looks back to find who performs the action - 'dog' (the subject). The object 'cat' has not appeared yet, so the causal mask blocks any attention to it.
                 </div>
                 
                 <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-secondary);">Attention Weights:</h3>
@@ -1088,22 +1089,23 @@
                 colorClass: "color-head1",
                 borderClass: "border-head1",
                 weights: [
-                    [0.60, 0.05, 0.15, 0.05, 0.05, 0.05, 0.01, 0.01, 0.01, 0.01, 0.01], // The
-                    [0.05, 0.70, 0.15, 0.03, 0.02, 0.02, 0.01, 0.01, 0.01, 0.00, 0.00], // cute
-                    [0.05, 0.15, 0.20, 0.45, 0.02, 0.05, 0.02, 0.02, 0.02, 0.01, 0.01], // dog
-                    [0.02, 0.03, 0.65, 0.15, 0.02, 0.10, 0.01, 0.01, 0.01, 0.00, 0.00], // chased
-                    [0.01, 0.01, 0.03, 0.05, 0.60, 0.20, 0.05, 0.02, 0.01, 0.01, 0.01], // the
-                    [0.01, 0.01, 0.05, 0.55, 0.03, 0.25, 0.02, 0.04, 0.02, 0.01, 0.01], // cat
-                    [0.01, 0.01, 0.02, 0.05, 0.01, 0.05, 0.70, 0.05, 0.05, 0.03, 0.02], // because
-                    [0.01, 0.01, 0.05, 0.05, 0.01, 0.15, 0.05, 0.20, 0.10, 0.35, 0.02], // it
-                    [0.01, 0.01, 0.02, 0.02, 0.01, 0.05, 0.05, 0.50, 0.20, 0.10, 0.03], // was
-                    [0.01, 0.01, 0.02, 0.02, 0.01, 0.03, 0.02, 0.60, 0.10, 0.15, 0.03], // running
-                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.05, 0.02, 0.70, 0.16]  // fast
+                    [1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // The (first token: nothing behind it)
+                    [0.15, 0.85, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // cute
+                    [0.10, 0.25, 0.65, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // dog (verb not seen yet)
+                    [0.02, 0.05, 0.70, 0.23, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // chased -> dog
+                    [0.01, 0.01, 0.03, 0.10, 0.85, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // the
+                    [0.01, 0.02, 0.07, 0.55, 0.10, 0.25, 0.00, 0.00, 0.00, 0.00, 0.00], // cat -> chased
+                    [0.01, 0.01, 0.05, 0.15, 0.01, 0.07, 0.70, 0.00, 0.00, 0.00, 0.00], // because
+                    [0.01, 0.01, 0.15, 0.02, 0.01, 0.25, 0.10, 0.45, 0.00, 0.00, 0.00], // it
+                    [0.01, 0.01, 0.03, 0.02, 0.01, 0.10, 0.02, 0.60, 0.20, 0.00, 0.00], // was -> it
+                    [0.01, 0.01, 0.02, 0.01, 0.01, 0.05, 0.01, 0.55, 0.18, 0.15, 0.00], // running -> it
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.05, 0.03, 0.70, 0.15] // fast -> running
+                
                 ],
                 explanations: {
-                    "chased": "'chased' identifies who performs the action ('dog') and who it is performed on ('cat').",
-                    "dog": "'dog' (subject) relates to its main action ('chased').",
-                    "cat": "'cat' (object) is linked to the verb 'chased' acting upon it.",
+                    "chased": "'chased' looks back to find who performs the action - 'dog' (the subject). The object 'cat' has not appeared yet, so the causal mask blocks any attention to it.",
+                    "dog": "'dog' (subject) cannot see its verb yet, because 'chased' comes later. The subject-verb link is formed when 'chased' looks back.",
+                    "cat": "'cat' (object) looks back and connects to the verb 'chased' acting upon it.",
                     "running": "'running' focuses on its subject 'it' (which refers to the cat).",
                     "was": "'was' focuses on its subject 'it'."
                 },
@@ -1116,22 +1118,23 @@
                 colorClass: "color-head2",
                 borderClass: "border-head2",
                 weights: [
-                    [0.80, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02],
-                    [0.02, 0.85, 0.03, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.00, 0.01],
-                    [0.02, 0.08, 0.80, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.00, 0.01],
-                    [0.01, 0.01, 0.05, 0.85, 0.01, 0.04, 0.01, 0.01, 0.01, 0.00, 0.00],
-                    [0.01, 0.01, 0.02, 0.02, 0.80, 0.10, 0.01, 0.01, 0.01, 0.00, 0.01],
-                    [0.01, 0.01, 0.05, 0.05, 0.02, 0.70, 0.01, 0.12, 0.01, 0.01, 0.01],
-                    [0.01, 0.01, 0.02, 0.02, 0.01, 0.02, 0.85, 0.02, 0.02, 0.01, 0.01],
-                    [0.01, 0.01, 0.15, 0.02, 0.01, 0.70, 0.02, 0.05, 0.01, 0.01, 0.01], // "it" focus 70% on "cat" and 15% on "dog"
-                    [0.01, 0.01, 0.05, 0.02, 0.01, 0.35, 0.02, 0.50, 0.02, 0.01, 0.01],
-                    [0.01, 0.01, 0.05, 0.02, 0.01, 0.25, 0.02, 0.40, 0.05, 0.15, 0.03],
-                    [0.01, 0.01, 0.02, 0.02, 0.01, 0.10, 0.02, 0.15, 0.02, 0.05, 0.60]
+                    [1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // The
+                    [0.10, 0.90, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // cute
+                    [0.05, 0.10, 0.85, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // dog
+                    [0.02, 0.02, 0.06, 0.90, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // chased
+                    [0.01, 0.01, 0.02, 0.06, 0.90, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // the
+                    [0.01, 0.01, 0.05, 0.05, 0.08, 0.80, 0.00, 0.00, 0.00, 0.00, 0.00], // cat (pronoun comes later)
+                    [0.01, 0.01, 0.02, 0.03, 0.01, 0.05, 0.87, 0.00, 0.00, 0.00, 0.00], // because
+                    [0.01, 0.01, 0.15, 0.02, 0.02, 0.70, 0.03, 0.06, 0.00, 0.00, 0.00], // it -> cat 70%, dog 15%
+                    [0.01, 0.01, 0.05, 0.01, 0.01, 0.35, 0.01, 0.50, 0.05, 0.00, 0.00], // was
+                    [0.01, 0.01, 0.05, 0.01, 0.01, 0.25, 0.01, 0.40, 0.05, 0.20, 0.00], // running
+                    [0.01, 0.01, 0.02, 0.01, 0.01, 0.10, 0.01, 0.15, 0.02, 0.06, 0.60] // fast
+                
                 ],
                 explanations: {
-                    "it": "'it' (pronoun) establishes a 70% connection with the noun 'cat' (and 15% with 'dog'), resolving its reference. It focuses more on the cat because the cat was running.",
-                    "cat": "Shows the connection between the cat and the pronoun 'it' referring to it.",
-                    "was": "Attends back towards 'it' and 'cat' to maintain subject-verb-complement agreement."
+                    "it": "'it' (pronoun) picks 'cat' out of the nouns behind it (70%) over 'dog' (15%), resolving its reference. That is pronoun resolution.",
+                    "cat": "'cat' stays quiet here - the pronoun that refers to it comes later. The link is formed when 'it' looks back and finds 'cat'.",
+                    "was": "'was' holds attention on its subject 'it' and on 'cat', the noun that 'it' stands for."
                 },
                 defaultExplanation: "This head resolves pronoun references by linking pronouns to their antecedent nouns."
             },
@@ -1142,23 +1145,24 @@
                 colorClass: "color-head3",
                 borderClass: "border-head3",
                 weights: [
-                    [0.70, 0.10, 0.10, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.00, 0.01],
-                    [0.02, 0.10, 0.82, 0.01, 0.01, 0.01, 0.01, 0.01, 0.00, 0.00, 0.01], // cute -> dog
-                    [0.01, 0.75, 0.20, 0.01, 0.01, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00], // dog -> cute
-                    [0.01, 0.01, 0.02, 0.90, 0.01, 0.02, 0.01, 0.01, 0.00, 0.01, 0.00],
-                    [0.01, 0.01, 0.01, 0.02, 0.75, 0.15, 0.01, 0.01, 0.01, 0.01, 0.01],
-                    [0.01, 0.01, 0.01, 0.02, 0.60, 0.30, 0.01, 0.01, 0.01, 0.01, 0.01],
-                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.90, 0.01, 0.01, 0.01, 0.01],
-                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.02, 0.85, 0.03, 0.02, 0.01],
-                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.05, 0.80, 0.05, 0.02],
-                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.05, 0.15, 0.72], // running -> fast
-                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.85, 0.07]  // fast -> running
+                    [1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // The
+                    [0.20, 0.80, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // cute (noun not seen yet)
+                    [0.10, 0.75, 0.15, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // dog -> cute
+                    [0.01, 0.02, 0.05, 0.92, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // chased
+                    [0.01, 0.01, 0.02, 0.06, 0.90, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // the
+                    [0.01, 0.02, 0.02, 0.05, 0.60, 0.30, 0.00, 0.00, 0.00, 0.00, 0.00], // cat -> the
+                    [0.01, 0.01, 0.01, 0.02, 0.01, 0.02, 0.92, 0.00, 0.00, 0.00, 0.00], // because
+                    [0.01, 0.01, 0.02, 0.01, 0.01, 0.03, 0.03, 0.88, 0.00, 0.00, 0.00], // it
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.07, 0.85, 0.00, 0.00], // was
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.03, 0.10, 0.80, 0.00], // running
+                    [0.01, 0.01, 0.01, 0.00, 0.00, 0.01, 0.00, 0.01, 0.03, 0.80, 0.12] // fast -> running
+                
                 ],
                 explanations: {
-                    "cute": "'cute' (adjective) focuses 82% of its attention on 'dog', showing which noun it describes.",
-                    "dog": "Connects back with the modifying adjective 'cute'.",
-                    "fast": "'fast' (adverb) modifies the action 'running', indicating the speed of the run.",
-                    "running": "Links with 'fast' to capture the description of the action."
+                    "cute": "'cute' (adjective) cannot yet see what it describes, because 'dog' comes later and the causal mask blocks forward attention. The link is formed one step later, when 'dog' looks back.",
+                    "dog": "'dog' (noun) looks back and forms a strong link (75%) with its adjective 'cute' - that is the modifier relation.",
+                    "fast": "'fast' (adverb) looks back and attaches to the verb 'running' (80%), describing the speed of the run.",
+                    "running": "'running' cannot see its modifier 'fast' yet; the link is formed when 'fast' looks back."
                 },
                 defaultExplanation: "This head connects adjectives and adverbs to the nouns and verbs they modify."
             },
@@ -1169,22 +1173,30 @@
                 colorClass: "color-head4",
                 borderClass: "border-head4",
                 weights: [
-                    [0.95, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // The
-                    [0.80, 0.15, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // cute -> The
-                    [0.02, 0.78, 0.15, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // dog -> cute
-                    [0.00, 0.02, 0.80, 0.15, 0.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // chased -> dog
-                    [0.00, 0.00, 0.02, 0.78, 0.15, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00], // the -> chased
-                    [0.00, 0.00, 0.00, 0.02, 0.80, 0.15, 0.03, 0.00, 0.00, 0.00, 0.00], // cat -> the
-                    [0.00, 0.00, 0.00, 0.00, 0.02, 0.78, 0.15, 0.05, 0.00, 0.00, 0.00], // because -> cat
-                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.80, 0.15, 0.03, 0.00, 0.00], // it -> because
-                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.78, 0.15, 0.05, 0.00], // was -> it
-                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.80, 0.15, 0.03], // running -> was
-                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.82, 0.16]  // fast -> running
+                    [1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // The
+                    [0.85, 0.15, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // cute -> The
+                    [0.05, 0.80, 0.15, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // dog -> cute
+                    [0.00, 0.05, 0.80, 0.15, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // chased -> dog
+                    [0.00, 0.00, 0.05, 0.80, 0.15, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], // the -> chased
+                    [0.00, 0.00, 0.00, 0.05, 0.80, 0.15, 0.00, 0.00, 0.00, 0.00, 0.00], // cat -> the
+                    [0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15, 0.00, 0.00, 0.00, 0.00], // because -> cat
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15, 0.00, 0.00, 0.00], // it -> because
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15, 0.00, 0.00], // was -> it
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15, 0.00], // running -> was
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15] // fast -> running
+                
                 ],
                 explanations: {},
                 defaultExplanation: "This head focuses on local sequences, usually attending to the immediately preceding token, helping to preserve word order context."
             }
         };
+
+        // sanity check: every row must be a causal probability distribution
+        Object.entries(attnData).forEach(([key, h]) => h.weights.forEach((row, i) => {
+            const sum = row.reduce((a, b) => a + b, 0);
+            console.assert(Math.abs(sum - 1) < 0.005, `${key} row ${i} sums to ${sum}`);
+            console.assert(row.slice(i + 1).every(w => w === 0), `${key} row ${i} attends to future tokens`);
+        }));
 
         const layerDetails = {
             bottom: {
@@ -1226,7 +1238,7 @@
         };
 
         let activeHeadKey = 'head1';
-        let activeQueryIndex = 1; // "cute"
+        let activeQueryIndex = 3; // "chased"
 
         // Initialize Visualizer Tokens
         function initVisualizer() {
