@@ -936,37 +936,58 @@
             <p>এই কৌশলের কারণে মডেলটি কোনো অতিরিক্ত সময় ব্যয় না করেই একটি শব্দকে একই সাথে ৪টি ভিন্ন দিক থেকে চিন্তা করতে পারে!</p>
         </div>
 
-        <!-- Interactive Visualizer Card -->
-        <div class="card">
+        <!-- Interactive Visualizer Card (Optional Deep Dive) -->
+        <div class="card deepdive-card" id="mha-visualizer-card">
+            <div class="deepdive-badge-bar">
+                <span class="deepdive-badge">✨ ঐচ্ছিক / Deep Dive</span>
+            </div>
             <h2>Interactive Multi-Head Attention Visualizer</h2>
-            <p>নিচের বিভিন্ন Attention Head সিলেক্ট করুন এবং বাক্যের যেকোনো একটি শব্দে ক্লিক করুন (যা হবে <strong>Query Word</strong>)। দেখুন কীভাবে ভিন্ন ভিন্ন হেডের অধীনে শব্দটি বাক্যের অন্যান্য শব্দের ওপর মনোযোগের পার্সেন্টেজ পরিবর্তন করছে।</p>
+            <p class="deepdive-teaser">বিভিন্ন Attention Head কীভাবে বাক্যের বিভিন্ন শব্দের পারস্পরিক সম্পর্কের ওপর ফোকাস করে, তা নিজে ক্লিক করে পরীক্ষা করতে নিচের বাটনে চাপ দিন। চাইলে এটি এড়িয়ে পরের অংশে চলে যেতে পারেন।</p>
             
-            <p class="viz-note" style="font-size:0.92rem; background: var(--card-bg-alt); padding: 0.75rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);"><strong>খেয়াল করুন:</strong> এখানে <span class="tech-term">Causal Mask</span> প্রয়োগ করা আছে — অর্থাৎ কোনো শব্দ তার পরের শব্দগুলোর দিকে তাকাতে পারে না, তাই সেগুলোর মান সবসময় ০%। প্রতিটি সারির মোট যোগফল ঠিক ১০০%। (সংখ্যাগুলো শেখার সুবিধার জন্য তৈরি করা উদাহরণ, কোনো প্রশিক্ষিত মডেল থেকে নেওয়া নয়।)</p>
-            <!-- Head Selector Tabs -->
-            <div class="head-selector">
-                <button class="head-btn head1-active active" id="btn-head1" onclick="selectHead('head1')">Head 1: Subject-Verb</button>
-                <button class="head-btn" id="btn-head2" onclick="selectHead('head2')">Head 2: Pronoun Resolution</button>
-                <button class="head-btn" id="btn-head3" onclick="selectHead('head3')">Head 3: Modifier/Adjective</button>
-                <button class="head-btn" id="btn-head4" onclick="selectHead('head4')">Head 4: Local Context</button>
+            <div class="deepdive-actions">
+                <button class="deepdive-toggle-btn" type="button" aria-expanded="false" onclick="toggleDeepDive('mha-visualizer-card')" data-open-text="ভিজ্যুয়ালাইজার সংকুচিত করুন" data-close-text="ইন্টারেক্টিভ ভিজ্যুয়ালাইজার চালু করুন">
+                    <span class="btn-text">ইন্টারেক্টিভ ভিজ্যুয়ালাইজার চালু করুন</span>
+                    <span class="toggle-icon">▾</span>
+                </button>
             </div>
 
-            <!-- Tokens Workspace -->
-            <div class="visualizer-tokens" id="tokens-container">
-                <!-- Javascript will inject tokens here -->
-            </div>
-
-            <!-- Visualizer Feedback & Bars -->
-            <div class="viz-details-panel">
-                <div class="layer-detail-title" style="color: var(--accent-cyan);">
-                    <span>Selected Query:</span> <strong id="query-word-display" style="font-family: var(--font-heading); background: rgba(var(--ink-rgb),0.1); padding: 0.1rem 0.6rem; border-radius:4px;">chased</strong>
-                </div>
-                <div class="viz-explanation border-head1" id="explanation-box">
-                    'chased' (ক্রিয়া) পেছনে তাকিয়ে খুঁজে বের করছে এই কাজটি কে করেছে — 'dog' (কর্তা)। কর্মপদ 'cat' এখনো আসেনি, তাই Causal Mask-এর কারণে সেদিকে তাকানো সম্ভব নয়।
-                </div>
+            <div class="deepdive-content">
+                <p>নিচের বিভিন্ন Attention Head সিলেক্ট করুন এবং বাক্যের যেকোনো একটি শব্দে ক্লিক করুন (যা হবে <strong>Query Word</strong>)। দেখুন কীভাবে ভিন্ন ভিন্ন হেডের অধীনে শব্দটি বাক্যের অন্যান্য শব্দের ওপর মনোযোগের পার্সেন্টেজ পরিবর্তন করছে।</p>
                 
-                <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-secondary);">Attention Weights (মনোযোগের হার):</h3>
-                <div class="attention-chart" id="chart-container">
-                    <!-- Javascript will inject chart rows here -->
+                <p class="viz-note" style="font-size:0.92rem; background: var(--card-bg-alt); padding: 0.75rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);"><strong>খেয়াল করুন:</strong> এখানে <span class="tech-term">Causal Mask</span> প্রয়োগ করা আছে — অর্থাৎ কোনো শব্দ তার পরের শব্দগুলোর দিকে তাকাতে পারে না, তাই সেগুলোর মান সবসময় ০%। প্রতিটি সারির মোট যোগফল ঠিক ১০০%। (সংখ্যাগুলো শেখার সুবিধার জন্য তৈরি করা উদাহরণ, কোনো প্রশিক্ষিত মডেল থেকে নেওয়া নয়।)</p>
+                
+                <!-- Head Selector Tabs -->
+                <div class="head-selector">
+                    <button class="head-btn head1-active active" id="btn-head1" onclick="selectHead('head1')">Head 1: Subject-Verb</button>
+                    <button class="head-btn" id="btn-head2" onclick="selectHead('head2')">Head 2: Pronoun Resolution</button>
+                    <button class="head-btn" id="btn-head3" onclick="selectHead('head3')">Head 3: Modifier/Adjective</button>
+                    <button class="head-btn" id="btn-head4" onclick="selectHead('head4')">Head 4: Local Context</button>
+                </div>
+
+                <!-- Tokens Workspace -->
+                <div class="visualizer-tokens" id="tokens-container">
+                    <!-- Javascript will inject tokens here -->
+                </div>
+
+                <!-- Visualizer Feedback & Bars -->
+                <div class="viz-details-panel">
+                    <div class="layer-detail-title" style="color: var(--accent-cyan);">
+                        <span>Selected Query:</span> <strong id="query-word-display" style="font-family: var(--font-heading); background: rgba(var(--ink-rgb),0.1); padding: 0.1rem 0.6rem; border-radius:4px;">chased</strong>
+                    </div>
+                    <div class="viz-explanation border-head1" id="explanation-box">
+                        'chased' (ক্রিয়া) পেছনে তাকিয়ে খুঁজে বের করছে এই কাজটি কে করেছে — 'dog' (কর্তা)। কর্মপদ 'cat' এখনো আসেনি, তাই Causal Mask-এর কারণে সেদিকে তাকানো সম্ভব নয়।
+                    </div>
+                    
+                    <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-secondary);">Attention Weights (মনোযোগের হার):</h3>
+                    <div class="attention-chart" id="chart-container">
+                        <!-- Javascript will inject chart rows here -->
+                    </div>
+                </div>
+
+                <div class="deepdive-footer">
+                    <button class="deepdive-footer-btn" type="button" onclick="collapseDeepDive('mha-visualizer-card')">
+                        <span>ভিজ্যুয়ালাইজার সংকুচিত করুন</span> ▴
+                    </button>
                 </div>
             </div>
         </div>

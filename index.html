@@ -983,6 +983,10 @@
             box-shadow: var(--shadow-soft);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+        .resume-card[hidden],
+        [hidden] {
+            display: none !important;
+        }
         .resume-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
         .resume-card-body { flex: 1; min-width: 0; }
         .resume-card-eyebrow {
@@ -2014,6 +2018,7 @@
         ];
 
         // --- 2. Logical State Management ---
+        const TABS = ['dashboard', 'lessons', 'glossary', 'resources', 'quiz'];
         let currentTab = "dashboard";
 
         // Active pointer arrays based on language
@@ -2031,8 +2036,17 @@
         let quizCurrentStep = 0; 
         let quizUserAnswers = [];
 
+        // Helper to safely get language from localStorage
+        function getStoredLang() {
+            var raw = (window.lsGet && window.LS_KEYS) ? window.lsGet(window.LS_KEYS.lang, 'bn') : (localStorage.getItem('lang') || 'bn');
+            if (typeof raw === 'string') {
+                raw = raw.replace(/^["']|["']$/g, '').trim();
+            }
+            return (raw === 'en') ? 'en' : 'bn';
+        }
+
         // Language state
-        let currentLang = localStorage.getItem('lang') || 'bn';
+        let currentLang = getStoredLang();
 
         // Translation Maps
         const uiTranslations = {
@@ -2156,16 +2170,42 @@
             }
         };
 
-        // --- 3. Initial Load Hook ---
+        // --- 3. Initial Load & BFCache Hooks ---
+        function initApp() {
+            loadStateFromLocalStorage();
+            syncLanguage();
+            applyHash();
+            renderResumeCard();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+
         window.addEventListener('load', () => {
             loadStateFromLocalStorage();
             syncLanguage();
-            
+            renderResumeCard();
+        });
+
+        // Ensure state & continue reading card are refreshed on browser Back/Forward (BFCache restore)
+        window.addEventListener('pageshow', () => {
+            loadStateFromLocalStorage();
+            syncLanguage();
             applyHash();
             renderResumeCard();
         });
 
-        const TABS = ['dashboard', 'lessons', 'glossary', 'resources', 'quiz'];
+        // Ensure state is refreshed when returning to tab
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                loadStateFromLocalStorage();
+                renderResumeCard();
+                if (currentTab === 'dashboard') updateDashboardAnalytics();
+            }
+        });
 
         // Offer the reader their place back: the lesson they last scrolled in,
         // otherwise the first one they have not finished.
@@ -2173,29 +2213,44 @@
             const card = document.getElementById('resume-card');
             if (!card) return;
             const isEn = (currentLang === 'en');
-            const scrolls = window.lsGet(window.LS_KEYS.scroll, {}) || {};
-            const lastId = scrolls.__last;
+            const scrolls = (window.lsGet && window.LS_KEYS) ? (window.lsGet(window.LS_KEYS.scroll, {}) || {}) : {};
+            const lastId = (typeof scrolls === 'object' && scrolls !== null) ? scrolls.__last : null;
 
             let lesson = lastId && activeLessonsData.find(l => l.id === lastId);
             let resuming = !!lesson;
             if (!lesson) {
                 lesson = activeLessonsData.find(l => (lessonProgress[l.id] || 'not-started') !== 'completed');
             }
-            if (!lesson) { card.hidden = true; return; }
+            if (!lesson) {
+                card.hidden = true;
+                card.style.display = 'none';
+                card.removeAttribute('href');
+                card.innerHTML = '';
+                return;
+            }
 
-            const offset = resuming ? Math.round(scrolls[lesson.id] || 0) : 0;
+            const offset = (resuming && typeof scrolls === 'object' && scrolls !== null)
+                ? Math.round(Number(scrolls[lesson.id]) || 0)
+                : 0;
             card.href = lesson.file + (offset > 0 ? '?scroll=' + offset : '');
             card.innerHTML =
                 '<div class="resume-card-body">' +
                     '<span class="resume-card-eyebrow"></span>' +
                     '<span class="resume-card-title"></span>' +
                 '</div><span class="resume-card-arrow" aria-hidden="true">&rarr;</span>';
-            card.querySelector('.resume-card-eyebrow').textContent = resuming
-                ? (isEn ? 'Continue reading' : 'পড়া চালিয়ে যান')
-                : (isEn ? 'Start here' : 'এখান থেকে শুরু করুন');
-            card.querySelector('.resume-card-title').textContent =
-                (isEn ? 'Lesson ' : 'লেসন ') + lesson.num + ' — ' + lesson.title;
+            const eyebrowEl = card.querySelector('.resume-card-eyebrow');
+            const titleEl = card.querySelector('.resume-card-title');
+            if (eyebrowEl) {
+                eyebrowEl.textContent = resuming
+                    ? (isEn ? 'Continue reading' : 'পড়া চালিয়ে যান')
+                    : (isEn ? 'Start here' : 'এখান থেকে শুরু করুন');
+            }
+            if (titleEl) {
+                titleEl.textContent =
+                    (isEn ? 'Lesson ' : 'লেসন ') + lesson.num + ' — ' + lesson.title;
+            }
             card.hidden = false;
+            card.style.display = 'flex';
         }
 
         function applyHash() {
@@ -2208,15 +2263,28 @@
 
         // --- 4. LocalStorage Syncing ---
         function loadStateFromLocalStorage() {
-            // Load language
-            currentLang = localStorage.getItem('lang') || 'bn';
+            // Load language safely
+            currentLang = getStoredLang();
             
             // Load lesson progress
-            const storedProgress = localStorage.getItem('transformer_lessons_progress');
-            if (storedProgress) {
-                lessonProgress = JSON.parse(storedProgress);
+            var storedProgress = (window.lsGet && window.LS_KEYS)
+                ? window.lsGet(window.LS_KEYS.progress, null)
+                : null;
+            if (storedProgress && typeof storedProgress === 'object' && !Array.isArray(storedProgress)) {
+                lessonProgress = storedProgress;
             } else {
-                // Initialize default
+                try {
+                    const raw = localStorage.getItem('transformer_lessons_progress');
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+                            lessonProgress = parsed;
+                        }
+                    }
+                } catch (e) {}
+            }
+            if (!lessonProgress || typeof lessonProgress !== 'object') {
+                lessonProgress = {};
                 activeLessonsData.forEach(l => {
                     lessonProgress[l.id] = 'not-started';
                 });
@@ -2224,9 +2292,19 @@
             }
 
             // Load goals
-            const storedGoals = localStorage.getItem('transformer_goals');
-            if (storedGoals) {
-                missionGoals = JSON.parse(storedGoals);
+            var storedGoals = (window.lsGet && window.LS_KEYS)
+                ? window.lsGet(window.LS_KEYS.goals, null)
+                : null;
+            if (Array.isArray(storedGoals)) {
+                missionGoals = storedGoals;
+            } else {
+                try {
+                    const raw = localStorage.getItem('transformer_goals');
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        if (Array.isArray(parsed)) missionGoals = parsed;
+                    }
+                } catch (e) {}
             }
             // Sync goal checkbox UI
             missionGoals.forEach((val, idx) => {
@@ -2238,18 +2316,36 @@
             });
 
             // Load quiz score
-            const storedQuiz = localStorage.getItem('transformer_quiz_score');
-            if (storedQuiz) {
-                quizScore = parseInt(storedQuiz);
+            var storedQuiz = (window.lsGet && window.LS_KEYS)
+                ? window.lsGet(window.LS_KEYS.quiz, null)
+                : null;
+            if (storedQuiz !== null && !isNaN(parseInt(storedQuiz, 10))) {
+                quizScore = parseInt(storedQuiz, 10);
+            } else {
+                try {
+                    const raw = localStorage.getItem('transformer_quiz_score');
+                    if (raw !== null && !isNaN(parseInt(raw, 10))) {
+                        quizScore = parseInt(raw, 10);
+                    }
+                } catch (e) {}
             }
         }
 
         function saveStateToLocalStorage() {
-            localStorage.setItem('transformer_lessons_progress', JSON.stringify(lessonProgress));
-            localStorage.setItem('transformer_goals', JSON.stringify(missionGoals));
-            if (quizScore !== null) {
-                localStorage.setItem('transformer_quiz_score', quizScore.toString());
+            if (window.lsSet && window.LS_KEYS) {
+                window.lsSet(window.LS_KEYS.progress, lessonProgress);
+                window.lsSet(window.LS_KEYS.goals, missionGoals);
+                if (quizScore !== null) {
+                    window.lsSet(window.LS_KEYS.quiz, quizScore);
+                }
             }
+            try {
+                localStorage.setItem('transformer_lessons_progress', JSON.stringify(lessonProgress));
+                localStorage.setItem('transformer_goals', JSON.stringify(missionGoals));
+                if (quizScore !== null) {
+                    localStorage.setItem('transformer_quiz_score', quizScore.toString());
+                }
+            } catch (e) {}
         }
 
         // --- 5. UI Renderers ---
@@ -2370,6 +2466,7 @@
 
         // --- 6. Event Handlers & Interactions ---
         function switchTab(tabId) {
+            if (!TABS.includes(tabId)) tabId = 'dashboard';
             currentTab = tabId;
             window.location.hash = tabId;
 
@@ -2377,24 +2474,31 @@
             document.querySelectorAll('.nav-menu li').forEach(li => {
                 li.classList.remove('active');
             });
-            document.getElementById(`nav-${tabId}`).classList.add('active');
+            const navBtn = document.getElementById(`nav-${tabId}`);
+            if (navBtn) navBtn.classList.add('active');
 
             // Headings come from tabTranslations, the same source translateDOM uses.
-            const trans = tabTranslations[currentLang][tabId];
+            const lang = (currentLang === 'en') ? 'en' : 'bn';
+            const transMap = tabTranslations[lang] || tabTranslations.bn;
+            const trans = transMap ? transMap[tabId] : null;
             if (trans) {
-                document.getElementById('page-heading').innerText = trans.title;
-                document.getElementById('page-subheading').innerText = trans.subtitle;
+                const heading = document.getElementById('page-heading');
+                const subheading = document.getElementById('page-subheading');
+                if (heading) heading.innerText = trans.title;
+                if (subheading) subheading.innerText = trans.subtitle;
             }
 
             // Show appropriate sections
             document.querySelectorAll('.view-section').forEach(sec => {
                 sec.classList.remove('active');
             });
-            document.getElementById(`view-${tabId}`).classList.add('active');
+            const viewSection = document.getElementById(`view-${tabId}`);
+            if (viewSection) viewSection.classList.add('active');
 
-            // Analytics updates
+            // Analytics updates & resume card refresh
             if (tabId === 'dashboard') {
                 updateDashboardAnalytics();
+                renderResumeCard();
             }
         }
 
@@ -2609,12 +2713,17 @@
 
         // --- Bilingual Language System ---
         function toggleLanguage() {
-            currentLang = currentLang === 'bn' ? 'en' : 'bn';
-            localStorage.setItem('lang', currentLang);
+            currentLang = (currentLang === 'bn') ? 'en' : 'bn';
+            if (window.lsSet && window.LS_KEYS) {
+                window.lsSet(window.LS_KEYS.lang, currentLang);
+            }
+            try { localStorage.setItem('lang', currentLang); } catch (e) {}
             syncLanguage();
         }
 
         function syncLanguage() {
+            currentLang = (currentLang === 'en') ? 'en' : 'bn';
+
             // 1. Update language button text
             const langBtn = document.getElementById('lang-toggle-btn');
             if (langBtn) {
@@ -2651,30 +2760,33 @@
         }
 
         function translateDOM() {
-            const dict = uiTranslations[currentLang];
-            
-            // Update text content or innerHTML of elements by ID
-            for (const [id, text] of Object.entries(dict)) {
-                const el = document.getElementById(id);
-                if (el) {
-                    if (text.includes('<') || text.includes('&') || text.includes('strong>')) {
-                        el.innerHTML = text;
-                    } else {
-                        el.innerText = text;
+            const lang = (currentLang === 'en') ? 'en' : 'bn';
+            const dict = uiTranslations[lang] || uiTranslations.bn;
+            if (dict) {
+                // Update text content or innerHTML of elements by ID
+                for (const [id, text] of Object.entries(dict)) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        if (text.includes('<') || text.includes('&') || text.includes('strong>')) {
+                            el.innerHTML = text;
+                        } else {
+                            el.innerText = text;
+                        }
                     }
                 }
-            }
-            
-            // Specially translate placeholder for search input
-            const searchInput = document.getElementById('glossary-search');
-            if (searchInput) {
-                searchInput.placeholder = dict["glossary-search-placeholder"];
+                
+                // Specially translate placeholder for search input
+                const searchInput = document.getElementById('glossary-search');
+                if (searchInput && dict["glossary-search-placeholder"]) {
+                    searchInput.placeholder = dict["glossary-search-placeholder"];
+                }
             }
 
             // Specially update headings and subheadings for active tab
             const heading = document.getElementById('page-heading');
             const subheading = document.getElementById('page-subheading');
-            const trans = tabTranslations[currentLang][currentTab];
+            const transMap = tabTranslations[lang] || tabTranslations.bn;
+            const trans = transMap ? transMap[currentTab] : null;
             if (trans && heading && subheading) {
                 heading.innerText = trans.title;
                 subheading.innerText = trans.subtitle;

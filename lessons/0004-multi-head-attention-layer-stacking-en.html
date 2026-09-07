@@ -935,37 +935,58 @@
             <p>This allows the model to process the word from 4 different angles at the exact same speed as thinking from just 1 angle!</p>
         </div>
 
-        <!-- Interactive Visualizer Card -->
-        <div class="card">
+        <!-- Interactive Visualizer Card (Optional Deep Dive) -->
+        <div class="card deepdive-card" id="mha-visualizer-card">
+            <div class="deepdive-badge-bar">
+                <span class="deepdive-badge">✨ Optional / Deep Dive</span>
+            </div>
             <h2>Interactive Multi-Head Attention Visualizer</h2>
-            <p>Select different Attention Heads below and click on any word in the sentence (which acts as the <strong>Query Word</strong>). Observe how different heads shift their attention distribution across the sentence.</p>
+            <p class="deepdive-teaser">Curious to see how different attention heads focus on distinct linguistic relationships across the sentence? Click below to launch the interactive simulator, or feel free to skip ahead.</p>
             
-            <p class="viz-note" style="font-size:0.92rem; background: var(--card-bg-alt); padding: 0.75rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);"><strong>Note:</strong> A <span class="tech-term">causal mask</span> is applied here - a word can never attend to words that come after it, so those weights are always 0%. Each row sums to exactly 100%. (The numbers are illustrative teaching values, not dumped from a trained model.)</p>
-            <!-- Head Selector Tabs -->
-            <div class="head-selector">
-                <button class="head-btn head1-active active" id="btn-head1" onclick="selectHead('head1')">Head 1: Subject-Verb</button>
-                <button class="head-btn" id="btn-head2" onclick="selectHead('head2')">Head 2: Pronoun Resolution</button>
-                <button class="head-btn" id="btn-head3" onclick="selectHead('head3')">Head 3: Modifier/Adjective</button>
-                <button class="head-btn" id="btn-head4" onclick="selectHead('head4')">Head 4: Local Context</button>
+            <div class="deepdive-actions">
+                <button class="deepdive-toggle-btn" type="button" aria-expanded="false" onclick="toggleDeepDive('mha-visualizer-card')" data-open-text="Collapse Visualizer" data-close-text="Explore Interactive Visualizer">
+                    <span class="btn-text">Explore Interactive Visualizer</span>
+                    <span class="toggle-icon">▾</span>
+                </button>
             </div>
 
-            <!-- Tokens Workspace -->
-            <div class="visualizer-tokens" id="tokens-container">
-                <!-- Javascript will inject tokens here -->
-            </div>
-
-            <!-- Visualizer Feedback & Bars -->
-            <div class="viz-details-panel">
-                <div class="layer-detail-title" style="color: var(--accent-cyan);">
-                    <span>Selected Query:</span> <strong id="query-word-display" style="font-family: var(--font-heading); background: rgba(var(--ink-rgb),0.1); padding: 0.1rem 0.6rem; border-radius:4px;">chased</strong>
-                </div>
-                <div class="viz-explanation border-head1" id="explanation-box">
-                    'chased' looks back to find who performs the action - 'dog' (the subject). The object 'cat' has not appeared yet, so the causal mask blocks any attention to it.
-                </div>
+            <div class="deepdive-content">
+                <p>Select different Attention Heads below and click on any word in the sentence (which acts as the <strong>Query Word</strong>). Observe how different heads shift their attention distribution across the sentence.</p>
                 
-                <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-secondary);">Attention Weights:</h3>
-                <div class="attention-chart" id="chart-container">
-                    <!-- Javascript will inject chart rows here -->
+                <p class="viz-note" style="font-size:0.92rem; background: var(--card-bg-alt); padding: 0.75rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);"><strong>Note:</strong> A <span class="tech-term">causal mask</span> is applied here - a word can never attend to words that come after it, so those weights are always 0%. Each row sums to exactly 100%. (The numbers are illustrative teaching values, not dumped from a trained model.)</p>
+                
+                <!-- Head Selector Tabs -->
+                <div class="head-selector">
+                    <button class="head-btn head1-active active" id="btn-head1" onclick="selectHead('head1')">Head 1: Subject-Verb</button>
+                    <button class="head-btn" id="btn-head2" onclick="selectHead('head2')">Head 2: Pronoun Resolution</button>
+                    <button class="head-btn" id="btn-head3" onclick="selectHead('head3')">Head 3: Modifier/Adjective</button>
+                    <button class="head-btn" id="btn-head4" onclick="selectHead('head4')">Head 4: Local Context</button>
+                </div>
+
+                <!-- Tokens Workspace -->
+                <div class="visualizer-tokens" id="tokens-container">
+                    <!-- Javascript will inject tokens here -->
+                </div>
+
+                <!-- Visualizer Feedback & Bars -->
+                <div class="viz-details-panel">
+                    <div class="layer-detail-title" style="color: var(--accent-cyan);">
+                        <span>Selected Query:</span> <strong id="query-word-display" style="font-family: var(--font-heading); background: rgba(var(--ink-rgb),0.1); padding: 0.1rem 0.6rem; border-radius:4px;">chased</strong>
+                    </div>
+                    <div class="viz-explanation border-head1" id="explanation-box">
+                        'chased' looks back to find who performs the action - 'dog' (the subject). The object 'cat' has not appeared yet, so the causal mask blocks any attention to it.
+                    </div>
+                    
+                    <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-secondary);">Attention Weights:</h3>
+                    <div class="attention-chart" id="chart-container">
+                        <!-- Javascript will inject chart rows here -->
+                    </div>
+                </div>
+
+                <div class="deepdive-footer">
+                    <button class="deepdive-footer-btn" type="button" onclick="collapseDeepDive('mha-visualizer-card')">
+                        <span>Collapse Visualizer</span> ▴
+                    </button>
                 </div>
             </div>
         </div>

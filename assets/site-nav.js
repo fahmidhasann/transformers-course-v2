@@ -351,7 +351,9 @@
     if (langBtn && langLabel) {
         langLabel.textContent = isEn ? 'বাংলা' : 'EN';
         langBtn.addEventListener('click', function () {
-            window.lsSet(K.lang, isEn ? 'bn' : 'en');
+            var nextLang = isEn ? 'bn' : 'en';
+            window.lsSet(K.lang, nextLang);
+            try { localStorage.setItem('lang', nextLang); } catch (e) {}
             location.href = baseId + (isEn ? '.html' : '-en.html') +
                             '?scroll=' + Math.round(window.scrollY);
         });
@@ -435,12 +437,17 @@
 
         // Remember where we stopped, so the hub can offer "continue reading".
         clearTimeout(saveTimer);
-        saveTimer = setTimeout(function () {
+        saveTimer = setTimeout(saveReadingPosition, 400);
+    }
+
+    function saveReadingPosition() {
+        try {
             var store = window.lsGet(K.scroll, {}) || {};
-            store[baseId] = Math.round(y);
+            if (typeof store !== 'object' || store === null) store = {};
+            store[baseId] = Math.round(window.scrollY);
             store.__last = baseId;
             window.lsSet(K.scroll, store);
-        }, 400);
+        } catch (e) {}
     }
 
     window.addEventListener('scroll', function () {
@@ -450,8 +457,17 @@
         if (!ticking) { ticking = true; requestAnimationFrame(onScrollFrame); }
     });
 
+    // Flush immediately on unload or when user navigates away/switches tabs
+    window.addEventListener('pagehide', saveReadingPosition);
+    window.addEventListener('beforeunload', saveReadingPosition);
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') saveReadingPosition();
+    });
+
     // Offset in-page jumps so the sticky nav does not cover the heading.
     document.documentElement.style.scrollPaddingTop = (nav.offsetHeight + 16) + 'px';
 
+    // Immediately record this lesson as the last-visited lesson
+    saveReadingPosition();
     onScrollFrame();
 })();

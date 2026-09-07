@@ -52,3 +52,149 @@
     --font-body:      'Noto Sans Bengali', system-ui, sans-serif;
     --font-main:      var(--font-body);
 }
+
+/* ============================================================================
+ * Deep Dive / Optional Interactive Visualizer Card Styles
+ * ==========================================================================*/
+.deepdive-card {
+    border: 1px solid var(--border-color);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+}
+
+.deepdive-card.is-expanded {
+    border-color: var(--accent-cyan);
+    box-shadow: var(--shadow);
+}
+
+.deepdive-badge-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.deepdive-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+    background: var(--tint-cyan);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(14, 116, 144, 0.25);
+}
+
+.deepdive-teaser {
+    color: var(--text-secondary);
+    font-size: 0.96rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.deepdive-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.deepdive-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--tint-cyan);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(14, 116, 144, 0.35);
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    user-select: none;
+}
+
+.deepdive-toggle-btn:hover {
+    background: var(--accent-cyan);
+    color: var(--text-on-accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
+}
+
+.deepdive-toggle-btn .toggle-icon {
+    display: inline-block;
+    transition: transform 0.25s ease;
+    font-size: 0.85em;
+}
+
+.deepdive-card.is-expanded .deepdive-toggle-btn .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.deepdive-content {
+    display: none;
+    opacity: 0;
+    margin-top: 0;
+    transition: opacity 0.3s ease;
+}
+
+.deepdive-card.is-expanded .deepdive-content {
+    display: block;
+    opacity: 1;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--border-color);
+    animation: fadeInDeepDive 0.35s ease-out forwards;
+}
+
+@keyframes fadeInDeepDive {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.deepdive-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border-subtle);
+}
+
+.deepdive-footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--card-bg-alt);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.45rem 1.1rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.deepdive-footer-btn:hover {
+    background: var(--bg-sunk);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+}
+
+/* Ensure [hidden] attribute works reliably across all elements, overriding display:flex/grid */
+[hidden] {
+    display: none !important;
+}

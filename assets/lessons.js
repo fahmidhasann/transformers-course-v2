@@ -72,9 +72,56 @@ window.LS_KEYS = {
 window.lsGet = function (key, fallback) {
     try {
         var raw = localStorage.getItem(key);
-        return raw === null ? fallback : JSON.parse(raw);
+        if (raw === null || raw === undefined) return fallback;
+        try {
+            var val = JSON.parse(raw);
+            if (typeof val === 'string') {
+                val = val.replace(/^["']|["']$/g, '').trim();
+            }
+            return (val !== null && val !== undefined) ? val : fallback;
+        } catch (e) {
+            if (typeof raw === 'string') {
+                raw = raw.replace(/^["']|["']$/g, '').trim();
+            }
+            return raw || fallback;
+        }
     } catch (e) { return fallback; }
 };
 window.lsSet = function (key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+        if (key === (window.LS_KEYS && window.LS_KEYS.lang ? window.LS_KEYS.lang : 'lang')) {
+            try {
+                var cleanLang = (value === 'en') ? 'en' : 'bn';
+                localStorage.setItem('lang', cleanLang);
+            } catch (e2) {}
+        }
+    } catch (e) {}
+};
+
+/* Shared Collapsible Deep-Dive Component Controller */
+window.toggleDeepDive = function (cardId) {
+    var card = typeof cardId === 'string' ? document.getElementById(cardId) : cardId;
+    if (!card) return;
+    var isExpanded = card.classList.toggle('is-expanded');
+    var btn = card.querySelector('.deepdive-toggle-btn');
+    if (btn) {
+        btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        var textSpan = btn.querySelector('.btn-text');
+        var isEn = /-en\.html$/.test((location.pathname || '').toLowerCase());
+        if (textSpan) {
+            var openText = btn.getAttribute('data-open-text') || (isEn ? 'Collapse Visualizer' : 'ভিজ্যুয়ালাইজার সংকুচিত করুন');
+            var closeText = btn.getAttribute('data-close-text') || (isEn ? 'Explore Interactive Visualizer' : 'ইন্টারেক্টিভ ভিজ্যুয়ালাইজার চালু করুন');
+            textSpan.textContent = isExpanded ? openText : closeText;
+        }
+    }
+};
+
+window.collapseDeepDive = function (cardId) {
+    var card = typeof cardId === 'string' ? document.getElementById(cardId) : cardId;
+    if (!card) return;
+    if (card.classList.contains('is-expanded')) {
+        window.toggleDeepDive(card);
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 };
