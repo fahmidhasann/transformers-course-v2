@@ -1203,7 +1203,7 @@
             <ol>
                 <li><span class="highlight">Tokenization:</span> বাক্যকে ছোট ছোট টুকরোতে ভাগ করা এবং প্রতিটি টুকরোকে একটি ইউনিক আইডি নম্বর দেওয়া।</li>
                 <li><span class="highlight">Embedding:</span> সেই নম্বরগুলোকে একটি প্রোফাইল বা ভেক্টরে রূপান্তর করা, যাতে কম্পিউটার বুঝতে পারে শব্দটির আসল অর্থ কী।</li>
-                <li><span class="highlight">Positional Encoding:</span> শব্দের সাথে একটি পজিশন নম্বর যুক্ত করা, যাতে কম্পিউটার বাক্যে শব্দটির অবস্থান বা ক্রম বুঝতে পারে।</li>
+                <li><span class="highlight">Positional Encoding:</span> শব্দের সাথে তার অবস্থানের তথ্য (একটি পজিশন ভেক্টর) যুক্ত করা, যাতে কম্পিউটার বাক্যে শব্দটির অবস্থান বা ক্রম বুঝতে পারে।</li>
             </ol>
             <p>চলুন এই ধারণাগুলো খুব সহজে বুঝে নেওয়া যাক।</p>
         </div>
@@ -1239,13 +1239,13 @@
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
                         <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">464</div>
                         <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">3797</div>
-                        <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">18534</div>
+                        <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">21256</div>
                     </div>
                 </div>
             </div>
             
             <ul>
-                <li><strong>Vocabulary (ভোকাবুলারি):</strong> মডেলের ডিকশনারি। উদাহরণস্বরূপ, GPT-4 এর ডিকশনারিতে প্রায় ১,০০,০০০ টোকেন বা শব্দ আছে।</li>
+                <li><strong>Vocabulary (ভোকাবুলারি):</strong> মডেলের ডিকশনারি। উদাহরণস্বরূপ, GPT-4 এর ডিকশনারিতে প্রায় ১,০০,০০০ টোকেন (পুরো শব্দ ও শব্দাংশ মিলিয়ে) আছে।</li>
                 <li><strong>Token IDs:</strong> টোকেনাইজ করার পর, <code>"cat"</code> শব্দটি ডিকশনারির একটি ইউনিক আইডি নম্বরে রূপান্তরিত (ম্যাপ) হয়, যেমন <code>3797</code>।</li>
             </ul>
 
@@ -1255,7 +1255,7 @@
                     💡 অপরিচিত শব্দ সমাধান: Sub-word Tokenization (BPE)
                 </h3>
                 <p style="font-size: 0.98rem; line-height: 1.6; margin-bottom: 1.2rem; color: var(--text-secondary);">
-                    অভিধানে (Vocabulary) দুনিয়ার সব শব্দ আলাদাভাবে মুখস্থ রাখা অসম্ভব (একে বলে <strong>Out-Of-Vocabulary বা OOV সমস্যা</strong>)। আধুনিক LLM-এ ব্যবহৃত টোকেনাইজাররা (যেমন GPT-তে <strong>Byte Pair Encoding / BPE</strong>) পুরো শব্দ না চিনে থাকলে সেটিকে ছোট ছোট পরিচিত <strong>সাব-ওয়ার্ড (Sub-words)</strong> বা উপ-শব্দে ভেঙে ফেলে!
+                    অভিধানে (Vocabulary) দুনিয়ার সব শব্দ আলাদাভাবে মুখস্থ রাখা অসম্ভব (একে বলে <strong>Out-Of-Vocabulary বা OOV সমস্যা</strong>)। আধুনিক LLM-এ ব্যবহৃত টোকেনাইজাররা (যেমন GPT-তে <strong>Byte Pair Encoding / BPE</strong>) পুরো শব্দ না চিনে থাকলে সেটিকে ছোট ছোট পরিচিত <strong>সাব-ওয়ার্ড (Sub-words)</strong> বা উপ-শব্দে ভেঙে ফেলে! (নিচের উদাহরণটি সরলীকৃত: বাস্তবে BPE ব্যাকরণ মেনে prefix বা suffix খোঁজে না, বরং training data-তে কোন অক্ষরগুচ্ছ কত ঘনঘন একসাথে আসে সেই হিসাবে ভাঙে — যেমন GPT-4-এর tokenizer "unhappiness"-কে ভাঙে "un" + "h" + "appiness"-এ।)
                 </p>
 
                 <!-- BPE Flow Diagram -->
@@ -1312,7 +1312,7 @@
         <!-- Section 2: Embeddings -->
         <div class="card">
             <h2>২. Embeddings (অর্থ যুক্ত করা)</h2>
-            <p>এখন আমাদের কাছে <code>"cat"</code> এর জন্য <code>3797</code> এবং <code>"dog"</code> এর জন্য <code>4251</code> এর মতো আইডি নম্বর আছে। কিন্তু এগুলো শুধু সাধারণ বারকোডের মতো। কম্পিউটার জানে না যে বিড়াল ও কুকুর উভয়েই প্রাণী।</p>
+            <p>এখন আমাদের কাছে <code>"cat"</code> এর জন্য <code>3797</code> এবং <code>"dog"</code> এর জন্য <code>3290</code> এর মতো আইডি নম্বর আছে। কিন্তু এগুলো শুধু সাধারণ বারকোডের মতো। কম্পিউটার জানে না যে বিড়াল ও কুকুর উভয়েই প্রাণী।</p>
             
             <p>এই সমস্যা সমাধানে আসে <span class="tech-term">Embeddings</span>। সাধারণ বারকোডের জায়গায় আমরা একটি বড় সংখ্যার তালিকা (বা <span class="tech-term">Vector</span>) ব্যবহার করি। এই ভেক্টরটিকে শব্দের একটি বিস্তারিত "পরিচয়পত্র" (বা বৈশিষ্ট্য-প্রোফাইল) হিসেবে ভাবতে পারেন।</p>
             
@@ -1394,7 +1394,7 @@
                             </div>
                             <div style="display: flex; flex-direction: column;">
                                 <span style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Token ID</span>
-                                <span style="color: var(--text-primary); font-weight: 500;">18534</span>
+                                <span style="color: var(--text-primary); font-weight: 500;">21256</span>
                             </div>
                         </div>
 
@@ -1422,7 +1422,7 @@
         <div class="card" id="embedding-3d-card">
             <h2>3D এম্বেডিং স্পেস ভিজ্যুয়ালাইজার (3D Embedding Space)</h2>
             <p style="margin-bottom: 1rem;">
-                        বাস্তব এআই (AI) মডেলগুলো (যেমন: ChatGPT, Claude, Gemini) একটি শব্দের অর্থ বোঝার জন্য শত শত ভিন্ন ভিন্ন বৈশিষ্ট্য বা গুণাবলি ব্যবহার করে। তবে সহজে দেখার ও বোঝার জন্য, আমরা এখানে মাত্র ৩টি সাধারণ বৈশিষ্ট্য ব্যবহার করছি: 
+                        বাস্তব এআই (AI) মডেলগুলো (যেমন: ChatGPT, Claude, Gemini) একটি শব্দের অর্থ বোঝার জন্য শত শত, এমনকি হাজার হাজার ভিন্ন ভিন্ন বৈশিষ্ট্য বা ডাইমেনশন ব্যবহার করে — আর সেগুলোর "Gender" বা "Age"-এর মতো কোনো নাম থাকে না, মডেল training-এর সময় নিজেই সেগুলো শিখে নেয়। তবে সহজে দেখার ও বোঝার জন্য, আমরা এখানে মাত্র ৩টি সাধারণ বৈশিষ্ট্য ব্যবহার করছি: 
                         <span class="tech-term">Gender</span> (পুরুষ বনাম নারী), <span class="tech-term">Royalty</span> (রাজকীয় বনাম সাধারণ), এবং <span class="tech-term">Age</span> (পরিপক্ক বনাম শিশু)।
                     </p>
 
@@ -1606,7 +1606,7 @@
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     সমাধান: পজিশনাল ভেক্টর (Positional Vectors)
                 </h3>
-                <p style="margin-bottom: 1.5rem; line-height: 1.6;">এই সমস্যা সমাধানে মডেল প্রতিটি শব্দের জন্য একটি বিশেষ "পজিশন ট্যাগ" বা "সিট নাম্বার" তৈরি করে, যাকে <span class="tech-term">Positional Encoding</span> বলা হয়। এরপর শব্দের মূল অর্থের সাথে এই পজিশন ট্যাগটি গাণিতিকভাবে যোগ করে দেওয়া হয়।</p>
+                <p style="margin-bottom: 1.5rem; line-height: 1.6;">এই সমস্যা সমাধানে মডেল প্রতিটি শব্দের জন্য একটি বিশেষ "পজিশন ট্যাগ" বা "সিট নাম্বার" তৈরি করে, যাকে <span class="tech-term">Positional Encoding</span> বলা হয়। এরপর শব্দের মূল অর্থের সাথে এই পজিশন ট্যাগটি গাণিতিকভাবে যোগ করে দেওয়া হয়। (এটি মূল Transformer পেপারের পদ্ধতি; Llama-র মতো আধুনিক অনেক LLM একই কাজ করে RoPE নামের একটু ভিন্ন কৌশলে — ভেক্টরের সাথে কিছু যোগ না করে, Attention-এর ভেতরে ভেক্টরকে অবস্থান অনুযায়ী খানিকটা "ঘুরিয়ে" দিয়ে।)</p>
                 
                 <div class="pos-vector-diagram">
                     <div style="text-align: center;">
@@ -1808,7 +1808,7 @@
                     step1: "১. মূলবিন্দু (0,0) থেকে Word A (King) এর দিকে ভেক্টর আঁকা হলো। King ভেক্টর: [8.0, 2.0]",
                     step2: "২. এবার Word B (Man) [2.0, 2.0] বিয়োগ করা হলো। এর অর্থ King ভেক্টরের মাথা থেকে Man এর বিপরীত দিকে যাত্রা করে আমরা পৌঁছালাম [6.0, 0.0] বিন্দুতে।",
                     step3: "৩. এখন Word C (Woman) [2.0, 6.0] যোগ করা হলো। [6.0, 0.0] থেকে Woman এর দিকে অগ্রসর হয়ে আমরা পৌঁছালাম [8.0, 6.0] বিন্দুতে।",
-                    step4: "৪. ম্যাজিক! আমাদের সর্বশেষ প্রাপ্ত বিন্দু [8.0, 6.0] হলো Word D (Queen) ভেক্টরের অবিকল অবস্থান! অর্থাৎ: King - Man + Woman = Queen"
+                    step4: "৪. ম্যাজিক! আমাদের সর্বশেষ প্রাপ্ত বিন্দু [8.0, 6.0] হলো Word D (Queen) ভেক্টরের অবিকল অবস্থান! অর্থাৎ: King - Man + Woman = Queen (বাস্তব মডেলে ফলাফল হুবহু মেলে না, তবে তার সবচেয়ে কাছের শব্দটি হয় Queen — তাই আসলে ≈)"
                 }
             },
             capital: {
@@ -2166,7 +2166,7 @@
                     <div style="background: rgba(14, 116, 144, 0.05); border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
                         <strong>🔍 একটি মজার জিনিস খেয়াল করুন:</strong> <br>
                         বাক্যে দুটি <strong>"${data.word}"</strong> রয়েছে (পজিশন 0 এবং 3)। 
-                        দুটি শব্দের অর্থ একই হওয়ায় তাদের <strong>Word Vector (W) হুবহু একই</strong>। কিন্তু তাদের অবস্থান ভিন্ন হওয়ায় <strong>Position Vector (P) ভিন্ন</strong>। 
+                        সরলতার জন্য আমরা দুটিকে একই টোকেন ধরেছি, তাই তাদের <strong>Word Vector (W) হুবহু একই</strong> (একই Token ID মানেই embedding টেবিলের একই সারি; বাস্তবে অবশ্য "The" ও " the" আলাদা টোকেন)। কিন্তু তাদের অবস্থান ভিন্ন হওয়ায় <strong>Position Vector (P) ভিন্ন</strong>। 
                         এর ফলে যোগফল বা <strong>Combined Vector (C) সম্পূর্ণ আলাদা</strong> হয়ে গেছে! এভাবেই মডেল একই শব্দের ভিন্ন ভিন্ন অবস্থান নিখুঁতভাবে বুঝতে পারে।
                     </div>
                 `;

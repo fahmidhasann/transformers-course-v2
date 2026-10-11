@@ -783,7 +783,7 @@
         <div class="card tb-architecture-map">
             <h2>Transformer Block ম্যাপ — বর্তমান অবস্থান</h2>
             <div class="tb-map-legend"><span><i class="tb-legend-dot tb-legend-active"></i> এই লেসনের ফোকাস</span><span><i class="tb-legend-dot tb-legend-rest"></i> বাকি অংশ (অন্য লেসনে)</span></div>
-            <p class="tb-map-caption"><strong>বর্তমান অবস্থান:</strong> এই লেসন <span class="tech-term">Attention</span>-এর পরের অংশ নিয়ে — <span class="tech-term">Feed-Forward Network</span>, <span class="tech-term">Residual</span> (skip) <span class="tech-term">Connection</span> ও <span class="tech-term">Layer Normalization</span> (<span class="tech-term">Add &amp; Norm</span>), নিচে আলোকিত। সবুজ ড্যাশ-লাইনগুলো হলো residual পথ।</p>
+            <p class="tb-map-caption"><strong>বর্তমান অবস্থান:</strong> এই লেসন <span class="tech-term">Attention</span>-এর পরের অংশ নিয়ে — <span class="tech-term">Feed-Forward Network</span>, <span class="tech-term">Residual</span> (skip) <span class="tech-term">Connection</span> ও <span class="tech-term">Layer Normalization</span> (<span class="tech-term">Add &amp; Norm</span>), নিচে আলোকিত। সবুজ ড্যাশ-লাইনগুলো হলো residual পথ। (ম্যাপটি ২০১৭ সালের ক্লাসিক নকশা অনুযায়ী আঁকা, যেখানে Norm আসে Add-এর পরে; আধুনিক LLM-এ Norm প্রতিটি সাব-লেয়ারের আগেই বসে — নিচে Pre-LN দেখুন।)</p>
             <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -1084,14 +1084,14 @@
                 <div class="math-block" style="background: var(--card-bg-alt); padding: 0.6rem; border-radius: 6px; text-align: center; margin: 0.5rem 0; font-family: monospace;">
                     FFN(x) = Activation(x W₁ + b₁) W₂ + b₂
                 </div>
-                <p style="margin: 0; color: var(--text-secondary);">প্রথম লেয়ারটি ইনপুটকে অনেক বড় আকারে (সাধারণত ৪ গুণ) প্রসারিত করে যাতে গভীর ফিচার সংরক্ষিত হয়, অ্যাক্টিভেশন ফাংশনটি ফিল্টার করে, এবং দ্বিতীয় লেয়ারটি আবার তাকে ছোট করে আগের আকারে নিয়ে আসে।</p>
+                <p style="margin: 0; color: var(--text-secondary);">প্রথম লেয়ারটি ইনপুটকে অনেক বড় আকারে (সাধারণত ৪ গুণ; তবে Llama-র মতো SwiGLU মডেলে একটি বাড়তি "gate" শাখা থাকে, তাই প্রসারণ প্রায় ২.৭ গুণ) প্রসারিত করে যাতে গভীর ফিচার সংরক্ষিত হয়, অ্যাক্টিভেশন ফাংশনটি ফিল্টার করে, এবং দ্বিতীয় লেয়ারটি আবার তাকে ছোট করে আগের আকারে নিয়ে আসে।</p>
             </div>
         </div>
 
         <!-- Residual Connections Card -->
         <div class="card">
             <h2>2. সেফটি হাইওয়ে বা নিরাপদ মহাসড়ক (Skip Connections)</h2>
-            <p>GPT-4 এর মতো আধুনিক মডেলগুলো অনেক "গভীর" হয়, অর্থাৎ এগুলোর ভেতরে ডজন ডজন বা শত শত প্রসেসিং লেয়ার একটির ওপর আরেকটি সাজানো থাকে। কিন্তু এখানে একটি সমস্যা আছে: এতগুলো লেয়ার পার হওয়ার সময় তথ্য হারিয়ে যেতে পারে বা এলোমেলো হয়ে যেতে পারে, যার ফলে মডেলটি হয়তো মূল শব্দগুলোই ভুলে যেতে পারে।</p>
+            <p>আধুনিক LLM-গুলো অনেক "গভীর" হয়, অর্থাৎ এগুলোর ভেতরে ডজন ডজন (প্রায়ই ৩০ থেকে ১০০-রও বেশি) প্রসেসিং লেয়ার একটির ওপর আরেকটি সাজানো থাকে। কিন্তু এখানে একটি সমস্যা আছে: এতগুলো লেয়ার পার হওয়ার সময় তথ্য হারিয়ে যেতে পারে বা এলোমেলো হয়ে যেতে পারে, যার ফলে মডেলটি হয়তো মূল শব্দগুলোই ভুলে যেতে পারে।</p>
             
             <p><strong>সমাধান: সরাসরি বাইপাস রাস্তা</strong></p>
             <p>এই সমস্যার সমাধানে ইঞ্জিনিয়াররা তৈরি করেছেন <span class="tech-term">Skip Connections</span> (বা Residual Connections)। এটি লোকাল রাস্তার পাশে দিয়ে যাওয়া একটি এক্সপ্রেস হাইওয়ের মতো কাজ করে।</p>
@@ -1161,7 +1161,7 @@
         <!-- Layer Normalization Card -->
         <div class="card">
             <h2>3. স্বয়ংক্রিয় ভলিউম কন্ট্রোল (Layer Normalization)</h2>
-            <p>শত শত লেয়ার পার হওয়ার সময় মডেলের ভেতরের <span class="tech-term">Token Vectors</span> বা সিগন্যালগুলো (যাকে আমরা এতক্ষণ সংখ্যা হিসেবে কল্পনা করেছি) বারবার গুণ হতে থাকে। এই ক্রমাগত গাণিতিক হিসাবের কারণে ভেক্টরগুলোর মান (values) বিশাল বড় হয়ে যেতে পারে, বা সংকুচিত হয়ে একেবারে শূন্য হয়ে যেতে পারে। এর ফলাফল দুই পর্যায়ে দেখা যায়:</p>
+            <p>ডজন ডজন লেয়ার পার হওয়ার সময় মডেলের ভেতরের <span class="tech-term">Token Vectors</span> বা সিগন্যালগুলো (যাকে আমরা এতক্ষণ সংখ্যা হিসেবে কল্পনা করেছি) বারবার গুণ হতে থাকে। এই ক্রমাগত গাণিতিক হিসাবের কারণে ভেক্টরগুলোর মান (values) বিশাল বড় হয়ে যেতে পারে, বা সংকুচিত হয়ে একেবারে শূন্য হয়ে যেতে পারে। এর ফলাফল দুই পর্যায়ে দেখা যায়:</p>
             
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-body); list-style-type: square;">
                 <li><strong>Training-এর সময়:</strong> যদি সিগন্যালগুলো অনেক বেশি এলোমেলো হয়ে যায়, তবে ব্যাকপ্রোপাগেশন কাজ করা বন্ধ করে দেয় এবং মডেলটি আর নতুন কিছু শিখতে পারে না (মডেল ক্র্যাশ করে)।</li>
@@ -1226,8 +1226,8 @@
 
             <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
                 <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.4rem;">📐 গাণিতিক বিস্তারিত: Pre-LN বনাম Post-LN</strong>
-                <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">গাণিতিক সূত্রটি নিশ্চিত করে যে ভেক্টরের ফিচারগুলোর গড় ০ এবং ভ্যারিয়েন্স ১ বজায় থাকবে।</p>
-                <p style="margin: 0; color: var(--text-secondary);">পুরনো Transformer মডেলগুলোতে প্রসেসিংয়ের <em>পরে</em> নরমালাইজেশন হতো (Post-LN: <code>LN(x + SubLayer(x))</code>)। কিন্তু Gemini, Llama বা Claude-এর মতো আধুনিক আর্কিটেকচারগুলোতে প্রসেসিংয়ের <em>আগেই</em> ইনপুটকে ব্যালেন্স করে নেওয়া হয় (Pre-LN: <code>x + SubLayer(LN(x))</code>), যা গভীর মডেলগুলোর ট্রেনিংকে অত্যন্ত স্থিতিশীল রাখে।</p>
+                <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">গাণিতিক সূত্রটি প্রতিটি টোকেন ভেক্টরের ফিচারগুলোকে গড় ০ এবং ভ্যারিয়েন্স ১-এ নিয়ে আসে (এরপর শেখা একটি scale ও shift দিয়ে সামান্য সামঞ্জস্য করা হয়)। Llama-র মতো অনেক আধুনিক LLM এর একটি হালকা সংস্করণ ব্যবহার করে—RMSNorm, যা গড় বাদ দিয়ে শুধু মানের সামগ্রিক আকার ঠিক করে।</p>
+                <p style="margin: 0; color: var(--text-secondary);">পুরনো Transformer মডেলগুলোতে প্রসেসিংয়ের <em>পরে</em> নরমালাইজেশন হতো (Post-LN: <code>LN(x + SubLayer(x))</code>)। কিন্তু GPT-3 বা Llama-র মতো আধুনিক মডেলগুলোতে (এবং যতদূর জানা যায়, আজকের প্রায় সব বড় LLM-এ) প্রসেসিংয়ের <em>আগেই</em> ইনপুটকে ব্যালেন্স করে নেওয়া হয় (Pre-LN: <code>x + SubLayer(LN(x))</code>), যা গভীর মডেলগুলোর ট্রেনিংকে অত্যন্ত স্থিতিশীল রাখে।</p>
             </div>
         </div>
 
@@ -1392,7 +1392,7 @@
                     <div class="quiz-option" onclick="checkAnswer(1, this, true, 'চমৎকার! FFN প্রতিটি টোকেন রিপ্রেজেন্টেশনকে পজিশন-অনুযায়ী স্বাধীনভাবে প্রসেস করে গভীর ফিচার তৈরি করে ও ফ্যাকচুয়াল নলেজ যোগ করে।')">
                         খ) প্রতিটি টোকেনকে আলাদা আলাদাভাবে (Independently) প্রসেস করে তাদের মধ্যকার গভীর ফিচার এক্সট্র্যাক্ট করা।
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'ভুল উত্তর। এটি টোকেনাইজেশনের অংশ, যা মূলত ওক্যাবুলারি তৈরির সময় বাইরের পাইপলাইনে ঘটে।')">
+                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'ভুল উত্তর। এটি টোকেনাইজেশনের অংশ, যা মূলত ভোকাবুলারি তৈরির সময় বাইরের পাইপলাইনে ঘটে।')">
                         গ) টেক্সটকে ক্ষুদ্র ক্ষুদ্র টুকরোতে ভাগ করে আইডি (Token IDs) অ্যাসাইন করা।
                     </div>
                     <div id="quiz-feedback-1" class="quiz-feedback"></div>
@@ -1402,7 +1402,7 @@
                 <div class="quiz-question-card">
                     <h3>প্রশ্ন ২: Residual Connection (Skip Connection) কীভাবে গভীর নেটওয়ার্ক ট্রেনিং সহজতর করে?</h3>
                     <div class="quiz-option" onclick="checkAnswer(2, this, true, 'একদম সঠিক! Skip Connection-এর মূল কাজই হলো এটি ব্যাকপ্রপাগেশনের সময় গ্র্যাডিয়েন্ট সরাসরি পূর্ববর্তী লেয়ারে পৌঁছে দেয়, ফলে গ্র্যাডিয়েন্ট ভ্যানিশিং হয় না।')">
-                        ক) এটি ইনপুটকে সাব-লেয়ারের আউটপুটের সাথে সরাসরি যোগ করে ব্যাকপ্রপাগেশনে গ্র্যাডিয়েন্ট নির্বিঘ্নে চলাচলের রাস্তা (+১ ড্রাইভ) তৈরি করে।
+                        ক) এটি ইনপুটকে সাব-লেয়ারের আউটপুটের সাথে সরাসরি যোগ করে ব্যাকপ্রপাগেশনে গ্র্যাডিয়েন্ট নির্বিঘ্নে চলাচলের রাস্তা (+১ ডেরিভেটিভ) তৈরি করে।
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(2, this, false, 'ভুল উত্তর। Skip Connection ভেক্টরের ডাইমেনশন কমায় না, বরং আগের ডাইমেনশন বজায় রেখেই যোগ সম্পন্ন করে।')">
                         খ) এটি ইনপুট ভেক্টরের সাইজ অর্ধেক করে দেয় যাতে দ্রুত ম্যাট্রিক্স গুণন সম্পন্ন করা যায়।
@@ -1437,7 +1437,7 @@
                 <li>Transformer-এর আদি উৎস: <a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention Is All You Need (Vaswani et al., 2017)</a></li>
                 <li>FFN-এর মেমোরি ইন্টারপ্রিটেশন: <a href="https://arxiv.org/abs/2012.14913" target="_blank">Transformer Feed-Forward Layers Are Key-Value Memories (Geva et al., 2020)</a></li>
                 <li>Pre-LN বনাম Post-LN বিশ্লেষণ: <a href="https://arxiv.org/abs/2002.04745" target="_blank">On Layer Normalization in the Transformer Architecture (Xiong et al., 2020)</a></li>
-                <li>ভ্যানিশিং গ্র্যাডিয়েন্ট ও রেজিনাল কানেকশন: <a href="https://arxiv.org/abs/1512.03385" target="_blank">Deep Residual Learning for Image Recognition (He et al., 2015)</a></li>
+                <li>ভ্যানিশিং গ্র্যাডিয়েন্ট ও Residual Connection: <a href="https://arxiv.org/abs/1512.03385" target="_blank">Deep Residual Learning for Image Recognition (He et al., 2015)</a></li>
             </ul>
             <p style="margin-top: 1rem; font-style: italic;">পরবর্তী লেসনে আমরা ট্রান্সফরমার এনকোডার এবং ডেকোডার ব্লকের মধ্যকার পার্থক্য ও তাদের কম্বাইনড কাজের প্রক্রিয়া শিখবো।</p>
         </div>
@@ -1684,6 +1684,12 @@
             } else if (maxVal > 5) {
                 banner.classList.add('banner-warning');
                 banner.textContent = "সংখ্যাগুলো অনেক বড় হয়ে গেছে! নরমালাইজেশন ছাড়া, বা ভেতরের লেয়ার খুব শক্তিশালী হলে, মানগুলো নিয়ন্ত্রণের বাইরে বেড়ে যায়। (একে বলে exploding values।)";
+            } else if (!state.skip) {
+                banner.classList.add('banner-warning');
+                banner.textContent = "সংখ্যাগুলো সীমার মধ্যে আছে শুধু নরমালাইজেশনের কারণে — কিন্তু শর্টকাট না থাকায় আউটপুটে মূল ইনপুট (x)-এর আর কোনো চিহ্ন নেই। গভীর মডেলে প্রতিটি লেয়ার আগেরটার তথ্য মুছে দিত, আর শেখার সিগন্যালের ফেরার কোনো সোজা রাস্তা থাকত না।";
+            } else if (!state.ln) {
+                banner.classList.add('banner-stable');
+                banner.textContent = "এই এক ধাপে ঠিকঠাক — শর্টকাট মূল সংখ্যাগুলো ধরে রেখেছে। তবে নরমালাইজেশন না থাকলে এমন ছোট ছোট বৃদ্ধি অনেক লেয়ার জুড়ে জমে বড় হয়ে যায়।";
             } else {
                 banner.classList.add('banner-stable');
                 banner.textContent = "দেখতে সুস্থ! নরমালাইজেশন এবং স্কিপ শর্টকাট একসাথে কাজ করে সংখ্যাগুলোকে নিরাপদ সীমার মধ্যে রাখে।";
@@ -1784,6 +1790,9 @@
             } else if (!state.skip && state.ffnScale === 3.0) {
                 banner.classList.add('banner-warning');
                 banner.textContent = "শেখার সিগন্যাল বিস্ফোরিত হয়েছে — এই ধাপে 3× বেড়ে গেছে। গভীর নেটওয়ার্কে এটি ট্রেনিংকে ধসিয়ে দেয়। (একে বলে exploding gradient সমস্যা।)";
+            } else if (state.skip && state.ffnScale === 3.0) {
+                banner.classList.add('banner-warning');
+                banner.textContent = "শর্টকাট রাস্তাটা খোলা রেখেছে ঠিকই, কিন্তু শক্তিশালী ভেতরের লেয়ারটি তার ওপর নিজের 3× যোগ করছে — এই এক ধাপেই সিগন্যাল 4× হয়ে গেছে। অনেক লেয়ার জুড়ে এটা জমতে থাকলে বিস্ফোরণ তবুও ঘটবে; তাই বাস্তব মডেলে নরমালাইজেশন ও সতর্ক initialization দিয়ে ভেতরের লেয়ারের অবদান ছোট রাখা হয়।";
             } else {
                 banner.classList.add('banner-stable');
                 banner.textContent = "হেলদি শেখার সিগন্যাল! স্কিপ শর্টকাটের কল্যাণে একটি শক্তিশালী সিগন্যাল পুরো পথ ফিরে আসে, যাতে প্রতিটি লেয়ার শিখতে পারে।";

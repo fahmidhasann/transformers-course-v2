@@ -783,7 +783,7 @@
         <div class="card tb-architecture-map">
             <h2>Transformer Block Map — Current Position</h2>
             <div class="tb-map-legend"><span><i class="tb-legend-dot tb-legend-active"></i> Focus of this lesson</span><span><i class="tb-legend-dot tb-legend-rest"></i> Rest (other lessons)</span></div>
-            <p class="tb-map-caption"><strong>Current Position:</strong> this lesson covers what comes after <span class="tech-term">Attention</span> — the <span class="tech-term">Feed-Forward Network</span>, <span class="tech-term">Residual</span> (skip) <span class="tech-term">Connections</span> and <span class="tech-term">Layer Normalization</span> (<span class="tech-term">Add &amp; Norm</span>), highlighted below. The green dashed lines are the residual paths.</p>
+            <p class="tb-map-caption"><strong>Current Position:</strong> this lesson covers what comes after <span class="tech-term">Attention</span> — the <span class="tech-term">Feed-Forward Network</span>, <span class="tech-term">Residual</span> (skip) <span class="tech-term">Connections</span> and <span class="tech-term">Layer Normalization</span> (<span class="tech-term">Add &amp; Norm</span>), highlighted below. The green dashed lines are the residual paths. (The map follows the classic 2017 layout, where Norm comes after the Add; modern LLMs move the Norm before each sub-layer — see Pre-LN below.)</p>
             <svg class="tb-map-svg" viewBox="0 0 380 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -1084,14 +1084,14 @@
                 <div class="math-block" style="background: var(--card-bg-alt); padding: 0.6rem; border-radius: 6px; text-align: center; margin: 0.5rem 0; font-family: monospace;">
                     FFN(x) = Activation(x W₁ + b₁) W₂ + b₂
                 </div>
-                <p style="margin: 0; color: var(--text-secondary);">The first layer expands the input dimension (typically 4x) to capture complex factual knowledge, the activation function filters feature activations, and the second layer projects it back to the standard model dimension.</p>
+                <p style="margin: 0; color: var(--text-secondary);">The first layer expands the input dimension (typically 4x; SwiGLU models like Llama add a second "gate" branch and expand about 2.7x instead) to capture complex factual knowledge, the activation function filters feature activations, and the second layer projects it back to the standard model dimension.</p>
             </div>
         </div>
 
         <!-- Residual Connections Card -->
         <div class="card">
             <h2>2. The "Safety Highway" (Skip Connections)</h2>
-            <p>Modern models like GPT-4 are incredibly "deep," meaning they stack dozens or hundreds of processing layers on top of each other. But there's a problem: as information passes through so many layers, it can get lost or scrambled, causing the model to forget the original inputs.</p>
+            <p>Modern LLMs are incredibly "deep," meaning they stack dozens of processing layers (often 30 to 100+) on top of each other. But there's a problem: as information passes through so many layers, it can get lost or scrambled, causing the model to forget the original inputs.</p>
             
             <p><strong>The Solution: Direct Bypass Roads</strong></p>
             <p>To fix this, engineers created <span class="tech-term">Skip Connections</span> (or Residual Connections). It works like an express highway running alongside local roads.</p>
@@ -1161,7 +1161,7 @@
         <!-- Layer Normalization Card -->
         <div class="card">
             <h2>3. The "Volume Control" (Layer Normalization)</h2>
-            <p>As the <span class="tech-term">Token Vectors</span> or signals (the numbers we've been talking about) pass through hundreds of layers, they are repeatedly multiplied. Because of this continuous math, the values inside these vectors can explode into insanely huge numbers, or shrink down to zero. The consequences of this happen in two phases:</p>
+            <p>As the <span class="tech-term">Token Vectors</span> or signals (the numbers we've been talking about) pass through dozens of layers, they are repeatedly multiplied. Because of this continuous math, the values inside these vectors can explode into insanely huge numbers, or shrink down to zero. The consequences of this happen in two phases:</p>
 
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-body); list-style-type: square;">
                 <li><strong>During Training:</strong> If these signals get too crazy, the backpropagation process effectively crashes, and training fails to converge.</li>
@@ -1226,8 +1226,8 @@
 
             <div class="note-card" style="margin-top: 1rem; margin-bottom: 1rem; background: rgba(var(--ink-rgb),0.03); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.93rem;">
                 <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.4rem;">📐 Mathematical Explanation: Pre-LN vs Post-LN</strong>
-                <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">The normalization formula enforces a mean of 0 and a variance of 1 across token features.</p>
-                <p style="margin: 0; color: var(--text-secondary);">Older Transformer architectures applied normalization <em>after</em> sub-layer computation (Post-LN: <code>LN(x + SubLayer(x))</code>). Modern architectures like Llama, Gemini, and Claude apply normalization <em>before</em> processing (Pre-LN: <code>x + SubLayer(LN(x))</code>), creating a vastly more stable gradient flow during deep network training.</p>
+                <p style="margin-bottom: 0.5rem; color: var(--text-secondary);">The normalization formula rescales each token's features to a mean of 0 and a variance of 1 (a learned scale and shift then fine-tune them). Many modern LLMs such as Llama use a lighter variant, RMSNorm, which skips the mean and only fixes the overall size.</p>
+                <p style="margin: 0; color: var(--text-secondary);">Older Transformer architectures applied normalization <em>after</em> sub-layer computation (Post-LN: <code>LN(x + SubLayer(x))</code>). Modern LLMs such as GPT-3 and Llama (and, as far as is publicly known, most of today's large models) apply normalization <em>before</em> processing (Pre-LN: <code>x + SubLayer(LN(x))</code>), creating a vastly more stable gradient flow during deep network training.</p>
             </div>
         </div>
 
@@ -1684,6 +1684,12 @@
             } else if (maxVal > 5) {
                 banner.classList.add('banner-warning');
                 banner.textContent = "The numbers blew up! Without normalization, or with a strong inner layer, the values grow out of control. (This is called exploding values.)";
+            } else if (!state.skip) {
+                banner.classList.add('banner-warning');
+                banner.textContent = "The numbers stay in range only because normalization rescaled them — but with no shortcut, the original input (x) is gone from the output. In a deep model each layer would overwrite the last, and the learning signal would have no highway back.";
+            } else if (!state.ln) {
+                banner.classList.add('banner-stable');
+                banner.textContent = "Fine for this one step — the shortcut keeps the original numbers. But without normalization, small growth like this piles up across many layers.";
             } else {
                 banner.classList.add('banner-stable');
                 banner.textContent = "Looks healthy! Normalization and the skip shortcut work together to keep the numbers in a safe range.";
@@ -1784,6 +1790,9 @@
             } else if (!state.skip && state.ffnScale === 3.0) {
                 banner.classList.add('banner-warning');
                 banner.textContent = "The learning signal exploded — it grew 3× at this step. In a deep network this makes training blow up. (This is the exploding gradient problem.)";
+            } else if (state.skip && state.ffnScale === 3.0) {
+                banner.classList.add('banner-warning');
+                banner.textContent = "The shortcut keeps the path open, but the strong inner layer adds its own 3× on top — the signal grew to 4× at this one step. Stacked over many layers this still explodes, which is why real models keep each inner layer's contribution small (normalization, careful initialization).";
             } else {
                 banner.classList.add('banner-stable');
                 banner.textContent = "Healthy learning signal! Thanks to the skip shortcut, a strong signal flows all the way back so every layer can keep learning.";

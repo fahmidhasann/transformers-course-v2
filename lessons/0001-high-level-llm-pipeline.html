@@ -907,7 +907,7 @@
         <!-- Transformer Block Map -->
         <div class="card tb-architecture-map">
             <h2>Transformer Block ম্যাপ — বর্তমান অবস্থান</h2>
-            <p class="tb-map-caption"><strong>সম্পূর্ণ ম্যাপ:</strong> নিচের ডায়াগ্রামটি একটি <span class="tech-term">Transformer Block</span>-এর পূর্ণ গঠন দেখায় — নিচে <span class="tech-term">Input Tokens</span> থেকে শুরু করে উপরে <span class="tech-term">Next Token</span> প্রেডিকশন পর্যন্ত। পরের প্রতিটি লেসনে আমরা এর একেকটি অংশ আলাদাভাবে আলোকিত করে গভীরভাবে শিখব।</p>
+            <p class="tb-map-caption"><strong>সম্পূর্ণ ম্যাপ:</strong> নিচের ডায়াগ্রামটি একটি পূর্ণাঙ্গ (decoder-only) <span class="tech-term">Transformer</span> মডেলের গঠন দেখায় — নিচে <span class="tech-term">Input Tokens</span> থেকে শুরু করে উপরে <span class="tech-term">Next Token</span> প্রেডিকশন পর্যন্ত। পরের প্রতিটি লেসনে আমরা এর একেকটি অংশ আলাদাভাবে আলোকিত করে গভীরভাবে শিখব।</p>
             <svg class="tb-map-svg" viewBox="0 0 440 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -1132,7 +1132,7 @@
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3>Output & Softmax (অনুমান করা)</h3>
-                        <p>অবশেষে, মডেল তার সম্পূর্ণ ভোকাবুলারির প্রতিটি শব্দের জন্য একটি সম্ভাবনার স্কোর বের করে। যেমন "আমি ভাত" এর পর পরবর্তী শব্দ কী হবে তার জন্য <span class="tech-term">Softmax</span> ফাংশন এই স্কোরগুলোকে সম্ভাবনার শতাংশ বা Probability Distribution-এ রূপান্তর করে এবং সর্বোচ্চ সম্ভাবনাময় শব্দটি ("খাই") আউটপুট হিসেবে বেছে নেয়।</p>
+                        <p>অবশেষে, মডেল তার সম্পূর্ণ ভোকাবুলারির প্রতিটি শব্দের জন্য একটি স্কোর বের করে। যেমন "আমি ভাত" এর পর পরবর্তী শব্দ কী হবে তার জন্য <span class="tech-term">Softmax</span> ফাংশন এই স্কোরগুলোকে সম্ভাবনার শতাংশ বা Probability Distribution-এ রূপান্তর করে। এরপর এই distribution থেকে একটি শব্দ বেছে নেওয়া হয় — সবচেয়ে সহজ নিয়মে সর্বোচ্চ সম্ভাবনাময় শব্দটি ("খাই"); তবে ChatGPT-এর মতো মডেল প্রায়ই সম্ভাবনা অনুযায়ী লটারির মতো করে বাছে (Sampling), তাই একই প্রশ্নে ভিন্ন ভিন্ন উত্তর আসে।</p>
                         <div class="step-diagram">
                             <div class="dia-softmax">
                                 <div class="dia-bar-bg">
@@ -1188,7 +1188,7 @@
 
                     <!-- Embed Tab -->
                     <div class="tab-panel" id="tab-embed">
-                        <p style="font-size:0.9rem; color:var(--text-secondary);">প্রতিটি টোকেন এখন একটি 8-dimensional Vector (বাস্তবে এটি ৪০৯৬+ ডাইমেনশন হয়):</p>
+                        <p style="font-size:0.9rem; color:var(--text-secondary);">প্রতিটি টোকেন এখন একটি 8-dimensional Vector (বাস্তবে এটি শত থেকে হাজার হাজার ডাইমেনশনের হয় — যেমন GPT-2-তে 768, GPT-3-তে 12,288):</p>
                         <div class="embedding-grid" id="embed-display">
                             <span style="color:var(--text-secondary)">Prompt সিলেক্ট করে Run চাপুন...</span>
                         </div>
@@ -1255,8 +1255,8 @@
                     <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'ভুল উত্তর! শব্দ আইডিগুলো সরাসরি যোগ করা হয় না, বরং স্কোর হিসাব করা হয়।')">
                         ক) বাক্যের সব টোকেন আইডি একসাথে যোগ করে নির্দিষ্ট সংখ্যা নির্ধারণ করে।
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(this, 3, true, 'অসাধারণ! Softmax ফাংশন ভোকাবুলারির প্রতিটি শব্দের জন্য বের করা স্কোরকে শতকরা হারে (Probability) রূপান্তর করে এবং সর্বোচ্চ হারের শব্দটিকে আউটপুট হিসেবে বেছে নেয়।')">
-                        খ) Softmax ফাংশন সম্পূর্ণ ডিকশনারির প্রতিটি শব্দের জন্য সম্ভাবনা (Probability) শতকরা হারে রূপান্তর করে সর্বোচ্চ হারের শব্দ বেছে নেয়।
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, true, 'অসাধারণ! Softmax ফাংশন ভোকাবুলারির প্রতিটি শব্দের জন্য বের করা স্কোরকে শতকরা হারে (Probability) রূপান্তর করে, আর সেই সম্ভাবনা অনুযায়ী পরবর্তী শব্দটি বাছাই করা হয় (সবচেয়ে সহজ নিয়মে সর্বোচ্চটি)।')">
+                        খ) Softmax ফাংশন সম্পূর্ণ ডিকশনারির প্রতিটি শব্দের জন্য সম্ভাবনা (Probability) শতকরা হারে রূপান্তর করে, আর সেই সম্ভাবনা অনুযায়ী পরবর্তী শব্দ বাছাই করা হয়।
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'ভুল উত্তর! এম্বেডিং ভেক্টর থেকে সরাসরি টেক্সট তৈরি হয় না, এটি Softmax-এর পরেই ঘটে।')">
                         গ) সরাসরি এম্বেডিং ভেক্টরকে টেক্সটে কনভার্ট করে ফেলে।
@@ -1312,9 +1312,9 @@
             sky: {
                 tokens: [
                     { word: "The", id: 464 },
-                    { word: " stars", id: 5743 },
-                    { word: " shine", id: 11210 },
-                    { word: " bright", id: 6382 },
+                    { word: " stars", id: 5788 },
+                    { word: " shine", id: 18340 },
+                    { word: " bright", id: 6016 },
                     { word: " in", id: 287 },
                     { word: " the", id: 262 }
                 ],
@@ -1342,11 +1342,11 @@
             },
             code: {
                 tokens: [
-                    { word: "Python", id: 15482 },
+                    { word: "Python", id: 37906 },
                     { word: " is", id: 318 },
                     { word: " a", id: 257 },
                     { word: " great", id: 1049 },
-                    { word: " programming", id: 8945 }
+                    { word: " programming", id: 8300 }
                 ],
                 embeddings: [
                     [0.91, -0.12, 0.76, -0.34, 0.89, 0.12, -0.45, 0.67],

@@ -904,7 +904,7 @@
                     <div class="arch-card-header enc-dec">T5 (Encoder-Decoder)</div>
                     <div class="arch-card-body">
                         <ul>
-                            <li><strong>Attention Type:</strong> Bidirectional attention in the Encoder, and Causal attention in the Decoder.</li>
+                            <li><strong>Attention Type:</strong> Bidirectional attention in the Encoder, and Causal attention in the Decoder — plus <span class="tech-term">Cross-Attention</span>, through which every Decoder token looks back at the Encoder's full understanding of the input.</li>
                             <li><strong>Core Goal:</strong> Transforming one format sequence into another format sequence (Seq2Seq).</li>
                             <li><strong>Use Cases:</strong> Machine translation, text summarization.</li>
                             <li><strong>Example:</strong> T5, BART.</li>
@@ -913,7 +913,7 @@
                 </div>
             </div>
             
-            <p style="margin-top: 1.5rem;"><strong>Why are modern LLMs mostly Decoder-Only?</strong><br>The Decoder-Only architecture can be easily expanded to a massive scale. It can learn on its own from huge amounts of text data without needing manual guidance—a process known as <span class="highlight">Unsupervised Pre-training</span>. Furthermore, it can look at an entire sentence at once to predict the next word. Because it handles all this information simultaneously, it takes full advantage of the GPU's parallel processing power to run incredibly fast.</p>
+            <p style="margin-top: 1.5rem;"><strong>Why are modern LLMs mostly Decoder-Only?</strong><br>The Decoder-Only architecture can be easily expanded to a massive scale. It can learn on its own from huge amounts of text data without needing manual guidance—a process known as <span class="highlight">Self-supervised (Unsupervised) Pre-training</span>. Furthermore, during training the Causal Mask lets every word in a sentence learn to predict its own next word at the same time, so one sentence gives many lessons at once. Because it handles all this simultaneously, it takes full advantage of the GPU's parallel processing power to train incredibly fast. And since almost any task can be phrased as "continue this text," one simple design covers chatting, translating, summarizing, and coding.</p>
         </div>
 
         <!-- Section 2: Causal Masking -->
@@ -1005,7 +1005,7 @@
             <p>When we use ChatGPT or Gemini, words appear on the screen one by one. This is called <span class="tech-term">Autoregressive Generation</span>. The steps are as follows:</p>
             <p>
                 1. <strong><span class="tech-term">Input Prompt</span>:</strong> The model first takes the user's prompt (e.g., <code>"LLMs are"</code>).<br>
-                2. <strong><span class="tech-term">Next Token Prediction</span>:</strong> Processing through the Causal Mask, the model calculates probabilities for the next token and selects the one with the highest probability (e.g., <code>"changing"</code>).<br>
+                2. <strong><span class="tech-term">Next Token Prediction</span>:</strong> Processing through the Causal Mask, the model calculates probabilities for the next token and picks one — often the most likely, or one sampled from the top candidates for variety (e.g., <code>"changing"</code>).<br>
                 3. <strong><span class="tech-term">Context Update</span>:</strong> The new token is appended to the previous input (making the new input: <code>"LLMs are changing"</code>).<br>
                 4. <strong><span class="tech-term">Loop & Stop Signal</span>:</strong> This loop continues iteratively until the model generates a special token called <span class="tech-term">&lt;EOS&gt; (End of Sequence)</span>.
             </p>
@@ -1058,7 +1058,7 @@
             <h2>Interactive Causal Masking & Autoregressive Grid</h2>
             <div style="background: rgba(60, 117, 73, 0.1); border-left: 4px solid var(--accent-green); padding: 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem;">
                 <strong>💡 Training vs Inference (Crucial Concept):</strong><br>
-                This diagram is actually showing two things at once. The <strong>locked or masked matrix</strong> is primarily used during model <strong>Training</strong>. When the model is fed the entire sentence at once to learn, this matrix ensures it cannot peek at future words.<br><br>
+                This diagram is actually showing two things at once. The <strong>locked or masked matrix</strong> is primarily used during model <strong>Training</strong>. When the model is fed the entire sentence at once to learn, this matrix ensures it cannot peek at future words. (The same mask is still applied when the model first reads your whole prompt at once, so no prompt word peeks ahead.)<br><br>
                 On the other hand, when you click the <strong>"Next Step"</strong> button to generate words step-by-step, this is called <strong>Inference</strong> (just like when you chat with ChatGPT). During inference, the future words literally don't exist yet, so the model builds the sentence one word at a time and moves forward!
             </div>
             <p>Click the <strong>"Next Step"</strong> button in the simulator below to see how the model generates a new word at each step, and how future words are locked by the "locked" symbol in the <strong>2D Attention Matrix</strong>. You can hover your mouse over the cells to see detailed descriptions.</p>
@@ -1130,7 +1130,7 @@
                 <!-- Question 1 -->
                 <div class="quiz-question">
                     <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">Question 1: Why is Causal Masking used in Decoder-Only models like ChatGPT or Gemini?</p>
-                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'Sorry! Parallel processing on GPUs is a native feature of the Transformer itself; Causal Masking is not required for it.')">
+                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'Sorry! Parallel processing on GPUs comes from the Transformer itself; the mask\'s job is not speed but stopping the model from peeking at future words during that parallel training.')">
                         A) To increase model processing speed, allowing parallel computations on GPUs.
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(1, this, true, 'Excellent! Causal Masking hides future words so that the model learns the correct strategy of predicting the next token using only preceding ones.')">
@@ -1163,8 +1163,8 @@
                     <div class="quiz-option" onclick="checkAnswer(3, this, false, 'Incorrect! The model generates text fully automatically and decides when to stop on its own.')">
                         A) The user clicks the stop button.
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'Exactly correct! When the model predicts the special <EOS> (End of Sequence) token as the next token, the generation loop terminates automatically.')">
-                        B) Generating the <EOS> (End of Sequence) token.
+                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'Exactly correct! When the model predicts the special &amp;lt;EOS&amp;gt; (End of Sequence) token as the next token, the generation loop terminates automatically.')">
+                        B) Generating the &lt;EOS&gt; (End of Sequence) token.
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(3, this, false, 'Incorrect! Although there is a maximum sequence length limit, architecturally, the termination is driven by generating a stop token.')">
                         C) Generating the same number of words as the input prompt.
@@ -1183,7 +1183,7 @@
                 <li>Visual explanation of GPT and Causal Attention: <a href="https://jalammar.github.io/illustrated-gpt2/" target="_blank">The Illustrated GPT-2 (Visualizing Transformer Language Models) by Jay Alammar</a></li>
                 <li>Causal Masking and Autoregressive decoding: <a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention Is All You Need (Vaswani et al.)</a></li>
             </ul>
-            <p style="margin-top: 1rem; font-style: italic;">In the next lesson, we will learn about Multi-Head Attention and how it helps the model attend to different parts of the sequence simultaneously.</p>
+            <p style="margin-top: 1rem; font-style: italic;">That completes our journey through the Transformer block — you can now trace a prompt from tokens all the way to the next word. Try the Final Assessment on the Hub to test yourself.</p>
         </div>
 
     </div>
@@ -1229,7 +1229,7 @@
             const explanations = [
                 `<strong>Step 1: (First Input Token)</strong><br>The prompt <code>"LLMs"</code> is given as input to the model. Since this is the first word, by Causal Masking rules it can only see itself (100% attention). Based on this, the model predicts the next word: <code>" are"</code> (88% probability).`,
                 `<strong>Step 2: (First Predicted Token Appended)</strong><br>The previously generated word <code>" are"</code> is now appended to the input, making it <code>"LLMs are"</code>. Look at the second row (Query: " are"); it can see the previous word <code>"LLMs"</code> and itself, but future tokens are masked. The model predicts: <code>" changing"</code> (76% probability).`,
-                `<strong>Step 3: (Second Predicted Token Appended)</strong><br>The input is now <code>"LLMs are changing"</code>. The third Query token <code>" changing"</code> can attend to the preceding tokens <code>"LLMs"</code> and <code>" are"</code>. Through conditional attention, it gives the highest importance to <code>" are"</code> (50%). The model outputs: <code>" our"</code> (62% probability).`,
+                `<strong>Step 3: (Second Predicted Token Appended)</strong><br>The input is now <code>"LLMs are changing"</code>. The third Query token <code>" changing"</code> can attend to the preceding tokens <code>"LLMs"</code> and <code>" are"</code>. In this example, it gives the highest importance to <code>" are"</code> (50%). The model outputs: <code>" our"</code> (62% probability).`,
                 `<strong>Step 4: (Third Predicted Token Appended)</strong><br>The input is now <code>"LLMs are changing our"</code>. The fourth Query token <code>" our"</code> attends to its preceding 3 tokens, with the majority of attention on <code>" changing"</code> (60%). The model predicts: <code>" world"</code> (92% probability).`,
                 `<strong>Step 5: (Generation Complete)</strong><br>Our target sentence has been generated: <code>"LLMs are changing our world"</code>. The final Query token <code>" world"</code> can attend to all tokens in the sentence. Finally, the model predicts the special <code>"&lt;EOS&gt;"</code> (End of Sequence) token, ending the generation loop.`
             ];
@@ -1302,7 +1302,7 @@
                         cell.innerHTML = `
                             <span class="percentage">${attnVal}%</span>
                             <span class="label">attn</span>
-                            <div class="cell-tooltip">When generating the word '${tokens[i].trim()}', the model pays ${attnVal}% attention to the word '${tokens[j].trim()}'.</div>
+                            <div class="cell-tooltip">While '${tokens[i].trim()}' (Query) helps predict the next word, it pays ${attnVal}% attention to the word '${tokens[j].trim()}'.</div>
                         `;
                     }
                     gridDiv.appendChild(cell);

@@ -930,7 +930,7 @@
         <!-- Analogy Card -->
         <div class="card">
             <h2>Query, Key, and Value: The Library Analogy</h2>
-            <p>Self-Attention uses three profiles for every word: <span class="highlight">Query (Q)</span>, <span class="highlight-purple">Key (K)</span>, and <span class="tech-term">Value (V)</span>. Think of it like looking for a book in a library:</p>
+            <p>Self-Attention creates three profiles for every word by multiplying its embedding with three learned matrices (W<sub>Q</sub>, W<sub>K</sub>, W<sub>V</sub>): <span class="highlight">Query (Q)</span>, <span class="highlight-purple">Key (K)</span>, and <span class="tech-term">Value (V)</span>. Think of it like looking for a book in a library:</p>
             
             <div class="analogy-grid">
                 <div class="analogy-card">
@@ -967,7 +967,7 @@
                         <span style="font-size: 0.95rem;"><strong>Key:</strong> We check the labels of all other words. The word "cat" has a label that matches living things that get hungry.</span>
                     </div>
                     <div style="background: var(--card-bg-alt); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
-                        <span style="font-size: 0.95rem;"><strong>Value:</strong> Because there's a strong match, "it" absorbs the meaning (Value) of "cat". The mathematical relationship <strong>it = cat</strong> is now established in the model!</span>
+                        <span style="font-size: 0.95rem;"><strong>Value:</strong> Because there's a strong match, "it" absorbs the meaning (Value) of "cat". "it" now carries a large share of the cat's meaning - roughly <strong>it ≈ cat</strong>!</span>
                     </div>
                 </div>
             </div>
@@ -999,7 +999,7 @@
                                 <div style="color: var(--text-secondary);">&times;</div>
                                 <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600;">K: "milk"</div>
                                 <div style="color: var(--text-secondary);">&#8594;</div>
-                                <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-purple);">Score: 40</div>
+                                <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-purple);">Score: 33</div>
                             </div>
                         </div>
                     </div>
@@ -1011,15 +1011,15 @@
 
                 <div style="background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-purple);">
                     <strong style="color: var(--accent-purple);">Step 2: Shrinking the Scores (Scaling)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Sometimes the match scores get too large and break the math later on. To fix this, the mechanism scales all the scores down.</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">The longer the vectors (the bigger d<sub>k</sub>), the larger the match scores tend to get, which breaks the math later on. To fix this, the mechanism scales all the scores down.</p>
                     <div style="background: rgba(109, 69, 168, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
-                        <strong>Example:</strong> Suppose "cat" gets a score of 50, and "milk" gets 40. These numbers are too large and might break the next math step. The model scales them down (e.g., to 5.0 and 4.0) to keep things stable.
+                        <strong>Example:</strong> Suppose "cat" gets a score of 50, and "milk" gets 33. These numbers are too large and might break the next math step. The model scales them down (e.g., to 5.0 and 3.3) to keep things stable.
                     </div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: var(--font-heading);">
                         <div style="display: flex; align-items: center; gap: 1rem; background: var(--card-bg-alt); padding: 1rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05);">
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                 <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">50</div>
-                                <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">40</div>
+                                <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">33</div>
                             </div>
                             <div style="display: flex; flex-direction: column; align-items: center; color: var(--text-secondary);">
                                 <div style="font-size: 1.2rem;">&#8594;</div>
@@ -1027,7 +1027,7 @@
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                 <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary); text-align: center;">5.0</div>
-                                <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary); text-align: center;">4.0</div>
+                                <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary); text-align: center;">3.3</div>
                             </div>
                         </div>
                     </div>
@@ -1048,7 +1048,7 @@
                             <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05); width: 100%; max-width: 500px;">
                                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                     <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">5.0</div>
-                                    <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">4.0</div>
+                                    <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">3.3</div>
                                 </div>
                                 
                                 <div style="background: rgba(14, 116, 144, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem 1rem; border-radius: 8px; font-weight: 700; color: var(--accent-cyan); text-align: center;">
@@ -1091,7 +1091,7 @@
                     <strong style="color: var(--accent-green);">Step 4: Combining Meanings (Weighted Sum)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">Finally, the Self-Attention mechanism gathers the "Values" (meanings) of the other words, taking a lot from words with high percentages and very little from words with low percentages. It mixes them all together into a new, context-rich super-word!</p>
                     <div style="background: rgba(60, 117, 73, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
-                        <strong>Example:</strong> To build the final meaning for <strong>"it"</strong>, the mechanism takes a large piece (80%) of the "cat" Value, and a small piece (15%) of the "milk" Value. Because the sentence mentioned "hungry", the mathematical calculation resolves "it" to the cat! The word "it" now contains the context of a hungry cat.
+                        <strong>Example:</strong> To build the final meaning for <strong>"it"</strong>, the mechanism takes a large piece (80%) of the "cat" Value, and a small piece (15%) of the "milk" Value. Because "hungry" fits a cat far better than milk, a trained model's attention naturally leans toward the cat. (In a GPT-style model, 'it' cannot yet see the later word 'hungry'; the link forms when 'hungry' or a later word looks back at 'it' and 'cat'.) The word "it" now contains the context of a hungry cat.
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 1.5rem 0; font-family: var(--font-heading);">
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05);">
@@ -1121,6 +1121,8 @@
         <div class="card">
             <h2>Interactive Attention Simulator</h2>
             <p>Select a sentence below. Click on any word in the <strong>Query (Q) Row</strong> to see how the connection lines and <strong>Attention Weights</strong> dynamically adjust based on context.</p>
+
+            <p style="font-size:0.92rem; background: var(--card-bg-alt); padding: 0.75rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);"><strong>Note:</strong> To keep the idea simple, every word here may look at the whole sentence - words before and after it - as in encoder models like BERT. GPT-style models such as ChatGPT use a <span class="tech-term">causal mask</span>: a word can only look at the words before it. There, 'it' cannot see the later 'tired' or 'wide'; instead, when the model reaches 'tired'/'wide' it looks back and links 'it' with 'animal'/'street' (more in Lesson 6). The numbers are illustrative teaching values, not taken from a trained model.</p>
 
             <div class="simulator">
                 <div class="sim-input-group">
@@ -1164,7 +1166,7 @@
                 <div class="quiz-option" onclick="checkAnswer(this, 1, true, 'Excellent! Query represents what the word is looking for, Key represents its label, and Value holds its core content.')">
                     A) Query is the search for word relationships, Key is the label/index of a word, and Value is its actual semantic content.
                 </div>
-                <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'Incorrect. Recall the YouTube search analogy.')">
+                <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'Incorrect. Recall the library analogy.')">
                     B) Query is the next token ID, Key is the embedding matrix, and Value is the Softmax value.
                 </div>
                 <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'Incorrect! Query, Key, and Value are vectors derived from the word embeddings; none represent dictionaries or output labels.')">
@@ -1188,7 +1190,7 @@
             </div>
 
             <div class="quiz-question-container" style="margin-top: 2rem;">
-                <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">3. In \"The animal didn't cross the street because it was too tired\" and \"...it was too wide\", how does the meaning of 'it' change?</p>
+                <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">3. In "The animal didn't cross the street because it was too tired" and "...it was too wide", how does the meaning of 'it' change?</p>
                 <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'Incorrect! Transformers do not use hand-crafted grammar rules.')">
                     A) The two sentences use different rule-based grammar code.
                 </div>
@@ -1224,7 +1226,7 @@
                     'it': {
                         title: "Query Focus: 'it'",
                         text: "Here, the word 'it' focuses 55% of its attention (Attention Weight) on 'animal' because the trait 'tired' is semantically associated with a living creature rather than a street.",
-                        weights: [0.02, 0.55, 0.03, 0.05, 0.02, 0.05, 0.03, 0.15, 0.02, 0.03, 0.10]
+                        weights: [0.02, 0.55, 0.03, 0.05, 0.02, 0.05, 0.03, 0.10, 0.02, 0.03, 0.10]
                     },
                     'street': {
                         title: "Query Focus: 'street'",
@@ -1244,7 +1246,7 @@
                     'it': {
                         title: "Query Focus: 'it'",
                         text: "Here, the word 'it' shifts 60% of its attention to 'street' because 'wide' is a characteristic of a street rather than an animal. By changing a single adjective, 'it' completely changes its referent! This is the power of context.",
-                        weights: [0.02, 0.05, 0.03, 0.05, 0.02, 0.60, 0.03, 0.12, 0.02, 0.03, 0.08]
+                        weights: [0.02, 0.05, 0.03, 0.05, 0.02, 0.60, 0.03, 0.07, 0.02, 0.03, 0.08]
                     },
                     'wide': {
                         title: "Query Focus: 'wide'",
@@ -1389,7 +1391,7 @@
                 // Heuristically calculate simulated weights
                 weightArr = calculateHeuristicWeights(currentWords, index);
                 explanationTitle = `Query Focus: "${wordName}"`;
-                explanationText = `The computer calculated the relationships using dot-products. Estimated Attention Weights are shown below:`;
+                explanationText = `There is no hand-made data for this word, so the scores come from a simple rule (word distance plus a few meaning matches) passed through Softmax; a real model would use the Q·K dot product here. Estimated Attention Weights are shown below:`;
             }
 
             // Attention weights form a probability distribution over the keys, so

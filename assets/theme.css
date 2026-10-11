@@ -1,28 +1,33 @@
+/* Classical display serif for headings and chapter labels. Bangla glyphs in
+ * those headings fall through to Noto Sans Bengali (Source Serif 4 has no
+ * Bengali), so Bangla text always renders in the owner's chosen face. */
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap');
+
 /* Warm ivory reading theme — the single source of truth for every colour and font.
  * Was duplicated verbatim in all 13 HTML files; now linked by each of them.
  * Never hardcode a colour anywhere else. See docs/AGENTS.md §4. */
 :root {
     /* Surfaces */
-    --bg-color:       #FAF6F0;
-    --bg-sunk:        #F2ECE2;
-    --card-bg:        #FFFCF7;
-    --card-bg-alt:    #F5EFE6;
-    --panel-bg:       #FBF6EE;
-    --sidebar-bg:     #FFFCF7;
+    --bg-color:       #F6F0E4;
+    --bg-sunk:        #EFE6D6;
+    --card-bg:        #FFFCF5;
+    --card-bg-alt:    #F4ECDF;
+    --panel-bg:       #FAF4E9;
+    --sidebar-bg:     #FFFCF5;
 
     /* Lines */
-    --border-color:   #E6DBCB;
-    --border-strong:  #D6C6AF;
-    --border-subtle:  #EFE7DA;
+    --border-color:   #E2D5C0;
+    --border-strong:  #CDBA9C;
+    --border-subtle:  #ECE2D1;
 
     /* Ink */
-    --text-primary:   #2B2622;
-    --text-body:      #3A342E;
-    --text-secondary: #6E635A;
-    --text-muted:     #756C63;
+    --text-primary:   #221D19;
+    --text-body:      #36302A;
+    --text-secondary: #6B6057;
+    --text-muted:     #71665C;
     --text-ghost:     #918880;
     --text-on-accent: #FFFDF9;
-    --ink-rgb:        43, 38, 34;
+    --ink-rgb:        34, 29, 25;
 
     /* Accents (retuned for a light ground) */
     --accent-cyan:    #0E7490;
@@ -32,6 +37,15 @@
     --accent-pink:    #B03A62;
     --accent-blue:    #1D5FA8;
     --accent-red:     #B3261E;
+    --accent-cyan-deep: #0B5F76; /* hover/pressed state of solid teal fills */
+
+    /* Typographic accents (classical layer). Rubric = oxblood, used only for
+       chapter labels, section numerals, the monogram and the reading rule —
+       never for data. Gold is decorative (rules/ornaments), never text. */
+    --accent-rubric:  #8E2B22;
+    --tint-rubric:    #F6E7E1;
+    --rule-gold:      #B8964F;
+    --rubric-rgb:     142, 43, 34;
 
     /* Accent tints */
     --tint-cyan:      #E4F0F3;
@@ -44,10 +58,13 @@
     /* Depth */
     --shadow:         0 1px 2px rgba(90,70,45,.05), 0 6px 20px rgba(90,70,45,.07);
     --shadow-soft:    0 1px 3px rgba(90,70,45,.06);
-    --ring:           0 0 0 3px rgba(14,116,144,.14);
+    --ring:           0 0 0 3px rgba(14,116,144,.16);
+    --focus-ring:     0 0 0 2px var(--card-bg), 0 0 0 4px var(--accent-cyan);
+    --paper-shadow:   0 1px 0 rgba(90,70,45,.04), 0 2px 4px -2px rgba(90,70,45,.08), 0 14px 32px -20px rgba(90,70,45,.28);
     --glow:           var(--ring);
 
     /* Type */
+    --font-display:   'Source Serif 4', 'Noto Sans Bengali', Georgia, 'Times New Roman', serif;
     --font-heading:   'Outfit', 'Noto Sans Bengali', sans-serif;
     --font-body:      'Noto Sans Bengali', system-ui, sans-serif;
     --font-main:      var(--font-body);
@@ -197,4 +214,193 @@
 /* Ensure [hidden] attribute works reliably across all elements, overriding display:flex/grid */
 [hidden] {
     display: none !important;
+}
+
+/* ============================================================================
+ * Classical layer — typography, chapter structure, paper surfaces, a11y.
+ *
+ * CSS only. It never changes text, ids, classes or script behaviour. Each
+ * page's inline <style> is declared AFTER this file, so rules that must win
+ * carry an extra `html body` prefix (same convention as site-nav.css).
+ * The `--accent-*` tokens the visualizations use are deliberately untouched.
+ * ==========================================================================*/
+
+html { scroll-padding-top: 88px; }
+@media (max-width: 900px) { html { scroll-padding-top: 76px; } }
+
+::selection { background: rgba(var(--rubric-rgb), 0.16); color: var(--text-primary); }
+
+/* Visible keyboard focus everywhere (mouse clicks stay quiet). */
+html body :focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+html body input[type="range"]:focus-visible { outline-offset: 4px; }
+
+/* --- Type: classical serif for display text ------------------------------ */
+html body h1,
+html body h2,
+html body h3,
+html body .site-nav-brand-name,
+html body .sidebar-brand-name {
+    font-family: var(--font-display);
+    letter-spacing: -0.005em;
+    font-optical-sizing: auto;
+}
+html body h1 { font-weight: 650; }
+html body h2 { font-weight: 620; }
+html body h3 { font-weight: 600; }
+
+/* --- Lesson chapter opener (lesson pages: .container > header) ----------- */
+html body .container > header {
+    margin-bottom: 3.25rem;
+    padding-top: 0.5rem;
+}
+html body .container > header .badge {
+    background: none;
+    color: var(--accent-rubric);
+    padding: 0;
+    border-radius: 0;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.1rem;
+    box-shadow: none;
+}
+html body .container > header .badge::before,
+html body .container > header .badge::after {
+    content: "";
+    width: 2.5rem;
+    height: 1px;
+    background: var(--rule-gold);
+}
+html body .container > header h1 {
+    font-size: clamp(2rem, 1.2rem + 3vw, 2.85rem);
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 0.85rem;
+    text-wrap: balance;
+}
+html body .container > header .subtitle {
+    font-size: 1.12rem;
+    color: var(--text-secondary);
+    max-width: 40rem;
+    margin: 0 auto;
+    text-wrap: balance;
+}
+/* Gold double rule with a centre lozenge — a quiet chapter ornament. */
+html body .container > header::after {
+    content: "\25C6";
+    display: block;
+    width: 176px;
+    height: 12px;
+    margin: 1.75rem auto 0;
+    font: 9px/12px Georgia, 'DejaVu Sans', serif;
+    text-align: center;
+    color: var(--accent-rubric);
+    background:
+        linear-gradient(var(--rule-gold), var(--rule-gold)) 0 5px / 74px 1px no-repeat,
+        linear-gradient(var(--rule-gold), var(--rule-gold)) 0 8px / 74px 1px no-repeat,
+        linear-gradient(var(--rule-gold), var(--rule-gold)) 100% 5px / 74px 1px no-repeat,
+        linear-gradient(var(--rule-gold), var(--rule-gold)) 100% 8px / 74px 1px no-repeat;
+}
+
+/* --- Cards read as pages -------------------------------------------------- */
+html body .container .card {
+    border-radius: 10px;
+    border-color: var(--border-color);
+    box-shadow: var(--paper-shadow);
+}
+
+/* Section headings: ink, serif, numbered like a textbook. The counter runs on
+   exactly the selector site-nav.js numbers (`.container .card > h2`), so the
+   numeral on the page always matches the TOC rail and the contents sheet. */
+html body .container { counter-reset: lesson-sec; }
+html body .container .card > h2 {
+    counter-increment: lesson-sec;
+    color: var(--text-primary);
+    font-size: 1.6rem;
+    line-height: 1.3;
+    padding-bottom: 0.7rem;
+    margin-bottom: 1.15rem;
+    border-bottom: 1px solid var(--border-color);
+    align-items: baseline;
+    gap: 0.6rem;
+    text-wrap: balance;
+}
+html body .container .card > h2::before {
+    content: counter(lesson-sec);
+    flex: 0 0 auto;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.8em;
+    font-variant-numeric: lining-nums tabular-nums;
+    color: var(--accent-rubric);
+    min-width: 1.6em;
+    height: 1.6em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(var(--rubric-rgb), 0.35);
+    border-radius: 50%;
+    background: var(--tint-rubric);
+    transform: translateY(-0.08em);
+}
+/* Prose sub-headings directly inside a card: ink instead of a data colour. */
+html body .container .card > h3 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    margin-top: 1.75rem;
+}
+
+/* Inline technical terms: lighter "small type" chip, still clearly marked. */
+html body .container .tech-term {
+    background: var(--card-bg-alt);
+    border-color: var(--border-color);
+    border-radius: 3px;
+    padding: 0.05rem 0.35rem;
+}
+
+/* Footnote-like citations and the footer colophon. */
+html body .container .citations {
+    border-top: 1px solid var(--border-strong);
+    font-size: 0.88rem;
+}
+html body .container .citations a,
+html body .container .card p a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(14, 116, 144, 0.45);
+}
+html body .container footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+/* --- Mobile reading comfort --------------------------------------------- */
+@media (max-width: 600px) {
+    html body .container .card { padding: 1.15rem 1rem; }
+    html body .container .card > h2 { font-size: 1.32rem; gap: 0.5rem; }
+    html body .container > header { margin-bottom: 2.25rem; }
+    html body .container > header .badge::before,
+    html body .container > header .badge::after { width: 1.5rem; }
+}
+
+/* --- Motion: honour the OS setting for every page ------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto !important; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

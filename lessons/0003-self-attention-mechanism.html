@@ -923,13 +923,13 @@
             </div>
 
             <!-- Single Summary Paragraph -->
-            <p style="margin-top: 1rem; line-height: 1.7;">মানুষ বাক্যের প্রেক্ষাপট মুহূর্তেই বুঝে ফেলে, কিন্তু কম্পিউটারের কাছে প্রতিটি শব্দ কেবল ডেটা বা সংখ্যা। আগে প্রচলিত মডেলগুলো এক-একটি শব্দ আলাদাভাবে পড়ায় দীর্ঘ বাক্যের ক্ষেত্রে শুরুর কনটেক্সট হারিয়ে যেত। Transformer-এর <span class="tech-term">Self-Attention</span> মেকানিজম সবকটি শব্দকে একসাথে তুলনা করে প্রতিটি শব্দকে তার আশেপাশের <span class="tech-term">Context</span> থেকে সঠিক অর্থ বুঝতে সাহায্য করে。</p>
+            <p style="margin-top: 1rem; line-height: 1.7;">মানুষ বাক্যের প্রেক্ষাপট মুহূর্তেই বুঝে ফেলে, কিন্তু কম্পিউটারের কাছে প্রতিটি শব্দ কেবল ডেটা বা সংখ্যা। আগে প্রচলিত মডেলগুলো শব্দগুলো একটির পর একটি করে পড়ায় দীর্ঘ বাক্যের ক্ষেত্রে শুরুর কনটেক্সট হারিয়ে যেত। Transformer-এর <span class="tech-term">Self-Attention</span> মেকানিজম সবকটি শব্দকে একসাথে তুলনা করে প্রতিটি শব্দকে তার আশেপাশের <span class="tech-term">Context</span> থেকে সঠিক অর্থ বুঝতে সাহায্য করে।</p>
         </div>
 
         <!-- Analogy Card -->
         <div class="card">
             <h2>Query, Key, and Value: লাইব্রেরির রূপক</h2>
-            <p>Self-Attention প্রতিটি শব্দের জন্য তিনটি প্রফাইল বা ভেক্টর ব্যবহার করে: <span class="highlight">Query (Q)</span>, <span class="highlight-purple">Key (K)</span>, এবং <span class="tech-term">Value (V)</span>। এটি লাইব্রেরিতে একটি বই খোঁজার মতো:</p>
+            <p>Self-Attention প্রতিটি শব্দের Embedding-কে তিনটি আলাদা শেখা ম্যাট্রিক্স (W<sub>Q</sub>, W<sub>K</sub>, W<sub>V</sub>) দিয়ে গুণ করে তিনটি প্রফাইল বা ভেক্টর তৈরি করে: <span class="highlight">Query (Q)</span>, <span class="highlight-purple">Key (K)</span>, এবং <span class="tech-term">Value (V)</span>। এটি লাইব্রেরিতে একটি বই খোঁজার মতো:</p>
             
             <div class="analogy-grid">
                 <div class="analogy-card">
@@ -966,7 +966,7 @@
                         <span style="font-size: 0.95rem;"><strong>Key:</strong> আমরা বাক্যের অন্যান্য শব্দের লেবেল চেক করি। "cat" শব্দটির এমন একটি লেবেল আছে যা ক্ষুধার্ত হতে পারে এমন প্রাণীর সাথে মিলে যায়।</span>
                     </div>
                     <div style="background: var(--card-bg-alt); padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
-                        <span style="font-size: 0.95rem;"><strong>Value:</strong> যেহেতু একটি চমৎকার মিল পাওয়া গেছে, "it" শব্দটি "cat"-এর অর্থ (Value) গ্রহণ করে। মডেলের কাছে তখন <strong>it = cat</strong> এর গাণিতিক সম্পর্ক তৈরি হয়!</span>
+                        <span style="font-size: 0.95rem;"><strong>Value:</strong> যেহেতু একটি চমৎকার মিল পাওয়া গেছে, "it" শব্দটি "cat"-এর অর্থ (Value) গ্রহণ করে। ফলে "it"-এর ভেক্টরে "cat"-এর অর্থ অনেকখানি মিশে যায় — যেন <strong>it ≈ cat</strong>!</span>
                     </div>
                 </div>
             </div>
@@ -998,7 +998,7 @@
                                 <div style="color: var(--text-secondary);">&times;</div>
                                 <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600;">K: "milk"</div>
                                 <div style="color: var(--text-secondary);">&#8594;</div>
-                                <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-purple);">Score: 40</div>
+                                <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-purple);">Score: 33</div>
                             </div>
                         </div>
                     </div>
@@ -1010,15 +1010,15 @@
 
                 <div style="background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border-left: 3px solid var(--accent-purple);">
                     <strong style="color: var(--accent-purple);">ধাপ ২: স্কোর ছোট করা (Scaling)</strong>
-                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">কখনও কখনও মিলের স্কোরগুলো অনেক বড় হয়ে যায় যা পরের ধাপের হিসাবে সমস্যা করে। এটি ঠিক করতে, মেকানিজমটি স্কোরগুলোকে কিছুটা ছোট করে দেয়।</p>
+                    <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">ভেক্টর যত লম্বা হয় (অর্থাৎ d<sub>k</sub> যত বড়), মিলের স্কোরগুলোও তত বড় হয়ে যায়, যা পরের ধাপের হিসাবে সমস্যা করে। এটি ঠিক করতে, মেকানিজমটি স্কোরগুলোকে কিছুটা ছোট করে দেয়।</p>
                     <div style="background: rgba(109, 69, 168, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-purple);">
-                        <strong>উদাহরণ:</strong> ধরুন, "cat" এর স্কোর হলো ৫০ এবং "milk" এর স্কোর ৪০। মডেলটি এই বড় সংখ্যাগুলোকে ভাগ করে ছোট ও হিসাবের উপযোগী করে তোলে, যেমন ৫.০ এবং ৪.০।
+                        <strong>উদাহরণ:</strong> ধরুন, "cat" এর স্কোর হলো ৫০ এবং "milk" এর স্কোর ৩৩। মডেলটি এই বড় সংখ্যাগুলোকে ভাগ করে ছোট ও হিসাবের উপযোগী করে তোলে, যেমন ৫.০ এবং ৩.৩।
                     </div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; font-family: var(--font-heading);">
                         <div style="display: flex; align-items: center; gap: 1rem; background: var(--card-bg-alt); padding: 1rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05);">
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                 <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">50</div>
-                                <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">40</div>
+                                <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">33</div>
                             </div>
                             <div style="display: flex; flex-direction: column; align-items: center; color: var(--text-secondary);">
                                 <div style="font-size: 1.2rem;">&#8594;</div>
@@ -1026,7 +1026,7 @@
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                 <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary); text-align: center;">5.0</div>
-                                <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary); text-align: center;">4.0</div>
+                                <div style="background: rgba(109, 69, 168, 0.15); border: 1px solid var(--accent-purple); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; color: var(--text-primary); text-align: center;">3.3</div>
                             </div>
                         </div>
                     </div>
@@ -1046,7 +1046,7 @@
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05); width: 100%; max-width: 500px;">
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                 <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">5.0</div>
-                                <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">4.0</div>
+                                <div style="background: var(--card-bg-alt); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; text-align: center;">3.3</div>
                             </div>
                             
                             <div style="background: rgba(14, 116, 144, 0.1); border: 1px solid var(--accent-cyan); padding: 0.8rem 1rem; border-radius: 8px; font-weight: 700; color: var(--accent-cyan); text-align: center;">
@@ -1088,7 +1088,7 @@
                     <strong style="color: var(--accent-green);">ধাপ ৪: অর্থের সংমিশ্রণ (Weighted Sum)</strong>
                     <p style="font-size: 0.95rem; margin: 0.3rem 0 0 0;">সবশেষে, সেলফ-এটেনশন মেকানিজম অন্য শব্দগুলোর "Values" (ভেক্টর বার্তা) সংগ্রহ করে—যে শব্দগুলোতে মনোযোগের হার বেশি, তাদের থেকে বেশি তথ্য নিয়ে একটি সমন্বিত ও প্রসঙ্গ-সমৃদ্ধ রিপ্রেজেন্টেশন (Contextual Embedding) তৈরি করে।</p>
                     <div style="background: rgba(60, 117, 73, 0.1); padding: 0.8rem; border-radius: 8px; margin-top: 0.8rem; font-size: 0.95rem; border-left: 2px solid var(--accent-green);">
-                        <strong>উদাহরণ:</strong> <strong>"it"</strong>-এর চূড়ান্ত অর্থ তৈরি করতে, মেকানিজমটি "cat"-এর থেকে বড় অংশ (৮০%) এবং "milk"-এর থেকে ছোট অংশ (১৫%) গ্রহণ করে। যেহেতু বাক্যে "hungry" শব্দটি রয়েছে, তাই গাণিতিকভাবে নিশ্চিত হওয়া যায় যে "it" বলতে বিড়ালটিকে বোঝানো হয়েছে, দুধকে নয়। ফলে "it" শব্দটির নতুন ভেক্টর রিপ্রেজেন্টেশনে ক্ষুধার্ত বিড়ালের প্রসঙ্গ স্পষ্টভাবে প্রতিফলিত হয়।
+                        <strong>উদাহরণ:</strong> <strong>"it"</strong>-এর চূড়ান্ত অর্থ তৈরি করতে, মেকানিজমটি "cat"-এর থেকে বড় অংশ (৮০%) এবং "milk"-এর থেকে ছোট অংশ (১৫%) গ্রহণ করে। "hungry" শব্দটি দুধের চেয়ে বিড়ালের সাথেই বেশি মানানসই, তাই প্রশিক্ষিত মডেলের মনোযোগ স্বাভাবিকভাবেই বিড়ালের দিকে ঝোঁকে, দুধের দিকে নয়। (GPT-ধাঁচের মডেলে 'it' নিজে পরের 'hungry' দেখতে পায় না; এই মিলটি তৈরি হয় যখন 'hungry' বা তার পরের শব্দ পেছনে তাকিয়ে 'it' ও 'cat'-কে জুড়ে নেয়।) ফলে "it" শব্দটির নতুন ভেক্টর রিপ্রেজেন্টেশনে ক্ষুধার্ত বিড়ালের প্রসঙ্গ স্পষ্টভাবে প্রতিফলিত হয়।
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 1.5rem 0; font-family: var(--font-heading);">
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; background: var(--card-bg-alt); padding: 1.2rem; border-radius: 10px; border: 1px solid rgba(var(--ink-rgb),0.05);">
@@ -1117,7 +1117,9 @@
         <!-- Interactive Simulator Card -->
         <div class="card">
             <h2>Interactive Attention Simulator</h2>
-            <p>নিচের যেকোনো একটি বাক্য বেছে নিন। এরপর <strong>Query (Q) Row</strong>-এর যেকোনো শব্দের ওপর ক্লিক করুন। দেখুন কীভাবে মনোযোগের লাল ও নীল সংযোগ রেখা ও তাদের ওজন বা <strong>Attention Weights</strong> পরিবর্তিত হচ্ছে।</p>
+            <p>নিচের যেকোনো একটি বাক্য বেছে নিন। এরপর <strong>Query (Q) Row</strong>-এর যেকোনো শব্দের ওপর ক্লিক করুন। দেখুন কীভাবে মনোযোগের সংযোগ রেখা (যত মোটা ও উজ্জ্বল, মনোযোগ তত বেশি) ও তাদের ওজন বা <strong>Attention Weights</strong> পরিবর্তিত হচ্ছে।</p>
+
+            <p style="font-size:0.92rem; background: var(--card-bg-alt); padding: 0.75rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-cyan);"><strong>খেয়াল করুন:</strong> সহজে বোঝার জন্য এখানে প্রতিটি শব্দকে পুরো বাক্য — আগের ও পরের সব শব্দ — দেখতে দেওয়া হয়েছে, যেমনটা BERT-এর মতো Encoder মডেলে হয়। কিন্তু ChatGPT-এর মতো GPT-ধাঁচের মডেলে <span class="tech-term">Causal Mask</span> থাকে: কোনো শব্দ কেবল তার আগের শব্দগুলোই দেখতে পায়। সেখানে 'it' নিজে পরের 'tired' বা 'wide' দেখতে পায় না; বরং 'tired'/'wide'-এ পৌঁছে মডেল পেছনে তাকিয়ে 'it' আর 'animal'/'street'-কে জুড়ে নেয় (বিস্তারিত Lesson 6-এ)। সংখ্যাগুলো শেখার সুবিধার জন্য তৈরি উদাহরণ, কোনো প্রশিক্ষিত মডেল থেকে নেওয়া নয়।</p>
 
             <div class="simulator">
                 <div class="sim-input-group">
@@ -1161,7 +1163,7 @@
                 <div class="quiz-option" onclick="checkAnswer(this, 1, true, 'চমৎকার! Query নির্দেশ করে শব্দটি কোন শব্দ থেকে অর্থ নেবে, Key হলো তার নিজের লেবেল এবং Value হলো তার মূল কন্টেন্ট বা তথ্য।')">
                     ক) Query হলো শব্দটি কার সাথে সম্পর্কিত হবে তার অনুসন্ধান, Key হলো শব্দের লেবেল/ইনডেক্স এবং Value হলো শব্দের প্রকৃত অর্থ বা কন্টেন্ট।
                 </div>
-                <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'দুঃখিত, ভুল উত্তর! ইউটিউব সার্চ অ্যানালজিটি আবার মনে করুন।')">
+                <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'দুঃখিত, ভুল উত্তর! লাইব্রেরির রূপকটি আবার মনে করুন।')">
                     খ) Query হলো পরবর্তী টোকেন আইডি, Key হলো এম্বেডিং ম্যাট্রিক্স এবং Value হলো সফটম্যাক্স মান।
                 </div>
                 <div class="quiz-option" onclick="checkAnswer(this, 1, false, 'ভুল উত্তর! Query, Key এবং Value শব্দটির এম্বেডিং থেকে উৎপন্ন ভেক্টর মাত্র, কোনোটিই আউটপুট লজিক বা ডিকশনারি নয়।')">
@@ -1221,7 +1223,7 @@
                     'it': {
                         title: "Query Focus: 'it'",
                         text: "এখানে 'it' শব্দটি 'animal' (প্রাণী)-এর সাথে ৫৫% মনোযোগ (Attention Weight) সংযোগ তৈরি করেছে। কারণ 'tired' বা ক্লান্ত হওয়ার গুণটি রাস্তার চেয়ে প্রাণীর সাথে বেশি মানানসই।",
-                        weights: [0.02, 0.55, 0.03, 0.05, 0.02, 0.05, 0.03, 0.15, 0.02, 0.03, 0.10]
+                        weights: [0.02, 0.55, 0.03, 0.05, 0.02, 0.05, 0.03, 0.10, 0.02, 0.03, 0.10]
                     },
                     'street': {
                         title: "Query Focus: 'street'",
@@ -1241,7 +1243,7 @@
                     'it': {
                         title: "Query Focus: 'it'",
                         text: "এখানে 'it' শব্দটি 'street' (রাস্তা)-এর সাথে ৬০% মনোযোগ সংযোগ তৈরি করেছে। কারণ 'wide' বা প্রশস্ত হওয়া গুণটি প্রাণীর তুলনায় রাস্তার সাথে বেশি মানানসই। কনটেক্সট পরিবর্তনের সাথে সাথে 'it' তার পরিচয় পরিবর্তন করে ফেলেছে!",
-                        weights: [0.02, 0.05, 0.03, 0.05, 0.02, 0.60, 0.03, 0.12, 0.02, 0.03, 0.08]
+                        weights: [0.02, 0.05, 0.03, 0.05, 0.02, 0.60, 0.03, 0.07, 0.02, 0.03, 0.08]
                     },
                     'wide': {
                         title: "Query Focus: 'wide'",
@@ -1386,7 +1388,7 @@
                 // Heuristically calculate simulated weights
                 weightArr = calculateHeuristicWeights(currentWords, index);
                 explanationTitle = `Query Focus: "${wordName}"`;
-                explanationText = `কম্পিউটার গাণিতিক ডট প্রোডাক্ট ব্যবহার করে "${wordName}" এর সাথে অন্যান্য শব্দের সম্পর্ক নির্ধারণ করেছে। নিচে এর আনুমানিক Attention Weights দেখানো হলো।`;
+                explanationText = `"${wordName}"-এর জন্য আলাদা করে সাজানো ডেটা নেই, তাই শব্দের দূরত্ব ও কিছু অর্থগত মিলের একটি সহজ নিয়ম দিয়ে স্কোর বানিয়ে Softmax করা হয়েছে (আসল মডেল এখানে Q ও K-এর ডট প্রোডাক্ট ব্যবহার করে)। নিচে এর আনুমানিক Attention Weights দেখানো হলো।`;
             }
 
             // Attention weights form a probability distribution over the keys, so

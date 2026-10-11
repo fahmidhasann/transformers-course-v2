@@ -829,9 +829,9 @@
             <h2>Dimension Splitting: A Clever Trick</h2>
             <p>You might think running 4 "Heads" at the same time would make the computer 4 times slower. But the Transformer uses a clever trick to avoid this!</p>
             
-            <p>Imagine a word's meaning is stored as a list of <span class="highlight">512 numbers</span>. If we have <span class="highlight">4</span> Attention Heads, the mechanism doesn't give all 512 numbers to every Head.</p>
+            <p>Imagine a word's meaning is stored as a list of <span class="highlight">512 numbers</span>. If we have <span class="highlight">4</span> Attention Heads, every Head still sees all 512 numbers, but uses its own learned matrices (W<sub>Q</sub>, W<sub>K</sub>, W<sub>V</sub>) to shrink them into its own smaller Query, Key and Value.</p>
             
-            <p>Instead, it chops the numbers up equally:</p>
+            <p>In other words, the total size of Q, K and V is split equally among the Heads:</p>
             <div class="math-box">
                 512 total numbers ÷ 4 Heads = 128 numbers per Head
             </div>
@@ -862,7 +862,7 @@
                         <line x1="450" y1="0" x2="450" y2="40" stroke="rgba(var(--ink-rgb),0.15)" stroke-width="1" />
                         <line x1="475" y1="0" x2="475" y2="40" stroke="rgba(var(--ink-rgb),0.15)" stroke-width="1" />
                         
-                        <text x="250" y="25" fill="var(--text-on-accent)" font-weight="600" text-anchor="middle" font-size="15">Full Vector: 512 Dimensions</text>
+                        <text x="250" y="25" fill="var(--text-on-accent)" font-weight="600" text-anchor="middle" font-size="15">Q / K / V: 512 Dimensions</text>
                         <!-- Dots to indicate continuity -->
                         <text x="110" y="25" fill="var(--text-on-accent)" opacity="0.6" font-size="18" text-anchor="middle">...</text>
                         <text x="390" y="25" fill="var(--text-on-accent)" opacity="0.6" font-size="18" text-anchor="middle">...</text>
@@ -931,7 +931,7 @@
                 </svg>
             </div>
             
-            <p>Each Head only looks at a small slice (128 numbers) to do its specialized job. When they are all done, they glue their answers back together into a single 512-number list.</p>
+            <p>Each Head works with its own small 128-number Q, K and V to do its specialized job. When they are all done, they glue (concatenate) their answers back together into a new 512-number list, and a final <span class="tech-term">Output Projection</span> (W<sub>O</sub>) mixes all the Heads' findings together.</p>
             <p>This allows the model to process the word from 4 different angles at the exact same speed as thinking from just 1 angle!</p>
         </div>
 
@@ -995,7 +995,7 @@
         <div class="card">
             <h2>Layer Stacking: Building Deep Understanding</h2>
             <p>A Transformer model isn't just one single block of Multi-Head Attention (here a block refers to a <span class="tech-term">Transformer block</span>). It's actually a massive tower of blocks stacked on top of each other. This is called <span class="tech-term">Layer Stacking</span>.</p>
-            <p>For example, models like BERT or GPT-4 use dozens of layers, and some have over 100! Why so many? Because understanding language takes steps. The bottom layers handle simple things, and the top layers handle deep thinking:</p>
+            <p>For example, large models like ChatGPT or Claude use dozens of layers - GPT-3 alone has 96! Why so many? Because understanding language takes steps. The bottom layers handle simple things, and the top layers handle deep thinking:</p>
             
             <div class="layer-stack">
                 <!-- Top Layers -->
@@ -1093,7 +1093,7 @@
                 <li>Visual Guide: <a href="https://jalammar.github.io/illustrated-transformer/" target="_blank">The Illustrated Transformer by Jay Alammar</a></li>
                 <li>Layer Stacking Explanation: <a href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank">A Mathematical Framework for Transformer Circuits (Anthropic Research)</a></li>
             </ul>
-            <p style="margin-top: 1rem; font-style: italic;">In the next lesson, we will learn how Transformers stack hundreds of layers using <strong>Residual Connections and Layer Normalization</strong>.</p>
+            <p style="margin-top: 1rem; font-style: italic;">In the next lesson, we will learn how Transformers stack so many layers using <strong>Residual Connections and Layer Normalization</strong>.</p>
         </div>
 
     </div>

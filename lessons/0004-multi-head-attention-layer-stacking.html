@@ -830,9 +830,9 @@
             <p>আপনার মনে হতে পারে, একসাথে ৪টি "Head" চালালে কম্পিউটার ৪ গুণ ধীরগতির হয়ে যাবে। কিন্তু Transformer এই সমস্যা এড়াতে একটি দারুণ কৌশল ব্যবহার করে!</p>
             <p>কল্পনা করুন, প্রতিটি শব্দকে (যেমন: "বিড়াল") কম্পিউটারের কাছে পরিচিত করার জন্য একটি <strong>এমবেডিং ভেক্টর (<span class="tech-term">Embedding Vector</span>)</strong> বা সংখ্যার তালিকা ব্যবহার করা হয়। ধরুন, একটি শব্দের ভেক্টরে <span class="highlight">৫১২টি সংখ্যা</span> আছে (উদাহরণস্বরূপ: <code>[0.12, -0.45, 0.89, ..., 0.03]</code> মোট ৫১২টি সংখ্যার একটি তালিকা)।</p>
             
-            <p>আমাদের যদি <span class="highlight">৪টি</span> Attention Head থাকে, এআই প্রতিটি Head-কে এই ৫১২টি সংখ্যাই দিয়ে দেয় না।</p>
+            <p>আমাদের যদি <span class="highlight">৪টি</span> Attention Head থাকে, প্রতিটি Head পুরো ৫১২টি সংখ্যাই দেখে — কিন্তু নিজের আলাদা শেখা ম্যাট্রিক্স (W<sub>Q</sub>, W<sub>K</sub>, W<sub>V</sub>) দিয়ে সেটিকে ছোট করে নিজের Query, Key ও Value বানায়।</p>
             
-            <p>বরং, এটি সংখ্যাগুলোকে সমানভাবে ভাগ করে দেয়:</p>
+            <p>অর্থাৎ Q, K, V-এর মোট মাপটি Head-গুলোর মধ্যে সমানভাবে ভাগ হয়ে যায়:</p>
             <div style="background: var(--card-bg-alt); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 1rem; font-family: var(--font-heading);">
                 মোট ৫১২টি সংখ্যা ÷ ৪টি Head = প্রতিটি Head-এর জন্য ১২৮টি সংখ্যা
             </div>
@@ -863,7 +863,7 @@
                         <line x1="450" y1="0" x2="450" y2="40" stroke="rgba(var(--ink-rgb),0.15)" stroke-width="1" />
                         <line x1="475" y1="0" x2="475" y2="40" stroke="rgba(var(--ink-rgb),0.15)" stroke-width="1" />
                         
-                        <text x="250" y="25" fill="var(--text-on-accent)" font-weight="600" text-anchor="middle" font-size="15">Full Vector: 512 Dimensions</text>
+                        <text x="250" y="25" fill="var(--text-on-accent)" font-weight="600" text-anchor="middle" font-size="15">Q / K / V: 512 Dimensions</text>
                         <!-- Dots to indicate continuity -->
                         <text x="110" y="25" fill="var(--text-on-accent)" opacity="0.6" font-size="18" text-anchor="middle">...</text>
                         <text x="390" y="25" fill="var(--text-on-accent)" opacity="0.6" font-size="18" text-anchor="middle">...</text>
@@ -932,7 +932,7 @@
                 </svg>
             </div>
             
-            <p>প্রতিটি Head তার নিজস্ব বিশেষ কাজটি করার জন্য মাত্র একটি ছোট অংশ (১২৮টি সংখ্যা) নিয়ে কাজ করে। যখন সবার কাজ শেষ হয়, তারা তাদের ফলাফলগুলোকে আবার জুড়ে দিয়ে মূল ৫১২টি সংখ্যার একটি তালিকা তৈরি করে।</p>
+            <p>প্রতিটি Head তার নিজস্ব বিশেষ কাজটি করার জন্য মাত্র ১২৮টি সংখ্যার ছোট Q, K, V নিয়ে কাজ করে। যখন সবার কাজ শেষ হয়, তারা তাদের ফলাফলগুলোকে পাশাপাশি জুড়ে (Concatenate) আবার ৫১২টি সংখ্যার একটি নতুন তালিকা বানায়, আর শেষে একটি <span class="tech-term">Output Projection</span> (W<sub>O</sub>) সব Head-এর তথ্য একসাথে মিশিয়ে দেয়।</p>
             <p>এই কৌশলের কারণে মডেলটি কোনো অতিরিক্ত সময় ব্যয় না করেই একটি শব্দকে একই সাথে ৪টি ভিন্ন দিক থেকে চিন্তা করতে পারে!</p>
         </div>
 
@@ -996,7 +996,7 @@
         <div class="card">
             <h2>Layer Stacking: গভীরভাবে বুঝতে শেখা</h2>
             <p>একটি ট্রান্সফর্মার মডেলের ভেতরে Multi-Head Attention-এর শুধু একটি ব্লক (এখানে ব্লক বলতে মূলত একটি <span class="tech-term">Transformer block</span>-কে বোঝানো হচ্ছে) থাকে না। বরং অনেকগুলো ব্লক একটির ওপর আরেকটি স্তূপাকারে সাজানো থাকে, যাকে <span class="tech-term">Layer Stacking</span> বলে।</p>
-            <p>যেমন: ChatGPT বা Claude-এর মতো মডেলগুলোতে কয়েক ডজন লেয়ার বা স্তর থাকে, আর GPT-4-এ আছে ১০০-এরও বেশি! এতগুলো লেয়ার কেন? কারণ ভাষা বুঝতে অনেকগুলো ধাপ পার হতে হয়। নিচের লেয়ারগুলো সহজ বিষয়গুলো সামলায়, আর ওপরের লেয়ারগুলো গভীর চিন্তাভাবনা করে:</p>
+            <p>যেমন: ChatGPT বা Claude-এর মতো বড় মডেলগুলোতে কয়েক ডজন লেয়ার বা স্তর থাকে — শুধু GPT-3-এই আছে ৯৬টি লেয়ার! এতগুলো লেয়ার কেন? কারণ ভাষা বুঝতে অনেকগুলো ধাপ পার হতে হয়। নিচের লেয়ারগুলো সহজ বিষয়গুলো সামলায়, আর ওপরের লেয়ারগুলো গভীর চিন্তাভাবনা করে:</p>
             
             <div class="layer-stack">
                 <!-- Top Layers -->
@@ -1071,11 +1071,11 @@
 
                 <!-- Question 3 -->
                 <div class="quiz-question-card">
-                    <div class="quiz-question">প্রশ্ন ৩: একটি Transformer মডেলের Embedding Dimension (d_model) হলো ৭ ৬৮ (768) এবং এতে ১২টি (12) Attention Head রয়েছে। প্রতিটি Head-এর নিজস্ব ডাইমেনশন (d_head) কত হবে?</div>
+                    <div class="quiz-question">প্রশ্ন ৩: একটি Transformer মডেলের Embedding Dimension (d_model) হলো ৭৬৮ (768) এবং এতে ১২টি (12) Attention Head রয়েছে। প্রতিটি Head-এর নিজস্ব ডাইমেনশন (d_head) কত হবে?</div>
                     <div class="quiz-option" onclick="checkAnswer(3, this, false, 'ভুল উত্তর! এটি হেড সংখ্যা নির্দেশ করছে, ডাইমেনশন নয়।')">
                         ক) 12
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'চমৎকার! ৭ ৬৮ ডাইমেনশনকে ১২টি হেডে ভাগ করা হয়। তাই প্রতিটি হেডের ডাইমেনশন হলো ৭৬৮ / ১২ = ৬৪।')">
+                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'চমৎকার! ৭৬৮ ডাইমেনশনকে ১২টি হেডে ভাগ করা হয়। তাই প্রতিটি হেডের ডাইমেনশন হলো ৭৬৮ / ১২ = ৬৪।')">
                         খ) 64 (কারণ 768 / 12 = 64)
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(3, this, false, 'ভুল উত্তর! সম্পূর্ণ ডাইমেনশন কোনো একক হেডের কাছে থাকে না, এটি বিভক্ত হয়।')">
@@ -1094,7 +1094,7 @@
                 <li>ভিজুয়াল গাইড: <a href="https://jalammar.github.io/illustrated-transformer/" target="_blank">The Illustrated Transformer by Jay Alammar</a></li>
                 <li>লেয়ার স্ট্যাকিংয়ের ব্যাখ্যা: <a href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank">A Mathematical Framework for Transformer Circuits (Anthropic Research)</a></li>
             </ul>
-            <p style="margin-top: 1rem; font-style: italic;">পরবর্তী লেসনে আমরা শিখবো কীভাবে ট্রান্সফরমার মডেলগুলো <strong>Residual Connections এবং Layer Normalization</strong> ব্যবহার করে সফলভাবে শত শত লেয়ারকে একসাথে যুক্ত করতে পারে।</p>
+            <p style="margin-top: 1rem; font-style: italic;">পরবর্তী লেসনে আমরা শিখবো কীভাবে ট্রান্সফরমার মডেলগুলো <strong>Residual Connections এবং Layer Normalization</strong> ব্যবহার করে সফলভাবে এত এত লেয়ারকে একসাথে যুক্ত করতে পারে।</p>
         </div>
 
     </div>

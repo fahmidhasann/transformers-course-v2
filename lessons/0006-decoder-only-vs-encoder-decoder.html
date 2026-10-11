@@ -904,7 +904,7 @@
                     <div class="arch-card-header enc-dec">T5 (Encoder-Decoder)</div>
                     <div class="arch-card-body">
                         <ul>
-                            <li><strong>Attention Type:</strong> Encoder-এ দ্বিমুখী (Bidirectional) এবং Decoder-এ একমুখী (Causal) মনোযোগ ব্যবহৃত হয়।</li>
+                            <li><strong>Attention Type:</strong> Encoder-এ দ্বিমুখী (Bidirectional) এবং Decoder-এ একমুখী (Causal) মনোযোগ ব্যবহৃত হয়। সাথে থাকে <span class="tech-term">Cross-Attention</span>—যার মাধ্যমে Decoder-এর প্রতিটি টোকেন Encoder-এর বোঝা পুরো ইনপুটের দিকে ফিরে তাকাতে পারে।</li>
                             <li><strong>Core Goal:</strong> এক ফরম্যাটের সিকোয়েন্সকে অন্য ফরম্যাটে রূপান্তর করা (Seq2Seq)।</li>
                             <li><strong>Use Cases:</strong> Translation (অনুবাদ), Text Summarization (সারসংক্ষেপ)।</li>
                             <li><strong>Example:</strong> T5, BART।</li>
@@ -914,7 +914,7 @@
             </div>
             
             <p style="margin-top: 1.5rem;"><strong>কেন আধুনিক LLM-গুলো মূলত Decoder-Only?</strong><br>
-            Decoder-Only আর্কিটেকচারকে খুব সহজেই অনেক বড় মডেলে রূপান্তর করা যায়। এটি মানুষের কোনো নির্দেশনা ছাড়াই ইন্টারনেটের বিশাল পরিমাণ লেখা নিজে নিজে পড়ে শিখতে পারে—যাকে বলা হয় <span class="highlight">Unsupervised Pre-training</span>। এছাড়া, এটি একটি বাক্যের আগের সব শব্দকে একসাথে দেখে পরের শব্দটি কী হবে তা অনুমান করতে পারে। একসাথে অনেকগুলো কাজ করতে পারার এই সুবিধার কারণে, জিপিইউ (GPU) তার পুরো ক্ষমতা ব্যবহার করে একে অত্যন্ত দ্রুতগতিতে চালাতে পারে।</p>
+            Decoder-Only আর্কিটেকচারকে খুব সহজেই অনেক বড় মডেলে রূপান্তর করা যায়। এটি মানুষের কোনো নির্দেশনা ছাড়াই ইন্টারনেটের বিশাল পরিমাণ লেখা নিজে নিজে পড়ে শিখতে পারে—যাকে বলা হয় <span class="highlight">Self-supervised (Unsupervised) Pre-training</span>। এছাড়া, ট্রেনিংয়ের সময় Causal Mask-এর কল্যাণে একটি বাক্যের প্রতিটি শব্দ একসাথে নিজের পরের শব্দটি অনুমান করা শেখে—ফলে একটি বাক্য থেকেই একসাথে অনেকগুলো শিক্ষা মেলে। একসাথে অনেকগুলো কাজ করতে পারার এই সুবিধার কারণে, জিপিইউ (GPU) তার পুরো ক্ষমতা ব্যবহার করে একে অত্যন্ত দ্রুতগতিতে ট্রেনিং দিতে পারে। আর যেহেতু প্রায় যেকোনো কাজকেই "এই লেখাটা এগিয়ে নাও" হিসেবে বলা যায়, তাই একটিমাত্র সরল ডিজাইনেই চ্যাট, অনুবাদ, সারসংক্ষেপ, কোডিং—সবই হয়ে যায়।</p>
         </div>
 
         <!-- Section 2: Causal Masking -->
@@ -1002,11 +1002,11 @@
 
         <!-- Section 3: Autoregressive Generation -->
         <div class="card">
-            <h2>Autoregressive Generation (স্বয়ংক্রিয় পুনরাবৃত্তি)</h2>
+            <h2>Autoregressive Generation (নিজের আগের শব্দে ভর করে লেখা)</h2>
             <p>যখন আমরা চ্যাটজিপিটি বা জেমিনি ব্যবহার করি, তখন শব্দগুলো এক এক করে স্ক্রিনে ফুটে ওঠে। একে বলা হয় <span class="tech-term">Autoregressive Generation</span>। এর ধাপগুলো নিম্নরূপ:</p>
             <p>
                 ১. <strong><span class="tech-term">Input Prompt</span>:</strong> মডেল শুরুতে ইউজারের প্রম্পটটি গ্রহণ করে (যেমন: <code>"LLMs are"</code>)।<br>
-                ২. <strong><span class="tech-term">Next Token Prediction</span>:</strong> Causal Mask-এর মাধ্যমে প্রসেস হয়ে মডেল পরবর্তী সম্ভাব্য টোকেনের সম্ভাব্যতা হিসাব করে এবং সর্বোচ্চ মানের টোকেনটি বেছে নেয় (যেমন: <code>"changing"</code>)।<br>
+                ২. <strong><span class="tech-term">Next Token Prediction</span>:</strong> Causal Mask-এর মাধ্যমে প্রসেস হয়ে মডেল পরবর্তী সম্ভাব্য টোকেনের সম্ভাব্যতা হিসাব করে এবং সাধারণত সবচেয়ে সম্ভাব্য টোকেনটি (অথবা বৈচিত্র্যের জন্য শীর্ষ কয়েকটির মধ্য থেকে একটি) বেছে নেয় (যেমন: <code>"changing"</code>)।<br>
                 ৩. <strong><span class="tech-term">Context Update</span>:</strong> নতুন টোকেনটিকে আগের ইনপুটের সাথে জোড়া লাগানো হয় (ইনপুট হয়: <code>"LLMs are changing"</code>)।<br>
                 ৪. <strong><span class="tech-term">Loop & Stop Signal</span>:</strong> এই লুপটি বারংবার চলতে থাকে যতক্ষণ না মডেলটি একটি বিশেষ টোকেন তৈরি করে, যাকে বলা হয় <span class="tech-term">&lt;EOS&gt; (End of Sequence)</span>।
             </p>
@@ -1059,7 +1059,7 @@
             <h2>Interactive Causal Masking & Autoregressive Grid</h2>
             <div style="background: rgba(60, 117, 73, 0.1); border-left: 4px solid var(--accent-green); padding: 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem;">
                 <strong>💡 Training vs Inference (গুরুত্বপূর্ণ কনসেপ্ট):</strong><br>
-                এই ডায়াগ্রামটি মূলত দুটি বিষয়কে একসাথে দেখাচ্ছে। <strong>লক করা বা মাস্ক করা ম্যাট্রিক্সটি</strong> মূলত মডেল <strong>ট্রেনিং</strong> এর সময় ব্যবহার করা হয়। মডেলকে যখন একসাথে পুরো বাক্যটি দিয়ে শেখানো হয়, তখন এই ম্যাট্রিক্সটি নিশ্চিত করে যেন মডেল ভবিষ্যতের শব্দ দেখতে না পারে।<br><br>
+                এই ডায়াগ্রামটি মূলত দুটি বিষয়কে একসাথে দেখাচ্ছে। <strong>লক করা বা মাস্ক করা ম্যাট্রিক্সটি</strong> মূলত মডেল <strong>ট্রেনিং</strong> এর সময় ব্যবহার করা হয়। মডেলকে যখন একসাথে পুরো বাক্যটি দিয়ে শেখানো হয়, তখন এই ম্যাট্রিক্সটি নিশ্চিত করে যেন মডেল ভবিষ্যতের শব্দ দেখতে না পারে। (ইনফারেন্সে আপনার পুরো প্রম্পটটি প্রথমবার একসাথে পড়ার সময়ও এই মাস্ক কাজ করে, যাতে প্রম্পটের কোনো শব্দ সামনে উঁকি দিতে না পারে।)<br><br>
                 অন্যদিকে, আপনি যখন <strong>"Next Step"</strong> বাটনে ক্লিক করে ধাপে ধাপে শব্দ জেনারেট করছেন, এটি হলো <strong>Inference</strong> (যেমনটি আপনি ChatGPT এর সাথে চ্যাট করার সময় হয়)। ইনফারেন্সের সময় ভবিষ্যৎ শব্দগুলো আসলেও থাকে না, মডেল একটি করে শব্দ তৈরি করে এবং সামনের দিকে এগোয়!
             </div>
             <p>নিচের সিমুলেটরটির <strong>"Next Step"</strong> বাটনে ক্লিক করে দেখুন কীভাবে মডেল প্রতিটি ধাপে নতুন শব্দ জেনারেট করছে এবং কীভাবে <strong>2D Attention Matrix</strong>-এ পরবর্তী শব্দগুলো "locked" চিহ্নের মাধ্যমে লক হয়ে যাচ্ছে। আপনি মাউস দিয়ে সেলের ওপর হোভার করে বিস্তারিত বিবরণ দেখতে পারেন।</p>
@@ -1131,7 +1131,7 @@
                 <!-- Question 1 -->
                 <div class="quiz-question">
                     <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">প্রশ্ন ১: ChatGPT বা Gemini-এর মতো Decoder-Only মডেলে কেন Causal Masking ব্যবহার করা হয়?</p>
-                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'দুঃখিত! জিপিইউ-তে সমান্তরাল প্রসেসিং তো ট্রান্সফরমারের নিজস্ব বৈশিষ্ট্য, এর জন্য কজাল মাস্কিংয়ের প্রয়োজন পড়ে না।')">
+                    <div class="quiz-option" onclick="checkAnswer(1, this, false, 'দুঃখিত! জিপিইউ-তে সমান্তরাল প্রসেসিং তো ট্রান্সফরমারের নিজস্ব বৈশিষ্ট্য; কজাল মাস্কিংয়ের কাজ গতি বাড়ানো নয়, বরং সেই সমান্তরাল ট্রেনিংয়ে সামনের শব্দ আড়াল করে চিটিং ঠেকানো।')">
                         ক) মডেলের প্রসেসিং স্পিড বাড়াতে, যাতে GPU-তে সমান্তরালভাবে গণনা করা যায়।
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(1, this, true, 'চমৎকার! Causal Masking পরবর্তী শব্দগুলোকে আড়াল করে রাখে যাতে ট্রেনিংয়ের সময় মডেল আগের টোকেন দিয়ে পরের টোকেন অনুমানের সঠিক কৌশলটি শিখতে পারে।')">
@@ -1164,8 +1164,8 @@
                     <div class="quiz-option" onclick="checkAnswer(3, this, false, 'ভুল উত্তর! মডেল সম্পূর্ণ স্বয়ংক্রিয়ভাবে জেনারেট করে এবং নিজে থেকেই বন্ধ হওয়ার সিদ্ধান্ত নেয়।')">
                         ক) ইউজারের পক্ষ থেকে স্টপ বাটনে ক্লিক করা।
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'একদম সঠিক! মডেল যখন পরবর্তী টোকেন হিসেবে বিশেষ <EOS> (End of Sequence) টোকেনটি প্রেডিক্ট করে, তখন স্বয়ংক্রিয়ভাবে জেনারেশন লুপটি বন্ধ হয়ে যায়।')">
-                        খ) <EOS> (End of Sequence) টোকেন জেনারেট করা।
+                    <div class="quiz-option" onclick="checkAnswer(3, this, true, 'একদম সঠিক! মডেল যখন পরবর্তী টোকেন হিসেবে বিশেষ &amp;lt;EOS&amp;gt; (End of Sequence) টোকেনটি প্রেডিক্ট করে, তখন স্বয়ংক্রিয়ভাবে জেনারেশন লুপটি বন্ধ হয়ে যায়।')">
+                        খ) &lt;EOS&gt; (End of Sequence) টোকেন জেনারেট করা।
                     </div>
                     <div class="quiz-option" onclick="checkAnswer(3, this, false, 'ভুল! যদিও প্রম্পটের ম্যাক্সিমাম লেন্থের লিমিট থাকে, তবে আর্কিটেকচারালি মূল সমাপ্তি ঘটে একটি স্টপ টোকেন জেনারেশনের মাধ্যমে।')">
                         গ) প্রম্পটের ইনপুট শব্দের সমান সংখ্যক শব্দ তৈরি করা।
@@ -1184,7 +1184,7 @@
                 <li>GPT ও Causal Attention এর ভিজ্যুয়াল ব্যাখ্যা: <a href="https://jalammar.github.io/illustrated-gpt2/" target="_blank">The Illustrated GPT-2 (Visualizing Transformer Language Models) by Jay Alammar</a></li>
                 <li>Causal Masking ও Autoregressive decoding: <a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention Is All You Need (Vaswani et al.)</a></li>
             </ul>
-            <p style="margin-top: 1rem; font-style: italic;">পরবর্তী লেসনে আমরা শিখবো কীভাবে <strong>Multi-Head Attention</strong> কাজ করে এবং এটি কীভাবে মডেলকে একই সাথে ভিন্ন ভিন্ন তথ্যে মনোযোগ দিতে সাহায্য করে।</p>
+            <p style="margin-top: 1rem; font-style: italic;">এর মাধ্যমেই Transformer block-এর ভেতরের যাত্রা শেষ হলো—এখন আপনি একটি প্রম্পটকে টোকেন থেকে শুরু করে পরের শব্দ পর্যন্ত পুরো পথটা নিজেই অনুসরণ করতে পারবেন। নিজেকে যাচাই করতে Hub-এর <strong>Final Assessment</strong> দিয়ে দেখুন।</p>
         </div>
 
     </div>
@@ -1230,7 +1230,7 @@
             const explanations = [
                 `<strong>ধাপ ১: (প্রথম ইনপুট টোকেন)</strong><br>মডেলের কাছে প্রম্পট হিসেবে শুরুতে <code>"LLMs"</code> ইনপুট দেওয়া হয়েছে। যেহেতু এটিই প্রথম শব্দ, Causal Masking-এর নিয়মে এটি কেবল নিজেকেই দেখতে পায় (১০০% মনোযোগ)। এর ওপর ভিত্তি করে মডেল পরবর্তী শব্দ প্রেডিক্ট করে: <code>" are"</code> (৮৮% সম্ভাবনা)।`,
                 `<strong>ধাপ ২: (প্রথম প্রেডিক্টেড টোকেন যুক্ত হলো)</strong><br>আগের ধাপে তৈরি হওয়া <code>" are"</code> শব্দটি এখন ইনপুটের সাথে যুক্ত হয়েছে, ফলে ইনপুটটি হয়েছে <code>"LLMs are"</code>। দ্বিতীয় লাইনে (Query: " are") দেখুন, এটি পেছনের শব্দ <code>"LLMs"</code> এবং নিজেকে দেখতে পাচ্ছে, কিন্তু সামনের টোকেনগুলো মাস্ক করা। মডেল নতুন শব্দ প্রেডিক্ট করে: <code>" changing"</code> (৭৬% সম্ভাবনা)।`,
-                `<strong>ধাপ ৩: (দ্বিতীয় প্রেডিক্টেড টোকেন যুক্ত হলো)</strong><br>ইনপুট এখন <code>"LLMs are changing"</code>। তৃতীয় কোয়েরি টোকেন <code>" changing"</code> পূর্বের টোকেন <code>"LLMs"</code> এবং <code>" are"</code>-কে দেখতে পাচ্ছে। কন্ডিশনাল অ্যাটেনশনের মাধ্যমে এটি <code>" are"</code>-কে সবচেয়ে বেশি গুরুত্ব দিচ্ছে (৫০%)। মডেলের আউটপুট: <code>" our"</code> (৬২% সম্ভাবনা)।`,
+                `<strong>ধাপ ৩: (দ্বিতীয় প্রেডিক্টেড টোকেন যুক্ত হলো)</strong><br>ইনপুট এখন <code>"LLMs are changing"</code>। তৃতীয় কোয়েরি টোকেন <code>" changing"</code> পূর্বের টোকেন <code>"LLMs"</code> এবং <code>" are"</code>-কে দেখতে পাচ্ছে। এই উদাহরণে এটি <code>" are"</code>-কে সবচেয়ে বেশি গুরুত্ব দিচ্ছে (৫০%)। মডেলের আউটপুট: <code>" our"</code> (৬২% সম্ভাবনা)।`,
                 `<strong>ধাপ ৪: (তৃতীয় প্রেডিক্টেড টোকেন যুক্ত হলো)</strong><br>ইনপুট এখন <code>"LLMs are changing our"</code>। চতুর্থ কোয়েরি টোকেন <code>" our"</code> তার পূর্ববর্তী ৩টি টোকেন দেখতে পাচ্ছে। মনোযোগের বড় অংশ চলে গেছে <code>" changing"</code> শব্দটির ওপর (৬০%)। মডেল পরবর্তী শব্দ প্রেডিক্ট করে: <code>" world"</code> (৯২% সম্ভাবনা)।`,
                 `<strong>ধাপ ৫: (সম্পূর্ণ বাক্য জেনারেশন সম্পন্ন)</strong><br>আমাদের কাঙ্ক্ষিত বাক্যটি তৈরি হয়ে গেছে: <code>"LLMs are changing our world"</code>। শেষ কোয়েরি টোকেন <code>" world"</code> বাক্যের সব টোকেনকে এটেন্ড করতে পারে। অবশেষে, মডেল পরবর্তী শব্দ হিসেবে <code>"&lt;EOS&gt;"</code> (End Of Sequence) জেনারেট করে, যার মানে বাক্য জেনারেশন লুপটি সফলভাবে শেষ হয়েছে।`
             ];
@@ -1303,7 +1303,7 @@
                         cell.innerHTML = `
                             <span class="percentage">${attnVal}%</span>
                             <span class="label">attn</span>
-                            <div class="cell-tooltip">'${tokens[i].trim()}' শব্দটি জেনারেট করার সময় মডেল '${tokens[j].trim()}' শব্দটির দিকে ${attnVal}% মনোযোগ দিচ্ছে।</div>
+                            <div class="cell-tooltip">'${tokens[i].trim()}' শব্দটি (Query) পরের শব্দ অনুমান করার সময় '${tokens[j].trim()}' শব্দটির দিকে ${attnVal}% মনোযোগ দিচ্ছে।</div>
                         `;
                     }
                     gridDiv.appendChild(cell);

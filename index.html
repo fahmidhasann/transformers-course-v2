@@ -1180,6 +1180,85 @@
             }
         }
 
+        /* ---- Classical layer (hub) — visual only; see assets/theme.css ---- */
+        .sidebar { box-shadow: 0 6px 18px -12px rgba(90, 70, 45, .25); }
+        .sidebar-brand-logo {
+            border-radius: 7px;
+            background: var(--accent-rubric);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.35rem;
+            box-shadow: inset 0 0 0 1px rgba(255, 253, 249, 0.18), inset 0 0 0 3px var(--accent-rubric), inset 0 0 0 4px rgba(255, 253, 249, 0.35);
+        }
+        .sidebar-brand-name { font-weight: 650; letter-spacing: 0.005em; }
+        .nav-item.active button {
+            background: var(--tint-cyan);
+            border-color: rgba(14, 116, 144, 0.35);
+            box-shadow: none;
+        }
+        .nav-item:hover svg { transform: none; }
+
+        .header-title h1 { font-weight: 650; letter-spacing: -0.01em; }
+
+        .card { border-radius: 10px; box-shadow: var(--paper-shadow); }
+        .card:hover { border-color: var(--border-strong); }
+        .card h2 { font-weight: 620; }
+
+        /* Stat cards: small-caps labels, serif figures. A text status
+           ("not attempted") is set smaller than a figure so the row stays even. */
+        .analytics-info p:first-child {
+            font-family: var(--font-display);
+            letter-spacing: 0.1em;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .analytics-info h3 { font-weight: 600; font-variant-numeric: lining-nums; }
+        #dash-quiz-status { font-size: clamp(1.35rem, 1rem + 1vw, 1.75rem); line-height: 1.3; }
+        .progress-circle-bar { stroke: var(--accent-rubric); }
+
+        /* Roadmap reads like a book's table of contents. */
+        .roadmap-line {
+            width: 2px;
+            left: 11px;
+            background: var(--border-strong);
+            box-shadow: none;
+        }
+        .roadmap-marker { box-shadow: 0 0 0 4px var(--bg-color); border-width: 3px; }
+        .roadmap-node.completed .roadmap-marker,
+        .roadmap-node.in-progress .roadmap-marker { box-shadow: 0 0 0 4px var(--bg-color); }
+        .roadmap-card { border-radius: 10px; box-shadow: var(--paper-shadow); }
+        .roadmap-card:hover { transform: translateX(4px); box-shadow: var(--paper-shadow); border-color: var(--border-strong); }
+        .roadmap-card-badge {
+            background: none;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: var(--accent-rubric);
+        }
+        .roadmap-card-title { font-family: var(--font-display); font-weight: 620; }
+
+        .btn-primary {
+            background: var(--accent-cyan);
+            box-shadow: 0 1px 2px rgba(90, 70, 45, .18);
+        }
+        .btn-primary:hover { opacity: 1; background: var(--accent-cyan-deep); }
+
+        .resume-card { border-radius: 10px; border-width: 1px; border-left-width: 4px; }
+        .resume-card-eyebrow { font-family: var(--font-display); letter-spacing: 0.02em; font-weight: 600; font-size: 0.8rem; }
+        .resume-card-title { font-family: var(--font-display); font-size: 1.12rem; }
+
+        .lang-toggle-btn:hover { transform: none; }
+        @media (max-width: 600px) {
+            /* Course banner heading is inline-styled; keep it a calm size on phones. */
+            #view-dashboard > div > h3 { font-size: 1.12rem !important; }
+            .analytics-info h3 { font-size: 1.9rem; }
+        }
+
     </style>
 </head>
 <body>
@@ -1260,9 +1339,9 @@
             <a class="resume-card" id="resume-card" hidden></a>
 
             <!-- Course Attribution Banner -->
-            <div style="text-align: center; margin-bottom: 2rem; padding: 2rem 1.5rem; border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 16px; background: linear-gradient(135deg, var(--card-bg-alt), var(--card-bg-alt)); box-shadow: 0 8px 32px rgba(90, 70, 45, .07), 0 0 20px rgba(14, 116, 144, 0.15); position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));"></div>
-                <h3 style="font-size: 1.25rem; line-height: 1.6; margin-bottom: 0.75rem; color: var(--text-primary); font-weight: 600; letter-spacing: 0.5px;">Helping you learn Transformers, the core architecture behind all modern large language models like ChatGPT, Claude, and Gemini.</h3>
+            <div style="text-align: center; margin-bottom: 2rem; padding: 2rem 1.5rem; border: 1px solid var(--border-color); border-radius: 10px; background: var(--card-bg); box-shadow: var(--paper-shadow); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; border-top: 1px solid var(--rule-gold); border-bottom: 1px solid var(--rule-gold);"></div>
+                <h3 style="font-size: 1.35rem; line-height: 1.5; margin-bottom: 0.75rem; color: var(--text-primary); font-weight: 500; font-style: italic; max-width: 46rem; margin-left: auto; margin-right: auto;">Helping you learn Transformers, the core architecture behind all modern large language models like ChatGPT, Claude, and Gemini.</h3>
                 <p style="font-size: 1rem; color: var(--text-secondary); margin: 0;">Course made by <a href="https://web.facebook.com/fahmid.hasan.190797/" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-weight: 700; border-bottom: 1px solid var(--accent-cyan); padding-bottom: 2px; transition: all 0.3s ease;">Fahmid Hasan</a></p>
             </div>
 
@@ -1601,13 +1680,13 @@
                 category: "Model Block & Optimization",
                 term: "Layer Normalization",
                 bnTerm: "লেয়ার নরমালাইজেশন",
-                def: "এটি মডেলের ভেতরের একটি স্বয়ংক্রিয় 'ভলিউম কন্ট্রোলার' বা ব্যালেন্সিং সিস্টেম। এটি ভেক্টরের মানগুলো খুব বেশি বড় হয়ে গেলে কমিয়ে আনে এবং খুব ছোট হয়ে গেলে বাড়িয়ে একটি নির্দিষ্ট রেঞ্জের মধ্যে রাখে, ফলে মডেলের ট্রেনিং মসৃণ হয়। আধুনিক LLM-গুলোতে (যেমন Gemini বা Claude) এটি প্রতিটি মূল ধাপের আগেই প্রয়োগ করা হয় (Pre-LN), যা ট্রেনিংকে আরও স্থিতিশীল করে তোলে।"
+                def: "এটি মডেলের ভেতরের একটি স্বয়ংক্রিয় 'ভলিউম কন্ট্রোলার' বা ব্যালেন্সিং সিস্টেম। এটি ভেক্টরের মানগুলো খুব বেশি বড় হয়ে গেলে কমিয়ে আনে এবং খুব ছোট হয়ে গেলে বাড়িয়ে একটি নির্দিষ্ট রেঞ্জের মধ্যে রাখে, ফলে মডেলের ট্রেনিং মসৃণ হয়। আধুনিক LLM-গুলোতে (যেমন GPT-3 বা Llama) এটি প্রতিটি মূল ধাপের আগেই প্রয়োগ করা হয় (Pre-LN), যা ট্রেনিংকে আরও স্থিতিশীল করে তোলে।"
             },
             {
                 category: "Model Block & Optimization",
                 term: "Layer Stacking",
                 bnTerm: "লেয়ার স্ট্যাকিং",
-                def: "একই ধরণের Transformer ব্লককে বারবার একটার ওপর আরেকটা সাজিয়ে একটি গভীর মডেল তৈরি করার পদ্ধতি। সাধারণত, নিচের দিকের লেয়ারগুলো শব্দের প্রাথমিক গঠন ও ব্যাকরণ বিশ্লেষণ করে, আর ওপরের লেয়ারগুলো বাক্যের গভীর অর্থ ও যুক্তি নিয়ে কাজ করে। উদাহরণস্বরূপ, GPT-4 মডেলে এমন ১০০-এরও বেশি লেয়ার স্তরে স্তরে সাজানো থাকে।"
+                def: "একই ধরণের Transformer ব্লককে বারবার একটার ওপর আরেকটা সাজিয়ে একটি গভীর মডেল তৈরি করার পদ্ধতি। সাধারণত, নিচের দিকের লেয়ারগুলো শব্দের প্রাথমিক গঠন ও ব্যাকরণ বিশ্লেষণ করে, আর ওপরের লেয়ারগুলো বাক্যের গভীর অর্থ ও যুক্তি নিয়ে কাজ করে। উদাহরণস্বরূপ, GPT-3 মডেলে এমন ৯৬টি লেয়ার স্তরে স্তরে সাজানো থাকে।"
             },
             {
                 category: "Generation & LLM Architecture",
@@ -1880,13 +1959,13 @@
                 category: "Model Block & Optimization",
                 term: "Layer Normalization",
                 bnTerm: "লেয়ার নরমালাইজেশন",
-                def: "An automatic volume knob inside the model: it turns the numbers down when they get too loud and up when too quiet, keeping everything balanced so training stays smooth. Modern models (Gemini, Claude) apply it before each step (called Pre-LN) for extra stability."
+                def: "An automatic volume knob inside the model: it turns the numbers down when they get too loud and up when too quiet, keeping everything balanced so training stays smooth. Modern models (such as GPT-3 and Llama) apply it before each step (called Pre-LN) for extra stability."
             },
             {
                 category: "Model Block & Optimization",
                 term: "Layer Stacking",
                 bnTerm: "লেয়ার স্ট্যাকিং",
-                def: "Repeating the same Transformer block over and over, like a tower of blocks. Lower layers handle spelling and grammar; higher layers handle meaning and reasoning. GPT-4 stacks over 100 of them."
+                def: "Repeating the same Transformer block over and over, like a tower of blocks. Lower layers handle spelling and grammar; higher layers handle meaning and reasoning. GPT-3, for example, stacks 96 of them."
             },
             {
                 category: "Generation & LLM Architecture",
