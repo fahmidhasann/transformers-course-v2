@@ -907,7 +907,7 @@
         <!-- Transformer Block Map -->
         <div class="card tb-architecture-map">
             <h2>Transformer Block Map — Current Position</h2>
-            <p class="tb-map-caption"><strong>The full map:</strong> the diagram below shows the complete structure of a <span class="tech-term">Transformer Block</span> — from <span class="tech-term">Input Tokens</span> at the bottom up to the <span class="tech-term">Next Token</span> prediction at the top. In each lesson that follows we highlight and zoom into one specific part of it.</p>
+            <p class="tb-map-caption"><strong>The full map:</strong> the diagram below shows the complete structure of a decoder-only <span class="tech-term">Transformer</span> model (the dashed box is one Transformer Block, repeated N times) — from <span class="tech-term">Input Tokens</span> at the bottom up to the <span class="tech-term">Next Token</span> prediction at the top. In each lesson that follows we highlight and zoom into one specific part of it.</p>
             <svg class="tb-map-svg" viewBox="0 0 440 500" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -1083,7 +1083,7 @@
                     <div class="step-number">3</div>
                     <div class="step-content">
                         <h3>Transformer Blocks (The Brain)</h3>
-                        <p>This is where the magic happens. Using the <span class="tech-term">Self-Attention Mechanism</span>, the model looks at all the words in the sentence at once to understand the context. It reads the whole sentence ("I eat rice") to understand how "eat" relates to both "I" and "rice", with the relationship to "I" (the subject performing the action) being the strongest.</p>
+                        <p>This is where the magic happens. Using the <span class="tech-term">Self-Attention Mechanism</span>, the model looks at all the words in the sentence at once to understand the context. It reads the whole sentence ("I eat rice") to understand how the words connect: "eat" links most strongly back to "I" (the subject performing the action), and "rice" links back to "eat" (the thing being eaten). In an LLM each word can only look at the words before it, never ahead.</p>
                         <div class="step-diagram">
                             <div class="dia-attention-row" style="background: transparent; padding: 0.5rem 0; justify-content: center; width: 100%; border: none;">
                                 <svg class="dia-attention-svg" viewBox="0 0 320 120" style="width: 100%; max-width: 320px; height: auto; display: block; overflow: visible;">
@@ -1132,7 +1132,7 @@
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3>Output & Softmax (Making the Guess)</h3>
-                        <p>Finally, the model looks at its entire dictionary and scores every possible next word. For example, to guess the next word (like the action "eat"), the <span class="tech-term">Softmax</span> function turns these scores into percentages, and the word with the highest percentage wins!</p>
+                        <p>Finally, the model looks at its entire dictionary and scores every possible next word. For example, to guess what comes after "I", the <span class="tech-term">Softmax</span> function turns these scores into percentages (a Probability Distribution). A word is then picked from it: the simplest rule takes the highest one ("eat"), but models like ChatGPT often draw in proportion to the odds (Sampling), which is why the same question can get different answers.</p>
                         <div class="step-diagram">
                             <div class="dia-softmax">
                                 <div class="dia-bar-bg">
@@ -1188,7 +1188,7 @@
 
                     <!-- Embed Tab -->
                     <div class="tab-panel" id="tab-embed">
-                        <p style="font-size:0.9rem; color:var(--text-secondary);">Each token is now represented as an 8-dimensional vector (in practice, this is usually 4096+ dimensions):</p>
+                        <p style="font-size:0.9rem; color:var(--text-secondary);">Each token is now represented as an 8-dimensional vector (in practice, hundreds to thousands of dimensions, e.g. 768 in GPT-2 and 12,288 in GPT-3):</p>
                         <div class="embedding-grid" id="embed-display">
                             <span style="color:var(--text-secondary)">Select a prompt and click Run...</span>
                         </div>
@@ -1255,10 +1255,10 @@
                     <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'Incorrect! Token IDs are not added together numerically.')">
                         A) By summing up all token IDs in the sequence.
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(this, 3, true, 'Awesome! Softmax turns vocabulary scores into probability percentages and chooses the token with the highest score.')">
-                        B) Softmax converts scores into percentage probabilities across the entire dictionary and picks the highest.
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, true, 'Awesome! Softmax turns vocabulary scores into probability percentages and the next token is then picked from those probabilities (in the simplest case, the highest one).')">
+                        B) Softmax converts scores into percentage probabilities across the entire dictionary, and the next word is picked according to those probabilities.
                     </div>
-                    <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'Incorrect! Embedding vectors are abstract representations; Softmax is required to project scores back to tokens.')">
+                    <div class="quiz-option" onclick="checkAnswer(this, 3, false, 'Incorrect! Embedding vectors are abstract representations; a final Linear layer scores every token and Softmax turns those scores into probabilities.')">
                         C) Directly converting embedding vectors into raw words without probability scoring.
                     </div>
                     <div id="quiz-feedback-3" class="quiz-feedback"></div>
@@ -1312,9 +1312,9 @@
             sky: {
                 tokens: [
                     { word: "The", id: 464 },
-                    { word: " stars", id: 5743 },
-                    { word: " shine", id: 11210 },
-                    { word: " bright", id: 6382 },
+                    { word: " stars", id: 5788 },
+                    { word: " shine", id: 18340 },
+                    { word: " bright", id: 6016 },
                     { word: " in", id: 287 },
                     { word: " the", id: 262 }
                 ],
@@ -1342,11 +1342,11 @@
             },
             code: {
                 tokens: [
-                    { word: "Python", id: 15482 },
+                    { word: "Python", id: 37906 },
                     { word: " is", id: 318 },
                     { word: " a", id: 257 },
                     { word: " great", id: 1049 },
-                    { word: " programming", id: 8945 }
+                    { word: " programming", id: 8300 }
                 ],
                 embeddings: [
                     [0.91, -0.12, 0.76, -0.34, 0.89, 0.12, -0.45, 0.67],

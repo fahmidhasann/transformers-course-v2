@@ -1204,7 +1204,7 @@
             <ol>
                 <li><span class="highlight">Tokenization:</span> Chopping the sentence into pieces and giving each piece a unique ID number.</li>
                 <li><span class="highlight">Embedding:</span> Turning those numbers into a rich profile (a vector) so the computer understands what the word actually means.</li>
-                <li><span class="highlight">Positional Encoding:</span> Tagging the word with a position number, so the computer knows the order of the sentence.</li>
+                <li><span class="highlight">Positional Encoding:</span> Tagging the word with its position (as a position vector), so the computer knows the order of the sentence.</li>
             </ol>
             <p>Let's explore these concepts simply.</p>
         </div>
@@ -1240,7 +1240,7 @@
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
                         <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">464</div>
                         <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">3797</div>
-                        <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">18534</div>
+                        <div style="background: rgba(60, 117, 73, 0.15); border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 6px; font-family: 'Outfit', monospace; color: var(--accent-green); font-weight: bold; box-shadow: 0 4px 12px rgba(60, 117, 73, 0.2);">21256</div>
                     </div>
                 </div>
             </div>
@@ -1256,7 +1256,7 @@
                     💡 Handling Unknown Words: Sub-word Tokenization (BPE)
                 </h3>
                 <p style="font-size: 0.98rem; line-height: 1.6; margin-bottom: 1.2rem; color: var(--text-secondary);">
-                    It is impossible to store every single word in existence in a Vocabulary (known as the <strong>Out-Of-Vocabulary / OOV problem</strong>). Modern LLM tokenizers (such as <strong>Byte Pair Encoding / BPE</strong> in GPT) solve this by breaking unfamiliar words down into smaller, familiar <strong>Sub-words</strong>!
+                    It is impossible to store every single word in existence in a Vocabulary (known as the <strong>Out-Of-Vocabulary / OOV problem</strong>). Modern LLM tokenizers (such as <strong>Byte Pair Encoding / BPE</strong> in GPT) solve this by breaking unfamiliar words down into smaller, familiar <strong>Sub-words</strong>! (The example below is simplified: real BPE does not look for grammatical prefixes or suffixes; it splits by which character groups appear together most often in the training data. GPT-4's tokenizer, for instance, splits "unhappiness" into "un" + "h" + "appiness".)
                 </p>
 
                 <!-- BPE Flow Diagram -->
@@ -1313,7 +1313,7 @@
         <!-- Section 2: Embeddings -->
         <div class="card">
             <h2>2. Embeddings (Adding Meaning)</h2>
-            <p>Now we have ID numbers like <code>3797</code> for <code>"cat"</code> and <code>4251</code> for <code>"dog"</code>. But these are just random barcodes. The computer doesn't know that cats and dogs are animals.</p>
+            <p>Now we have ID numbers like <code>3797</code> for <code>"cat"</code> and <code>3290</code> for <code>"dog"</code>. But these are just random barcodes. The computer doesn't know that cats and dogs are animals.</p>
             
             <p>To fix this, we use <span class="tech-term">Embeddings</span>. We replace the simple barcode with a long list of numbers (a <span class="tech-term">Vector</span>). Think of this vector as a detailed "identity profile" (or characteristic card) for the word.</p>
             
@@ -1395,7 +1395,7 @@
                             </div>
                             <div style="display: flex; flex-direction: column;">
                                 <span style="color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Token ID</span>
-                                <span style="color: var(--text-primary); font-weight: 500;">18534</span>
+                                <span style="color: var(--text-primary); font-weight: 500;">21256</span>
                             </div>
                         </div>
 
@@ -1423,7 +1423,7 @@
         <div class="card" id="embedding-3d-card">
             <h2>3D Embedding Space Visualizer</h2>
             <p style="margin-bottom: 1rem;">
-                        Real AI models (like ChatGPT, Claude, Gemini) look at hundreds of different features to figure out what a word means. To make it easy to see and understand, we are using just 3 simple features here: 
+                        Real AI models (like ChatGPT, Claude, Gemini) use hundreds or even thousands of dimensions to capture what a word means, and none of them come with neat labels like "Gender" or "Age"; the model learns them by itself during training. To make it easy to see and understand, we are using just 3 simple features here: 
                         <span class="tech-term">Gender</span> (Male vs. Female), <span class="tech-term">Royalty</span> (Royal vs. Common), and <span class="tech-term">Age</span> (Adult vs. Child).
                     </p>
 
@@ -1605,7 +1605,7 @@
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     The Solution: Positional Vectors
                 </h3>
-                <p style="margin-bottom: 1.5rem; line-height: 1.6;">To fix this, the model creates a special "position tag" (or seat number) for each word, known as a <span class="tech-term">Positional Encoding Vector</span>. It then mathematically mixes this position tag with the word's meaning tag.</p>
+                <p style="margin-bottom: 1.5rem; line-height: 1.6;">To fix this, the model creates a special "position tag" (or seat number) for each word, known as a <span class="tech-term">Positional Encoding Vector</span>. It then mathematically adds this position tag to the word's meaning tag. (This is the original Transformer paper's method; many modern LLMs such as Llama use a variant called RoPE, which instead slightly "rotates" vectors inside Attention according to their position.)</p>
                 
                 <div class="pos-vector-diagram">
                     <div style="text-align: center;">
@@ -1807,7 +1807,7 @@
                     step1: "1. A vector is drawn from the origin (0,0) to Word A (King). King vector: [8.0, 2.0]",
                     step2: "2. Next, Word B (Man) [2.0, 2.0] is subtracted. This means moving in the opposite direction of Man from the head of the King vector, arriving at [6.0, 0.0].",
                     step3: "3. Now, Word C (Woman) [2.0, 6.0] is added. Moving in the direction of Woman from [6.0, 0.0] brings us to [8.0, 6.0].",
-                    step4: "4. Magic! Our final coordinate [8.0, 6.0] is the exact position of Word D (Queen)! Therefore: King - Man + Woman = Queen"
+                    step4: "4. Magic! Our final coordinate [8.0, 6.0] is the exact position of Word D (Queen)! Therefore: King - Man + Woman = Queen (in a real model the result lands near Queen rather than exactly on it, so it is really ≈)"
                 }
             },
             capital: {
@@ -2165,7 +2165,7 @@
                     <div style="background: rgba(14, 116, 144, 0.05); border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
                         <strong>🔍 Interesting Observation:</strong> <br>
                         The input sentence contains the word <strong>"${data.word}"</strong> twice (at positions 0 and 3). 
-                        Because they have the same meaning, their <strong>Word Vectors (W) are identical</strong>. However, because they are in different locations, their <strong>Position Vectors (P) are different</strong>. 
+                        For simplicity we treat both as the same token, so their <strong>Word Vectors (W) are identical</strong> (same Token ID means the same row of the embedding table; in a real tokenizer "The" and " the" are actually different tokens). However, because they are in different locations, their <strong>Position Vectors (P) are different</strong>. 
                         As a result, their <strong>Combined Vectors (C) are completely distinct</strong>! This is how the model distinguishes between identical words located at different parts of a sentence.
                     </div>
                 `;
