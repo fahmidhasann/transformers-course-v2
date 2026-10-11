@@ -1071,6 +1071,76 @@
            2rem gutter was taking from an already-narrow scrolling panel. */
         .embed-panel { padding: 2rem; }
         @media (max-width: 600px) { .embed-panel { padding: 0.9rem; } }
+
+        /* ===== Mobile interactives (phones & tablets) =====
+           Desktop (>900px) is untouched; see docs/AGENTS.md. */
+        /* Gradient buttons need the on-accent ink (was near-black, 2.4–3:1). */
+        #run-math-btn, #step-math-btn, #next-step-btn { color: var(--text-on-accent); }
+        @media (max-width: 600px) {
+            /* Token → embedding rows: wrap instead of a 600px row whose vector
+               (the point of the panel) sat off-screen. */
+            .embed-panel [style*="min-width: 600px"] {
+                min-width: 0 !important;
+                flex-wrap: wrap;
+                row-gap: 0.6rem;
+                padding: 0.85rem 1rem !important;
+            }
+            .embed-panel [style*="min-width: 600px"] > div:first-child { width: auto !important; flex: 1 1 auto; }
+            .embed-panel [style*="min-width: 600px"] > div:nth-child(2) { width: auto !important; flex: 0 0 auto; }
+            .embed-panel [style*="min-width: 600px"] > div:last-child { width: 100% !important; justify-content: center !important; }
+            .embed-panel [style*="min-width: 600px"] > div:last-child > div { gap: 0.7rem !important; }
+
+            /* 3D space: labels were 8.5px after the viewBox scaled down. */
+            .three-d-axis-label { font-size: 17px; }
+            .three-d-axis-limit-label { font-size: 13px; }
+            .three-d-word-node text { font-size: 19px; }
+            #embedding-3d-card label { min-height: 44px; }
+
+            /* Feature-profile table fits a phone instead of clipping "Age". */
+            .heatmap-table { font-size: 0.85rem; }
+            .heatmap-table th, .heatmap-table td { padding: 0.6rem 0.35rem; }
+            .heatmap-table td:first-child, .heatmap-table th:first-child { padding-left: 0.6rem; }
+            .heatmap-cell { min-width: 0; }
+
+            /* Vector-arithmetic plot: more room and legible labels (were 6.5px). */
+            .vector-visualizer { padding: 0.5rem; min-height: 0; }
+            .svg-grid { max-width: none; }
+            #vector-svg .axis-label { font-size: 17px; }
+            #vector-svg > text.axis-label { font-size: 15px; text-anchor: end; }
+            #vector-svg > text.axis-label[x="460"] { transform: translateY(20px); }
+            #vector-svg .word-point text { font-size: 19px; }
+            #vector-svg [id^="label-"] { font-size: 18px; }
+
+            /* Positional-encoding table: one stacked card per vector instead of
+               a sideways-scrolling table that hid half the dimensions. */
+            .vector-table { display: block; overflow: visible; white-space: normal; border-spacing: 0; }
+            .vector-table thead, .vector-table tbody { display: block; }
+            .vector-table thead tr { display: flex; justify-content: space-between; gap: 0.75rem; }
+            .vector-table thead th { width: auto !important; padding: 0 0.25rem 0.4rem; font-size: 0.8rem; }
+            .vector-table tbody tr {
+                display: block;
+                margin-top: 0.5rem;
+                background: var(--card-bg-alt);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+            }
+            .vector-table tbody tr td,
+            .vector-table tbody tr td:first-child,
+            .vector-table tbody tr td:last-child {
+                display: block;
+                border: none;
+                border-radius: 12px;
+                padding: 0.6rem 0.75rem;
+                background: transparent;
+            }
+            .vector-table tbody tr td:last-child { padding-top: 0; }
+            .vector-display-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.3rem; }
+            .vector-block { width: auto; font-size: 0.74rem; }
+        }
+        @media (hover: none) {
+            /* Wider hit area for the small word dots in the 3D space. */
+            .three-d-word-node circle { stroke: transparent; stroke-width: 26px; }
+        }
     </style>
 </head>
 <body>
@@ -2190,7 +2260,17 @@
             table.addEventListener('mouseout', function(e) {
                 const block = e.target.closest('.vector-block');
                 if (!block) return;
+                if (peTouch) return; // a tap's highlight stays until the next tap
                 clearDimensionHighlight();
+            });
+
+            // Tap equivalent for touch screens (no hover there).
+            let peTouch = false;
+            table.addEventListener('pointerdown', function(e) { peTouch = e.pointerType !== 'mouse'; });
+            table.addEventListener('click', function(e) {
+                const block = e.target.closest('.vector-block');
+                if (!block) { clearDimensionHighlight(); return; }
+                highlightDimension(parseInt(block.getAttribute('data-dim')));
             });
         }
 
@@ -2234,6 +2314,7 @@
         const center3D = { x: 250, y: 250 };
         
         let isDragging3D = false;
+        let tapped3DNode = null; // word last tapped on a touch screen
         let lastMousePos3D = { x: 0, y: 0 };
 
         function init3DSpace() {
@@ -2266,6 +2347,18 @@
 
             // Touch events for mobile
             viewport.addEventListener('touchstart', (e) => {
+                // preventDefault() below also cancels the emulated mouseenter,
+                // so a tap on a word shows its coordinates here instead.
+                const tappedNode = e.target.closest ? e.target.closest('.three-d-word-node') : null;
+                if (tappedNode) {
+                    const tappedName = tappedNode.id.replace(/^node-/, '');
+                    if (tapped3DNode && tapped3DNode !== tappedName) highlight3DNode(tapped3DNode, false);
+                    tapped3DNode = tappedName;
+                    highlight3DNode(tappedName, true);
+                } else if (tapped3DNode) {
+                    highlight3DNode(tapped3DNode, false);
+                    tapped3DNode = null;
+                }
                 if (e.touches.length === 1) {
                     isDragging3D = true;
                     lastMousePos3D = { x: e.touches[0].clientX, y: e.touches[0].clientY };

@@ -868,6 +868,45 @@
             justify-content: space-between;
             padding-right: 10px;
         }
+
+        /* ===== Mobile interactives (phones & tablets) =====
+           Desktop (>900px) is untouched; see docs/AGENTS.md. */
+        /* "Run Step-by-Step" sits on the teal→purple gradient: its label needs
+           the on-accent ink, not the inherited near-black (2.4:1). */
+        #run-sim-btn { color: var(--text-on-accent); }
+        @media (max-width: 900px) {
+            /* Stage tabs: every stage visible at once instead of a strip that
+               hides stages 3–4 off-screen with no affordance. */
+            .tab-nav {
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 0.4rem;
+                overflow: visible;
+                white-space: normal;
+                border-bottom: none;
+            }
+            .tab-btn {
+                white-space: normal;
+                line-height: 1.25;
+                text-align: center;
+                padding: 0.5rem 0.4rem;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                background: var(--card-bg);
+            }
+            .tab-btn.active {
+                border: 2px solid var(--accent-cyan);
+                background: var(--tint-cyan);
+                font-weight: 600;
+            }
+        }
+        @media (max-width: 600px) {
+            .tab-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .tab-btn { font-size: 0.88rem; }
+            .sim-output { padding: 1rem 0.85rem; min-height: 160px; }
+            .attn-row { gap: 0.6rem; }
+            .attn-word { width: 64px; }
+        }
     </style>
 </head>
 <body>
@@ -908,7 +947,7 @@
         <div class="card tb-architecture-map">
             <h2>Transformer Block Map — Current Position</h2>
             <p class="tb-map-caption"><strong>The full map:</strong> the diagram below shows the complete structure of a decoder-only <span class="tech-term">Transformer</span> model (the dashed box is one Transformer Block, repeated N times) — from <span class="tech-term">Input Tokens</span> at the bottom up to the <span class="tech-term">Next Token</span> prediction at the top. In each lesson that follows we highlight and zoom into one specific part of it.</p>
-            <svg class="tb-map-svg" viewBox="0 0 440 500" role="img" aria-label="Transformer block architecture map">
+            <svg class="tb-map-svg" viewBox="0 0 440 500" data-mobile-viewbox="14 8 392 482" role="img" aria-label="Transformer block architecture map">
   <defs>
     <marker id="tb-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0 1.5 L8 5 L0 8.5 z" fill="var(--text-muted)"/>
