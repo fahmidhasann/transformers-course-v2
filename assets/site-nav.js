@@ -325,6 +325,7 @@
             if (ov !== 'auto' && ov !== 'scroll') return;
             if (el.scrollWidth <= el.clientWidth + 2) {
                 el.classList.remove('x-scrollable', 'at-start', 'at-end', 'at-both');
+                if (el._xsHint) el._xsHint.hidden = true;
                 return;
             }
             el.classList.add('x-scrollable');
@@ -341,9 +342,67 @@
         el.classList.toggle('at-start', atStart && !atEnd);
         el.classList.toggle('at-end', atEnd && !atStart);
         el.classList.toggle('at-both', !atStart && !atEnd);
+        placeHint(el);
+    }
+
+    // On a phone the edge shadow alone is easy to miss, so a sideways panel
+    // also gets a small "⇆" chip pinned to its right edge until it has been
+    // scrolled once. Below the 900px nav breakpoint only; desktop never sees it.
+    var narrowMq = window.matchMedia ? window.matchMedia('(max-width: 900px)') : null;
+    function placeHint(el) {
+        var hint = el._xsHint;
+        var show = narrowMq && narrowMq.matches && el.classList.contains('x-scrollable') &&
+                   !el.classList.contains('at-end') && !el.dataset.xsSeen && el.offsetParent !== null;
+        if (!show) { if (hint) hint.hidden = true; return; }
+        var parent = el.parentNode;
+        if (!hint) {
+            hint = document.createElement('span');
+            hint.className = 'x-scroll-hint';
+            hint.setAttribute('aria-hidden', 'true');
+            hint.textContent = '\u21C6';
+            if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
+            parent.insertBefore(hint, el.nextSibling);
+            el._xsHint = hint;
+            el.addEventListener('scroll', function () {
+                if (el.scrollLeft > 8) { el.dataset.xsSeen = '1'; hint.hidden = true; }
+            }, { passive: true });
+        }
+        hint.hidden = false;
+        hint.style.top = (el.offsetTop + el.offsetHeight / 2 - 15) + 'px';
+        hint.style.left = (el.offsetLeft + el.offsetWidth - 38) + 'px';
     }
     markScrollers();
     window.addEventListener('resize', markScrollers);
+    // Tabs, toggles and "show more" buttons reveal panels after load; re-check
+    // which of them now scroll sideways once the click has repainted.
+    container.addEventListener('click', function () {
+        setTimeout(markScrollers, 350);
+    });
+
+    // --- Phone-sized viewBox for wide diagrams ------------------------------
+    // An <svg data-mobile-viewbox="x y w h"> is cropped to its content on
+    // screens ≤600px so its labels stay legible; wider screens keep the
+    // authored viewBox untouched.
+    var mobileSvgs = document.querySelectorAll('svg[data-mobile-viewbox]');
+    if (mobileSvgs.length && window.matchMedia) {
+        var phoneMq = window.matchMedia('(max-width: 600px)');
+        var applyViewBoxes = function () {
+            mobileSvgs.forEach(function (svg) {
+                if (!svg.hasAttribute('data-desktop-viewbox')) {
+                    svg.setAttribute('data-desktop-viewbox', svg.getAttribute('viewBox') || '');
+                }
+                var vb = phoneMq.matches ? svg.getAttribute('data-mobile-viewbox')
+                                         : svg.getAttribute('data-desktop-viewbox');
+                if (vb) svg.setAttribute('viewBox', vb);
+                // width/height attributes would otherwise letterbox the crop.
+                var parts = (svg.getAttribute('data-mobile-viewbox') || '').split(/[\s,]+/);
+                svg.style.aspectRatio = (phoneMq.matches && parts.length === 4) ? parts[2] + ' / ' + parts[3] : '';
+            });
+        };
+        applyViewBoxes();
+        if (phoneMq.addEventListener) phoneMq.addEventListener('change', applyViewBoxes);
+        else if (phoneMq.addListener) phoneMq.addListener(applyViewBoxes);
+    }
 
     // --- Language toggle (keeps your place in the twin file) ----------------
     var langBtn = document.getElementById('langToggleBtn');

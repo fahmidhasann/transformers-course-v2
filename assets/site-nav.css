@@ -546,6 +546,45 @@ html { scrollbar-gutter: stable; }
                 inset  18px 0 14px -14px rgba(var(--ink-rgb), 0.38);
 }
 
+/* The "⇆" chip site-nav.js pins to a sideways panel's right edge (≤900px
+   only) until the reader has scrolled it once. It never takes taps. */
+.x-scroll-hint {
+    position: absolute;
+    z-index: 3;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-soft);
+    color: var(--accent-cyan);
+    font-size: 16px;
+    line-height: 1;
+    pointer-events: none;
+    animation: x-hint-nudge 1.6s ease-in-out infinite;
+}
+.x-scroll-hint[hidden] { display: none; }
+@keyframes x-hint-nudge {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(-5px); }
+}
+@media (min-width: 901px) {
+    .x-scroll-hint { display: none; }
+}
+
+/* --- Transformer Block map: legible labels on phones ----------------------
+   The map's viewBox shrinks to ~0.75–0.87× on a 360–390px screen, which put
+   its labels at 7–9px. Larger user-unit sizes keep them ≥10px; every label
+   still fits its box. (The extra `html` beats each lesson's inline rules.) */
+@media (max-width: 600px) {
+    html .tb-map-svg text { font-size: 14px; }
+    html .tb-map-svg .tb-sub { font-size: 11.5px; }
+    html .tb-map-svg .tb-block .tb-block-label { font-size: 13px; }
+}
+
 /* --- End-of-lesson card: close the loop where the reading happens --------- */
 .lesson-end {
     margin: 2.5rem 0 1rem;
@@ -603,6 +642,7 @@ html { scrollbar-gutter: stable; }
 
 /* --- Motion preferences -------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
+    .x-scroll-hint { animation: none; }
     .reader-bar,
     .reader-sheet,
     .reader-sheet-backdrop { transition: none; }

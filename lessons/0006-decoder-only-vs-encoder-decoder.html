@@ -742,6 +742,62 @@
     to { stroke-dashoffset: -14; }
 }
 
+
+        /* ===== Mobile interactives (phones & tablets) =====
+           Desktop (>900px) is untouched; see docs/AGENTS.md. */
+        .cell-detail { display: none; }
+        @media (hover: none) {
+            /* No hover on touch: a tapped cell's explanation shows in a line
+               under the grid instead of a clipped floating tooltip. */
+            .grid-cell .cell-tooltip { display: none; }
+            .grid-cell.tapped { outline: 2px solid var(--accent-cyan); outline-offset: 1px; }
+            .cell-detail.show {
+                display: block;
+                margin-top: 0.75rem;
+                padding: 0.6rem 0.8rem;
+                border-left: 3px solid var(--accent-cyan);
+                border-radius: 0 8px 8px 0;
+                background: var(--tint-cyan);
+                color: var(--text-primary);
+                font-size: 0.88rem;
+                line-height: 1.5;
+            }
+        }
+        @media (max-width: 900px) {
+            /* Attention matrix fits its panel instead of scrolling sideways. */
+            .grid-panel { padding: 0.75rem; }
+            .mask-grid {
+                min-width: 0;
+                grid-template-columns: 56px repeat(5, minmax(0, 1fr));
+                gap: 4px;
+                padding: 6px;
+            }
+            .grid-header-cell { font-size: 0.62rem; padding: 2px 0; word-break: normal; white-space: nowrap; }
+            .grid-header-cell.y-axis { font-size: 0.68rem; padding-right: 4px; }
+            .grid-cell .percentage { font-size: 0.8rem; }
+            .grid-cell .label { font-size: 0.6rem; }
+        }
+        @media (max-width: 600px) {
+            /* Prev / Next side by side, Reset underneath: labels stop wrapping
+               into three cramped lines. */
+            .sim-controls { padding: 1rem; }
+            .sim-buttons { display: grid; grid-template-columns: 1fr 1fr; }
+            .sim-buttons .reset-btn { grid-column: 1 / -1; }
+
+            /* Masking table: fits the screen instead of a 500px scroller. */
+            .masking-diagram { padding: 0.85rem !important; font-size: 0.85rem !important; }
+            .masking-diagram > div { min-width: 0 !important; }
+            .masking-diagram [style*="width: 140px"] { width: 72px !important; }
+            .masking-diagram [style*="flex: 1.5"] { min-width: 0; overflow-wrap: anywhere; }
+
+            /* Autoregressive loop sketch: fills the width (viewBox cropped by
+               site-nav.js) with labels big enough to read. */
+            .diagram-container { padding: 0.5rem !important; }
+            .diagram-container > svg { width: 100%; height: auto; }
+            svg:has(#arrow-ar) text[font-size="14"] { font-size: 20px; }
+            svg:has(#arrow-ar) text[font-size="12"] { font-size: 17px; }
+            svg:has(#arrow-ar) text[font-size="18"] { font-size: 26px; }
+        }
         </style>
 </head>
 <body>
@@ -1012,7 +1068,7 @@
             </p>
 
             <div class="diagram-container" style="display: flex; justify-content: center; margin: 2rem 0; padding: 1.5rem; background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 2px 10px rgba(90, 70, 45, .07);">
-                <svg width="600" height="250" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+                <svg width="600" height="250" viewBox="0 0 600 250" data-mobile-viewbox="10 42 580 178" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <marker id="arrow-ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                             <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary-color, var(--accent-green))" />
@@ -1330,6 +1386,32 @@
             currentStep = 1;
             updateSimulator();
         });
+
+        // Touch screens have no hover: tapping a cell shows its tooltip text in
+        // a line under the grid (mouse users keep the hover tooltip).
+        (function () {
+            const grid = document.getElementById('causal-grid');
+            if (!grid) return;
+            const detail = document.createElement('div');
+            detail.className = 'cell-detail';
+            detail.setAttribute('aria-live', 'polite');
+            grid.insertAdjacentElement('afterend', detail);
+            grid.addEventListener('click', (e) => {
+                const cell = e.target.closest('.grid-cell');
+                const tip = cell && cell.querySelector('.cell-tooltip');
+                if (!tip) return;
+                grid.querySelectorAll('.grid-cell.tapped').forEach(c => c.classList.remove('tapped'));
+                cell.classList.add('tapped');
+                detail.textContent = tip.textContent.trim();
+                detail.classList.add('show');
+            });
+            ['next-btn', 'prev-btn', 'reset-btn'].forEach(id => {
+                document.getElementById(id).addEventListener('click', () => {
+                    detail.classList.remove('show');
+                    detail.textContent = '';
+                });
+            });
+        })();
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
