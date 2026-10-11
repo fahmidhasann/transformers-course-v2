@@ -750,7 +750,7 @@
             <h2>Why Do We Need Multiple Attention Heads?</h2>
             <p>We know that Self-Attention helps a word connect with other words to find context. But language is tricky! A single word can have many different relationships at the same time.</p>
             
-            <p>Look at this sentence: <span class="highlight">"The cute dog chased the cat because it was running fast."</span></p>
+            <p>Look at this sentence: <span class="highlight">"The cute dog chased the cat because it was running away."</span></p>
             <p>Think about the word <span class="tech-term">dog</span>. It's doing several things at once:</p>
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-body); list-style-type: square;">
                 <li>It's being described as <span class="highlight">"cute"</span>.</li>
@@ -802,7 +802,7 @@
                     <text x="495" y="95" class="diag-tok">it</text>
                     <text x="545" y="95" class="diag-tok">was</text>
                     <text x="615" y="95" class="diag-tok">running</text>
-                    <text x="690" y="95" class="diag-tok">fast.</text>
+                    <text x="690" y="95" class="diag-tok">away.</text>
                     
                     <!-- Arcs -->
                     <!-- Head 3: dog -> cute (backward under causal mask). Above arc -->
@@ -817,7 +817,7 @@
                     <path d="M 495 75 Q 420 10 355 72" class="diag-arc diag-arc-h2" marker-end="url(#arr-h2)"/>
                     <text x="425" y="15" class="diag-label diag-label-h2">Head 2 (Pronoun Detective)</text>
 
-                    <!-- Head 4: fast -> running (backward under causal mask). Below arc -->
+                    <!-- Head 4: away -> running (backward under causal mask). Below arc -->
                     <path d="M 690 105 Q 650 145 618 108" class="diag-arc diag-arc-h4" marker-end="url(#arr-h4)"/>
                     <text x="650" y="160" class="diag-label diag-label-h4">Head 4 (Order Keeper)</text>
                 </svg>
@@ -1100,7 +1100,7 @@
 
     <script>
         // Tokens for the visualizer
-        const tokens = ["The", "cute", "dog", "chased", "the", "cat", "because", "it", "was", "running", "fast."];
+        const tokens = ["The", "cute", "dog", "chased", "the", "cat", "because", "it", "was", "running", "away."];
 
         const attnData = {
             head1: { // Subject-Verb
@@ -1120,7 +1120,7 @@
                     [0.01, 0.01, 0.15, 0.02, 0.01, 0.25, 0.10, 0.45, 0.00, 0.00, 0.00], // it
                     [0.01, 0.01, 0.03, 0.02, 0.01, 0.10, 0.02, 0.60, 0.20, 0.00, 0.00], // was -> it
                     [0.01, 0.01, 0.02, 0.01, 0.01, 0.05, 0.01, 0.55, 0.18, 0.15, 0.00], // running -> it
-                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.05, 0.03, 0.70, 0.15] // fast -> running
+                    [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.05, 0.03, 0.70, 0.15] // away -> running
                 
                 ],
                 explanations: {
@@ -1149,7 +1149,7 @@
                     [0.01, 0.01, 0.15, 0.02, 0.02, 0.70, 0.03, 0.06, 0.00, 0.00, 0.00], // it -> cat 70%, dog 15%
                     [0.01, 0.01, 0.05, 0.01, 0.01, 0.35, 0.01, 0.50, 0.05, 0.00, 0.00], // was
                     [0.01, 0.01, 0.05, 0.01, 0.01, 0.25, 0.01, 0.40, 0.05, 0.20, 0.00], // running
-                    [0.01, 0.01, 0.02, 0.01, 0.01, 0.10, 0.01, 0.15, 0.02, 0.06, 0.60] // fast
+                    [0.01, 0.01, 0.02, 0.01, 0.01, 0.10, 0.01, 0.15, 0.02, 0.06, 0.60] // away
                 
                 ],
                 explanations: {
@@ -1176,14 +1176,14 @@
                     [0.01, 0.01, 0.02, 0.01, 0.01, 0.03, 0.03, 0.88, 0.00, 0.00, 0.00], // it
                     [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.02, 0.07, 0.85, 0.00, 0.00], // was
                     [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.03, 0.10, 0.80, 0.00], // running
-                    [0.01, 0.01, 0.01, 0.00, 0.00, 0.01, 0.00, 0.01, 0.03, 0.80, 0.12] // fast -> running
+                    [0.01, 0.01, 0.01, 0.00, 0.00, 0.01, 0.00, 0.01, 0.03, 0.80, 0.12] // away -> running
                 
                 ],
                 explanations: {
                     "cute": "'cute' (adjective) cannot yet see what it describes, because 'dog' comes later and the causal mask blocks forward attention. The link is formed one step later, when 'dog' looks back.",
                     "dog": "'dog' (noun) looks back and forms a strong link (75%) with its adjective 'cute' - that is the modifier relation.",
-                    "fast": "'fast' (adverb) looks back and attaches to the verb 'running' (80%), describing the speed of the run.",
-                    "running": "'running' cannot see its modifier 'fast' yet; the link is formed when 'fast' looks back."
+                    "away": "'away' (adverb) looks back and attaches to the verb 'running' (80%), describing the direction of the run (fleeing).",
+                    "running": "'running' cannot see its modifier 'away' yet; the link is formed when 'away' looks back."
                 },
                 defaultExplanation: "This head connects adjectives and adverbs to the nouns and verbs they modify."
             },
@@ -1204,7 +1204,7 @@
                     [0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15, 0.00, 0.00, 0.00], // it -> because
                     [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15, 0.00, 0.00], // was -> it
                     [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15, 0.00], // running -> was
-                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15] // fast -> running
+                    [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.80, 0.15] // away -> running
                 
                 ],
                 explanations: {},
@@ -1252,7 +1252,7 @@
                     <p><strong>Job:</strong> Understanding the true meaning, logic, and deciding what the next word should be.</p>
                     <p><strong>Example ("The cute dog chased the cat because..."):</strong></p>
                     <p style="background: var(--card-bg-alt); padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-cyan); font-size:0.9rem; font-style:italic;">
-                        The top layers synthesize the overall context, connecting 'chasing' with 'running fast' to comprehend the narrative before calculating next-token probabilities!
+                        The top layers synthesize the overall context, connecting 'chasing' with 'running away' to comprehend the narrative before calculating next-token probabilities!
                     </p>
                 `
             }

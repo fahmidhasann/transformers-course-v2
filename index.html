@@ -1478,7 +1478,7 @@
         <section class="view-section" id="view-resources">
             <div class="card" style="margin-bottom: 2rem;">
                 <h2 id="resources-intro-title">সহায়ক রিসোর্স গাইড</h2>
-                <p id="resources-intro-desc">ট্রান্সফরমার আর্কিটেকচার নিয়ে ভিজ্যুয়াল অ্যানিমেশন, অরিজিনাল পেপার এবং মডার্ন লার্জ ল্যাঙ্গুয়েজ মডেল শেখার জন্য নিচে চমৎকার কিছু সহায়ক রিসোর্স সাজানো রয়েছে। প্রতিটি রিসোর্সের সংক্ষিপ্ত বিবরণও দেওয়া হলো যাতে আপনি আপনি আপনার সুবিধামতো বেছে নিতে পারেন।</p>
+                <p id="resources-intro-desc">ট্রান্সফরমার আর্কিটেকচার নিয়ে ভিজ্যুয়াল অ্যানিমেশন, অরিজিনাল পেপার এবং মডার্ন লার্জ ল্যাঙ্গুয়েজ মডেল শেখার জন্য নিচে চমৎকার কিছু সহায়ক রিসোর্স সাজানো রয়েছে। প্রতিটি রিসোর্সের সংক্ষিপ্ত বিবরণও দেওয়া হলো যাতে আপনি আপনার সুবিধামতো বেছে নিতে পারেন।</p>
             </div>
             
             <div class="resources-grid" id="resources-container">
@@ -1566,7 +1566,7 @@
                 category: "Input Representation",
                 term: "BPE (Byte Pair Encoding)",
                 bnTerm: "বাইট পেয়ার এনকোডিং",
-                def: "মডেলের শব্দভাণ্ডার তৈরির একটি অত্যন্ত কার্যকরী অ্যালগরিদম। এটি পরিচিত ও সাধারণ শব্দগুলোকে আস্ত রাখে এবং অপরিচিত শব্দগুলোকে পরিচিত ক্ষুদ্রতর অংশে ভেঙে ফেলে। যেমন, 'unhappiness' শব্দটি ভেঙে 'un', 'happi' এবং 'ness' এ পরিণত হয়—ফলে একেবারে নতুন কোনো শব্দ দেখলেও মডেল বিভ্রান্ত হয় না।"
+                def: "মডেলের শব্দভাণ্ডার তৈরির একটি অত্যন্ত কার্যকরী অ্যালগরিদম। এটি পরিচিত ও সাধারণ শব্দগুলোকে আস্ত রাখে এবং অপরিচিত শব্দগুলোকে পরিচিত ক্ষুদ্রতর অংশে ভেঙে ফেলে। যেমন, 'unhappiness' শব্দটি কয়েকটি পরিচিত টুকরোয় ভেঙে যেতে পারে (আসল GPT-2 tokenizer-এ: 'un', 'h', 'appiness'); টুকরোগুলো সবসময় ব্যাকরণগত prefix/suffix হয় না—ফলে একেবারে নতুন কোনো শব্দ দেখলেও মডেল বিভ্রান্ত হয় না।"
             },
             {
                 category: "Input Representation",
@@ -1656,7 +1656,7 @@
                 category: "Model Block & Optimization",
                 term: "Dimension Splitting",
                 bnTerm: "ডাইমেনশন স্প্লিটিং",
-                def: "একটি শব্দের এম্বেডিং ভেক্টরের ডাইমেনশনগুলোকে সমপরিমাণে বিভিন্ন Head-এর মধ্যে ভাগ করে দেওয়া। যেমন- ৫১২ ডাইমেনশনের একটি ভেক্টরকে ৮টি Head-এর মধ্যে ভাগ করলে প্রত্যেকে ৬৪টি করে ডাইমেনশন পায়। এর ফলে কোনো অতিরিক্ত কম্পিউটেশনাল খরচ ছাড়াই একাধিক Head সমান্তরালভাবে কাজ করতে সক্ষম হয়।"
+                def: "Multi-Head Attention-এ মোট ডাইমেনশনকে Head-গুলোর মধ্যে সমানভাবে ভাগ করে দেওয়া। তবে embedding ভেক্টর কেটে টুকরো করা হয় না—প্রতিটি Head পুরো ৫১২ ডাইমেনশনের ভেক্টরটিই পড়ে, তারপর নিজের W_Q/W_K/W_V দিয়ে সেটিকে ছোট ৬৪ ডাইমেনশনের Q, K, V-তে রূপান্তর করে (৫১২ ÷ ৮ = ৬৪)। শেষে সব Head-এর আউটপুট জোড়া লাগিয়ে W_O দিয়ে মেশানো হয়। ফলে প্রায় একটি বড় Head-এর খরচেই অনেকগুলো Head একসাথে কাজ করতে পারে।",
             },
             {
                 category: "Model Block & Optimization",
@@ -1742,7 +1742,7 @@
             {
                 type: "video",
                 title: 'Andrej Karpathy: "Let\'s build GPT: from scratch"',
-                desc: " hisPyTorch কোডিং-এর ওপর নির্মিত হলেও, এর শুরুর অংশগুলো Transformer-এর components (বিশেষ করে causal mask, attention logits) খুব সুন্দরভাবে visually ও conceptually ব্যাখ্যা করে।",
+                desc: "PyTorch কোডিং-এর ওপর নির্মিত হলেও, এর শুরুর অংশগুলো Transformer-এর components (বিশেষ করে causal mask, attention logits) খুব সুন্দরভাবে visually ও conceptually ব্যাখ্যা করে।",
                 url: "https://www.youtube.com/watch?v=kCc8FmEb1nY"
             },
             {
@@ -1802,7 +1802,7 @@
                     "এটি দিয়ে মডেলের লেয়ারের সংখ্যা বা গভীরতা বাড়ানো হয়।"
                 ],
                 answer: 0,
-                explain: "Dimension Splitting প্রতিটি Head-কে মূল এম্বেডিংয়ের অংশবিশেষ (d_head = d_model / h) নিয়ে সমান্তরালে কাজ করতে দেয়, যা রিসোর্স বাঁচিয়ে উন্নত পারফরম্যান্স দেয়।"
+                explain: "Dimension Splitting-এ প্রতিটি Head পুরো এম্বেডিং পড়ে, কিন্তু নিজের ছোট সাবস্পেসে (d_head = d_model / h) Q, K, V বানিয়ে সমান্তরালে কাজ করে, যা বাড়তি খরচ ছাড়াই ভিন্ন ভিন্ন সম্পর্ক ধরতে দেয়।"
             },
             {
                 question: "৫. Decoder-Only মডেলে Training-এর সময় ভবিষ্যৎ শব্দ দেখে ফেলা (Cheating) বন্ধ করতে কোন মেকানিজম ব্যবহৃত হয়?",
@@ -1845,7 +1845,7 @@
                 category: "Input Representation",
                 term: "BPE (Byte Pair Encoding)",
                 bnTerm: "বাইট পেয়ার এনকোডিং",
-                def: "A clever way to build the dictionary: keep common words whole, but break rare ones into familiar chunks. 'unhappiness' becomes 'un' + 'happi' + 'ness' — so the model is never completely stumped by a new word."
+                def: "A clever way to build the dictionary: keep common words whole, but break rare ones into familiar chunks. 'unhappiness' becomes 'un' + 'h' + 'appiness' in GPT-2 (chunks aren't always grammatical prefixes/suffixes) — so the model is never completely stumped by a new word."
             },
             {
                 category: "Input Representation",
@@ -1935,7 +1935,7 @@
                 category: "Model Block & Optimization",
                 term: "Dimension Splitting",
                 bnTerm: "ডাইমেনশন স্প্লিটিং",
-                def: "Sharing the work among the attention heads by splitting a word's numbers equally between them — e.g. 512 numbers / 8 heads = 64 each — so many heads run at once without extra cost."
+                def: "Sharing the work among the attention heads: each head still reads the full 512-number vector, but projects it (with its own W_Q/W_K/W_V) down to a smaller 64-number Q, K and V — 512 / 8 heads = 64 each. The heads' outputs are concatenated and mixed by W_O, so many heads run at about the cost of one big head.",
             },
             {
                 category: "Model Block & Optimization",
@@ -2155,7 +2155,7 @@
                 "glossary-search-placeholder": "পদক্ষেপ বা ইংরেজি Term দিয়ে সার্চ করুন (যেমন: Attention)...",
                 "glossary-cat-all-opt": "সব ক্যাটাগরি",
                 "resources-intro-title": "সহায়ক রিসোর্স গাইড",
-                "resources-intro-desc": "ট্রান্সফরমার আর্কিটেকচার নিয়ে ভিজ্যুয়াল অ্যানিমেশন, অরিজিনাল পেপার এবং মডার্ন লার্জ ল্যাঙ্গুয়েজ মডেল শেখার জন্য নিচে চমৎকার কিছু সহায়ক রিসোর্স সাজানো রয়েছে। প্রতিটি রিসোর্সের সংক্ষিপ্ত বিবরণও দেওয়া হলো যাতে আপনি আপনি আপনার সুবিধামতো বেছে নিতে পারেন।",
+                "resources-intro-desc": "ট্রান্সফরমার আর্কিটেকচার নিয়ে ভিজ্যুয়াল অ্যানিমেশন, অরিজিনাল পেপার এবং মডার্ন লার্জ ল্যাঙ্গুয়েজ মডেল শেখার জন্য নিচে চমৎকার কিছু সহায়ক রিসোর্স সাজানো রয়েছে। প্রতিটি রিসোর্সের সংক্ষিপ্ত বিবরণও দেওয়া হলো যাতে আপনি আপনার সুবিধামতো বেছে নিতে পারেন।",
                 "quiz-intro-title": "Transformer Architecture Assessment",
                 "quiz-intro-desc": "৬টি লেসন শেষ করার পর আপনার অর্জিত জ্ঞান যাচাইয়ের জন্য প্রস্তুত? ৫টি বহুনির্বাচনী প্রশ্নের সঠিক উত্তর দিয়ে সফলতার সাথে উত্তীর্ণ হয়ে অর্জন করুন আপনার <strong>\"Transformer Hub Completion Certificate\"</strong>!",
                 "quiz-start-btn": "কুইজ শুরু করুন",
